@@ -4,7 +4,7 @@ USE `fitpro`;
 --
 -- Host: 127.0.0.1    Database: fitpro
 -- ------------------------------------------------------
--- Server version	8.3.0
+-- Server version	8.2.0
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -33,6 +33,15 @@ CREATE TABLE `comida` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `comida`
+--
+
+LOCK TABLES `comida` WRITE;
+/*!40000 ALTER TABLE `comida` DISABLE KEYS */;
+/*!40000 ALTER TABLE `comida` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `comida_menu`
 --
 
@@ -48,6 +57,15 @@ CREATE TABLE `comida_menu` (
   CONSTRAINT `menu_comida_FK` FOREIGN KEY (`menu_id`) REFERENCES `menu` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `comida_menu`
+--
+
+LOCK TABLES `comida_menu` WRITE;
+/*!40000 ALTER TABLE `comida_menu` DISABLE KEYS */;
+/*!40000 ALTER TABLE `comida_menu` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `desempenyo_comida`
@@ -71,6 +89,15 @@ CREATE TABLE `desempenyo_comida` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `desempenyo_comida`
+--
+
+LOCK TABLES `desempenyo_comida` WRITE;
+/*!40000 ALTER TABLE `desempenyo_comida` DISABLE KEYS */;
+/*!40000 ALTER TABLE `desempenyo_comida` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `desempenyo_menu`
 --
 
@@ -86,6 +113,15 @@ CREATE TABLE `desempenyo_menu` (
   CONSTRAINT `menu_desempenyo_FK` FOREIGN KEY (`menu_id`) REFERENCES `menu` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `desempenyo_menu`
+--
+
+LOCK TABLES `desempenyo_menu` WRITE;
+/*!40000 ALTER TABLE `desempenyo_menu` DISABLE KEYS */;
+/*!40000 ALTER TABLE `desempenyo_menu` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `desempenyo_serie`
@@ -111,6 +147,15 @@ CREATE TABLE `desempenyo_serie` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `desempenyo_serie`
+--
+
+LOCK TABLES `desempenyo_serie` WRITE;
+/*!40000 ALTER TABLE `desempenyo_serie` DISABLE KEYS */;
+/*!40000 ALTER TABLE `desempenyo_serie` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `desempenyo_sesion`
 --
 
@@ -126,6 +171,15 @@ CREATE TABLE `desempenyo_sesion` (
   CONSTRAINT `sesion_desempenyo_FK` FOREIGN KEY (`sesion_id`) REFERENCES `sesion` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `desempenyo_sesion`
+--
+
+LOCK TABLES `desempenyo_sesion` WRITE;
+/*!40000 ALTER TABLE `desempenyo_sesion` DISABLE KEYS */;
+/*!40000 ALTER TABLE `desempenyo_sesion` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `dieta`
@@ -146,6 +200,15 @@ CREATE TABLE `dieta` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `dieta`
+--
+
+LOCK TABLES `dieta` WRITE;
+/*!40000 ALTER TABLE `dieta` DISABLE KEYS */;
+/*!40000 ALTER TABLE `dieta` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `dieta_cliente`
 --
 
@@ -161,6 +224,15 @@ CREATE TABLE `dieta_cliente` (
   CONSTRAINT `dieta_dieta_FK` FOREIGN KEY (`dieta_id`) REFERENCES `dieta` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `dieta_cliente`
+--
+
+LOCK TABLES `dieta_cliente` WRITE;
+/*!40000 ALTER TABLE `dieta_cliente` DISABLE KEYS */;
+/*!40000 ALTER TABLE `dieta_cliente` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `dietista_cliente`
@@ -180,6 +252,15 @@ CREATE TABLE `dietista_cliente` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `dietista_cliente`
+--
+
+LOCK TABLES `dietista_cliente` WRITE;
+/*!40000 ALTER TABLE `dietista_cliente` DISABLE KEYS */;
+/*!40000 ALTER TABLE `dietista_cliente` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `ejercicio`
 --
 
@@ -193,13 +274,19 @@ CREATE TABLE `ejercicio` (
   `imagen` varchar(255) DEFAULT NULL,
   `video` varchar(255) DEFAULT NULL,
   `tipo` varchar(45) DEFAULT NULL,
-  `grupo_muscular` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `video_UNIQUE` (`video`),
-  UNIQUE KEY `tipo_UNIQUE` (`tipo`),
-  UNIQUE KEY `grupo_muscular_UNIQUE` (`grupo_muscular`)
+  `grupo_muscular` int NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ejercicio`
+--
+
+LOCK TABLES `ejercicio` WRITE;
+/*!40000 ALTER TABLE `ejercicio` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ejercicio` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `entrenador_cliente`
@@ -219,6 +306,39 @@ CREATE TABLE `entrenador_cliente` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `entrenador_cliente`
+--
+
+LOCK TABLES `entrenador_cliente` WRITE;
+/*!40000 ALTER TABLE `entrenador_cliente` DISABLE KEYS */;
+/*!40000 ALTER TABLE `entrenador_cliente` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `grupo_muscular`
+--
+
+DROP TABLE IF EXISTS `grupo_muscular`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `grupo_muscular` (
+  `id` int NOT NULL,
+  `grupo_muscular` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `grupo_muscular`
+--
+
+LOCK TABLES `grupo_muscular` WRITE;
+/*!40000 ALTER TABLE `grupo_muscular` DISABLE KEYS */;
+INSERT INTO `grupo_muscular` VALUES (1,'Abductores'),(2,'Abdominales'),(3,'Aductores'),(4,'Biceps'),(5,'Gemelos'),(6,'Pecho'),(7,'Antebrazo'),(8,'Gluteos'),(9,'Isquiotibiales'),(10,'Flexores de cadera'),(11,'Cintilla Iliotibial'),(12,'Dorsales'),(13,'Espalda Baja'),(14,'Espalda Superior'),(15,'Cuello'),(16,'Oblicuos'),(17,'Fascia Palmar'),(18,'Fascia Plantar'),(19,'Cuadriceps'),(20,'Hombros'),(21,'Trapecios'),(22,'Triceps');
+/*!40000 ALTER TABLE `grupo_muscular` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `menu`
 --
 
@@ -233,6 +353,15 @@ CREATE TABLE `menu` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `menu`
+--
+
+LOCK TABLES `menu` WRITE;
+/*!40000 ALTER TABLE `menu` DISABLE KEYS */;
+/*!40000 ALTER TABLE `menu` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `orden_menu_dieta`
@@ -251,6 +380,15 @@ CREATE TABLE `orden_menu_dieta` (
   CONSTRAINT `menu_FK` FOREIGN KEY (`menu_id`) REFERENCES `menu` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `orden_menu_dieta`
+--
+
+LOCK TABLES `orden_menu_dieta` WRITE;
+/*!40000 ALTER TABLE `orden_menu_dieta` DISABLE KEYS */;
+/*!40000 ALTER TABLE `orden_menu_dieta` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `orden_sesion_rutina`
@@ -272,6 +410,39 @@ CREATE TABLE `orden_sesion_rutina` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `orden_sesion_rutina`
+--
+
+LOCK TABLES `orden_sesion_rutina` WRITE;
+/*!40000 ALTER TABLE `orden_sesion_rutina` DISABLE KEYS */;
+/*!40000 ALTER TABLE `orden_sesion_rutina` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `rol`
+--
+
+DROP TABLE IF EXISTS `rol`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `rol` (
+  `id` int NOT NULL,
+  `nombre` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rol`
+--
+
+LOCK TABLES `rol` WRITE;
+/*!40000 ALTER TABLE `rol` DISABLE KEYS */;
+INSERT INTO `rol` VALUES (1,'admin'),(2,'entrenador_fuerza'),(3,'entrenador_cross_training'),(4,'dietista'),(5,'cliente');
+/*!40000 ALTER TABLE `rol` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `rutina`
 --
 
@@ -290,6 +461,15 @@ CREATE TABLE `rutina` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `rutina`
+--
+
+LOCK TABLES `rutina` WRITE;
+/*!40000 ALTER TABLE `rutina` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rutina` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `rutina_cliente`
 --
 
@@ -305,6 +485,15 @@ CREATE TABLE `rutina_cliente` (
   CONSTRAINT `rutina_rutina_cliente_FK` FOREIGN KEY (`rutina_id`) REFERENCES `rutina` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rutina_cliente`
+--
+
+LOCK TABLES `rutina_cliente` WRITE;
+/*!40000 ALTER TABLE `rutina_cliente` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rutina_cliente` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `serie`
@@ -330,6 +519,15 @@ CREATE TABLE `serie` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `serie`
+--
+
+LOCK TABLES `serie` WRITE;
+/*!40000 ALTER TABLE `serie` DISABLE KEYS */;
+/*!40000 ALTER TABLE `serie` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `sesion`
 --
 
@@ -344,6 +542,15 @@ CREATE TABLE `sesion` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `sesion`
+--
+
+LOCK TABLES `sesion` WRITE;
+/*!40000 ALTER TABLE `sesion` DISABLE KEYS */;
+/*!40000 ALTER TABLE `sesion` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `usuario`
 --
 
@@ -353,17 +560,27 @@ DROP TABLE IF EXISTS `usuario`;
 CREATE TABLE `usuario` (
   `id` int NOT NULL,
   `dni` varchar(9) NOT NULL,
-  `rol` varchar(45) NOT NULL,
+  `rol` int NOT NULL,
   `nombre` varchar(45) NOT NULL,
   `apellidos` varchar(255) NOT NULL,
   `sexo` binary(1) DEFAULT NULL,
   `edad` int DEFAULT NULL,
   `altura` float DEFAULT NULL,
   `peso` float DEFAULT NULL,
-  `contrasenya` varchar(45) DEFAULT NULL,
+  `contrasenya` varchar(45) NOT NULL,
+  `correo` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `usuario`
+--
+
+LOCK TABLES `usuario` WRITE;
+/*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
+/*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -374,4 +591,4 @@ CREATE TABLE `usuario` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-08 19:27:26
+-- Dump completed on 2024-04-10 16:36:46

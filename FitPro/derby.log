@@ -1,7 +1,7 @@
 ----------------------------------------------------------------
-Wed Apr 10 15:53:26 CEST 2024:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.16.1.1 - (1901046): instance a816c00e-018e-c848-ec64-000002304980 
-on database directory memory:C:\Users\david\Documents\GitHub\FitPro\FitPro\b22899e5-7fb5-4fd7-ba2a-ddf1bea6216a with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528 
+Thu Apr 11 11:28:46 CEST 2024:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.16.1.1 - (1901046): instance a816c00e-018e-cc7c-fb74-0000022fb1c0 
+on database directory memory:C:\Users\david\Documents\GitHub\FitPro\FitPro\ec879d8e-69ac-4744-88d3-50fc3209deeb with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528 
 Loaded from file:/C:/Users/david/.m2/repository/org/apache/derby/derby/10.16.1.1/derby-10.16.1.1.jar
 java.vendor=Oracle Corporation
 java.runtime.version=21.0.2+13-58
@@ -12,5 +12,34 @@ os.version=10.0
 derby.system.home=null
 Database Class Loader started - derby.database.classpath=''
 ----------------------------------------------------------------
-Wed Apr 10 15:53:31 CEST 2024:
-Shutting down instance a816c00e-018e-c848-ec64-000002304980 on database directory memory:C:\Users\david\Documents\GitHub\FitPro\FitPro\b22899e5-7fb5-4fd7-ba2a-ddf1bea6216a with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528 
+Thu Apr 11 11:32:25 CEST 2024:
+Shutting down instance a816c00e-018e-cc7c-fb74-0000022fb1c0 on database directory memory:C:\Users\david\Documents\GitHub\FitPro\FitPro\ec879d8e-69ac-4744-88d3-50fc3209deeb with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528 
+----------------------------------------------------------------
+Thu Apr 11 11:32:26 CEST 2024:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.16.1.1 - (1901046): instance e66540fa-018e-cc7c-fb74-0000022fb1c0 
+on database directory memory:C:\Users\david\Documents\GitHub\FitPro\FitPro\7208533a-45b8-4ab9-9ba3-0a9ab0daf34c with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528 
+Loaded from file:/C:/Users/david/.m2/repository/org/apache/derby/derby/10.16.1.1/derby-10.16.1.1.jar
+java.vendor=Oracle Corporation
+java.runtime.version=21.0.2+13-58
+user.dir=C:\Users\david\Documents\GitHub\FitPro\FitPro
+os.name=Windows 11
+os.arch=amd64
+os.version=10.0
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+Thu Apr 11 11:35:42 CEST 2024:
+Shutting down instance e66540fa-018e-cc7c-fb74-0000022fb1c0 on database directory memory:C:\Users\david\Documents\GitHub\FitPro\FitPro\7208533a-45b8-4ab9-9ba3-0a9ab0daf34c with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528 
+----------------------------------------------------------------
+Thu Apr 11 11:35:43 CEST 2024:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.16.1.1 - (1901046): instance 5b17c1e6-018e-cc7c-fb74-0000022fb1c0 
+on database directory memory:C:\Users\david\Documents\GitHub\FitPro\FitPro\875e8667-501b-4229-8aa5-fd4d74820a28 with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528 
+Loaded from file:/C:/Users/david/.m2/repository/org/apache/derby/derby/10.16.1.1/derby-10.16.1.1.jar
+java.vendor=Oracle Corporation
+java.runtime.version=21.0.2+13-58
+user.dir=C:\Users\david\Documents\GitHub\FitPro\FitPro
+os.name=Windows 11
+os.arch=amd64
+os.version=10.0
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''

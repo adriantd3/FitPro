@@ -10,7 +10,7 @@ public class FitProController {
 
     @GetMapping("/")
     public String doLogin() {
-        return "login";
+        return "entrenador-cross-training/index";
     }
 
     @PostMapping("/home")

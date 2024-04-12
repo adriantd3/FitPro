@@ -24,15 +24,11 @@ header{
     border-radius:12.3%;
     padding-left: 1px;
 }
+
 .back-button:hover{
     filter: brightness(85%);
     transition: filter 0.15s;
     cursor: pointer;
-}
-
-h1 {
-    color: white;
-    text-align: center;
 }
 
 .button-container {
@@ -41,4 +37,33 @@ h1 {
     justify-content: center;
     align-items: center;
     margin-top: 100px;
+}
+
+.sesion-table-container {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    grid-template-rows: repeat(2, auto);
+    margin: 40px;
+    gap: 40px;
+}
+
+.sesion-buttons {
+    display: flex;
+    justify-content: flex-start;
+    gap: 70px;
+    margin-left: 40px;
+    margin-top: 40px;
+}
+
+.table-container {
+    margin: 40px;
+}
+
+.button-margin {
+    margin-left: 40px;
+}
+
+h1 {
+    color: white;
+    text-align: center;
 }

@@ -15,34 +15,40 @@
     <img class="back-button ms-1 mt-1 " src="assets/image.png" alt="">
     <h1 class="header-text text-center">Sesiones</h1>
 </header>
-<table border="1">
-    <thead>
-    <tr>
-        <th>Sesion</th>
-        <th>Editar sesion</th>
-        <th>Borrar sesion</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td>Sesion 1</td>
-        <td><a href="">Editar</a></td>
-        <td><a href="">Borrar</a></td>
-    </tr>
-    <tr>
-        <td>Sesion 2</td>
-        <td><a href="">Editar</a></td>
-        <td><a href="">Borrar</a></td>
-    </tr>
-    <tr>
-        <td>Sesion 3</td>
-        <td><a href="">Editar</a></td>
-        <td><a href="">Borrar</a></td>
-    </tr>
-    </tbody>
-
-</table><br/>
-<button class="btn btn-primary">Añadir sesion</button>
+<section class="table-container">
+    <table class="table table-striped table-dark">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Sesion</th>
+            <th scope="col">Editar</th>
+            <th scope="col">Borrar</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th scope="row">1</th>
+            <td>Sesion 1</td>
+            <td><a href="">Editar</a></td>
+            <td><a href="">Borrar</a></td>
+        </tr>
+        <tr>
+            <th scope="row">2</th>
+            <td>Sesion 2</td>
+            <td><a href="">Editar</a></td>
+            <td><a href="">Borrar</a></td>
+        </tr>
+        <tr>
+            <th scope="row">3</th>
+            <td>Sesion 3</td>
+            <td><a href="">Editar</a></td>
+            <td><a href="">Borrar</a></td>
+        </tr>
+        </tbody>
+    </table>
+</section>
+<br/>
+<button class="btn btn-primary button-margin">Añadir sesion</button>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

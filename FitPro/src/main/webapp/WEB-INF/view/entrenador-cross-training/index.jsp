@@ -15,7 +15,8 @@
     <section class="button-container">
         <button type="button" class="btn btn-secondary" onclick="window.location.href='/entrenador-cross-training/clientes'">Clientes</button><br/><br/>
         <button type="button" class="btn btn-secondary" onclick="window.location.href='/entrenador-cross-training/rutinas'">Rutinas</button><br/><br/>
-        <button type="button" class="btn btn-secondary" onclick="window.location.href='/entrenador-cross-training/sesiones'">Sesiones</button>
+        <button type="button" class="btn btn-secondary" onclick="window.location.href='/entrenador-cross-training/sesiones'">Sesiones</button><br/><br/>
+        <button type="button" class="btn btn-secondary" onclick="window.location.href='/entrenador-cross-training/sesion'">Sesion (solo mientras desarrollo)</button>
     </section>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>

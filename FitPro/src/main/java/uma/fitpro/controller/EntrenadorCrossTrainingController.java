@@ -21,4 +21,9 @@ public class EntrenadorCrossTrainingController {
     public String doSesiones(){
         return "entrenador-cross-training/sesiones";
     }
+
+    @GetMapping("/sesion")
+    public String doSesion(){
+        return "entrenador-cross-training/sesion";
+    }
 }

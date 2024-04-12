@@ -12,10 +12,10 @@
 </head>
 <body>
     <header>
-        <img hidden class="back-button ms-1 mt-1 " src="assets/back_button.png" alt="">
+        <img hidden class="back-button ms-1 mt-1 " src="" alt="">
         <h1 class="header-text text-center">Fit Pro</h1>
     </header>
-    <form method="post" action="/entrenadorfuerza-home">
+    <form method="post" action="/entrenador-fuerza/home">
 
         Usuario: <input type="text" name="user"> </br>
         Contraseña: <input type="text" name="password"> </br>

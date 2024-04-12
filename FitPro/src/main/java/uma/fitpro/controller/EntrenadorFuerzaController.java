@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/entrenador-fuerza")
 public class EntrenadorFuerzaController {
 
-    @PostMapping("/entrenadorfuerza-home")
+    @PostMapping("/home")
     public String doEntrenadorFuerzaHome(@RequestParam String user, @RequestParam String password) {
-        return "/entrenadorfuerza/home";
+        return "/entrenador-fuerza/home";
     }
 }

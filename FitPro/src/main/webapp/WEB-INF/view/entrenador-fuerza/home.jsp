@@ -14,13 +14,14 @@
 </head>
 <body>
     <header>
-        <img class="back-button ms-1 mt-1 " src="" alt="">
-        <h1 class="header-text text-center">Fit Pro</h1>
+        <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back_button.png" alt="<-"
+            onclick="window.location.href='/'"> <!-- Controlar pagina anterior por modelo -->
+        <h1 class="header-text text-center">Bienvenido, <%="Usuario"%></h1> <!-- Meter usuario por modelo -->
     </header>
-    <section style="align-items: center">
-        <button type="button" class="btn btn-primary">CRUD Rutinas</button>
+    <section class="position-relative top-25 start-50 w-25">
+        <button type="button" class="btn btn-primary translate-middle-x mb-2 mt-2 w-100">CRUD Rutinas</button>
         <br>
-        <button type="button" class="btn btn-primary">Clientes</button>
+        <button type="button" class="btn btn-primary translate-middle-x w-100">Clientes</button>
     </section>
 </body>
 </html>

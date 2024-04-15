@@ -9,16 +9,16 @@
     <title>Document</title>
 </head>
 <body>
-    <form method="post" action="/admin-users">
+    <form method="post" action="/admin/users">
         <button>Users</button>
     </form>
-    <form method="post" action="/admin-exercises">
+    <form method="post" action="/admin/exercises">
         <button>Exercises</button>
     </form>
-    <form method="post" action="/admin-food">
+    <form method="post" action="/admin/food">
         <button>Food</button>
     </form>
-    <form method="post" action="/admin-assignment">
+    <form method="post" action="/admin/assignment">
         <button>Assignment</button>
     </form>
 </body>

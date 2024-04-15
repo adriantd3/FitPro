@@ -25,7 +25,7 @@ DROP TABLE IF EXISTS `comida`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `comida` (
-  `id` int NOT NULL,
+  `id` int NOT NULL  AUTO_INCREMENT,
   `nombre` varchar(45) NOT NULL,
   `calorias` int NOT NULL,
   PRIMARY KEY (`id`)
@@ -75,7 +75,7 @@ DROP TABLE IF EXISTS `desempenyo_comida`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `desempenyo_comida` (
-  `id` int NOT NULL,
+  `id` int NOT NULL  AUTO_INCREMENT,
   `comida_id` int NOT NULL,
   `desempenyo_menu_id` int NOT NULL,
   `comido` tinyint NOT NULL,
@@ -105,7 +105,7 @@ DROP TABLE IF EXISTS `desempenyo_menu`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `desempenyo_menu` (
-  `id` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `menu_id` int NOT NULL,
   `fecha` date NOT NULL,
   PRIMARY KEY (`id`),
@@ -131,7 +131,7 @@ DROP TABLE IF EXISTS `desempenyo_serie`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `desempenyo_serie` (
-  `id` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `desempenyo_sesion_id` int NOT NULL,
   `serie_id` int DEFAULT NULL,
   `peso` float DEFAULT NULL,
@@ -163,7 +163,7 @@ DROP TABLE IF EXISTS `desempenyo_sesion`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `desempenyo_sesion` (
-  `id` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `sesion_id` int NOT NULL,
   `fecha` date DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -189,7 +189,7 @@ DROP TABLE IF EXISTS `dieta`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `dieta` (
-  `id` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `dietista_id` int NOT NULL,
   `nombre` varchar(45) NOT NULL,
   `fecha_creacion` date NOT NULL,
@@ -268,7 +268,7 @@ DROP TABLE IF EXISTS `ejercicio`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `ejercicio` (
-  `id` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `nombre` varchar(45) NOT NULL,
   `descripcion` longtext,
   `imagen` varchar(255) DEFAULT NULL,
@@ -346,7 +346,7 @@ DROP TABLE IF EXISTS `menu`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `menu` (
-  `id` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `nombre` varchar(45) NOT NULL,
   `calorias` float NOT NULL DEFAULT '0',
   `fecha_creacion` varchar(45) NOT NULL,
@@ -450,7 +450,7 @@ DROP TABLE IF EXISTS `rutina`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `rutina` (
-  `id` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `entrenador_id` int NOT NULL,
   `nombre` varchar(45) NOT NULL,
   `fecha_creacion` date NOT NULL,
@@ -503,7 +503,7 @@ DROP TABLE IF EXISTS `serie`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `serie` (
-  `id` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `sesion_id` int NOT NULL,
   `ejercicio_id` int NOT NULL,
   `peso` float DEFAULT NULL,
@@ -535,7 +535,7 @@ DROP TABLE IF EXISTS `sesion`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `sesion` (
-  `id` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `nombre` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -558,7 +558,7 @@ DROP TABLE IF EXISTS `usuario`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `usuario` (
-  `id` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `dni` varchar(9) NOT NULL,
   `rol` int NOT NULL,
   `nombre` varchar(45) NOT NULL,

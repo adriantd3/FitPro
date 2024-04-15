@@ -17,15 +17,38 @@
 </head>
 <body>
 <header>
-    <img class="back-button ms-1 mt-1 " src="assets/image.png" alt="">
+    <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back.png" alt="">
     <h1 class="header-text text-center">Ejercicios</h1>
 </header>
 <nav class="navbar navbar-light" style="justify-content: center">
     <form style="justify-items: center;display: flex;gap: 10px;">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        <input class="form-control mr-sm-2" type="search" placeholder="Introduzca el ejercicio" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
     </form>
 </nav>
+<section class="ejercicio-filtros">
+    <div>
+        Grupo muscular:
+        <select name="musculo">
+            <option value="espalda">Espalda</option>
+            <option value="pecho">Pecho</option>
+            <option value="hombro">Hombro</option>
+            <option value="brazo">Brazo</option>
+            <option value="pierna">Pierna</option>
+        </select>
+    </div>
+    <div>
+        Categoria:
+        <select name="categoria">
+            <option value="fuerza">Fuerza/Resistencia</option>
+            <option value="aerobica">Capacidad aerobica</option>
+            <option value="velocidad">Velocidad/Potencia</option>
+            <option value="estabilidad">Estabilidad</option>
+            <option value="movilidad">Movilidad</option>
+        </select>
+    </div>
+</section>
+
 <ul style="margin-left: 40px">
     <li><h6>Ejercicio 1</h6></li>
     <li><h6>Ejercicio 2</h6></li>

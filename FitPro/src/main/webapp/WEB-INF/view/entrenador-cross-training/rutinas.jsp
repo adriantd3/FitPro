@@ -12,7 +12,7 @@
 </head>
 <body>
 <header>
-    <img class="back-button ms-1 mt-1 " src="assets/image.png" alt="">
+    <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back.png" alt="">
     <h1 class="header-text text-center">Rutinas</h1>
 </header>
 <section class="table-container">

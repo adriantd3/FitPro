@@ -21,6 +21,10 @@ public class DesempenyoMenu {
     @Column(name = "fecha", nullable = false)
     private LocalDate fecha;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "usuario_id", nullable = false)
+    private Usuario usuario;
+
     public Integer getId() {
         return id;
     }
@@ -43,6 +47,14 @@ public class DesempenyoMenu {
 
     public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
 }

@@ -16,114 +16,138 @@
     <h1 class="header-text text-center">Sesion (nombre de la sesion)</h1>
 </header>
 <section class="sesion-table-container">
-    <table class="table table-striped table-dark">
-        <thead>
-        <tr><th style="background-color: transparent; color: darkblue;">Remo en polea</th></tr>
-        <tr>
-            <th scope="col">Serie</th>
-            <th scope="col">Peso</th>
-            <th scope="col">Repeticiones</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <th scope="row">1</th>
-            <td>50kg</td>
-            <td>12</td>
-        </tr>
-        <tr>
-            <th scope="row">2</th>
-            <td>55kg</td>
-            <td>8</td>
-        </tr>
-        <tr>
-            <th scope="row">3</th>
-            <td>60kg</td>
-            <td>6</td>
-        </tr>
-        </tbody>
-    </table>
-    <table class="table table-striped table-dark">
-        <thead>
-        <tr><th style="background-color: transparent; color: darkblue;">Remo en polea</th></tr>
-        <tr>
-            <th scope="col">Serie</th>
-            <th scope="col">Peso</th>
-            <th scope="col">Repeticiones</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <th scope="row">1</th>
-            <td>50kg</td>
-            <td>12</td>
-        </tr>
-        <tr>
-            <th scope="row">2</th>
-            <td>55kg</td>
-            <td>8</td>
-        </tr>
-        <tr>
-            <th scope="row">3</th>
-            <td>60kg</td>
-            <td>6</td>
-        </tr>
-        </tbody>
-    </table>
-    <table class="table table-striped table-dark">
-        <thead>
-        <tr><th style="background-color: transparent; color: darkblue;">Remo en polea</th></tr>
-        <tr>
-            <th scope="col">Serie</th>
-            <th scope="col">Peso</th>
-            <th scope="col">Repeticiones</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <th scope="row">1</th>
-            <td>50kg</td>
-            <td>12</td>
-        </tr>
-        <tr>
-            <th scope="row">2</th>
-            <td>55kg</td>
-            <td>8</td>
-        </tr>
-        <tr>
-            <th scope="row">3</th>
-            <td>60kg</td>
-            <td>6</td>
-        </tr>
-        </tbody>
-    </table>
-    <table class="table table-striped table-dark">
-        <thead>
-        <tr><th style="background-color: transparent; color: darkblue;">Remo en polea</th></tr>
-        <tr>
-            <th scope="col">Serie</th>
-            <th scope="col">Peso</th>
-            <th scope="col">Repeticiones</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <th scope="row">1</th>
-            <td>50kg</td>
-            <td>12</td>
-        </tr>
-        <tr>
-            <th scope="row">2</th>
-            <td>55kg</td>
-            <td>8</td>
-        </tr>
-        <tr>
-            <th scope="row">3</th>
-            <td>60kg</td>
-            <td>6</td>
-        </tr>
-        </tbody>
-    </table>
+    <div style="display: flex; flex-wrap: wrap; justify-content: center">
+        <table class="table table-striped table-dark">
+            <thead>
+            <tr><th style="background-color: transparent; color: darkblue;">Remo en polea</th></tr>
+            <tr>
+                <th scope="col">Serie</th>
+                <th scope="col">Peso</th>
+                <th scope="col">Repeticiones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th scope="row">1</th>
+                <td>50kg</td>
+                <td>12</td>
+                <td style="box-shadow: none;background-color: #434343;border-bottom-width: 0px;"><a href="">Borrar</a></td>
+            </tr>
+            <tr>
+                <th scope="row">2</th>
+                <td>55kg</td>
+                <td>8</td>
+                <td style="box-shadow: none;background-color: #434343;border-bottom-width: 0px;"><a href="">Borrar</a></td>
+            </tr>
+            <tr>
+                <th scope="row">3</th>
+                <td>60kg</td>
+                <td>6</td>
+                <td style="box-shadow: none;background-color: #434343;border-bottom-width: 0px;"><a href="">Borrar</a></td>
+            </tr>
+            </tbody>
+        </table>
+        <button type="button" class="btn btn-primary" onclick="window.location.href='/entrenador-cross-training/sesiones'">Añadir serie</button>
+    </div>
+    <div style="display: flex; flex-wrap: wrap; justify-content: center">
+        <table class="table table-striped table-dark">
+            <thead>
+            <tr><th style="background-color: transparent; color: darkblue;">Remo en polea</th></tr>
+            <tr>
+                <th scope="col">Serie</th>
+                <th scope="col">Peso</th>
+                <th scope="col">Repeticiones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th scope="row">1</th>
+                <td>50kg</td>
+                <td>12</td>
+                <td style="box-shadow: none;background-color: #434343;border-bottom-width: 0px;"><a href="">Borrar</a></td>
+            </tr>
+            <tr>
+                <th scope="row">2</th>
+                <td>55kg</td>
+                <td>8</td>
+                <td style="box-shadow: none;background-color: #434343;border-bottom-width: 0px;"><a href="">Borrar</a></td>
+            </tr>
+            <tr>
+                <th scope="row">3</th>
+                <td>60kg</td>
+                <td>6</td>
+                <td style="box-shadow: none;background-color: #434343;border-bottom-width: 0px;"><a href="">Borrar</a></td>
+            </tr>
+            </tbody>
+        </table>
+        <button type="button" class="btn btn-primary" onclick="window.location.href='/entrenador-cross-training/sesiones'">Añadir serie</button>
+    </div>
+    <div style="display: flex; flex-wrap: wrap; justify-content: center">
+        <table class="table table-striped table-dark">
+            <thead>
+            <tr><th style="background-color: transparent; color: darkblue;">Remo en polea</th></tr>
+            <tr>
+                <th scope="col">Serie</th>
+                <th scope="col">Peso</th>
+                <th scope="col">Repeticiones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th scope="row">1</th>
+                <td>50kg</td>
+                <td>12</td>
+                <td style="box-shadow: none;background-color: #434343;border-bottom-width: 0px;"><a href="">Borrar</a></td>
+            </tr>
+            <tr>
+                <th scope="row">2</th>
+                <td>55kg</td>
+                <td>8</td>
+                <td style="box-shadow: none;background-color: #434343;border-bottom-width: 0px;"><a href="">Borrar</a></td>
+            </tr>
+            <tr>
+                <th scope="row">3</th>
+                <td>60kg</td>
+                <td>6</td>
+                <td style="box-shadow: none;background-color: #434343;border-bottom-width: 0px;"><a href="">Borrar</a></td>
+            </tr>
+            </tbody>
+        </table>
+        <button type="button" class="btn btn-primary" onclick="window.location.href='/entrenador-cross-training/sesiones'">Añadir serie</button>
+    </div>
+    <div style="display: flex; flex-wrap: wrap; justify-content: center">
+        <table class="table table-striped table-dark">
+            <thead>
+            <tr><th style="background-color: transparent; color: darkblue;">Remo en polea</th></tr>
+            <tr>
+                <th scope="col">Serie</th>
+                <th scope="col">Peso</th>
+                <th scope="col">Repeticiones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th scope="row">1</th>
+                <td>50kg</td>
+                <td>12</td>
+                <td style="box-shadow: none;background-color: #434343;border-bottom-width: 0px;"><a href="">Borrar</a></td>
+            </tr>
+            <tr>
+                <th scope="row">2</th>
+                <td>55kg</td>
+                <td>8</td>
+                <td style="box-shadow: none;background-color: #434343;border-bottom-width: 0px;"><a href="">Borrar</a></td>
+            </tr>
+            <tr>
+                <th scope="row">3</th>
+                <td>60kg</td>
+                <td>6</td>
+                <td style="box-shadow: none;background-color: #434343;border-bottom-width: 0px;"><a href="">Borrar</a></td>
+            </tr>
+            </tbody>
+        </table>
+        <button type="button" class="btn btn-primary" onclick="window.location.href='/entrenador-cross-training/sesiones'">Añadir serie</button>
+    </div>
 </section>
 <section class="sesion-buttons">
     <button type="button" class="btn btn-success" onclick="window.location.href='/entrenador-cross-training/clientes'">Guardar</button>

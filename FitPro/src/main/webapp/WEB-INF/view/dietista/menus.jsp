@@ -24,7 +24,7 @@
         <div class="col-lg-5 ps-5 pt-5">
             <section id="Menus" class="menu-table pt-2">
                 <table class="table caption-top text-center ">
-                    <caption class="text-center">List of users</caption>
+                    <caption class="text-center text-white">List of users</caption>
                     <thead class="table-dark">
                     <tr>
                         <th class="id"></th>
@@ -72,7 +72,7 @@
                 <div class="col-md">
                     <section id="ComidasMenu" class="menu-table">
                         <table class="table caption-top text-center ">
-                            <caption class="text-center">Comidas del Menú</caption>
+                            <caption class="text-center text-white">Comidas del Menú</caption>
                             <thead class="table-dark">
                             <tr>
                                 <th class="id"></th>
@@ -122,7 +122,7 @@
                 <div class="col-md">
                     <section id="Comidas" class="menu-table">
                         <table class="table caption-top text-center ">
-                            <caption class="text-center">Comidas</caption>
+                            <caption class="text-center text-white">Comidas</caption>
                             <thead class="table-dark">
                             <tr>
                                 <th class="id"></th>

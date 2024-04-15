@@ -15,9 +15,12 @@
 <body>
 <header>
     <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back_button.png" alt="<-"
-         onclick="window.location.href='/'"> <!-- Controlar pagina anterior por modelo -->
+         onclick="window.location.href='/entrenador-fuerza/crud-rutina'"> <!-- Controlar pagina anterior por modelo -->
     <h1 class="header-text text-center">"Nombre Rutina"</h1> <!-- Controlar nombre rutina  -->
 </header>
-
+<section class="mt-3 ms-3 h-100">
+    <button class=" btn btn-primary top-50"
+            onclick="window.location.href='/entrenador-fuerza/crear-sesion'">Añadir Sesion</button>
+</section>
 </body>
 </html>

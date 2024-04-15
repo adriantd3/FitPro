@@ -1,6 +1,8 @@
 package uma.fitpro.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name = "ejercicio")
@@ -22,11 +24,15 @@ public class Ejercicio {
     @Column(name = "video")
     private String video;
 
-    @Column(name = "tipo", length = 45)
-    private String tipo;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "tipo", nullable = false)
+    private TipoEjercicio tipo;
 
-    @Column(name = "grupo_muscular", nullable = false)
-    private Integer grupoMuscular;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "grupo_muscular", nullable = false)
+    private GrupoMuscular grupoMuscular;
 
     public Integer getId() {
         return id;
@@ -68,19 +74,19 @@ public class Ejercicio {
         this.video = video;
     }
 
-    public String getTipo() {
+    public TipoEjercicio getTipo() {
         return tipo;
     }
 
-    public void setTipo(String tipo) {
+    public void setTipo(TipoEjercicio tipo) {
         this.tipo = tipo;
     }
 
-    public Integer getGrupoMuscular() {
+    public GrupoMuscular getGrupoMuscular() {
         return grupoMuscular;
     }
 
-    public void setGrupoMuscular(Integer grupoMuscular) {
+    public void setGrupoMuscular(GrupoMuscular grupoMuscular) {
         this.grupoMuscular = grupoMuscular;
     }
 

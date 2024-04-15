@@ -7,6 +7,10 @@ header{
     height: 4em;
 }
 
+body{
+    background-color: #434343;
+}
+
 .header-text{
     color: white;
     font-weight: bold;

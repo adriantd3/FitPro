@@ -24,8 +24,8 @@ public class Usuario {
     @Column(name = "apellidos", nullable = false)
     private String apellidos;
 
-    @Column(name = "sexo", length = 1)
-    private String sexo;
+    @Column(name = "sexo")
+    private Boolean sexo;
 
     @Column(name = "edad")
     private Integer edad;
@@ -82,11 +82,11 @@ public class Usuario {
         this.apellidos = apellidos;
     }
 
-    public String getSexo() {
+    public Boolean getSexo() {
         return sexo;
     }
 
-    public void setSexo(String sexo) {
+    public void setSexo(Boolean sexo) {
         this.sexo = sexo;
     }
 

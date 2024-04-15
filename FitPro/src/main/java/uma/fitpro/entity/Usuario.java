@@ -1,9 +1,8 @@
 package uma.fitpro.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name = "usuario")
@@ -15,8 +14,10 @@ public class Usuario {
     @Column(name = "dni", nullable = false, length = 9)
     private String dni;
 
-    @Column(name = "rol", nullable = false)
-    private Integer rol;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "rol", nullable = false)
+    private Rol rol;
 
     @Column(name = "nombre", nullable = false, length = 45)
     private String nombre;
@@ -24,8 +25,8 @@ public class Usuario {
     @Column(name = "apellidos", nullable = false)
     private String apellidos;
 
-    @Column(name = "sexo", length = 1)
-    private String sexo;
+    @Column(name = "sexo")
+    private Byte sexo;
 
     @Column(name = "edad")
     private Integer edad;
@@ -58,11 +59,11 @@ public class Usuario {
         this.dni = dni;
     }
 
-    public Integer getRol() {
+    public Rol getRol() {
         return rol;
     }
 
-    public void setRol(Integer rol) {
+    public void setRol(Rol rol) {
         this.rol = rol;
     }
 
@@ -82,11 +83,11 @@ public class Usuario {
         this.apellidos = apellidos;
     }
 
-    public String getSexo() {
+    public Byte getSexo() {
         return sexo;
     }
 
-    public void setSexo(String sexo) {
+    public void setSexo(Byte sexo) {
         this.sexo = sexo;
     }
 

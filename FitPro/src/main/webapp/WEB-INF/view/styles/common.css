@@ -7,6 +7,10 @@ header{
     height: 4em;
 }
 
+body{
+    background-color: #434343;
+}
+
 .header-text{
     color: white;
     font-weight: bold;
@@ -20,13 +24,15 @@ header{
     border-radius:12.3%;
     padding-left: 1p;
 }
-
 .back-button:hover{
     filter: brightness(85%);
     transition: filter 0.15s;
     cursor: pointer; 
 }
 
-body{
-    background-color: #434343;
+.tag{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color:white;
 }

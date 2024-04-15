@@ -3,48 +3,40 @@ package uma.fitpro.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-public class FitProController {
-
-    @GetMapping("/")
-    public String doLogin() {
-        return "login";
-    }
-
-    @PostMapping("/home")
-    public String doHome(@RequestParam String user, @RequestParam String password) {
-
-        return "admin/admin-home";
-    }
+@RequestMapping("/admin")
+public class AdminController {
 
     //////////////////////////////////////////////////////
     /////////               ADMIN                /////////
     //////////////////////////////////////////////////////
 
-    @PostMapping("/admin-users")
+    @PostMapping("/users")
     public String doUsers() {
 
-        return "admin/admin-users";
+        return "admin/users";
     }
 
-    @PostMapping("/admin-exercises")
+    @PostMapping("/exercises")
     public String doExercises() {
 
-        return "admin/admin-exercises";
+        return "admin/exercises";
     }
 
-    @PostMapping("/admin-food")
+    @PostMapping("/food")
     public String doFood() {
 
-        return "admin/admin-food";
+        return "admin/food";
     }
 
-    @PostMapping("/admin-assignment")
+    @PostMapping("/assignment")
     public String doAssingment() {
 
-        return "admin/admin-assignment";
+        return "admin/assignment";
     }
 
 }
+

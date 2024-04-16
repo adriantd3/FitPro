@@ -1,4 +1,6 @@
-<%--
+<%@ page import="uma.fitpro.entity.Menu" %>
+<%@ page import="uma.fitpro.entity.Comida" %>
+<%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: jabr3
   Date: 15/04/2024
@@ -6,6 +8,12 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    List<Menu> menus = (List<Menu>) request.getAttribute("menus");
+    Menu menu = (Menu) request.getAttribute("menu");
+    List<Comida> comidas = (List<Comida>) request.getAttribute("comidas");
+%>
+
 <html>
 <head>
     <title>Menus</title>
@@ -33,28 +41,18 @@
                     </tr>
                     </thead>
                     <tbody class = "table-group-divider table-secondary">
+                    <%
+                        for(Menu m : menus){
+                    %>
+
                     <tr>
-                        <td>1</td>
-                        <td>x</td>
-                        <td>x</td>
+                        <td><%= m.getId() %></td>
+                        <td><%= m.getNombre() %></td>
+                        <td><%= m.getCalorias() %></td>
                     </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>x</td>
-                        <td>x</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>x</td>
-                        <td>x</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            4
-                        </td>
-                        <td>x</td>
-                        <td>x</td>
-                    </tr>
+                    <%
+                        }
+                    %>
                     </tbody>
                 </table>
             </section>
@@ -82,6 +80,9 @@
                             </tr>
                             </thead>
                             <tbody class = "table-secondary">
+                            <%
+                                if(menu==null){
+                            %>
                             <tr>
                                 <td style="height: 30px;">1</td>
                                 <td>x</td>
@@ -108,6 +109,9 @@
                                 <td>x</td>
                                 <td class=" bg-danger border-dark">E</td>
                             </tr>
+                            <%
+                                }
+                            %>
                             </tbody>
                         </table>
                     </section>
@@ -132,32 +136,18 @@
                             </tr>
                             </thead>
                             <tbody class = "table-secondary">
+                            <%
+                                for(Comida comida : comidas){
+                            %>
                             <tr>
-                                <td style="height: 30px;">1</td>
-                                <td>x</td>
-                                <td>x</td>
+                                <td><%= comida.getId() %></td>
+                                <td><%= comida.getNombre() %></td>
+                                <td><%= comida.getCalorias() %></td>
                                 <td class=" bg-primary border-dark">A</td>
                             </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>x</td>
-                                <td>x</td>
-                                <td class=" bg-primary border-dark">A</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>x</td>
-                                <td>x</td>
-                                <td class=" bg-primary border-dark">A</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    4
-                                </td>
-                                <td>x</td>
-                                <td>x</td>
-                                <td class=" bg-primary border-dark">A</td>
-                            </tr>
+                            <%
+                                }
+                            %>
                             </tbody>
                         </table>
                     </section>

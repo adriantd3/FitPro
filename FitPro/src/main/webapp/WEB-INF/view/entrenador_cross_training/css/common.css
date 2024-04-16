@@ -71,7 +71,11 @@ header{
     margin-top: 20px;
 }
 
-h1 {
+h1{
     color: white;
     text-align: center;
+}
+
+h6 {
+    color: beige;
 }

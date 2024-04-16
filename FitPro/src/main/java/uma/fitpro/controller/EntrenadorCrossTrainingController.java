@@ -5,10 +5,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import uma.fitpro.dao.EntrenadorClienteRepository;
-import uma.fitpro.dao.UsuarioRepository;
-import uma.fitpro.entity.EntrenadorCliente;
-import uma.fitpro.entity.Usuario;
+import org.springframework.web.bind.annotation.RequestParam;
+import uma.fitpro.dao.*;
+import uma.fitpro.entity.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +25,21 @@ public class EntrenadorCrossTrainingController {
     @Autowired
     protected UsuarioRepository usuarioRepository;
 
+    @Autowired
+    protected RutinaRepository rutinaRepository;
+
+    @Autowired
+    protected EjercicioRepository ejercicioRepository;
+
+    @Autowired
+    protected TipoEjercicioRepository tipoEjercicioRepository;
+
+    @Autowired
+    protected GrupoMuscularRepository grupoMuscularRepository;
+
+    @Autowired
+    protected SesionRepository sesionRepository;
+
     @GetMapping("/clientes")
     public String doClientes(Model model){
         Usuario entrenador = usuarioRepository.findById(entrenador_id).orElse(null);
@@ -39,22 +53,43 @@ public class EntrenadorCrossTrainingController {
     }
 
     @GetMapping("/rutinas")
-    public String doRutinas(){
+    public String doRutinas(Model model){
+        List<Rutina> rutinas = rutinaRepository.findAll();
+        model.addAttribute("rutinas", rutinas);
         return "entrenador_cross_training/rutinas";
     }
 
     @GetMapping("/sesiones")
-    public String doSesiones(){
+    public String doSesiones(Model modelo){
+        List<Sesion> sesiones = sesionRepository.findAll();
+
+        modelo.addAttribute("sesiones", sesiones);
         return "entrenador_cross_training/sesiones";
     }
 
     @GetMapping("/sesion")
     public String doSesion(){
+
         return "entrenador_cross_training/sesion";
     }
 
     @GetMapping("/ejercicios")
-    public String doEjercicios(){
+    public String doEjercicios(@RequestParam("ejercicio") String ejercicio, Model modelo){
+        List<Ejercicio> ejercicios = ejercicioRepository.findAll();
+        if (!ejercicio.isEmpty()){
+            for (Ejercicio e : ejercicios){
+                if (!e.getNombre().contains(ejercicio)){
+                    ejercicios.remove(e);
+                }
+            }
+        }
+        List<TipoEjercicio> tipos = tipoEjercicioRepository.findAll();
+        List<GrupoMuscular> grupos = grupoMuscularRepository.findAll();
+
+        modelo.addAttribute("ejercicios", ejercicios);
+        modelo.addAttribute("tipos", tipos);
+        modelo.addAttribute("grupos", grupos);
+
         return "entrenador_cross_training/ejercicios";
     }
 }

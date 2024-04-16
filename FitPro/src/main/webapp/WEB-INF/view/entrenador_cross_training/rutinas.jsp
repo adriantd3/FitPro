@@ -1,4 +1,10 @@
+<%@ page import="uma.fitpro.entity.Rutina" %>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    List<Rutina> rutinas = (List<Rutina>) request.getAttribute("rutinas");
+
+%>
 <!doctype html>
 <html lang="en">
 <head>
@@ -26,24 +32,21 @@
         </tr>
         </thead>
         <tbody>
+        <%
+            int num = 1;
+            for (Rutina r : rutinas){
+        %>
         <tr>
-            <th scope="row">1</th>
-            <td>Rutina 1</td>
+            <th scope="row"><%= num %></th>
+            <td><%= r.getNombre() + " , FECHA: " + r.getFechaCreacion()%></td>
             <td><a href="">Editar</a></td>
             <td><a href="">Borrar</a></td>
         </tr>
-        <tr>
-            <th scope="row">2</th>
-            <td>Rutina 2</td>
-            <td><a href="">Editar</a></td>
-            <td><a href="">Borrar</a></td>
-        </tr>
-        <tr>
-            <th scope="row">3</th>
-            <td>Rutina 3</td>
-            <td><a href="">Editar</a></td>
-            <td><a href="">Borrar</a></td>
-        </tr>
+        <%
+                num++;
+            }
+        %>
+
         </tbody>
     </table>
 </section>

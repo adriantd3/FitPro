@@ -1,8 +1,13 @@
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.List" %>
+<%@ page import="uma.fitpro.entity.Ejercicio" %>
+<%@ page import="uma.fitpro.entity.TipoEjercicio" %>
+<%@ page import="uma.fitpro.entity.GrupoMuscular" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    // ESPACIO PARA DECLARACIONES EN JAVA
-
+    List<Ejercicio> ejercicios = (List<Ejercicio>) request.getAttribute("ejercicios");
+    List<TipoEjercicio> tipos = (List<TipoEjercicio>) request.getAttribute("tipos");
+    List<GrupoMuscular> grupos = (List<GrupoMuscular>) request.getAttribute("grupos");
 %>
 <!doctype html>
 <html lang="en">
@@ -21,39 +26,50 @@
     <h1 class="header-text text-center">Ejercicios</h1>
 </header>
 <nav class="navbar navbar-light" style="justify-content: center">
-    <form style="justify-items: center;display: flex;gap: 10px;">
-        <input class="form-control mr-sm-2" type="search" style="width: 400px" placeholder="Introduzca el ejercicio" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+    <form style="justify-items: center;display: flex;gap: 10px;" method="get" action="/entrenador_cross_training/ejercicios">
+        <input class="form-control mr-sm-2" type="search" style="width: 400px" placeholder="Introduzca el ejercicio" aria-label="Search" name="ejercicio">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" disabled>Buscar</button>
     </form>
 </nav>
 <section class="ejercicio-filtros">
     <div>
         Grupo muscular:
         <select class="selectpicker" data-style="btn-primary" name="musculo">
-            <option value="espalda">Espalda</option>
-            <option value="pecho">Pecho</option>
-            <option value="hombro">Hombro</option>
-            <option value="brazo">Brazo</option>
-            <option value="pierna">Pierna</option>
+            <%
+                for (GrupoMuscular g : grupos){
+
+            %>
+            <option value="<%= g.getGrupoMuscular() %>"><%= g.getGrupoMuscular() %></option>
+            <%
+                }
+            %>
         </select>
     </div>
     <div>
         Categoria:
         <select class="selectpicker" data-style="btn-primary" name="categoria">
-            <option value="fuerza">Fuerza/Resistencia</option>
-            <option value="aerobica">Capacidad aerobica</option>
-            <option value="velocidad">Velocidad/Potencia</option>
-            <option value="estabilidad">Estabilidad</option>
-            <option value="movilidad">Movilidad</option>
+            <%
+                for (TipoEjercicio t : tipos){
+
+            %>
+            <option value="<%= t.getTipo() %>"><%= t.getTipo() %></option>
+            <%
+                }
+            %>
         </select>
     </div>
 </section>
 
-<ul style="margin-left: 40px">
-    <li><h6>Ejercicio 1</h6></li>
-    <li><h6>Ejercicio 2</h6></li>
-    <li><h6>Ejercicio 3</h6></li>
-    <li><h6>Ejercicio 4</h6></li>
+<ul style="margin: 40px;">
+    <%
+        for (Ejercicio e : ejercicios){
+
+
+    %>
+    <li style="color: beige"><h6><%= e.getNombre() + ", MUSCULO: " + e.getGrupoMuscular().getGrupoMuscular() + ", TIPO: " + e.getTipo().getTipo()%></h6></li>
+    <%
+        }
+    %>
 </ul>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>

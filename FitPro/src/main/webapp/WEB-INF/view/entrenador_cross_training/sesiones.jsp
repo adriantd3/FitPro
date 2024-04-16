@@ -1,4 +1,9 @@
+<%@ page import="uma.fitpro.entity.Sesion" %>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    List<Sesion> sesiones = (List<Sesion>) request.getAttribute("sesiones");
+%>
 <!doctype html>
 <html lang="en">
 <head>
@@ -26,24 +31,22 @@
         </tr>
         </thead>
         <tbody>
+        <%
+            int num = 1;
+            for (Sesion s : sesiones){
+
+
+        %>
         <tr>
-            <th scope="row">1</th>
-            <td>Sesion 1</td>
+            <th scope="row"><%= num %></th>
+            <td><%= s.getNombre() %></td>
             <td><a href="">Editar</a></td>
             <td><a href="">Borrar</a></td>
         </tr>
-        <tr>
-            <th scope="row">2</th>
-            <td>Sesion 2</td>
-            <td><a href="">Editar</a></td>
-            <td><a href="">Borrar</a></td>
-        </tr>
-        <tr>
-            <th scope="row">3</th>
-            <td>Sesion 3</td>
-            <td><a href="">Editar</a></td>
-            <td><a href="">Borrar</a></td>
-        </tr>
+        <%
+                num++;
+            }
+        %>
         </tbody>
     </table>
 </section>

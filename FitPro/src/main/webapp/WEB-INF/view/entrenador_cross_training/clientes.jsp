@@ -32,35 +32,25 @@
         </tr>
         </thead>
         <tbody>
+        <%
+            int num = 1;
+            for (Usuario u : clientes){
+
+
+        %>
         <tr>
-            <th scope="row">1</th>
-            <td>Sesion 1</td>
+            <th scope="row"><%= num %></th>
+            <td><%= u.getNombre() + " " + u.getApellidos()%></td>
             <td><a href="">Rutinas</a></td>
         </tr>
-        <tr>
-            <th scope="row">2</th>
-            <td>Sesion 2</td>
-            <td><a href="">Rutinas</a></td>
-        </tr>
-        <tr>
-            <th scope="row">3</th>
-            <td>Sesion 3</td>
-            <td><a href="">Rutinas</a></td>
-        </tr>
+        <%
+                num++;
+            }
+        %>
+
         </tbody>
     </table>
 </section>
-<ul>
-    <%
-        for (Usuario u : clientes){
-
-
-    %>
-    <li><%= u.getNombre()%></li>
-    <%
-        }
-    %>
-</ul>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

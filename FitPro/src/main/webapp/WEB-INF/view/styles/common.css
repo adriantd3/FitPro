@@ -29,3 +29,10 @@ body{
     transition: filter 0.15s;
     cursor: pointer; 
 }
+
+.tag{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color:white;
+}

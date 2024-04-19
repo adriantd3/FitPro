@@ -2,6 +2,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!doctype html>
 
+<%
+    Usuario usuario = (Usuario) request.getAttribute("usuario");
+%>
+
+
 <html lang="en">
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -9,7 +14,7 @@
     <style>
         <%@ include file="../styles/common.css"%>
     </style>
-    <title>CLiente - Índice</title>
+    <title>Cliente - Índice</title>
 </head>
 <body>
 <header>
@@ -24,6 +29,16 @@
     <button type="button" class="btn btn-secondary w-100 translate-middle-x mt-3"
             onclick="window.location.href='cliente/dietas'">Dietas
     </button>
+    <%
+        //TEST
+        for (Usuario dietistas : usuario.getDietistas()){
+
+    %>
+    <p><%=dietistas.getNombre()%></p>
+
+    <%
+        }
+    %>
 </section>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"

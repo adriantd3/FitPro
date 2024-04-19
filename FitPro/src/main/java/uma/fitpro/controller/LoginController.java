@@ -11,6 +11,7 @@ import uma.fitpro.entity.Usuario;
 
 @Controller
 public class LoginController {
+
     @Autowired
     private UsuarioRepository usuarioRepository;
 

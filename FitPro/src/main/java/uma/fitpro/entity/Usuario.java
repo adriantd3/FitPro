@@ -4,10 +4,14 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 @Entity
 @Table(name = "usuario")
 public class Usuario {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
@@ -42,6 +46,54 @@ public class Usuario {
 
     @Column(name = "correo", nullable = false, length = 45)
     private String correo;
+
+    @OneToMany(mappedBy = "usuario")
+    private Set<DesempenyoMenu> desempenyoMenuEntities = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "usuario")
+    private Set<DesempenyoSesion> desempenyoSesionEntities = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "dietista")
+    private Set<Dieta> dietasDietista = new LinkedHashSet<>();
+
+    @ManyToMany
+    @JoinTable(name = "dieta_cliente",
+            joinColumns = @JoinColumn(name = "cliente_id"),
+            inverseJoinColumns = @JoinColumn(name = "dieta_id"))
+    private Set<Dieta> dietasCliente = new LinkedHashSet<>();
+
+    @ManyToMany
+    @JoinTable(name = "dietista_cliente",
+            joinColumns = @JoinColumn(name = "dietista_id"),
+            inverseJoinColumns = @JoinColumn(name = "cliente_id"))
+    private Set<Usuario> clientesDietista = new LinkedHashSet<>();
+
+    @ManyToMany
+    @JoinTable(name = "dietista_cliente",
+            joinColumns = @JoinColumn(name = "cliente_id"),
+            inverseJoinColumns = @JoinColumn(name = "dietista_id"))
+    private Set<Usuario> dietistas = new LinkedHashSet<>();
+
+    @ManyToMany
+    @JoinTable(name = "entrenador_cliente",
+            joinColumns = @JoinColumn(name = "entrenador_id"),
+            inverseJoinColumns = @JoinColumn(name = "cliente_id"))
+    private Set<Usuario> clientesEntrenador = new LinkedHashSet<>();
+
+    @ManyToMany
+    @JoinTable(name = "entrenador_cliente",
+            joinColumns = @JoinColumn(name = "cliente_id"),
+            inverseJoinColumns = @JoinColumn(name = "entrenador_id"))
+    private Set<Usuario> entrenadores = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "entrenador")
+    private Set<Rutina> rutinasEntrenador = new LinkedHashSet<>();
+
+    @ManyToMany
+    @JoinTable(name = "rutina_cliente",
+            joinColumns = @JoinColumn(name = "cliente_id"),
+            inverseJoinColumns = @JoinColumn(name = "rutina_id"))
+    private Set<Rutina> rutinasCliente = new LinkedHashSet<>();
 
     public Integer getId() {
         return id;
@@ -129,6 +181,86 @@ public class Usuario {
 
     public void setCorreo(String correo) {
         this.correo = correo;
+    }
+
+    public Set<DesempenyoMenu> getDesempenyoMenus() {
+        return desempenyoMenuEntities;
+    }
+
+    public void setDesempenyoMenus(Set<DesempenyoMenu> desempenyoMenuEntities) {
+        this.desempenyoMenuEntities = desempenyoMenuEntities;
+    }
+
+    public Set<DesempenyoSesion> getDesempenyoSesions() {
+        return desempenyoSesionEntities;
+    }
+
+    public void setDesempenyoSesions(Set<DesempenyoSesion> desempenyoSesionEntities) {
+        this.desempenyoSesionEntities = desempenyoSesionEntities;
+    }
+
+    public Set<Dieta> getDietasDietista() {
+        return dietasDietista;
+    }
+
+    public void setDietasDietista(Set<Dieta> dietasDietista) {
+        this.dietasDietista = dietasDietista;
+    }
+
+    public Set<Dieta> getDietasCliente() {
+        return dietasCliente;
+    }
+
+    public void setDietasCliente(Set<Dieta> dietasCliente) {
+        this.dietasCliente = dietasCliente;
+    }
+
+    public Set<Usuario> getClientesDietista() {
+        return clientesDietista;
+    }
+
+    public void setClientesDietista(Set<Usuario> clientesDietista) {
+        this.clientesDietista = clientesDietista;
+    }
+
+    public Set<Usuario> getDietistas() {
+        return dietistas;
+    }
+
+    public void setDietistas(Set<Usuario> dietistas) {
+        this.dietistas = dietistas;
+    }
+
+    public Set<Usuario> getClientesEntrenador() {
+        return clientesEntrenador;
+    }
+
+    public void setClientesEntrenador(Set<Usuario> clientesEntrenador) {
+        this.clientesEntrenador = clientesEntrenador;
+    }
+
+    public Set<Usuario> getEntrenadores() {
+        return entrenadores;
+    }
+
+    public void setEntrenadores(Set<Usuario> entrenadores) {
+        this.entrenadores = entrenadores;
+    }
+
+    public Set<Rutina> getRutinasEntrenador() {
+        return rutinasEntrenador;
+    }
+
+    public void setRutinasEntrenador(Set<Rutina> rutinasEntrenador) {
+        this.rutinasEntrenador = rutinasEntrenador;
+    }
+
+    public Set<Rutina> getRutinasCliente() {
+        return rutinasCliente;
+    }
+
+    public void setRutinasCliente(Set<Rutina> rutinasCliente) {
+        this.rutinasCliente = rutinasCliente;
     }
 
 }

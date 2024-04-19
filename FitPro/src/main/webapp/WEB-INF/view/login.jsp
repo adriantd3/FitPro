@@ -12,7 +12,7 @@
 <body>
 <header>
     <img class="back-button ms-1 mt-1 " src="assets/image.png" alt="">
-    <h1 class="header-text text-center">Rutinas de entrenamiento</h1>
+    <h1 class="header-text text-center">Login</h1>
 </header>
 <form method="post" action="/home">
     <h1>FitPro</h1> </br>

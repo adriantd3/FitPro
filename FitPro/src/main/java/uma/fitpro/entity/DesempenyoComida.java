@@ -16,11 +16,6 @@ public class DesempenyoComida {
     @JoinColumn(name = "comida_id", nullable = false)
     private Comida comida;
 
-    @MapsId("desempenyoMenuId")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "desempenyo_menu_id", nullable = false)
-    private DesempenyoMenu desempenyoMenu;
-
     @Column(name = "comido", nullable = false)
     private Byte comido;
 
@@ -41,14 +36,6 @@ public class DesempenyoComida {
 
     public void setComida(Comida comida) {
         this.comida = comida;
-    }
-
-    public DesempenyoMenu getDesempenyoMenu() {
-        return desempenyoMenu;
-    }
-
-    public void setDesempenyoMenu(DesempenyoMenu desempenyoMenu) {
-        this.desempenyoMenu = desempenyoMenu;
     }
 
     public Byte getComido() {

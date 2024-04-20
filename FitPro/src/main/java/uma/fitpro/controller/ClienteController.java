@@ -3,30 +3,37 @@ package uma.fitpro.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import uma.fitpro.dao.UsuarioRepository;
 import uma.fitpro.entity.Usuario;
 
 @Controller
-public class LoginController {
+public class ClienteController {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    @GetMapping("/")
-    public String doLogin(Model model) {
+    @PostMapping("/")
+    public String doClienteHome(Model model){
 
         Usuario dietista = this.usuarioRepository.findById(1).orElse(null);
         model.addAttribute("usuario", dietista);
 
-        return "cliente/index";
-    }
-
-    @PostMapping("/home")
-    public String doHome(@RequestParam String user, @RequestParam String password) {
+        System.out.println(dietista.toString());
 
         return "cliente/index";
     }
+
+    @GetMapping("/rutinas")
+    public String doRutinas(){
+        return "cliente/rutinas";
+    }
+
+    @GetMapping("/dietas")
+    public String doDietas(){
+        return "cliente/dietas";
+    }
+
+
+
 }

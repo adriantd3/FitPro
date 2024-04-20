@@ -16,8 +16,7 @@ public class Sesion {
     @Column(name = "nombre", nullable = false, length = 45)
     private String nombre;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "sesion_id", referencedColumnName = "id", nullable = false)
+    @OneToMany(mappedBy = "sesion")
     private Set<Serie> series = new LinkedHashSet<>();
 
     public Integer getId() {

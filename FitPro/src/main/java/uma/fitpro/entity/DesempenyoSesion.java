@@ -11,11 +11,16 @@ import java.util.Set;
 @Entity
 @Table(name = "desempenyo_sesion")
 public class DesempenyoSesion {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    private Integer id;
 
-    @EmbeddedId
-    private DesempenyoSesionId id;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "usuario_id", nullable = false)
+    private Usuario usuario;
 
-    @MapsId("sesionId")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "sesion_id", nullable = false)
@@ -24,16 +29,23 @@ public class DesempenyoSesion {
     @Column(name = "fecha")
     private LocalDate fecha;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "desempenyo_sesion_id", referencedColumnName = "id", nullable = false)
-    private Set<DesempenyoSerie> desempenyosSeries = new LinkedHashSet<>();
+    @OneToMany(mappedBy = "desempenyoSesion")
+    private Set<DesempenyoSerie> desempenyoSeryEntities = new LinkedHashSet<>();
 
-    public DesempenyoSesionId getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(DesempenyoSesionId id) {
+    public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     public Sesion getSesion() {
@@ -52,12 +64,12 @@ public class DesempenyoSesion {
         this.fecha = fecha;
     }
 
-    public Set<DesempenyoSerie> getDesempenyosSeries() {
-        return desempenyosSeries;
+    public Set<DesempenyoSerie> getDesempenyoSeries() {
+        return desempenyoSeryEntities;
     }
 
-    public void setDesempenyosSeries(Set<DesempenyoSerie> desempenyosSeries) {
-        this.desempenyosSeries = desempenyosSeries;
+    public void setDesempenyoSeries(Set<DesempenyoSerie> desempenyoSeryEntities) {
+        this.desempenyoSeryEntities = desempenyoSeryEntities;
     }
 
 }

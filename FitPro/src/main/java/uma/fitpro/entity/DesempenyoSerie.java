@@ -7,14 +7,19 @@ import org.hibernate.annotations.OnDeleteAction;
 @Entity
 @Table(name = "desempenyo_serie")
 public class DesempenyoSerie {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    private Integer id;
 
-    @EmbeddedId
-    private DesempenyoSerieId id;
-
-    @MapsId("serieId")
-    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "serie_id", nullable = true, referencedColumnName = "id")
+    @JoinColumn(name = "desempenyo_sesion_id", nullable = false)
+    private DesempenyoSesion desempenyoSesion;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "serie_id")
     private Serie serie;
 
     @Column(name = "peso")
@@ -29,12 +34,20 @@ public class DesempenyoSerie {
     @Column(name = "duracion")
     private Integer duracion;
 
-    public DesempenyoSerieId getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(DesempenyoSerieId id) {
+    public void setId(Integer id) {
         this.id = id;
+    }
+
+    public DesempenyoSesion getDesempenyoSesion() {
+        return desempenyoSesion;
+    }
+
+    public void setDesempenyoSesion(DesempenyoSesion desempenyoSesion) {
+        this.desempenyoSesion = desempenyoSesion;
     }
 
     public Serie getSerie() {

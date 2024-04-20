@@ -16,19 +16,23 @@ public class Dieta {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "dietista_id", nullable = false)
-    private Usuario dietista;
-
     @Column(name = "nombre", nullable = false, length = 45)
     private String nombre;
 
     @Column(name = "fecha_creacion", nullable = false)
     private LocalDate fechaCreacion;
 
-    @OneToMany(mappedBy = "dieta")
-    private Set<OrdenMenuDieta> ordenMenuDietas = new LinkedHashSet<>();
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "dieta_id", referencedColumnName = "id", nullable = false)
+    private Set<MenuDieta> menusDieta = new LinkedHashSet<>();
+
+    public Set<MenuDieta> getMenusDieta() {
+        return menusDieta;
+    }
+
+    public void setMenusDieta(Set<MenuDieta> menusDieta) {
+        this.menusDieta = menusDieta;
+    }
 
     public Integer getId() {
         return id;
@@ -36,14 +40,6 @@ public class Dieta {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Usuario getDietista() {
-        return dietista;
-    }
-
-    public void setDietista(Usuario dietista) {
-        this.dietista = dietista;
     }
 
     public String getNombre() {
@@ -61,13 +57,4 @@ public class Dieta {
     public void setFechaCreacion(LocalDate fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
-
-    public Set<OrdenMenuDieta> getOrdenMenuDietas() {
-        return ordenMenuDietas;
-    }
-
-    public void setOrdenMenuDietas(Set<OrdenMenuDieta> ordenMenuDietas) {
-        this.ordenMenuDietas = ordenMenuDietas;
-    }
-
 }

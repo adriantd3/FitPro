@@ -47,13 +47,16 @@ public class Usuario {
     @Column(name = "correo", nullable = false, length = 45)
     private String correo;
 
-    @OneToMany(mappedBy = "usuario")
-    private Set<DesempenyoMenu> desempenyoMenuEntities = new LinkedHashSet<>();
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuario_id", referencedColumnName = "id", nullable = false)
+    private Set<DesempenyoMenu> desempenyosMenus = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "usuario")
-    private Set<DesempenyoSesion> desempenyoSesionEntities = new LinkedHashSet<>();
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuario_id", referencedColumnName = "id", nullable = false)
+    private Set<DesempenyoSesion> desempenyosSesiones = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "dietista")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "dietista_id", referencedColumnName = "id", nullable = false)
     private Set<Dieta> dietasDietista = new LinkedHashSet<>();
 
     @ManyToMany
@@ -86,7 +89,9 @@ public class Usuario {
             inverseJoinColumns = @JoinColumn(name = "entrenador_id"))
     private Set<Usuario> entrenadores = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "entrenador")
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "entrenador_id", referencedColumnName = "id", nullable = false)
     private Set<Rutina> rutinasEntrenador = new LinkedHashSet<>();
 
     @ManyToMany
@@ -183,20 +188,20 @@ public class Usuario {
         this.correo = correo;
     }
 
-    public Set<DesempenyoMenu> getDesempenyoMenus() {
-        return desempenyoMenuEntities;
+    public Set<DesempenyoMenu> getDesempenyosMenus() {
+        return desempenyosMenus;
     }
 
-    public void setDesempenyoMenus(Set<DesempenyoMenu> desempenyoMenuEntities) {
-        this.desempenyoMenuEntities = desempenyoMenuEntities;
+    public void setDesempenyosMenus(Set<DesempenyoMenu> desempenyosMenus) {
+        this.desempenyosMenus = desempenyosMenus;
     }
 
-    public Set<DesempenyoSesion> getDesempenyoSesions() {
-        return desempenyoSesionEntities;
+    public Set<DesempenyoSesion> getDesempenyosSesiones() {
+        return desempenyosSesiones;
     }
 
-    public void setDesempenyoSesions(Set<DesempenyoSesion> desempenyoSesionEntities) {
-        this.desempenyoSesionEntities = desempenyoSesionEntities;
+    public void setDesempenyosSesiones(Set<DesempenyoSesion> desempenyosSesiones) {
+        this.desempenyosSesiones = desempenyosSesiones;
     }
 
     public Set<Dieta> getDietasDietista() {

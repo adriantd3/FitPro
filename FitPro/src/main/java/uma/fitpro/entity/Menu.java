@@ -28,7 +28,7 @@ public class Menu {
     @JoinTable(name = "comida_menu",
             joinColumns = @JoinColumn(name = "menu_id"),
             inverseJoinColumns = @JoinColumn(name = "comida_id"))
-    private Set<Comida> comidaEntities = new LinkedHashSet<>();
+    private Set<Comida> comidas = new LinkedHashSet<>();
 
     public Integer getId() {
         return id;
@@ -63,11 +63,12 @@ public class Menu {
     }
 
     public Set<Comida> getComidas() {
-        return comidaEntities;
+
+        return comidas;
     }
 
-    public void setComidas(Set<Comida> comidaEntities) {
-        this.comidaEntities = comidaEntities;
+    public void setComidas(Set<Comida> comidas) {
+        this.comidas = comidas;
     }
 
 }

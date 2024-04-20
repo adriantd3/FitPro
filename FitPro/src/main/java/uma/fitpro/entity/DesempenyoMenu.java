@@ -5,36 +5,43 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDate;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "desempenyo_menu")
 public class DesempenyoMenu {
-    @Id
-    @Column(name = "id", nullable = false)
-    private Integer id;
+    @EmbeddedId
+    private DesempenyoMenuId id;
 
+    @MapsId("menuId")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "usuario_id", nullable = false)
-    private Usuario usuario;
+    @JoinColumn(name = "menu_id", nullable = false)
+    private Menu menu;
 
     @Column(name = "fecha", nullable = false)
     private LocalDate fecha;
 
-    public Integer getId() {
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "desempenyo_menu_id", referencedColumnName = "id", nullable = false)
+    private Set<DesempenyoComida> desempenyosComidas = new LinkedHashSet<>();
+
+    public DesempenyoMenuId getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(DesempenyoMenuId id) {
         this.id = id;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public Menu getMenu() {
+        return menu;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setMenu(Menu menu) {
+        this.menu = menu;
     }
 
     public LocalDate getFecha() {
@@ -43,6 +50,14 @@ public class DesempenyoMenu {
 
     public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
+    }
+
+    public Set<DesempenyoComida> getDesempenyosComidas() {
+        return desempenyosComidas;
+    }
+
+    public void setDesempenyosComidas(Set<DesempenyoComida> desempenyosComidas) {
+        this.desempenyosComidas = desempenyosComidas;
     }
 
 }

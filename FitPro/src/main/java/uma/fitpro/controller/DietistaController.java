@@ -32,15 +32,15 @@ public class DietistaController {
     public String doMenus(@RequestParam("id") Integer id, Model model){
         List<Menu> menus = this.menuRepository.findAll();
         Menu menu = this.menuRepository.findById(id).orElse(null);
+        List<Comida> comidasMenu = this.menuRepository.findComidasMenuById(id);
         List<Comida> comidas = this.comidaRepository.findAll();
-        if(menus.isEmpty()){
-            System.out.println("AAAAAAAA");
-        }
+
 
         //lista con todas las comidas del menu concreto
 
         model.addAttribute("menus", menus);
         model.addAttribute("menu", menu);
+        model.addAttribute("comidasMenu", comidasMenu);
         model.addAttribute("comidas", comidas);
 
         return "dietista/menus";

@@ -11,6 +11,7 @@
 <%
     List<Menu> menus = (List<Menu>) request.getAttribute("menus");
     Menu menu = (Menu) request.getAttribute("menu");
+    List<Comida> comidasMenu = (List<Comida>) request.getAttribute("comidasMenu");
     List<Comida> comidas = (List<Comida>) request.getAttribute("comidas");
 %>
 
@@ -35,7 +36,7 @@
                     <caption class="text-center text-white">List of users</caption>
                     <thead class="table-dark">
                     <tr>
-                        <th class="id"></th>
+                        <th class="id">º\</th>
                         <th class="nombre-menu">Nombre</th>
                         <th class="kcal">Kcal</th>
                     </tr>
@@ -62,7 +63,11 @@
                 <div class="pt-4 row ps-3">
                         <span class="tag col-2 bg-secondary">Nombre</span>
                         <div class="col pe-5">
-                            <input type="text" class="form-control" name="nombre">
+                            <%
+                                String name = "";
+                                if(menu!=null){name=menu.getNombre();}
+                            %>
+                            <input type="text" class="form-control" name="nombre" value=<%= name %>>
                         </div>
                 </div>
             </section>
@@ -81,35 +86,17 @@
                             </thead>
                             <tbody class = "table-secondary">
                             <%
-                                if(menu==null){
+                                if(menu!=null){
+                                    for(Comida c : comidasMenu){
                             %>
-                            <tr>
-                                <td style="height: 30px;">1</td>
-                                <td>x</td>
-                                <td>x</td>
-                                <td class=" bg-danger border-dark">E</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>x</td>
-                                <td>x</td>
-                                <td class=" bg-danger border-dark">E</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>x</td>
-                                <td>x</td>
-                                <td class=" bg-danger border-dark">E</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    4
-                                </td>
-                                <td>x</td>
-                                <td>x</td>
-                                <td class=" bg-danger border-dark">E</td>
-                            </tr>
+                                    <tr>
+                                        <td><%= c.getId() %></td>
+                                        <td><%= c.getNombre() %></td>
+                                        <td><%= c.getCalorias() %></td>
+                                        <td class=" bg-danger border-dark">E</td>
+                                    </tr>
                             <%
+                                    }
                                 }
                             %>
                             </tbody>

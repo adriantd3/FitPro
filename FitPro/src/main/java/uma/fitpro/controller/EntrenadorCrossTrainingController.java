@@ -74,15 +74,11 @@ public class EntrenadorCrossTrainingController {
     }
 
     @GetMapping("/ejercicios")
-    public String doEjercicios(@RequestParam("ejercicio") String ejercicio, Model modelo){
-        List<Ejercicio> ejercicios = ejercicioRepository.findAll();
-        if (!ejercicio.isEmpty()){
-            for (Ejercicio e : ejercicios){
-                if (!e.getNombre().contains(ejercicio)){
-                    ejercicios.remove(e);
-                }
-            }
-        }
+    public String doEjercicios(@RequestParam("ejercicio") String ejercicio,
+                               @RequestParam("musculo") String musculo,
+                               @RequestParam("tipo") String tipo, Model modelo){
+        // DE MOMENTO SOLO FILTRA POR NOMBRE DEL EJERCICIO
+        List<Ejercicio> ejercicios = ejercicioRepository.filtrarEjercicio(ejercicio);
         List<TipoEjercicio> tipos = tipoEjercicioRepository.findAll();
         List<GrupoMuscular> grupos = grupoMuscularRepository.findAll();
 

@@ -26,39 +26,41 @@
     <h1 class="header-text text-center">Ejercicios</h1>
 </header>
 <nav class="navbar navbar-light" style="justify-content: center">
-    <form style="justify-items: center;display: flex;gap: 10px;" method="get" action="/entrenador_cross_training/ejercicios">
-        <input class="form-control mr-sm-2" type="search" style="width: 400px" placeholder="Introduzca el ejercicio" aria-label="Search" name="ejercicio">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" disabled>Buscar</button>
+    <form method="get" action="/entrenador_cross_training/ejercicios">
+        <section class="section-ejercicios">
+            <input class="form-control mr-sm-2" type="search" style="width: 400px" placeholder="Introduzca el ejercicio" aria-label="Search" name="ejercicio" value="<%= request.getParameter("ejercicio") %>">
+            <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Buscar</button>
+        </section>
+        <section class="ejercicio-filtros">
+            <div style="color: beige">
+                Grupo muscular:
+                <select class="selectpicker" data-style="btn-primary" name="musculo">
+                    <%
+                        for (GrupoMuscular g : grupos){
+
+                    %>
+                    <option value="<%= g.getGrupoMuscular() %>"><%= g.getGrupoMuscular() %></option>
+                    <%
+                        }
+                    %>
+                </select>
+            </div>
+            <div style="color: beige">
+                Categoria:
+                <select class="selectpicker" data-style="btn-primary" name="tipo">
+                    <%
+                        for (TipoEjercicio t : tipos){
+
+                    %>
+                    <option value="<%= t.getTipo() %>"><%= t.getTipo() %></option>
+                    <%
+                        }
+                    %>
+                </select>
+            </div>
+        </section>
     </form>
 </nav>
-<section class="ejercicio-filtros">
-    <div>
-        Grupo muscular:
-        <select class="selectpicker" data-style="btn-primary" name="musculo">
-            <%
-                for (GrupoMuscular g : grupos){
-
-            %>
-            <option value="<%= g.getGrupoMuscular() %>"><%= g.getGrupoMuscular() %></option>
-            <%
-                }
-            %>
-        </select>
-    </div>
-    <div>
-        Categoria:
-        <select class="selectpicker" data-style="btn-primary" name="categoria">
-            <%
-                for (TipoEjercicio t : tipos){
-
-            %>
-            <option value="<%= t.getTipo() %>"><%= t.getTipo() %></option>
-            <%
-                }
-            %>
-        </select>
-    </div>
-</section>
 
 <ul style="margin: 40px;">
     <%

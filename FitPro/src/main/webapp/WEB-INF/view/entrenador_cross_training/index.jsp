@@ -18,6 +18,8 @@
         <button type="button" class="btn btn-secondary" onclick="window.location.href='/entrenador_cross_training/sesiones'">Sesiones</button><br/><br/>
         <form method="get" action="/entrenador_cross_training/ejercicios">
             <input type="hidden" name="ejercicio" value="">
+            <input type="hidden" name="musculo" value="">
+            <input type="hidden" name="tipo" value="">
             <button class="btn btn-secondary" type="submit">Ejercicios (solo mientras desarrollo)</button><br/><br/>
         </form>
         <button type="button" class="btn btn-secondary" onclick="window.location.href='/entrenador_cross_training/sesion'">Sesion (solo mientras desarrollo)</button>

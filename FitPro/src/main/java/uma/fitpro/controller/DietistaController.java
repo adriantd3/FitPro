@@ -11,6 +11,7 @@ import uma.fitpro.dao.ComidaRepository;
 import uma.fitpro.dao.MenuRepository;
 import uma.fitpro.entity.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -32,7 +33,10 @@ public class DietistaController {
     public String doMenus(@RequestParam("id") Integer id, Model model){
         List<Menu> menus = this.menuRepository.findAll();
         Menu menu = this.menuRepository.findById(id).orElse(null);
-        List<Comida> comidasMenu = this.menuRepository.findComidasMenuById(id);
+        List<Comida> comidasMenu = null;
+        if(menu!=null){
+            comidasMenu = new ArrayList<>(menu.getComidas());
+        }
         List<Comida> comidas = this.comidaRepository.findAll();
 
 

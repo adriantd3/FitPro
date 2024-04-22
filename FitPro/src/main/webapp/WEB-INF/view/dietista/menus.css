@@ -1,0 +1,23 @@
+.menu-table{
+    width: 400px;
+}
+
+.id{
+    width: 40px;
+}
+
+.nombre-menu{
+    width: 120px;
+}
+
+.nombre-comida{
+    width: 120px;
+}
+
+.kcal{
+    width: 40px;
+}
+
+.table-button{
+    width: 20px;
+}

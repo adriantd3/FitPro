@@ -29,7 +29,7 @@ CREATE TABLE `comida` (
   `nombre` varchar(45) NOT NULL,
   `calorias` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -82,7 +82,7 @@ CREATE TABLE `desempenyo_menu` (
   `usuario_id` int NOT NULL,
   `menu_id` int NOT NULL,
   `fecha` date NOT NULL,
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`id`,`usuario_id`,`menu_id`),
   KEY `menu_FK_idx` (`menu_id`),
   KEY `menu_desempenyo_usuario_FK_idx` (`usuario_id`),
   CONSTRAINT `menu_desempenyo_FK` FOREIGN KEY (`menu_id`) REFERENCES `menu` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -100,16 +100,16 @@ DROP TABLE IF EXISTS `desempenyo_serie`;
 CREATE TABLE `desempenyo_serie` (
   `id` int NOT NULL AUTO_INCREMENT,
   `desempenyo_sesion_id` int NOT NULL,
-  `serie_id` int DEFAULT NULL,
+  `ejercicio_id` int NOT NULL,
   `peso` float DEFAULT NULL,
   `repeticiones` int DEFAULT NULL,
   `distancia` float DEFAULT NULL,
   `duracion` int DEFAULT NULL,
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`id`,`desempenyo_sesion_id`,`ejercicio_id`),
   KEY `desempenyo_sesion_FK_idx` (`desempenyo_sesion_id`),
-  KEY `serie_FK_idx` (`serie_id`),
+  KEY `ejercicio_FK_idx` (`ejercicio_id`),
   CONSTRAINT `desempenyo_sesion_FK` FOREIGN KEY (`desempenyo_sesion_id`) REFERENCES `desempenyo_sesion` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `serie_FK` FOREIGN KEY (`serie_id`) REFERENCES `serie` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `ejercicio_desempenyo_FK` FOREIGN KEY (`ejercicio_id`) REFERENCES `ejercicio` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -124,8 +124,8 @@ CREATE TABLE `desempenyo_sesion` (
   `id` int NOT NULL AUTO_INCREMENT,
   `usuario_id` int NOT NULL,
   `sesion_id` int NOT NULL,
-  `fecha` date DEFAULT NULL,
-  PRIMARY KEY (`id`),
+  `fecha` date NOT NULL,
+  PRIMARY KEY (`id`,`usuario_id`,`sesion_id`),
   KEY `sesion_desempenyo_FK_idx` (`sesion_id`),
   KEY `sesion_desempenyo_usuario_FK_idx` (`usuario_id`),
   CONSTRAINT `sesion_desempenyo_FK` FOREIGN KEY (`sesion_id`) REFERENCES `sesion` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -205,7 +205,7 @@ CREATE TABLE `ejercicio` (
   KEY `grupo_muscular_FK_idx` (`grupo_muscular`),
   CONSTRAINT `grupo_muscular_FK` FOREIGN KEY (`grupo_muscular`) REFERENCES `grupo_muscular` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `tipo_FK` FOREIGN KEY (`tipo`) REFERENCES `tipo_ejercicio` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -252,7 +252,7 @@ CREATE TABLE `menu` (
   `calorias` float NOT NULL DEFAULT '0',
   `fecha_creacion` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -266,7 +266,7 @@ CREATE TABLE `orden_menu_dieta` (
   `menu_id` int NOT NULL,
   `dieta_id` int NOT NULL,
   `orden` int NOT NULL,
-  PRIMARY KEY (`menu_id`,`dieta_id`),
+  PRIMARY KEY (`menu_id`,`dieta_id`,`orden`),
   KEY `dieta_FK_idx` (`dieta_id`),
   CONSTRAINT `dieta_FK` FOREIGN KEY (`dieta_id`) REFERENCES `dieta` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `menu_FK` FOREIGN KEY (`menu_id`) REFERENCES `menu` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -284,7 +284,7 @@ CREATE TABLE `orden_sesion_rutina` (
   `sesion_id` int NOT NULL,
   `rutina_id` int NOT NULL,
   `orden` int NOT NULL,
-  PRIMARY KEY (`sesion_id`,`rutina_id`),
+  PRIMARY KEY (`sesion_id`,`rutina_id`,`orden`),
   KEY `sesion_FK_idx` (`sesion_id`),
   KEY `rutina_FK_idx` (`rutina_id`),
   CONSTRAINT `rutina_FK` FOREIGN KEY (`rutina_id`) REFERENCES `rutina` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -356,12 +356,12 @@ CREATE TABLE `serie` (
   `repeticiones` int DEFAULT NULL,
   `distancia` float DEFAULT NULL,
   `duracion` int DEFAULT NULL,
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`id`,`sesion_id`,`ejercicio_id`),
   KEY `ejercicio_FK_idx` (`ejercicio_id`),
   KEY `sesion_FK_idx` (`sesion_id`),
   CONSTRAINT `ejercicio_FK` FOREIGN KEY (`ejercicio_id`) REFERENCES `ejercicio` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `sesion_serie_FK` FOREIGN KEY (`sesion_id`) REFERENCES `sesion` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -375,7 +375,7 @@ CREATE TABLE `sesion` (
   `id` int NOT NULL AUTO_INCREMENT,
   `nombre` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -426,4 +426,4 @@ CREATE TABLE `usuario` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-15 13:28:56
+-- Dump completed on 2024-04-22 11:43:05

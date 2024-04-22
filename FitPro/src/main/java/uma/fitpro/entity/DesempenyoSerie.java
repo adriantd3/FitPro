@@ -7,20 +7,20 @@ import org.hibernate.annotations.OnDeleteAction;
 @Entity
 @Table(name = "desempenyo_serie")
 public class DesempenyoSerie {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Integer id;
+    @EmbeddedId
+    private DesempenyoSerieId id;
 
+    @MapsId("desempenyoSesionId")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "desempenyo_sesion_id", nullable = false)
+    @JoinColumn(name = "desempenyo_sesion_id", nullable = false, referencedColumnName = "id")
     private DesempenyoSesion desempenyoSesion;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("ejercicioId")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "serie_id")
-    private Serie serie;
+    @JoinColumn(name = "ejercicio_id", nullable = false)
+    private Ejercicio ejercicio;
 
     @Column(name = "peso")
     private Float peso;
@@ -34,11 +34,11 @@ public class DesempenyoSerie {
     @Column(name = "duracion")
     private Integer duracion;
 
-    public Integer getId() {
+    public DesempenyoSerieId getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(DesempenyoSerieId id) {
         this.id = id;
     }
 
@@ -50,12 +50,12 @@ public class DesempenyoSerie {
         this.desempenyoSesion = desempenyoSesion;
     }
 
-    public Serie getSerie() {
-        return serie;
+    public Ejercicio getEjercicio() {
+        return ejercicio;
     }
 
-    public void setSerie(Serie serie) {
-        this.serie = serie;
+    public void setEjercicio(Ejercicio ejercicio) {
+        this.ejercicio = ejercicio;
     }
 
     public Float getPeso() {

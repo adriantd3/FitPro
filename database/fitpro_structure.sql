@@ -82,7 +82,7 @@ CREATE TABLE `desempenyo_menu` (
   `usuario_id` int NOT NULL,
   `menu_id` int NOT NULL,
   `fecha` date NOT NULL,
-  PRIMARY KEY (`id`,`usuario_id`,`menu_id`),
+  PRIMARY KEY (`id`),
   KEY `menu_FK_idx` (`menu_id`),
   KEY `menu_desempenyo_usuario_FK_idx` (`usuario_id`),
   CONSTRAINT `menu_desempenyo_FK` FOREIGN KEY (`menu_id`) REFERENCES `menu` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -125,7 +125,7 @@ CREATE TABLE `desempenyo_sesion` (
   `usuario_id` int NOT NULL,
   `sesion_id` int NOT NULL,
   `fecha` date NOT NULL,
-  PRIMARY KEY (`id`,`usuario_id`,`sesion_id`),
+  PRIMARY KEY (`id`),
   KEY `sesion_desempenyo_FK_idx` (`sesion_id`),
   KEY `sesion_desempenyo_usuario_FK_idx` (`usuario_id`),
   CONSTRAINT `sesion_desempenyo_FK` FOREIGN KEY (`sesion_id`) REFERENCES `sesion` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -426,4 +426,4 @@ CREATE TABLE `usuario` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-22 11:43:05
+-- Dump completed on 2024-04-22 11:57:13

@@ -1,6 +1,8 @@
 package uma.fitpro.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDate;
 import java.util.LinkedHashSet;
@@ -14,16 +16,19 @@ public class Rutina {
     @Column(name = "id", nullable = false)
     private Integer id;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "entrenador_id", nullable = false)
+    private Usuario entrenador;
+
     @Column(name = "nombre", nullable = false, length = 45)
     private String nombre;
 
     @Column(name = "fecha_creacion", nullable = false)
     private LocalDate fechaCreacion;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "rutina_id", referencedColumnName = "id", nullable = false)
-    private Set<SesionRutina> ordenSesionesRutina = new LinkedHashSet<>();
-
+    @OneToMany(mappedBy = "rutina")
+    private Set<OrdenSesionRutina> ordenSesionRutinas = new LinkedHashSet<>();
 
     public Integer getId() {
         return id;
@@ -31,6 +36,14 @@ public class Rutina {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Usuario getEntrenador() {
+        return entrenador;
+    }
+
+    public void setEntrenador(Usuario entrenador) {
+        this.entrenador = entrenador;
     }
 
     public String getNombre() {
@@ -49,12 +62,12 @@ public class Rutina {
         this.fechaCreacion = fechaCreacion;
     }
 
-    public Set<SesionRutina> getOrdenSesionesRutina() {
-        return ordenSesionesRutina;
+    public Set<OrdenSesionRutina> getOrdenSesionRutinas() {
+        return ordenSesionRutinas;
     }
 
-    public void setOrdenSesionesRutina(Set<SesionRutina> ordenSesionRutinas) {
-        this.ordenSesionesRutina = ordenSesionRutinas;
+    public void setOrdenSesionRutinas(Set<OrdenSesionRutina> ordenSesionRutinas) {
+        this.ordenSesionRutinas = ordenSesionRutinas;
     }
 
 }

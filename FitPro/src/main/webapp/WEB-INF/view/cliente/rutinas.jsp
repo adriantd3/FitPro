@@ -1,12 +1,5 @@
-<%@ page import="uma.fitpro.entity.Rutina" %>
-<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!doctype html>
-
-<%
-    List<Rutina> rutinas = (List<Rutina>) request.getAttribute("rutinas");
-%>
-
 <html lang="en">
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -14,7 +7,7 @@
     <style>
         <%@ include file="../styles/common.css"%>
     </style>
-    <title>Cliente - Rutinas</title>
+    <title>CLiente - Índice</title>
 </head>
 <body>
 <header>
@@ -22,17 +15,7 @@
     <h1 class="header-text text-center">Rutinas de entrenamiento</h1>
 </header>
 <ul>
-    <%
-        for (Rutina rutina : rutinas) {
-    %>
-    <li>
-        <a href="/cliente/series_rutina?id=<%=rutina.getId()%>&nombre_rutina=<%=rutina.getNombre()%>">
-            <%=rutina.getNombre()%>
-        </a>
-    </li>
-    <%
-        }
-    %>
+
 </ul>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"

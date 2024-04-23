@@ -2,6 +2,8 @@ package uma.fitpro.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import org.hibernate.Hibernate;
 
 import java.util.Objects;
@@ -10,6 +12,7 @@ import java.util.Objects;
 public class SerieId implements java.io.Serializable {
     private static final long serialVersionUID = -5319968942561611421L;
     @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "sesion_id", nullable = false)

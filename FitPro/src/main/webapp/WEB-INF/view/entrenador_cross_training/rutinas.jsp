@@ -1,9 +1,10 @@
 <%@ page import="uma.fitpro.entity.Rutina" %>
 <%@ page import="java.util.List" %>
+<%@ page import="uma.fitpro.entity.Usuario" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     List<Rutina> rutinas = (List<Rutina>) request.getAttribute("rutinas");
-
+    Usuario cliente = (Usuario) request.getAttribute("cliente");
 %>
 <!doctype html>
 <html lang="en">
@@ -19,7 +20,7 @@
 <body>
 <header>
     <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back.png" alt="">
-    <h1 class="header-text text-center">Rutinas</h1>
+    <h1 class="header-text text-center"><%= cliente!= null ? "Rutinas de " + cliente.getNombre() : "Rutinas"%></h1>
 </header>
 <section class="table-container">
     <table class="table table-striped table-dark">
@@ -40,7 +41,7 @@
             <th scope="row"><%= num %></th>
             <td><%= r.getNombre() + " , FECHA: " + r.getFechaCreacion()%></td>
             <td><a href="">Editar</a></td>
-            <td><a href="">Borrar</a></td>
+            <td><a href="/entrenador_cross_training/borrar_rutina?id=<%= r.getId()%>">Borrar</a></td>
         </tr>
         <%
                 num++;

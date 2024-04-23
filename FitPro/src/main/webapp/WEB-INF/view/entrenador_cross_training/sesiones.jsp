@@ -40,8 +40,8 @@
         <tr>
             <th scope="row"><%= num %></th>
             <td><%= s.getNombre() %></td>
-            <td><a href="">Editar</a></td>
-            <td><a href="">Borrar</a></td>
+            <td><a href="/entrenador_cross_training/sesion?id=<%= s.getId()%>">Editar</a></td>
+            <td><a href="/entrenador_cross_training/borrar_sesion?id=<%= s.getId()%>">Borrar</a></td>
         </tr>
         <%
                 num++;

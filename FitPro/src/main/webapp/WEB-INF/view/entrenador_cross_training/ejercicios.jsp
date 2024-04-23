@@ -3,11 +3,13 @@
 <%@ page import="uma.fitpro.entity.Ejercicio" %>
 <%@ page import="uma.fitpro.entity.TipoEjercicio" %>
 <%@ page import="uma.fitpro.entity.GrupoMuscular" %>
+<%@ page import="uma.fitpro.entity.Sesion" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     List<Ejercicio> ejercicios = (List<Ejercicio>) request.getAttribute("ejercicios");
     List<TipoEjercicio> tipos = (List<TipoEjercicio>) request.getAttribute("tipos");
     List<GrupoMuscular> grupos = (List<GrupoMuscular>) request.getAttribute("grupos");
+    Sesion sesion = (Sesion) request.getAttribute("sesion");
 %>
 <!doctype html>
 <html lang="en">
@@ -17,7 +19,8 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Ejercicios</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/css/bootstrap-select.min.css">
     <style><%@include file="css/common.css"%></style>
 </head>
 <body>
@@ -29,12 +32,12 @@
     <form method="get" action="/entrenador_cross_training/ejercicios">
         <section class="section-ejercicios">
             <input class="form-control mr-sm-2" type="search" style="width: 400px" placeholder="Introduzca el ejercicio" aria-label="Search" name="ejercicio" value="<%= request.getParameter("ejercicio") %>">
-            <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Buscar</button>
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
         </section>
         <section class="ejercicio-filtros">
             <div style="color: beige">
                 Grupo muscular:
-                <select class="selectpicker" data-style="btn-primary" name="musculo">
+                <select class="selectpicker" data-live-search="true" data-style="btn-primary" name="musculo">
                     <%
                         for (GrupoMuscular g : grupos){
 
@@ -68,11 +71,20 @@
 
 
     %>
-    <li style="color: beige"><h6><%= e.getNombre() + ", MUSCULO: " + e.getGrupoMuscular().getGrupoMuscular() + ", TIPO: " + e.getTipo().getTipo()%></h6></li>
+    <li style="color: beige"><a href="/entrenador_cross_training/anyadir_ejercicio?sesion=<%= sesion.getId()%>&ejercicio=<%= e.getId()%>"><%= e.getNombre() + ", MUSCULO: " + e.getGrupoMuscular().getGrupoMuscular() + ", TIPO: " + e.getTipo().getTipo()%></a></li>
     <%
         }
     %>
 </ul>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/js/bootstrap-select.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('.selectpicker').selectpicker();
+    });
+</script>
 </body>
 </html>

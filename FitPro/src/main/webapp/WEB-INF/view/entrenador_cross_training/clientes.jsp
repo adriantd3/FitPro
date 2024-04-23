@@ -41,7 +41,7 @@
         <tr>
             <th scope="row"><%= num %></th>
             <td><%= u.getNombre() + " " + u.getApellidos()%></td>
-            <td><a href="">Rutinas</a></td>
+            <td><a href="/entrenador_cross_training/rutinas_cliente?id=<%= u.getId()%>">Rutinas</a></td>
         </tr>
         <%
                 num++;

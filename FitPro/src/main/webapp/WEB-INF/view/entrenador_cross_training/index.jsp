@@ -16,13 +16,6 @@
         <button type="button" class="btn btn-secondary" onclick="window.location.href='/entrenador_cross_training/clientes'">Clientes</button><br/><br/>
         <button type="button" class="btn btn-secondary" onclick="window.location.href='/entrenador_cross_training/rutinas'">Rutinas</button><br/><br/>
         <button type="button" class="btn btn-secondary" onclick="window.location.href='/entrenador_cross_training/sesiones'">Sesiones</button><br/><br/>
-        <form method="get" action="/entrenador_cross_training/ejercicios">
-            <input type="hidden" name="ejercicio" value="">
-            <input type="hidden" name="musculo" value="">
-            <input type="hidden" name="tipo" value="">
-            <button class="btn btn-secondary" type="submit">Ejercicios (solo mientras desarrollo)</button><br/><br/>
-        </form>
-        <button type="button" class="btn btn-secondary" onclick="window.location.href='/entrenador_cross_training/sesion'">Sesion (solo mientras desarrollo)</button>
     </section>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>

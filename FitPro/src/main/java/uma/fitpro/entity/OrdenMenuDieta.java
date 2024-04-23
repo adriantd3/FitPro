@@ -10,14 +10,17 @@ public class OrdenMenuDieta {
     @EmbeddedId
     private OrdenMenuDietaId id;
 
+    @MapsId("menuId")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "menu_id", nullable = false)
+    private Menu menu;
+
     @MapsId("dietaId")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "dieta_id", nullable = false)
     private Dieta dieta;
-
-    @Column(name = "orden", nullable = false)
-    private Integer orden;
 
     public OrdenMenuDietaId getId() {
         return id;
@@ -27,20 +30,20 @@ public class OrdenMenuDieta {
         this.id = id;
     }
 
+    public Menu getMenu() {
+        return menu;
+    }
+
+    public void setMenu(Menu menu) {
+        this.menu = menu;
+    }
+
     public Dieta getDieta() {
         return dieta;
     }
 
     public void setDieta(Dieta dieta) {
         this.dieta = dieta;
-    }
-
-    public Integer getOrden() {
-        return orden;
-    }
-
-    public void setOrden(Integer orden) {
-        this.orden = orden;
     }
 
 }

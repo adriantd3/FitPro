@@ -22,9 +22,6 @@ public class OrdenSesionRutina {
     @JoinColumn(name = "rutina_id", nullable = false)
     private Rutina rutina;
 
-    @Column(name = "orden", nullable = false)
-    private Integer orden;
-
     public OrdenSesionRutinaId getId() {
         return id;
     }
@@ -47,14 +44,6 @@ public class OrdenSesionRutina {
 
     public void setRutina(Rutina rutina) {
         this.rutina = rutina;
-    }
-
-    public Integer getOrden() {
-        return orden;
-    }
-
-    public void setOrden(Integer orden) {
-        this.orden = orden;
     }
 
 }

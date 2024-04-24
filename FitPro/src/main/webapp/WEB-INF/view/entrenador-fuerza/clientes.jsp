@@ -1,5 +1,6 @@
 <%@ page import="uma.fitpro.entity.Usuario" %>
-<%@ page import="java.util.List" %><%--
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.Set" %><%--
   Created by IntelliJ IDEA.
   User: victor
   Date: 12/4/24
@@ -8,7 +9,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    List<Usuario> clientes = (List<Usuario>) request.getAttribute("clientes");
+    Set<Usuario> clientes = (Set<Usuario>) request.getAttribute("clientes");
 %>
 <html>
 <head>

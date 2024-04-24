@@ -1,5 +1,6 @@
 package uma.fitpro.controller;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +12,7 @@ import uma.fitpro.dao.UsuarioRepository;
 import uma.fitpro.entity.Usuario;
 
 import java.util.List;
+import java.util.Set;
 
 //////////////////////////////////////////////////////
 /////////        ENTRENADOR FUERZA           /////////
@@ -26,19 +28,15 @@ public class EntrenadorFuerzaController {
     @Autowired
     UsuarioRepository usuarioRepository;
 
-    @PostMapping("/home")
+    @PostMapping("/index")
     public String doEntrenadorFuerzaHome(@RequestParam String user, @RequestParam String password, Model model) {
 
-        Usuario usuario = usuarioRepository.findById(3).orElse(null);
-
-        model.addAttribute("usuario", usuario);
-
-        return "/entrenador-fuerza/home";
+        return "/entrenador-fuerza/index";
     }
 
-    @GetMapping("/home")
+    @GetMapping("/index")
     public String goHome() {
-        return "/entrenador-fuerza/home";
+        return "/entrenador-fuerza/index";
     }
 
     @GetMapping("/crud-rutina")
@@ -47,10 +45,12 @@ public class EntrenadorFuerzaController {
     }
 
     @GetMapping("/clientes")
-    public String goToClientes(@RequestParam("entrenador") Integer entrenador_id, Model model) {
+    public String goToClientes(@RequestParam("entrenador") Integer entrenador_id, Model model, HttpSession session) {
 
-        List<Usuario> clientes = usuarioRepository.findClientes(entrenador_id);
+        List<Usuario> USUARIOS = usuarioRepository.findAll();
 
+        Usuario entrenador = (Usuario)session.getAttribute("entrenador");
+        Set<Usuario> clientes = entrenador.getClientesEntrenador();
         model.addAttribute("clientes", clientes);
 
         return "/entrenador-fuerza/clientes";

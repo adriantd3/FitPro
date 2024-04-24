@@ -14,6 +14,7 @@ import uma.fitpro.entity.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/dietista")
@@ -52,27 +53,27 @@ public class DietistaController {
         return "dietista/menus";
     }
 
-    @PostMapping("/limpiar")
-    public String doLimpiar(@RequestParam(value = "id", required = false) Integer id, Model model){
-        List<Menu> menus = this.menuRepository.findAll();
-        List<Comida> comidas = this.comidaRepository.findAll();
-        Menu menu = null;
-        List<Comida> comidasMenu = null;
-
+    @PostMapping("/guardar")
+    public String doGuardar(@RequestParam(value = "id", required = false) Integer id, @RequestParam(value = "comidasMenu", required = false) List<Comida> comidasMenu){
         if(id!=null){
-            menu = this.menuRepository.findById(id).orElse(null);
+           Menu menu = menuRepository.findById(id).orElse(null);
+           menu.setComidas((Set<Comida>) comidasMenu);
+           menuRepository.save(menu);
         }
+        return "reditec:/dietista/menus";
+    }
 
-        if(menu!=null){
-            comidasMenu = new ArrayList<>(menu.getComidas());
+    @PostMapping("/limpiar")
+    public String doLimpiar(Model model){
+        return "reditect:/dietista/menus";
+    }
+
+    @PostMapping("/borrar")
+    public String doBorrar(@RequestParam(value = "id", required = false) Integer id){
+        if(id!=null){
+            menuRepository.deleteById(id);
         }
-
-        model.addAttribute("menus", menus);
-        model.addAttribute("menu", menu);
-        model.addAttribute("comidasMenu", comidasMenu);
-        model.addAttribute("comidas", comidas);
-
-        return "dietista/menus";
+        return "reditec:/dietista/menus";
     }
 
 

@@ -82,7 +82,7 @@
             </section>
             <div class="row">
                 <div class="col-md">
-                    <section id="ComidasMenu" class="menu-table">
+                    <section id="ListaComidasMenu" class="menu-table">
                         <table class="table caption-top text-center ">
                             <caption class="text-center text-white">Comidas del Menú</caption>
                             <thead class="table-dark">
@@ -113,10 +113,16 @@
                     </section>
 
                     <section id="buttons">
-                        <button type="button" class="btn btn-success me-3">Guardar</button>
-                        <button type="button" class="btn btn-primary me-3">Limpiar</button>
-                        <button type="button" class="btn btn-danger me-3">Borrar</button>
-
+                        <form method="post" action="./guardar">
+                            <input type="hidden" id="comidasMenu" value="<%= menu==null? null:menu.getComidas()%>">
+                            <button type="submit" class="btn btn-success me-3" value="<%= menu==null ? 0:menu.getId() %>">Guardar</button>
+                        </form>
+                        <form method="post" action="./limpiar">
+                            <button type="submit" class="btn btn-primary me-3">Limpiar</button>
+                        </form>
+                        <form method="post" action="./borrar">
+                            <button type="submit" class="btn btn-danger me-3" value="<%= menu==null ? 0:menu.getId() %>">Borrar</button>
+                        </form>
                     </section>
                 </div>
                 <div class="col-md">

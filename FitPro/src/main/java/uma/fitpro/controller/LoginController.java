@@ -1,5 +1,6 @@
 package uma.fitpro.controller;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,11 +24,12 @@ public class LoginController {
     }
 
     @PostMapping("/home")
-    public String doHome(@RequestParam String mail, @RequestParam String password, Model model) {
+    public String doHome(@RequestParam String mail, @RequestParam String password, Model model, HttpSession session) {
         List<Usuario> user = usuarioRepository.findByMail(mail);
         if (!user.isEmpty()) {
             Usuario usuario = user.get(0);
             if (usuario != null && usuario.getContrasenya().equals(password)) {
+                session.setAttribute("user", usuario);
                 return usuario.getRol().getNombre()+"/home";
             }
         }

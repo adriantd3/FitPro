@@ -18,16 +18,16 @@
     </header>
     <div class="form-wrapper">
         <form method="post" action="/admin/users">
-            <button type="button" class="btn btn-primary">Users</button>
+            <button type="submit" class="btn btn-primary">Users</button>
         </form>
         <form method="post" action="/admin/exercises">
-            <button type="button" class="btn btn-primary">Exercises</button>
+            <button type="submit" class="btn btn-primary">Exercises</button>
         </form>
         <form method="post" action="/admin/food">
-            <button type="button" class="btn btn-primary">Food</button>
+            <button type="submit" class="btn btn-primary">Food</button>
         </form>
         <form method="post" action="/admin/assignment">
-            <button type="button" class="btn btn-primary">Assignment</button>
+            <button type="submit" class="btn btn-primary">Assignment</button>
         </form>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

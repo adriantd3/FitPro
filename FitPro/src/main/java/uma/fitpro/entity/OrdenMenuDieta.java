@@ -22,9 +22,6 @@ public class OrdenMenuDieta {
     @JoinColumn(name = "dieta_id", nullable = false)
     private Dieta dieta;
 
-    @Column(name = "orden", nullable = false)
-    private Integer orden;
-
     public OrdenMenuDietaId getId() {
         return id;
     }
@@ -47,14 +44,6 @@ public class OrdenMenuDieta {
 
     public void setDieta(Dieta dieta) {
         this.dieta = dieta;
-    }
-
-    public Integer getOrden() {
-        return orden;
-    }
-
-    public void setOrden(Integer orden) {
-        this.orden = orden;
     }
 
 }

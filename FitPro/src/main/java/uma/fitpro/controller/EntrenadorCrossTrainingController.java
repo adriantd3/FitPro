@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import uma.fitpro.dao.*;
 import uma.fitpro.entity.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -66,6 +67,17 @@ public class EntrenadorCrossTrainingController {
     public String doBorrarRutina(@RequestParam("id") Integer id_rutina){
         Rutina rutina = rutinaRepository.findById(id_rutina).orElse(null);
         rutinaRepository.delete(rutina);
+        return "redirect:/entrenador_cross_training/rutinas";
+    }
+
+    @PostMapping("nueva_rutina")
+    public String doNuevaRutina(@RequestParam("nombre") String nombre){
+        Rutina rutina = new Rutina();
+        rutina.setNombre(nombre);
+        Usuario entrenador = usuarioRepository.findById(entrenador_id).orElse(null);
+        rutina.setEntrenador(entrenador);
+        rutina.setFechaCreacion(LocalDate.now());
+        this.rutinaRepository.save(rutina);
         return "redirect:/entrenador_cross_training/rutinas";
     }
 

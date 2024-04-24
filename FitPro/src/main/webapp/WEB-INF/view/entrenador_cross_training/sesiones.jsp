@@ -51,13 +51,12 @@
     </table>
 </section>
 <br/>
-<!-- Botón para abrir el modal -->
-<button type="button" class="btn btn-primary button-margin" data-toggle="modal" data-target="#exampleModal">
+
+<button type="button" class="btn btn-primary button-margin" data-toggle="modal" data-target="#nuevaSesion">
     Añadir sesion
 </button>
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="nuevaSesion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">

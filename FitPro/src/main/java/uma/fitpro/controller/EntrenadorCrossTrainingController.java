@@ -114,6 +114,14 @@ public class EntrenadorCrossTrainingController {
         return "entrenador_cross_training/sesion";
     }
 
+    @PostMapping("nueva_sesion")
+    public String doNuevaSesion(@RequestParam("nombre") String nombre){
+        Sesion sesion = new Sesion();
+        sesion.setNombre(nombre);
+        sesionRepository.save(sesion);
+        return "redirect:/entrenador_cross_training/sesiones";
+    }
+
     private Map<Ejercicio, List<Serie>> getEjercicioYSeries(List<Serie> series){
         Map<Ejercicio, List<Serie>> mapa = new HashMap<Ejercicio, List<Serie>>();
         for (Serie e : series){
@@ -134,7 +142,7 @@ public class EntrenadorCrossTrainingController {
     public String doEjercicios(@RequestParam("ejercicio") String ejercicio,
                                @RequestParam("musculo") String musculo,
                                @RequestParam("tipo") String tipo,
-                               @RequestParam("sesion") Integer id_sesion, Model modelo){
+                               @RequestParam(value = "sesion", required = false) Integer id_sesion, Model modelo){
         // DE MOMENTO SOLO FILTRA POR NOMBRE DEL EJERCICIO
         List<Ejercicio> ejercicios = ejercicioRepository.filtrarEjercicio(ejercicio);
         List<TipoEjercicio> tipos = tipoEjercicioRepository.findAll();
@@ -202,6 +210,23 @@ public class EntrenadorCrossTrainingController {
         this.serieRepository.save(nueva_serie);
 
         return "redirect:/entrenador_cross_training/sesion?id=" + sesion.getId();
+    }
+
+    @GetMapping("borrar_serie")
+    public String doBorrarSerie(@RequestParam("sesion") Sesion sesion,
+                                @RequestParam("serie") Integer id_serie,
+                                @RequestParam("ejercicio") Integer id_ejercicio){
+
+        SerieId serieId = new SerieId();
+        serieId.setId(id_serie);
+        serieId.setSesionId(sesion.getId());
+        serieId.setEjercicioId(id_ejercicio);
+
+        Serie serie = this.serieRepository.findById(serieId).orElse(null);
+
+        this.serieRepository.delete(serie);
+
+        return "redirect:/entrenador_cross_training/sesion?id=" +sesion.getId();
     }
 
 

@@ -79,6 +79,14 @@ header{
     margin-top: 20px;
 }
 
+.div-nueva-serie {
+    display: flex;
+    justify-content: flex-start;
+    justify-items: center;
+    gap: 30px;
+    margin-left: 40px;
+}
+
 h1{
     color: white;
     text-align: center;

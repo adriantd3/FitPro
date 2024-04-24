@@ -51,7 +51,7 @@
                 <th scope="row"><%= cont %></th>
                 <td><%= s.getPeso() %></td>
                 <td><%= s.getRepeticiones() %></td>
-                <td style="box-shadow: none;background-color: #434343;border-bottom-width: 0px;"><a href="">Borrar</a></td>
+                <td style="box-shadow: none;background-color: #434343;border-bottom-width: 0px;"><a href="/entrenador_cross_training/borrar_serie?sesion=<%=sesion.getId()%>&serie=<%=s.getId().getId()%>&ejercicio=<%=e.getId()%>">Borrar</a></td>
             </tr>
             <%
                     cont++;

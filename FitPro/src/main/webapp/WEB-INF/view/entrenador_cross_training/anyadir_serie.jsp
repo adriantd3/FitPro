@@ -19,11 +19,17 @@
 <body>
 <h1 class="ejemplo">Nueva serie</h1>
 <form method="post" action="/entrenador_cross_training/guardar_serie">
-    Peso:<input type="number" name="peso">
-    Repeticiones:<input type="number" name="repeticiones">
+    <div  style="width: 300px; margin-left: 40px" class="input-group mb-3">
+        <span class="input-group-text btn btn-success">Peso</span>
+        <input type="number" name="peso" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+    </div>
+    <div  style="width: 300px; margin-left: 40px" class="input-group mb-3">
+        <span class="input-group-text btn btn-success">Repeticiones</span>
+        <input type="number" name="repeticiones" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+    </div>
     <input type="hidden" name="sesion" value="<%= sesion.getId() %>">
     <input type="hidden" name="ejercicio" value="<%= ejercicio.getId() %>">
-    <button type="submit">Añadir serie</button>
+    <button style="margin-top: 30px" type="submit" class="btn btn-primary button-margin">Añadir serie</button>
 </form>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>

@@ -51,7 +51,34 @@
     </table>
 </section>
 <br/>
-<button class="btn btn-primary button-margin">Añadir sesion</button>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<!-- Botón para abrir el modal -->
+<button type="button" class="btn btn-primary button-margin" data-toggle="modal" data-target="#exampleModal">
+    Añadir sesion
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Nueva sesion</h5>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="/entrenador_cross_training/nueva_sesion">
+                    Nombre de la sesion: <input type="text" name="nombre">
+                    <div style="display: flex; justify-content: center; margin-top: 20px">
+                        <button type="submit" class="btn btn-primary">Guardar sesion</button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

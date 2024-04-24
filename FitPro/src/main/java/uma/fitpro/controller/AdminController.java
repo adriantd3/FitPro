@@ -30,10 +30,16 @@ public class AdminController {
     /////////               ADMIN                /////////
     //////////////////////////////////////////////////////
 
-    @PostMapping("/users")
-    public String doUsers(Model model) {
+    @GetMapping("/users")
+    public String doUsers(@RequestParam("id") Integer id, Model model) {
         List<Usuario> usuarios = usuarioRepository.findAll();
         List<Rol> roles = rolRepository.findAll();
+        if(id != 0) {
+            Usuario usuario = usuarioRepository.getReferenceById(id);
+            model.addAttribute("usuario", usuario);
+        } else {
+            model.addAttribute("usuario", null);
+        }
 
         model.addAttribute("usuarios", usuarios);
         model.addAttribute("roles", roles);

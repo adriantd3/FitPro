@@ -17,7 +17,7 @@
         <h1 class="header-text text-center">Admin Home</h1>
     </header>
     <div class="form-wrapper">
-        <form method="post" action="/admin/users">
+        <form method="post" action="/admin/users?id=0">
             <button type="submit" class="btn btn-primary">Users</button>
         </form>
         <form method="post" action="/admin/exercises">

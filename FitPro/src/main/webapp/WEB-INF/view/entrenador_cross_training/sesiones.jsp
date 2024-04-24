@@ -17,7 +17,9 @@
 </head>
 <body>
 <header>
-    <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back.png" alt="">
+    <a href="">
+        <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back.png" alt="" onclick="">
+    </a>
     <h1 class="header-text text-center">Sesiones</h1>
 </header>
 <section class="table-container">

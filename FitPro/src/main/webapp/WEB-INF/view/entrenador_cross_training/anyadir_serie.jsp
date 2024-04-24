@@ -29,8 +29,12 @@
     </div>
     <input type="hidden" name="sesion" value="<%= sesion.getId() %>">
     <input type="hidden" name="ejercicio" value="<%= ejercicio.getId() %>">
-    <button style="margin-top: 30px" type="submit" class="btn btn-primary button-margin">Añadir serie</button>
+    <div class="div-nueva-serie">
+        <button type="button" class="btn btn-secondary" onclick="window.location.href='/entrenador_cross_training/sesion?id=<%=sesion.getId()%>'">Cancelar</button>
+        <button type="submit" class="btn btn-primary">Añadir serie</button>
+    </div>
 </form>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

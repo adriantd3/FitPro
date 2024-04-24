@@ -11,10 +11,7 @@ import uma.fitpro.dao.*;
 import uma.fitpro.entity.*;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RequestMapping("/entrenador_cross_training")
 @Controller
@@ -87,16 +84,21 @@ public class EntrenadorCrossTrainingController {
         List<Rutina> rutinas = new ArrayList<>(cliente.getRutinasCliente());
         model.addAttribute("rutinas", rutinas);
         model.addAttribute("cliente", cliente);
-        return "entrenador_cross_training/rutinas";
+        return "entrenador_cross_training/rutinas_cliente";
     }
 
-    /*@PostMapping("borrar_rutina_cliente")
+    @GetMapping("borrar_rutina_cliente")
     public String doBorrarRutinaCliente(@RequestParam("rutina") Integer id_rutina,
                                         @RequestParam("cliente") Integer id_cliente){
-        //Usuario cliente = usuarioRepository.findById(id_cliente);
-        //Rutina rutina = rutinaRepository.findById(id_rutina);
-        return "redirect:/entrenador_cross_training/rutinas_cliente?id_cliente=" + id_cliente;
-    }*/
+
+        Usuario cliente = usuarioRepository.findById(id_cliente).orElse(null);
+        Rutina rutina = rutinaRepository.findById(id_rutina).orElse(null);
+        Set<Rutina> rutinas_cliente = cliente.getRutinasCliente();
+        rutinas_cliente.remove(rutina);
+        cliente.setRutinasCliente(rutinas_cliente);
+        usuarioRepository.save(cliente);
+        return "redirect:/entrenador_cross_training/rutinas_cliente?id=" + id_cliente;
+    }
 
     // --------------------------- SESIONES ---------------------------
 

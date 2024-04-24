@@ -1,4 +1,11 @@
+<%@ page import="java.util.List" %>
+<%@ page import="uma.fitpro.entity.Usuario" %>
+<%@ page import="uma.fitpro.entity.Rol" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    List<Usuario> usuarios = (List<Usuario>) request.getAttribute("usuarios");
+    List<Rol> roles = (List<Rol>) request.getAttribute("roles");
+%>
 <!doctype html>
 <html lang="en">
 <head>
@@ -7,6 +14,9 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style><%@ include file="../styles/common.css"%></style>
+    <style><%@ include file="./admin.css"%></style>
 </head>
 <body>
 <header>
@@ -24,39 +34,31 @@
         </tr>
         </thead>
         <tbody>
-
-        <tr onclick="window.location.href='/admin/users_cambiar?id=1'">
-            <th>2</th>
-            <td>David</td>
-            <td>Garcia Sanchez</td>
-            <td>admin</td>
+        <% for(Usuario u : usuarios){ %>
+        <tr>
+            <td><%=u.getId()%></td>
+            <td><%=u.getNombre()%></td>
+            <td><%=u.getApellidos()%></td>
+            <td><%=u.getRol().getNombre()%></td>
         </tr>
-
+        <% } %>
         </tbody>
     </table>
     <form class="user-form">
-        <table class="table-users table table-borderless">
+        <table class="table table-borderless">
             <tbody>
             <tr>
                 <td>Nombre:<input type="text" placeholder="Nombre" value=David></td>
                 <td>Apellidos:<input type="text" placeholder="Apellidos" value=Garcia Sanchez></td>
                 <td>DNI:<input type="text" placeholder="DNI" value=25915268B></td>
-                <td>Rol: <select >
-
-                    <option value=1> admin</option>
-
-                    <option value=2> entrenador_fuerza</option>
-
-                    <option value=3> entrenador_cross_training</option>
-
-                    <option value=4> dietista</option>
-
-                    <option value=5> cliente</option>
-
+                <td>Rol: <select>
+                    <% for(Rol rol : roles){ %>
+                        <option value=<%=rol.getId()%>> <%=rol.getNombre()%> </option>
+                    <% } %>
                 </select></td>
             </tr>
             <tr>
-                <td>Sexo: <select>
+                <td>Sexo:<br> <select>
                     <option value=1> Hombre </option>
                     <option value=0> Mujer </option>
                 </select></td>
@@ -65,9 +67,7 @@
                 <td>Peso:<input type="text" placeholder="Peso" value=87.0></td>
             </tr>
             <tr>
-                <td></td>
                 <td>Email:<input type="text" placeholder="Email" value=david@gmail.com></td>
-                <td></td>
                 <td>Contraseña:<input type="text" placeholder="Contraseña" value=david></td>
             </tr>
             </tbody>

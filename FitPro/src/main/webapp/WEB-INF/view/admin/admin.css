@@ -20,6 +20,14 @@ button {
     color: white;
 }
 
+.user-form input {
+    width: 204px;
+}
+
+.user-form select {
+    width: 204px;
+}
+
 .form-buttons {
     display: flex;
     justify-content: center;

@@ -1,20 +1,37 @@
 package uma.fitpro.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import uma.fitpro.dao.UsuarioRepository;
+import uma.fitpro.entity.Usuario;
+
+import java.util.List;
 
 @Controller
 public class LoginController {
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
     @GetMapping("/")
     public String doLogin() {
-        return "login";
+        return "login/login";
     }
 
     @PostMapping("/home")
-    public String doHome(@RequestParam String user, @RequestParam String password) {
+    public String doHome(@RequestParam String mail, @RequestParam String password, Model model) {
+        List<Usuario> user = usuarioRepository.findByMail(mail);
+        if (!user.isEmpty()) {
+            Usuario usuario = user.get(0);
+            if (usuario != null && usuario.getContrasenya().equals(password)) {
+                return usuario.getRol().getNombre()+"/home";
+            }
+        }
+        return "redirect:/";
 
-        return "admin/home";
     }
 }

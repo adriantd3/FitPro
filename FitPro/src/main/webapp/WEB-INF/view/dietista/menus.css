@@ -2,6 +2,17 @@
     width: 400px;
 }
 
+.menu td{
+    cursor: pointer;
+    user-select: none;
+    transition: 0.5s;
+    transition-timing-function: ease;
+}
+
+.menu:hover td{
+    background-color: lightgray;
+}
+
 .id{
     width: 40px;
 }

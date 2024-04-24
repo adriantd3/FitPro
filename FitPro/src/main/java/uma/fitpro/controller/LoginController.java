@@ -1,5 +1,6 @@
 package uma.fitpro.controller;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,12 +17,11 @@ public class LoginController {
     private UsuarioRepository usuarioRepository;
 
     @GetMapping("/")
-    public String doLogin(Model model) {
+    public String doLogin(HttpSession sesion) {
 
         Usuario dietista = this.usuarioRepository.findById(1).orElse(null);
-        model.addAttribute("usuario", dietista);
-
-        return "cliente/index";
+        sesion.setAttribute("user", dietista);
+        return "dietista/home";
     }
 
     @PostMapping("/home")

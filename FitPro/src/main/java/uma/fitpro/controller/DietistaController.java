@@ -1,5 +1,6 @@
 package uma.fitpro.controller;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,23 +25,24 @@ public class DietistaController {
     protected ComidaRepository comidaRepository;
 
     @PostMapping("/home")
-    public String doHome(@RequestParam String user, @RequestParam String password) {
-
-        return null;
+    public String doHome() {
+        return "home";
     }
 
-    @GetMapping("/menus")
-    public String doMenus(@RequestParam("id") Integer id, Model model){
+    @PostMapping("/menus")
+    public String doMenus(@RequestParam(value = "id", required = false) Integer id, Model model){
         List<Menu> menus = this.menuRepository.findAll();
-        Menu menu = this.menuRepository.findById(id).orElse(null);
+        List<Comida> comidas = this.comidaRepository.findAll();
+        Menu menu = null;
         List<Comida> comidasMenu = null;
+
+        if(id!=null){
+            menu = this.menuRepository.findById(id).orElse(null);
+        }
+
         if(menu!=null){
             comidasMenu = new ArrayList<>(menu.getComidas());
         }
-        List<Comida> comidas = this.comidaRepository.findAll();
-
-
-        //lista con todas las comidas del menu concreto
 
         model.addAttribute("menus", menus);
         model.addAttribute("menu", menu);
@@ -48,5 +50,16 @@ public class DietistaController {
         model.addAttribute("comidas", comidas);
 
         return "dietista/menus";
+    }
+
+    @PostMapping("/clientes")
+    public String doClientes(@RequestParam(value = "id", required = false) Integer clienteId, Model model, HttpSession sesion){
+        Usuario dietista = (Usuario) sesion.getAttribute("user");
+        List<Usuario> clientes = new ArrayList<>(dietista.getClientesDietista());
+
+
+        model.addAttribute("clientes", clientes);
+
+        return "dietista/clientes";
     }
 }

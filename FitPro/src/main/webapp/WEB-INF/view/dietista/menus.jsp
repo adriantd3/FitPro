@@ -21,41 +21,50 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style><%@ include file="../styles/common.css"%></style>
     <style><%@ include file="./menus.css"%></style>
+    <script>
+        function selectMenu(id){
+            document.getElementById("menuSelector").value=id;
+            document.forms[0].submit();
+        }
+    </script>
 </head>
 <body>
 <header>
     <img class="back-button ms-1 mt-1 " src="./assets/image.png" alt="">
-    <h1 class="header-text text-center">Header Text</h1>
+    <h1 class="header-text text-center">Menús</h1>
 </header>
 
 <div class="container-fluid" >
     <div class="row">
         <div class="col-lg-5 ps-5 pt-5">
             <section id="Menus" class="menu-table pt-2">
-                <table class="table caption-top text-center ">
-                    <caption class="text-center text-white">List of users</caption>
-                    <thead class="table-dark">
-                    <tr>
-                        <th class="id">º\</th>
-                        <th class="nombre-menu">Nombre</th>
-                        <th class="kcal">Kcal</th>
-                    </tr>
-                    </thead>
-                    <tbody class = "table-group-divider table-secondary">
-                    <%
-                        for(Menu m : menus){
-                    %>
+                <form method="post" action="./menus">
+                    <input type="hidden" name="id" id="menuSelector">
+                    <table class="table caption-top text-center ">
+                        <caption class="text-center text-white">List of users</caption>
+                        <thead class="table-dark">
+                        <tr>
+                            <th class="id">º\</th>
+                            <th class="nombre-menu">Nombre</th>
+                            <th class="kcal">Kcal</th>
+                        </tr>
+                        </thead>
+                        <tbody class = "table-group-divider table-secondary">
+                        <%
+                            for(Menu m : menus){
+                        %>
 
-                    <tr>
-                        <td><%= m.getId() %></td>
-                        <td><%= m.getNombre() %></td>
-                        <td><%= m.getCalorias() %></td>
-                    </tr>
-                    <%
-                        }
-                    %>
-                    </tbody>
-                </table>
+                        <tr class="menu" onclick="selectMenu(<%= m.getId() %>)">
+                            <td><%= m.getId() %></td>
+                            <td><%= m.getNombre() %></td>
+                            <td><%= m.getCalorias() %></td>
+                        </tr>
+                        <%
+                            }
+                        %>
+                        </tbody>
+                    </table>
+                </form>
             </section>
         </div>
         <div class="col-md">

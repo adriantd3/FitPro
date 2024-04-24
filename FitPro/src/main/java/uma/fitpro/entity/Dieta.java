@@ -5,11 +5,14 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDate;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "dieta")
 public class Dieta {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
@@ -23,6 +26,9 @@ public class Dieta {
 
     @Column(name = "fecha_creacion", nullable = false)
     private LocalDate fechaCreacion;
+
+    @OneToMany(mappedBy = "dieta")
+    private Set<OrdenMenuDieta> ordenMenuDietas = new LinkedHashSet<>();
 
     public Integer getId() {
         return id;
@@ -54,6 +60,14 @@ public class Dieta {
 
     public void setFechaCreacion(LocalDate fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
+    }
+
+    public Set<OrdenMenuDieta> getOrdenMenuDietas() {
+        return ordenMenuDietas;
+    }
+
+    public void setOrdenMenuDietas(Set<OrdenMenuDieta> ordenMenuDietas) {
+        this.ordenMenuDietas = ordenMenuDietas;
     }
 
 }

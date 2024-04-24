@@ -18,11 +18,6 @@ public class DesempenyoMenu {
     @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "menu_id", nullable = false)
-    private Menu menu;
-
     @Column(name = "fecha", nullable = false)
     private LocalDate fecha;
 
@@ -40,14 +35,6 @@ public class DesempenyoMenu {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
-    }
-
-    public Menu getMenu() {
-        return menu;
-    }
-
-    public void setMenu(Menu menu) {
-        this.menu = menu;
     }
 
     public LocalDate getFecha() {

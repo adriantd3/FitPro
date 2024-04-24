@@ -36,3 +36,12 @@ body{
     align-items: center;
     color:white;
 }
+
+.list-button{
+    text-align: start;
+}
+
+.list-button:hover{
+    background-color: dodgerblue;
+    border: dodgerblue;
+}

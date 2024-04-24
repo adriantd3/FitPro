@@ -1,4 +1,5 @@
-<%--
+<%@ page import="uma.fitpro.entity.Usuario" %>
+<%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: victor
   Date: 12/4/24
@@ -6,6 +7,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    List<Usuario> clientes = (List<Usuario>) request.getAttribute("clientes");
+%>
 <html>
 <head>
     <title>Title</title>
@@ -18,5 +22,16 @@
          onclick="window.location.href='/entrenador-fuerza/home'"> <!-- Controlar pagina anterior por modelo -->
     <h1 class="header-text text-center">Clientes</h1> <!-- Meter usuario por modelo -->
 </header>
+<ul class="list-group">
+    <%
+        for(Usuario cliente : clientes){
+    %>
+    <button class="list-button list-group-item m-3">
+        <%=cliente.getNombre()+ " " + cliente.getApellidos()%>
+    </button>
+    <%
+        }
+    %>
+</ul>
 </body>
 </html>

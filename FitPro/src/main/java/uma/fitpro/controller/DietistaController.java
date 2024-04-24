@@ -52,6 +52,31 @@ public class DietistaController {
         return "dietista/menus";
     }
 
+    @PostMapping("/limpiar")
+    public String doLimpiar(@RequestParam(value = "id", required = false) Integer id, Model model){
+        List<Menu> menus = this.menuRepository.findAll();
+        List<Comida> comidas = this.comidaRepository.findAll();
+        Menu menu = null;
+        List<Comida> comidasMenu = null;
+
+        if(id!=null){
+            menu = this.menuRepository.findById(id).orElse(null);
+        }
+
+        if(menu!=null){
+            comidasMenu = new ArrayList<>(menu.getComidas());
+        }
+
+        model.addAttribute("menus", menus);
+        model.addAttribute("menu", menu);
+        model.addAttribute("comidasMenu", comidasMenu);
+        model.addAttribute("comidas", comidas);
+
+        return "dietista/menus";
+    }
+
+
+
     @PostMapping("/clientes")
     public String doClientes(@RequestParam(value = "id", required = false) Integer clienteId, Model model, HttpSession sesion){
         Usuario dietista = (Usuario) sesion.getAttribute("user");

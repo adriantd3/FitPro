@@ -47,6 +47,13 @@ public class AdminController {
         return "admin/users";
     }
 
+    @GetMapping("/agregar-users")
+    public String doAddUsers(Model model) {
+
+
+        return "admin/users";
+    }
+
     @PostMapping("/exercises")
     public String doExercises() {
 

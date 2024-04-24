@@ -79,9 +79,15 @@
             </tbody>
         </table>
         <div class="form-buttons">
-            <span onclick=rellenarDatos(0) class="btn btn-primary">Guardar</span>
-            <span onclick=rellenarDatos(0) class="btn btn-primary">Borrar</span>
-            <span onclick=rellenarDatos(0) class="btn btn-primary">Limpiar</span>
+            <form method="post" action="/admin/agregar-users">
+                <button type="submit" class="btn btn-primary">Guardar</button>
+            </form>
+            <form method="post" action="/admin/elimina-users?id=0">
+                <button <%= usuario == null ? "" : "disabled" %> type="submit" class="btn btn-primary">Eliminar</button>
+            </form>
+            <form method="post" action="/admin/users?id=0">
+                <button type="submit" class="btn btn-primary">Limpiar</button>
+            </form>
         </div>
     </form>
 </div>

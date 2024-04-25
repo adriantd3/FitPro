@@ -1,4 +1,6 @@
-<%--
+<%@ page import="uma.fitpro.entity.Rutina" %>
+<%@ page import="java.util.List" %>
+<%@ page import="uma.fitpro.entity.Usuario" %><%--
   Created by IntelliJ IDEA.
   User: victor
   Date: 12/4/24
@@ -6,6 +8,11 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    List<Rutina> rutinas = (List<Rutina>) request.getAttribute("rutinas");
+
+    Usuario cliente = (Usuario) request.getAttribute("cliente");
+%>
 <html>
 <head>
     <title>Title</title>
@@ -16,11 +23,22 @@
 <header>
     <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back_button.png" alt="<-"
          onclick="window.location.href='/entrenador_fuerza/home'">
-    <h1 class="header-text text-center">Rutinas de entrenamiento</h1> <!-- Controlar si es de un usario para añadir "de usuario" y solo sus listas -->
+    <h1 class="header-text text-center">Rutinas de entrenamiento <%if(cliente != null){%><%="de "+cliente.getNombre()%><%}%></h1> <!-- Controlar si es de un usario para añadir "de usuario" y solo sus listas -->
 </header>
 <section class="mt-3 ms-3 h-100">
     <button class=" btn btn-primary top-50"
             onclick="window.location.href='/entrenador-fuerza/rutina'">Añadir Rutina</button>
+    <ul class="list-group">
+        <%
+            for(Rutina rutina : rutinas){
+        %>
+        <button class="list-button list-group-item m-3">
+            <%=rutina.getNombre()+ " " + rutina.getFechaCreacion()%>
+        </button>
+        <%
+            }
+        %>
+    </ul>
 </section>
 </body>
 </html>

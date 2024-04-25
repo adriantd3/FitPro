@@ -23,7 +23,7 @@
     </header>
     <section class="position-relative top-25 start-50 w-25">
         <button type="button" class="btn btn-secondary translate-middle-x mb-2 mt-2 w-100"
-                onclick="window.location.href='/entrenador_fuerza/crud-rutina'">CRUD Rutinas</button>
+                onclick="window.location.href='/entrenador_fuerza/crud-rutina?cliente='">CRUD Rutinas</button>
         <br>
         <button type="button" class="btn btn-secondary translate-middle-x w-100"
                 onclick="window.location.href='/entrenador_fuerza/clientes'">Clientes</button>

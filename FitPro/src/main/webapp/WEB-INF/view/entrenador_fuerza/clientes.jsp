@@ -23,11 +23,13 @@
          onclick="window.location.href='/entrenador_fuerza/home'"> <!-- Controlar pagina anterior por modelo -->
     <h1 class="header-text text-center">Clientes</h1> <!-- Meter usuario por modelo -->
 </header>
+
 <ul class="list-group">
+
     <%
         for(Usuario cliente : clientes){
     %>
-    <button class="list-button list-group-item m-3">
+    <button type="button" onclick="window.location.href='/entrenador_fuerza/crud-rutina?cliente=<%=cliente.getId()%>'" class="list-button list-group-item m-3">
         <%=cliente.getNombre()+ " " + cliente.getApellidos()%>
     </button>
     <%

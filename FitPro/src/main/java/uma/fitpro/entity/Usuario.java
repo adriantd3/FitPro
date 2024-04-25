@@ -86,10 +86,10 @@ public class Usuario {
             inverseJoinColumns = @JoinColumn(name = "entrenador_id"))
     private Set<Usuario> entrenadores = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "entrenador")
+    @OneToMany(fetch=FetchType.EAGER, mappedBy = "entrenador")
     private Set<Rutina> rutinasEntrenador = new LinkedHashSet<>();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "rutina_cliente",
             joinColumns = @JoinColumn(name = "cliente_id"),
             inverseJoinColumns = @JoinColumn(name = "rutina_id"))

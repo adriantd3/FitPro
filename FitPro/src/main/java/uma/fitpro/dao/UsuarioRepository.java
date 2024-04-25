@@ -8,4 +8,10 @@ import uma.fitpro.entity.Usuario;
 import java.util.List;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
+
+    @Query("select u from Usuario u where u.correo like :mail")
+    public List<Usuario> findByMail(@Param("mail") String mail);
+
+    @Query("select u from Usuario u where u.rol.id = :rol")
+    public List<Usuario> findAllByRol(@Param("rol") Integer id);
 }

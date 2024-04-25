@@ -19,7 +19,7 @@
 </head>
 <body>
 <header>
-    <a href="">
+    <a href="/entrenador_cross_training/clientes">
         <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back.png" alt="" onclick="">
     </a>
     <h1 class="header-text text-center"><%= cliente!= null ? "Rutinas de " + cliente.getNombre() : "Rutinas"%></h1>
@@ -41,7 +41,13 @@
         <tr>
             <th scope="row"><%= num %></th>
             <td><%= r.getNombre() + " , FECHA: " + r.getFechaCreacion()%></td>
-            <td><a href="/entrenador_cross_training/borrar_rutina_cliente?rutina=<%=r.getId()%>&cliente=<%=cliente.getId()%>">Borrar</a></td>
+            <td>
+                <form action="/entrenador_cross_training/borrar_rutina_cliente" method="post">
+                    <input type="hidden" name="rutina" value="<%=r.getId()%>">
+                    <input type="hidden" name="cliente" value="<%=cliente.getId()%>">
+                    <button type="submit" class="btn btn-danger">Borrar</button>
+                </form>
+            </td>
         </tr>
         <%
                 num++;

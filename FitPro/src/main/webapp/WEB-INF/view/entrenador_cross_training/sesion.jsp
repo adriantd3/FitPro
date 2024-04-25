@@ -33,10 +33,10 @@
         for (Ejercicio e : mapa.keySet()){
             nombre_ejercicio = e.getNombre();
     %>
-    <div style="display: flex; flex-wrap: wrap; justify-content: center">
-        <table class="table table-striped table-dark">
+    <div>
+        <table style="width: 700px" class="table table-striped table-dark">
             <thead>
-            <tr><th style="background-color: transparent; color: darkblue;"><%= nombre_ejercicio %></th></tr>
+            <tr><th style="background-color: transparent; color: darkblue;width: 300px"><%= nombre_ejercicio %></th></tr>
             <tr>
                 <th scope="col">Serie</th>
                 <th scope="col">Peso</th>
@@ -53,7 +53,14 @@
                 <th scope="row"><%= cont %></th>
                 <td><%= s.getPeso() %></td>
                 <td><%= s.getRepeticiones() %></td>
-                <td style="box-shadow: none;background-color: #434343;border-bottom-width: 0px;"><a href="/entrenador_cross_training/borrar_serie?sesion=<%=sesion.getId()%>&serie=<%=s.getId().getId()%>&ejercicio=<%=e.getId()%>">Borrar</a></td>
+                <td style="box-shadow: none;background-color: #434343;border-bottom-width: 0px;">
+                    <form action="/entrenador_cross_training/borrar_serie" method="post">
+                        <input type="hidden" name="sesion" value="<%=sesion.getId()%>">
+                        <input type="hidden" name="serie" value="<%=s.getId().getId()%>">
+                        <input type="hidden" name="ejercicio" value="<%=e.getId()%>">
+                        <button type="submit" class="btn btn-link">Borrar</button>
+                    </form>
+                </td>
             </tr>
             <%
                     cont++;
@@ -61,7 +68,9 @@
             %>
             </tbody>
         </table>
-        <button type="button" class="btn btn-primary" onclick="window.location.href='/entrenador_cross_training/anyadir_serie?sesion=<%=sesion.getId()%>&ejercicio=<%=e.getId()%>'">Añadir serie</button>
+        <div style="display: flex;justify-content: center;">
+            <button type="button" class="btn btn-primary" onclick="window.location.href='/entrenador_cross_training/anyadir_serie?sesion=<%=sesion.getId()%>&ejercicio=<%=e.getId()%>'">Añadir serie</button>
+        </div>
     </div>
     <%
         }

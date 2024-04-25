@@ -19,7 +19,7 @@
 </head>
 <body>
 <header>
-    <a href="">
+    <a href="/entrenador_cross_training/home">
         <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back.png" alt="" onclick="">
     </a>
     <h1 class="header-text text-center">Clientes</h1>
@@ -43,7 +43,7 @@
         <tr>
             <th scope="row"><%= num %></th>
             <td><%= u.getNombre() + " " + u.getApellidos()%></td>
-            <td><a href="/entrenador_cross_training/rutinas_cliente?id=<%= u.getId()%>">Rutinas</a></td>
+            <td><button class="btn btn-secondary" onclick="window.location.href='/entrenador_cross_training/rutinas_cliente?id=<%= u.getId()%>'">Rutinas</button></td>
         </tr>
         <%
                 num++;

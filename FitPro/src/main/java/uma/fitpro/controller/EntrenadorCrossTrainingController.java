@@ -41,6 +41,14 @@ public class EntrenadorCrossTrainingController {
     @Autowired
     protected SerieRepository serieRepository;
 
+    // --------------------------- HOME ---------------------------
+
+    @GetMapping("/home")
+    public String doHome(){
+
+        return "entrenador_cross_training/home";
+    }
+    
     // --------------------------- CLIENTES ---------------------------
 
     @GetMapping("/clientes")
@@ -60,7 +68,7 @@ public class EntrenadorCrossTrainingController {
         return "entrenador_cross_training/rutinas";
     }
 
-    @GetMapping("borrar_rutina")
+    @PostMapping("borrar_rutina")
     public String doBorrarRutina(@RequestParam("id") Integer id_rutina){
         Rutina rutina = rutinaRepository.findById(id_rutina).orElse(null);
         rutinaRepository.delete(rutina);
@@ -87,7 +95,7 @@ public class EntrenadorCrossTrainingController {
         return "entrenador_cross_training/rutinas_cliente";
     }
 
-    @GetMapping("borrar_rutina_cliente")
+    @PostMapping("borrar_rutina_cliente")
     public String doBorrarRutinaCliente(@RequestParam("rutina") Integer id_rutina,
                                         @RequestParam("cliente") Integer id_cliente){
 
@@ -110,7 +118,7 @@ public class EntrenadorCrossTrainingController {
         return "entrenador_cross_training/sesiones";
     }
 
-    @GetMapping("/borrar_sesion")
+    @PostMapping("/borrar_sesion")
     public String doBorrarSesion(@RequestParam("id") Integer id_sesion){
         Sesion sesion = sesionRepository.findById(id_sesion).orElse(null);
         sesionRepository.delete(sesion);
@@ -183,7 +191,6 @@ public class EntrenadorCrossTrainingController {
             mapa.put(ejercicio, new ArrayList<>());
         }
 
-
         model.addAttribute("sesion", sesion);
         model.addAttribute("mapa", mapa);
         return "entrenador_cross_training/sesion";
@@ -226,7 +233,7 @@ public class EntrenadorCrossTrainingController {
         return "redirect:/entrenador_cross_training/sesion?id=" + sesion.getId();
     }
 
-    @GetMapping("borrar_serie")
+    @PostMapping("borrar_serie")
     public String doBorrarSerie(@RequestParam("sesion") Sesion sesion,
                                 @RequestParam("serie") Integer id_serie,
                                 @RequestParam("ejercicio") Integer id_ejercicio){

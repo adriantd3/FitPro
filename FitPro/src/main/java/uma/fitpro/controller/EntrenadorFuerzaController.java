@@ -22,47 +22,45 @@ import java.util.Set;
  * @author Victor Perez Armenta
  */
 @Controller
-@RequestMapping("/entrenador-fuerza")
+@RequestMapping("/entrenador_fuerza")
 public class EntrenadorFuerzaController {
 
     @Autowired
     UsuarioRepository usuarioRepository;
 
-    @PostMapping("/index")
+    @PostMapping("/home")
     public String doEntrenadorFuerzaHome(@RequestParam String user, @RequestParam String password, Model model) {
 
-        return "/entrenador-fuerza/index";
+        return "/entrenador_fuerza/home";
     }
 
-    @GetMapping("/index")
-    public String goHome() {
-        return "/entrenador-fuerza/index";
+    @GetMapping("/home")
+    public String doHome() {
+        return "/entrenador_fuerza/home";
     }
 
     @GetMapping("/crud-rutina")
     public String goToCrudRutina() {
-        return "/entrenador-fuerza/crud-rutina";
+        return "/entrenador_fuerza/crud-rutina";
     }
 
     @GetMapping("/clientes")
-    public String goToClientes(@RequestParam("entrenador") Integer entrenador_id, Model model, HttpSession session) {
+    public String doClientes(Model model, HttpSession session) {
 
-        List<Usuario> USUARIOS = usuarioRepository.findAll();
-
-        Usuario entrenador = (Usuario)session.getAttribute("entrenador");
+        Usuario entrenador = (Usuario)session.getAttribute("user");
         Set<Usuario> clientes = entrenador.getClientesEntrenador();
         model.addAttribute("clientes", clientes);
 
-        return "/entrenador-fuerza/clientes";
+        return "/entrenador_fuerza/clientes";
     }
 
     @GetMapping("/crear-sesion")
-    public String goToCrearSesion() {
-        return "/entrenador-fuerza/crear-sesion";
+    public String doCrearSesion() {
+        return "/entrenador_fuerza/crear-sesion";
     }
 
     @GetMapping("/rutina")
-    public String goToRutina() {
-        return "/entrenador-fuerza/rutina";
+    public String doRutina() {
+        return "/entrenador_fuerza/rutina";
     }
 }

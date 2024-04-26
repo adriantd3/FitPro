@@ -1,4 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    String bienvenida = (String) request.getAttribute("bienvenida");
+%>
 <!doctype html>
 <html lang="en">
 <head>
@@ -11,7 +14,7 @@
     <style><%@include file="css/common.css"%></style>
 </head>
 <body>
-    <h1 class="ejemplo">Bienvenido, (nombre del entrenador)</h1>
+    <h1 class="ejemplo"><%=bienvenida!=null ? bienvenida : "Bienvenido, (nombre del entrenador)"%></h1>
     <section class="button-container">
         <button type="button" class="btn btn-secondary" onclick="window.location.href='/entrenador_cross_training/clientes'">Clientes</button><br/><br/>
         <button type="button" class="btn btn-secondary" onclick="window.location.href='/entrenador_cross_training/rutinas'">Rutinas</button><br/><br/>

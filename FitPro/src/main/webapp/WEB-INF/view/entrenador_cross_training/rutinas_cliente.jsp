@@ -4,6 +4,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     List<Rutina> rutinas = (List<Rutina>) request.getAttribute("rutinas");
+    List<Rutina> todasLasRutinas = (List<Rutina>) request.getAttribute("todasLasRutinas");
     Usuario cliente = (Usuario) request.getAttribute("cliente");
 %>
 <!doctype html>
@@ -15,6 +16,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Rutinas</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/css/bootstrap-select.min.css">
     <style><%@include file="css/common.css"%></style>
 </head>
 <body>
@@ -58,7 +60,50 @@
     </table>
 </section>
 <br/>
-<button class="btn btn-primary button-margin">Añadir rutina</button>
+<div class="sesion-buttons">
+    <button class="btn btn-success" onclick="window.location.href='/entrenador_cross_training/clientes'">Guardar</button>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#asignarRutina">
+        Añadir rutina
+    </button>
+</div>
+
+
+<div class="modal fade" id="asignarRutina" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div style="background-color: #c4c3c3" class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Asignar nueva rutina</h5>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="/entrenador_cross_training/asignar_rutina_cliente">
+
+                    Rutina a asignar:
+                    <select class="selectpicker" data-live-search="true" data-style="btn-secondary" name="rutina">
+                        <%
+                            for (Rutina r : todasLasRutinas){
+                        %>
+                        <option value="<%=r.getId()%>"><%=r.getNombre()%></option>
+                        <%
+                            }
+                        %>
+                    </select>
+                    <input type="hidden" name="cliente" value="<%=cliente.getId()%>">
+
+                    <div style="display: flex; justify-content: flex-end; margin-top: 20px">
+                        <button type="submit" class="btn btn-primary">Asignar rutina</button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/js/bootstrap-select.min.js"></script>
 </body>
 </html>

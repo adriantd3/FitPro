@@ -44,8 +44,16 @@ public class EntrenadorCrossTrainingController {
     // --------------------------- HOME ---------------------------
 
     @GetMapping("/home")
-    public String doHome(){
+    public String doHome(Model model){
+        Usuario usuario = usuarioRepository.findById(entrenador_id).orElse(null);
+        String bienvenida = "";
+        if (usuario.getSexo() == 1) {
+            bienvenida = "Bienvenido, " + usuario.getNombre();
+        }else {
+            bienvenida = "Bienvenida, " + usuario.getNombre();
+        }
 
+        model.addAttribute("bienvenida", bienvenida);
         return "entrenador_cross_training/home";
     }
     
@@ -90,9 +98,24 @@ public class EntrenadorCrossTrainingController {
     public String doRutinasCliente(Model model, @RequestParam("id") Integer id_cliente){
         Usuario cliente = usuarioRepository.findById(id_cliente).orElse(null);
         List<Rutina> rutinas = new ArrayList<>(cliente.getRutinasCliente());
+        List<Rutina> todasLasRutinas = rutinaRepository.findAll();
+        todasLasRutinas.removeAll(rutinas);
+
+        model.addAttribute("todasLasRutinas", todasLasRutinas);
         model.addAttribute("rutinas", rutinas);
         model.addAttribute("cliente", cliente);
         return "entrenador_cross_training/rutinas_cliente";
+    }
+
+    @PostMapping("asignar_rutina_cliente")
+    public String doAsignarRutinaCliente(@RequestParam("rutina") Rutina rutina,
+                                       @RequestParam("cliente") Usuario cliente){
+        Set<Rutina> rutinas_cliente = cliente.getRutinasCliente();
+        rutinas_cliente.add(rutina);
+        cliente.setRutinasCliente(rutinas_cliente);
+        usuarioRepository.save(cliente);
+
+        return "redirect:/entrenador_cross_training/rutinas_cliente?id=" + cliente.getId();
     }
 
     @PostMapping("borrar_rutina_cliente")

@@ -27,7 +27,7 @@ public class Rutina {
     @Column(name = "fecha_creacion", nullable = false)
     private LocalDate fechaCreacion;
 
-    @OneToMany(mappedBy = "rutina")
+    @OneToMany(fetch=FetchType.EAGER, mappedBy = "rutina")
     private Set<OrdenSesionRutina> ordenSesionRutinas = new LinkedHashSet<>();
 
     public Integer getId() {

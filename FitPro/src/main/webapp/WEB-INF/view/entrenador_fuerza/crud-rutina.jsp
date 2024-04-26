@@ -11,11 +11,11 @@
 <%
     List<Rutina> rutinas = (List<Rutina>) request.getAttribute("rutinas");
 
-    Usuario cliente = (Usuario) request.getAttribute("cliente");
+    Usuario cliente = (Usuario) session.getAttribute("cliente");
 %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Lista de rutinas</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style><%@ include file="../styles/common.css"%></style>
 </head>
@@ -27,12 +27,12 @@
 </header>
 <section class="mt-3 ms-3 h-100">
     <button class=" btn btn-primary top-50"
-            onclick="window.location.href='/entrenador-fuerza/rutina'">Añadir Rutina</button>
-    <ul class="list-group">
+            onclick="window.location.href='/entrenador_fuerza/rutina'">Añadir Rutina</button>
+    <ul class="list-group m-3">
         <%
             for(Rutina rutina : rutinas){
         %>
-        <button class="list-button list-group-item m-3">
+        <button onclick="window.location.href='/entrenador_fuerza/rutina?rutina=<%=rutina.getId()%>'" class="list-button list-group-item">
             <%=rutina.getNombre()+ " " + rutina.getFechaCreacion()%>
         </button>
         <%

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import uma.fitpro.dao.RutinaRepository;
+import uma.fitpro.dao.SesionRepository;
 import uma.fitpro.dao.UsuarioRepository;
 import uma.fitpro.entity.Rutina;
 import uma.fitpro.entity.Usuario;
@@ -35,9 +36,11 @@ public class EntrenadorFuerzaController {
     @Autowired
     private RutinaRepository rutinaRepository;
 
-    @PostMapping("/home")
-    public String doEntrenadorFuerzaHome(@RequestParam String user, @RequestParam String password, Model model) {
+    @Autowired
+    private SesionRepository sesionRepository;
 
+    @PostMapping("/home")
+    public String doEntrenadorFuerzaHome() {
         return "/entrenador_fuerza/home";
     }
 
@@ -47,19 +50,21 @@ public class EntrenadorFuerzaController {
     }
 
     @GetMapping("/crud-rutina")
-    public String goToCrudRutina(@RequestParam("cliente")@Nullable Integer cliente_id, Model model, HttpSession session) {
+    public String doCrudRutina(@RequestParam("cliente")@Nullable Integer cliente_id, Model model, HttpSession session) {
 
         List<Rutina> rutinas;
         Usuario entrenador = (Usuario) session.getAttribute("user");
         if (cliente_id != null) {
             Usuario cliente = usuarioRepository.findById(cliente_id).orElse(null);
-            model.addAttribute("cliente", cliente);
+            session.setAttribute("cliente", cliente);
             rutinas = rutinaRepository.findByClienteByEntrenador(cliente.getRutinasCliente(), entrenador);
 
         }
-        else rutinas = new ArrayList<>(entrenador.getRutinasEntrenador());
+        else{
+            rutinas = new ArrayList<>(entrenador.getRutinasEntrenador());
+            session.setAttribute("cliente", null);
+        }
 
-        System.out.println("Rutinas de " + entrenador.getNombre() +" "+ entrenador.getRutinasEntrenador().size());
         model.addAttribute("rutinas", rutinas);
         return "/entrenador_fuerza/crud-rutina";
     }
@@ -75,12 +80,15 @@ public class EntrenadorFuerzaController {
     }
 
     @GetMapping("/crear-sesion")
-    public String doCrearSesion() {
+    public String doCrearSesion(@RequestParam("cliente")@Nullable Integer cliente_id) {
         return "/entrenador_fuerza/crear-sesion";
     }
 
     @GetMapping("/rutina")
-    public String doRutina() {
+    public String doRutina(@RequestParam("rutina") Integer rutina_id, Model model, HttpSession session) {
+        Rutina rutina = rutinaRepository.findById(rutina_id).orElse(null);
+        model.addAttribute("rutina", rutina);
+        model.addAttribute("sesiones", sesionRepository.findAllByOrdenSesionRutina(rutina.getOrdenSesionRutinas()));
         return "/entrenador_fuerza/rutina";
     }
 }

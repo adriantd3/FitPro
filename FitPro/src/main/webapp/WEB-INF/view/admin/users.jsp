@@ -30,7 +30,7 @@
     <h1 class="header-text text-center">Usuarios</h1>
 </header>
 <div class="user-wrapper">
-    <table class="table-users table table-striped table-dark table-hover">
+    <table class="table-users table table-dark">
         <thead>
         <tr>
             <th scope="col">ID</th>
@@ -41,7 +41,7 @@
         </thead>
         <tbody>
         <% for(Usuario u : usuarios){ %>
-            <tr onclick=rellenarDatos(<%=u.getId()%>)>
+            <tr class="<%= usuario!=null && u.getId() == usuario.getId() ? "selected-row" : ""%>" onclick=rellenarDatos(<%=u.getId()%>)>
                 <td><%=u.getId()%></td>
                 <td><%=u.getNombre()%></td>
                 <td><%=u.getApellidos()%></td>
@@ -50,40 +50,40 @@
         <% } %>
         </tbody>
     </table>
-    <form class="user-form">
+    <form class="user-form" method="post" action="/admin/add-users">
+        <input name="Id" type="hidden" value=<%=usuario == null ? "0" : usuario.getId()%>>
         <table class="table table-borderless">
             <tbody>
             <tr>
-                <td>Nombre:<input type="text" placeholder="Nombre" value=<%=usuario == null ? "" : usuario.getNombre()%>></td>
-                <td>Apellidos:<input type="text" placeholder="Apellidos" value=<%=usuario == null ? "" : usuario.getApellidos()%>></td>
-                <td>DNI:<input type="text" placeholder="DNI" value=<%=usuario == null ? "" : usuario.getDni()%>></td>
-                <td>Rol: <select>
+                <td>Nombre:<input name="Nombre" type="text" placeholder="Nombre" value=<%=usuario == null ? "" : usuario.getNombre()%>></td>
+                <td>Apellidos:<input name="Apellidos" type="text" placeholder="Apellidos" value=<%=usuario == null ? "" : usuario.getApellidos()%>></td>
+                <td>DNI:<input name="DNI" type="text"  placeholder="DNI" value=<%=usuario == null ? "" : usuario.getDni()%>></td>
+                <td>Rol: <select name="Rol">
                     <% for(Rol rol : roles){ %>
                         <option <%=usuario != null && usuario.getRol().getId() == rol.getId() ? "selected" : ""%> value=<%=rol.getId()%>> <%=rol.getNombre()%> </option>
                     <% } %>
                 </select></td>
             </tr>
             <tr>
-                <td>Sexo:<br> <select>
+                <td>Sexo:<br> <select name="Sexo">
                     <option <%=usuario != null && usuario.getSexo() == 1 ? "selected" : ""%> value=1> Hombre </option>
                     <option <%=usuario != null && usuario.getSexo() == 0 ? "selected" : ""%> value=0> Mujer </option>
                 </select></td>
-                <td>Edad:<input type="text" placeholder="Edad" value=<%=usuario == null ? "" : usuario.getEdad()%>></td>
-                <td>Altura:<input type="text" placeholder="Altura" value=<%=usuario == null ? "" : usuario.getAltura()%>></td>
-                <td>Peso:<input type="text" placeholder="Peso" value=<%=usuario == null ? "" : usuario.getPeso()%>></td>
+                <td>Edad:<input name="Edad" type="number" placeholder="Edad" value=<%=usuario == null ? "" : usuario.getEdad()%>></td>
+                <td>Altura:<input name="Altura" type="number" placeholder="Altura" value=<%=usuario == null ? "" : usuario.getAltura()%>></td>
+                <td>Peso:<input name="Peso" type="number" placeholder="Peso" value=<%=usuario == null ? "" : usuario.getPeso()%>></td>
             </tr>
             <tr>
-                <td>Email:<input type="text" placeholder="Email" value=<%=usuario == null ? "" : usuario.getCorreo()%>></td>
-                <td>Contraseña:<input type="text" placeholder="Contraseña" value=<%=usuario == null ? "" : usuario.getContrasenya()%>></td>
+                <td>Email:<input name="Email" type="text" placeholder="Email" value=<%=usuario == null ? "" : usuario.getCorreo()%>></td>
+                <td>Contraseña:<input name="Contrasenya" type="text" placeholder="Contraseña" value=<%=usuario == null ? "" : usuario.getContrasenya()%>></td>
             </tr>
             </tbody>
         </table>
         <div class="form-buttons">
-            <form method="post" action="/admin/agregar-users">
                 <button type="submit" class="btn btn-primary">Guardar</button>
-            </form>
-            <form method="post" action="/admin/elimina-users?id=0">
-                <button <%= usuario == null ? "" : "disabled" %> type="submit" class="btn btn-primary">Eliminar</button>
+            <form method="post" action="/admin/delete-user">
+                <input name="Id" type="hidden" value=<%=usuario == null ? "0" : usuario.getId()%>>
+                <button <%= usuario != null ? "" : "disabled" %> type="submit" class="btn btn-primary">Eliminar</button>
             </form>
             <form method="post" action="/admin/users?id=0">
                 <button type="submit" class="btn btn-primary">Limpiar</button>

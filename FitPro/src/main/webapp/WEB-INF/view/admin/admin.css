@@ -36,3 +36,8 @@ button {
 .form-buttons button {
     margin-right: 30px;
 }
+
+.selected-row * {
+    background-color: #706f6e !important;
+    color: black !important;
+}

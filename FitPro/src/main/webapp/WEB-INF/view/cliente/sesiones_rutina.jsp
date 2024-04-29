@@ -1,6 +1,6 @@
 <%@ page import="uma.fitpro.entity.OrdenSesionRutina" %>
 <%@ page import="java.util.List" %>
-<%@ page import="uma.fitpro.utils.DateConversor" %>
+<%@ page import="uma.fitpro.utils.UtilityFunctions" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!doctype html>
 <%
@@ -25,7 +25,7 @@
 <ul>
     <%
         for (OrdenSesionRutina ordenSesionRutina : ordenSesionRutinas) {
-            String dayOfWeek = DateConversor.getDayByNumber(ordenSesionRutina.getId().getOrden());
+            String dayOfWeek = UtilityFunctions.getDayByNumber(ordenSesionRutina.getId().getOrden());
     %>
     <li>
         <a href="/cliente/desempenyo_sesion?id=<%=ordenSesionRutina.getSesion().getId()%>&nombre_sesion<%=ordenSesionRutina.getSesion().getNombre()%>">

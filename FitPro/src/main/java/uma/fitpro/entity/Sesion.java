@@ -16,7 +16,7 @@ public class Sesion {
     @Column(name = "nombre", nullable = false, length = 45)
     private String nombre;
 
-    @OneToMany(mappedBy = "sesion")
+    @OneToMany(mappedBy = "sesion",fetch = FetchType.EAGER)
     private Set<Serie> series = new LinkedHashSet<>();
 
     public Integer getId() {

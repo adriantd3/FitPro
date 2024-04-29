@@ -1,6 +1,6 @@
 <%@ page import="uma.fitpro.entity.OrdenSesionRutina" %>
 <%@ page import="java.util.List" %>
-<%@ page import="uma.fitpro.utils.DateConversor" %>
+<%@ page import="uma.fitpro.utils.UtilityFunctions" %>
 <%@ page import="uma.fitpro.entity.DesempenyoSesion" %>
 <%@ page import="uma.fitpro.entity.Sesion" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -36,7 +36,10 @@
         }
     %>
 </ul>
-<button type="button" class="btn btn-primary" onclick="window.location.href='cliente/nuevo_desempenyo'">Nuevo entrenamiento</button>
+
+<form method="post" action="nuevo_desempenyo">
+    <button type="submit" class="btn btn-primary">Nuevo entrenamiento</button>
+</form>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>

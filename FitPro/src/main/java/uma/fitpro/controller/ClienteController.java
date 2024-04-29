@@ -10,9 +10,12 @@ import uma.fitpro.dao.OrdenSesionRutinaRepository;
 import uma.fitpro.dao.SesionRepository;
 import uma.fitpro.dao.UsuarioRepository;
 import uma.fitpro.entity.*;
+import uma.fitpro.utils.UtilityFunctions;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/cliente")
@@ -67,7 +70,7 @@ public class ClienteController {
         if(sesion == null) {
             throw new RuntimeException("Sesion no encontrada");
         }
-        session.setAttribute("sesion", sesion);
+        session.setAttribute("sesion",sesion);
 
         Integer cliente_id = (Integer) session.getAttribute("cliente_id");
         List<DesempenyoSesion> desempenyoSesiones =
@@ -85,9 +88,27 @@ public class ClienteController {
         return "cliente/resultados_sesion";
     }
 
-    @GetMapping("/nuevo_entrenamiento")
-    public String doNuevoEntrenamiento(Model model) {
-        return "cliente/nuevo_entrenamiento";
+    @PostMapping("/nuevo_desempenyo")
+    public String doNuevoDesempenyo(Model model,HttpSession session) {
+
+        Sesion sesion = (Sesion) session.getAttribute("sesion");
+        List<Serie> series_list = new ArrayList<>(sesion.getSeries());
+
+        Map<Ejercicio,List<Serie>> sesion_dict = UtilityFunctions.generateDictionary(series_list);
+
+        model.addAttribute("sesion_dict", sesion_dict);
+        return "cliente/nuevo_desempenyo";
+    }
+
+    @PostMapping("/nuevo_entrenamiento")
+    public String doNuevoEntrenamiento(Model model, HttpSession session){
+
+        Sesion sesion = (Sesion) session.getAttribute("sesion");
+        List<Serie> series_list = new ArrayList<>(sesion.getSeries());
+
+        Map<Ejercicio,List<Serie>> sesion_dict = UtilityFunctions.generateDictionary(series_list);
+
+        return null;
     }
 
     @GetMapping("/dietas")

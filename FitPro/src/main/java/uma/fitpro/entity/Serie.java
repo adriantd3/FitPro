@@ -17,7 +17,7 @@ public class Serie {
     private Sesion sesion;
 
     @MapsId("ejercicioId")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "ejercicio_id", nullable = false)
     private Ejercicio ejercicio;

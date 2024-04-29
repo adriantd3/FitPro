@@ -13,6 +13,7 @@ import uma.fitpro.dao.RutinaRepository;
 import uma.fitpro.dao.SesionRepository;
 import uma.fitpro.dao.UsuarioRepository;
 import uma.fitpro.entity.Rutina;
+import uma.fitpro.entity.Sesion;
 import uma.fitpro.entity.Usuario;
 
 import java.util.ArrayList;
@@ -80,7 +81,18 @@ public class EntrenadorFuerzaController {
     }
 
     @GetMapping("/crear-sesion")
-    public String doCrearSesion(@RequestParam("cliente")@Nullable Integer cliente_id) {
+    public String doCrearSesion(@RequestParam("rutina") Integer rutina_id,
+                                @RequestParam("sesion")@Nullable Integer sesion_id, Model model, HttpSession session) {
+
+        Rutina rutina = rutinaRepository.findById(rutina_id).orElse(null);
+        model.addAttribute("rutina", rutina);
+        Sesion sesion;
+        if (sesion_id != null) {
+            sesion = sesionRepository.findById(sesion_id).orElse(null);
+            model.addAttribute("sesion", sesion);
+        }
+
+
         return "/entrenador_fuerza/crear-sesion";
     }
 

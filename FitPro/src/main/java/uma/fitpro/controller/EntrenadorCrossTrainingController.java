@@ -1,5 +1,6 @@
 package uma.fitpro.controller;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,15 +46,6 @@ public class EntrenadorCrossTrainingController {
 
     @GetMapping("/home")
     public String doHome(Model model){
-        Usuario usuario = usuarioRepository.findById(entrenador_id).orElse(null);
-        String bienvenida = "";
-        if (usuario.getSexo() == 1) {
-            bienvenida = "Bienvenido, " + usuario.getNombre();
-        }else {
-            bienvenida = "Bienvenida, " + usuario.getNombre();
-        }
-
-        model.addAttribute("bienvenida", bienvenida);
         return "entrenador_cross_training/home";
     }
     
@@ -76,14 +68,14 @@ public class EntrenadorCrossTrainingController {
         return "entrenador_cross_training/rutinas";
     }
 
-    @PostMapping("borrar_rutina")
+    @PostMapping("/borrar_rutina")
     public String doBorrarRutina(@RequestParam("id") Integer id_rutina){
         Rutina rutina = rutinaRepository.findById(id_rutina).orElse(null);
         rutinaRepository.delete(rutina);
         return "redirect:/entrenador_cross_training/rutinas";
     }
 
-    @PostMapping("nueva_rutina")
+    @PostMapping("/nueva_rutina")
     public String doNuevaRutina(@RequestParam("nombre") String nombre){
         Rutina rutina = new Rutina();
         rutina.setNombre(nombre);
@@ -107,7 +99,7 @@ public class EntrenadorCrossTrainingController {
         return "entrenador_cross_training/rutinas_cliente";
     }
 
-    @PostMapping("asignar_rutina_cliente")
+    @PostMapping("/asignar_rutina_cliente")
     public String doAsignarRutinaCliente(@RequestParam("rutina") Rutina rutina,
                                        @RequestParam("cliente") Usuario cliente){
         Set<Rutina> rutinas_cliente = cliente.getRutinasCliente();
@@ -118,7 +110,7 @@ public class EntrenadorCrossTrainingController {
         return "redirect:/entrenador_cross_training/rutinas_cliente?id=" + cliente.getId();
     }
 
-    @PostMapping("borrar_rutina_cliente")
+    @PostMapping("/borrar_rutina_cliente")
     public String doBorrarRutinaCliente(@RequestParam("rutina") Integer id_rutina,
                                         @RequestParam("cliente") Integer id_cliente){
 
@@ -159,7 +151,7 @@ public class EntrenadorCrossTrainingController {
         return "entrenador_cross_training/sesion";
     }
 
-    @PostMapping("nueva_sesion")
+    @PostMapping("/nueva_sesion")
     public String doNuevaSesion(@RequestParam("nombre") String nombre){
         Sesion sesion = new Sesion();
         sesion.setNombre(nombre);
@@ -168,7 +160,7 @@ public class EntrenadorCrossTrainingController {
     }
 
     private Map<Ejercicio, List<Serie>> getEjercicioYSeries(List<Serie> series){
-        Map<Ejercicio, List<Serie>> mapa = new HashMap<Ejercicio, List<Serie>>();
+        Map<Ejercicio, List<Serie>> mapa = new TreeMap<>();
         for (Serie e : series){
             List<Serie> s = mapa.get(e.getEjercicio());
             if (s==null){
@@ -187,22 +179,25 @@ public class EntrenadorCrossTrainingController {
     public String doEjercicios(@RequestParam("ejercicio") String ejercicio,
                                @RequestParam("musculo") String musculo,
                                @RequestParam("tipo") String tipo,
-                               @RequestParam(value = "sesion", required = false) Integer id_sesion, Model modelo){
-        // DE MOMENTO SOLO FILTRA POR NOMBRE DEL EJERCICIO
-        List<Ejercicio> ejercicios = ejercicioRepository.filtrarEjercicio(ejercicio);
+                               @RequestParam(value = "aplicar", required = false) Boolean aplicar, Model modelo){
+        List<Ejercicio> ejercicios;
+        if (aplicar!=null){ // Filtro por nombre, musculo y tipo
+            ejercicios = ejercicioRepository.filtrarEjercicioPorMusculoYTipo(ejercicio, musculo, tipo);
+        }else { // Filtro por nombre solo
+            ejercicios = ejercicioRepository.filtrarEjercicioPorNombre(ejercicio);
+        }
+
         List<TipoEjercicio> tipos = tipoEjercicioRepository.findAll();
         List<GrupoMuscular> grupos = grupoMuscularRepository.findAll();
-        Sesion sesion = sesionRepository.findById(id_sesion).orElse(null);
 
         modelo.addAttribute("ejercicios", ejercicios);
         modelo.addAttribute("tipos", tipos);
         modelo.addAttribute("grupos", grupos);
-        modelo.addAttribute("sesion", sesion);
 
         return "entrenador_cross_training/ejercicios";
     }
 
-    @GetMapping("anyadir_ejercicio")
+    @PostMapping("/anyadir_ejercicio")
     public String doAnyadirEjercicio(@RequestParam("sesion") Integer id_sesion,
                                      @RequestParam("ejercicio") Integer id_ejercicio,
                                      Model model){
@@ -233,7 +228,7 @@ public class EntrenadorCrossTrainingController {
         return "entrenador_cross_training/anyadir_serie";
     }
 
-    @PostMapping("guardar_serie")
+    @PostMapping("/guardar_serie")
     public String doGuardarSerie(@RequestParam("sesion") Integer id_sesion,
                                  @RequestParam("ejercicio") Integer id_ejercicio,
                                  @RequestParam("repeticiones") Integer repeticiones,
@@ -256,7 +251,7 @@ public class EntrenadorCrossTrainingController {
         return "redirect:/entrenador_cross_training/sesion?id=" + sesion.getId();
     }
 
-    @PostMapping("borrar_serie")
+    @PostMapping("/borrar_serie")
     public String doBorrarSerie(@RequestParam("sesion") Sesion sesion,
                                 @RequestParam("serie") Integer id_serie,
                                 @RequestParam("ejercicio") Integer id_ejercicio){

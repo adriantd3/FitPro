@@ -3,11 +3,12 @@
 <%@ page import="uma.fitpro.entity.Ejercicio" %>
 <%@ page import="uma.fitpro.entity.Serie" %>
 <%@ page import="java.util.List" %>
-<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.TreeMap" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     Sesion sesion = (Sesion) request.getAttribute("sesion");
-    HashMap<Ejercicio, List<Serie>> mapa = (HashMap<Ejercicio, List<Serie>>) request.getAttribute("mapa");
+    TreeMap<Ejercicio, List<Serie>> mapa = (TreeMap<Ejercicio, List<Serie>>) request.getAttribute("mapa");
+    session.setAttribute("sesion", sesion);
 %>
 <!doctype html>
 <html lang="en">
@@ -80,7 +81,7 @@
 <section class="sesion-buttons">
     <button type="button" class="btn btn-success" onclick="window.location.href='/entrenador_cross_training/sesiones'">Guardar</button>
     <button type="button" class="btn btn-danger" onclick="window.location.href='/entrenador_cross_training/borrar_sesion?id=<%= sesion.getId()%>'">Borrar</button>
-    <button type="button" class="btn btn-primary" onclick="window.location.href='/entrenador_cross_training/ejercicios?ejercicio=&musculo=&tipo=&sesion=<%= sesion.getId()%>'">Añadir ejercicio</button>
+    <button type="button" class="btn btn-primary" onclick="window.location.href='/entrenador_cross_training/ejercicios?ejercicio=&musculo=&tipo='">Añadir ejercicio</button>
 </section>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>

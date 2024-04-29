@@ -1,6 +1,7 @@
+<%@ page import="uma.fitpro.entity.Usuario" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    String bienvenida = (String) request.getAttribute("bienvenida");
+    Usuario user = (Usuario) session.getAttribute("user");
 %>
 <!doctype html>
 <html lang="en">
@@ -14,7 +15,15 @@
     <style><%@include file="css/common.css"%></style>
 </head>
 <body>
-    <h1 class="ejemplo"><%=bienvenida!=null ? bienvenida : "Bienvenido, (nombre del entrenador)"%></h1>
+    <%
+        String bienvenida = "";
+        if (user.getSexo() == 1){
+            bienvenida = "Bienvenido, ";
+        }else {
+            bienvenida = "Bienvenida, ";
+        }
+    %>
+    <h1 class="ejemplo"><%= bienvenida + user.getNombre()%></h1>
     <section class="button-container">
         <button type="button" class="btn btn-secondary" onclick="window.location.href='/entrenador_cross_training/clientes'">Clientes</button><br/><br/>
         <button type="button" class="btn btn-secondary" onclick="window.location.href='/entrenador_cross_training/rutinas'">Rutinas</button><br/><br/>

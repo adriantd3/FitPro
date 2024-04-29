@@ -32,6 +32,7 @@
         <tr>
             <th scope="col">#</th>
             <th scope="col">Rutina</th>
+            <th scope="col">Fecha</th>
             <th scope="col">Borrar</th>
         </tr>
         </thead>
@@ -42,7 +43,8 @@
         %>
         <tr>
             <th scope="row"><%= num %></th>
-            <td><%= r.getNombre() + " , FECHA: " + r.getFechaCreacion()%></td>
+            <td><%= r.getNombre() %></td>
+            <td><%=r.getFechaCreacion()%></td>
             <td>
                 <form action="/entrenador_cross_training/borrar_rutina_cliente" method="post">
                     <input type="hidden" name="rutina" value="<%=r.getId()%>">

@@ -67,8 +67,14 @@ header{
     display: flex;
     justify-content: center;
     justify-items: center;
-    gap: 60px;
+    gap: 50px;
     margin-top: 20px;
+}
+
+.div-ejercicio-filtros {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
 }
 
 .section-ejercicios {

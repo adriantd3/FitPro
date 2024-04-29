@@ -30,6 +30,7 @@
         <tr>
             <th scope="col">#</th>
             <th scope="col">Rutina</th>
+            <th scope="col">Fecha</th>
             <th scope="col">Editar</th>
             <th scope="col">Borrar</th>
         </tr>
@@ -41,7 +42,8 @@
         %>
         <tr>
             <th scope="row"><%= num %></th>
-            <td><%= r.getNombre() + " , FECHA: " + r.getFechaCreacion()%></td>
+            <td><%= r.getNombre() %></td>
+            <td><%=r.getFechaCreacion()%></td>
             <td><button class="btn btn-secondary">Editar</button></td>
             <td>
                 <form action="/entrenador_cross_training/borrar_rutina" method="post">

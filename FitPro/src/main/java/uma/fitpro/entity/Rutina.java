@@ -10,7 +10,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "rutina")
-public class Rutina {
+public class Rutina implements Comparable<Rutina> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -70,4 +70,8 @@ public class Rutina {
         this.ordenSesionRutinas = ordenSesionRutinas;
     }
 
+    @Override
+    public int compareTo(Rutina o) {
+        return this.getNombre().compareTo(o.getNombre());
+    }
 }

@@ -94,6 +94,11 @@ header{
     margin-top: 30px;
 }
 
+.form-editar-rutina {
+    display: flex;
+    gap: 20px;
+}
+
 h1{
     color: white;
     text-align: center;

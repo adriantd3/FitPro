@@ -44,7 +44,7 @@
             <th scope="row"><%= num %></th>
             <td><%= r.getNombre() %></td>
             <td><%=r.getFechaCreacion()%></td>
-            <td><button class="btn btn-secondary">Editar</button></td>
+            <td><button class="btn btn-secondary" onclick="window.location.href='/entrenador_cross_training/editar_rutina?id=<%=r.getId()%>'">Editar</button></td>
             <td>
                 <form action="/entrenador_cross_training/borrar_rutina" method="post">
                     <input type="hidden" name="id" value="<%=r.getId()%>">

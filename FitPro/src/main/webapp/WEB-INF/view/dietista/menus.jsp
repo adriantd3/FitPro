@@ -22,8 +22,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style><%@ include file="../styles/common.css"%></style>
     <style><%@ include file="./menus.css"%></style>
-<<<<<<< Updated upstream
-=======
+
     <script>
         function selectMenu(menuId){
             document.getElementById("menuSelector").value=menuId;
@@ -35,7 +34,6 @@
             document.getElementById("formAddComida").submit();
         }
     </script>
->>>>>>> Stashed changes
 </head>
 <body>
 <header>
@@ -46,114 +44,83 @@
 <div class="container-fluid" >
     <div class="row">
         <div class="col-lg-5 ps-5 pt-5">
-<<<<<<< Updated upstream
-            <section id="Menus" class="menu-table pt-2">
-                <table class="table caption-top text-center ">
-                    <caption class="text-center text-white">List of users</caption>
-                    <thead class="table-dark">
-                    <tr>
-                        <th class="id">º\</th>
-                        <th class="nombre-menu">Nombre</th>
-                        <th class="kcal">Kcal</th>
-                    </tr>
-                    </thead>
-                    <tbody class = "table-group-divider table-secondary">
-                    <%
-                        for(Menu m : menus){
-                    %>
-=======
             <section id="Menus" class="menu_table pt-2">
                 <form method="get" action="./menus">
                     <input type="hidden" name="id" id="menuSelector">
                     <table class="table caption-top text-center table-hover">
                         <caption class="text-center text-white">Menús</caption>
                         <thead class="table-dark">
-                        <tr>
-                            <th class="id">º\</th>
-                            <th class="nombre-menu">Nombre</th>
-                            <th class="kcal">Kcal</th>
-                        </tr>
+                            <tr>
+                                <th class="id">º\</th>
+                                <th class="nombre-menu">Nombre</th>
+                                <th class="kcal">Kcal</th>
+                            </tr>
                         </thead>
                         <tbody class = "table-group-divider table-secondary">
                         <%
                             for(Menu m : menus){
                         %>
->>>>>>> Stashed changes
-
-                    <tr>
-                        <td><%= m.getId() %></td>
-                        <td><%= m.getNombre() %></td>
-                        <td><%= m.getCalorias() %></td>
-                    </tr>
-                    <%
-                        }
-                    %>
-                    </tbody>
-                </table>
+                            <tr>
+                                <td><%= m.getId() %></td>
+                                <td><%= m.getNombre() %></td>
+                                <td><%= m.getCalorias() %></td>
+                            </tr>
+                        <%
+                            }
+                        %>
+                        </tbody>
+                    </table>
+                </form>
             </section>
         </div>
         <div class="col-md">
-            <section id="nombre">
+            <section id="comidasMenu">
                 <form id="guardar" method="post" action="./guardar">
-                <div class="pt-4 row ps-3">
-                        <span class="tag col-2 bg-secondary">Nombre</span>
-                        <div class="col pe-5">
-                            <%
-                                String name = "";
-                                if(menu!=null){name=menu.getNombre();}
-                            %>
-                            <input id="nombre" type="text" class="form-control" name="nombre" value=<%= name %>>
+                    <div class="pt-4 row ps-3">
+                            <span class="tag col-2 bg-secondary">Nombre</span>
+                            <div class="col pe-5">
+                                <%
+                                    String name = "";
+                                    if(menu!=null){name=menu.getNombre();}
+                                %>
+                                <input id="nombre" type="text" class="form-control" name="nombre" value=<%= name %>>
+                            </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md">
+                            <section id="ListaComidasMenu">
+                                <table class="table caption-top text-center table-hover">
+                                    <caption class="text-center text-white">Comidas del Menú</caption>
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th class="id"></th>
+                                            <th class="nombre-comida">Nombre</th>
+                                            <th class="kcal">Kcal</th>
+                                            <th class="table-button"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class = "table-secondary">
+                                        <%
+                                            if(menu!=null){
+                                                for(Comida c : comidasMenu){
+                                        %>
+                                            <tr>
+                                                <td><%= c.getId() %></td>
+                                                <td><%= c.getNombre() %></td>
+                                                <td><%= c.getCalorias() %></td>
+                                                <td><button class="btn bg-danger">E</button></td>
+                                            </tr>
+                                        <%
+                                                }
+                                            }
+                                        %>
+                                    </tbody>
+                                </table>
+                            </section>
                         </div>
-                </div>
-            </section>
-            <div class="row">
-                <div class="col-md">
-<<<<<<< Updated upstream
-                    <section id="ComidasMenu" class="menu-table">
-                        <table class="table caption-top text-center ">
-=======
-                    <section id="ListaComidasMenu">
-                        <table class="table caption-top text-center table-hover">
->>>>>>> Stashed changes
-                            <caption class="text-center text-white">Comidas del Menú</caption>
-                            <thead class="table-dark">
-                            <tr>
-                                <th class="id"></th>
-                                <th class="nombre-comida">Nombre</th>
-                                <th class="kcal">Kcal</th>
-                                <th class="table-button"></th>
-                            </tr>
-                            </thead>
-                            <tbody class = "table-secondary">
-                            <%
-                                if(menu!=null){
-                                    for(Comida c : comidasMenu){
-                            %>
-                                    <tr>
-                                        <td><%= c.getId() %></td>
-                                        <td><%= c.getNombre() %></td>
-                                        <td><%= c.getCalorias() %></td>
-                                        <td><button class="btn bg-danger">E</button></td>
-                                    </tr>
-                            <%
-                                    }
-                                }
-                            %>
-                            </tbody>
-                        </table>
-                    </section>
-
-<<<<<<< Updated upstream
-                    <section id="buttons">
-                        <button type="button" class="btn btn-success me-3">Guardar</button>
-                        <button type="button" class="btn btn-primary me-3">Limpiar</button>
-                        <button type="button" class="btn btn-danger me-3">Borrar</button>
-
-                    </section>
-=======
+                    </div>
                     <div class="menuButtons">
-                            <button type="submit" class="btn btn-success me-3 saveButton" name="id" value="<%= menu==null ? 0:menu.getId() %>" onclick="guardar()">Guardar</button>
-                        </form>
+                        <button type="submit" class="btn btn-success me-3 saveButton" name="id" value="<%= menu==null ? 0:menu.getId() %>" onclick="guardar()">Guardar</button>
                         <form method="get" action="./limpiar">
                             <button type="submit" class="btn btn-primary me-3">Limpiar</button>
                         </form>
@@ -161,8 +128,8 @@
                             <button type="submit" class="btn btn-danger me-3" name="id" value="<%= menu==null ? 0:menu.getId() %>">Borrar</button>
                         </form>
                     </div>
->>>>>>> Stashed changes
-                </div>
+                </form>
+            </section>
                 <div class="col-md">
                     <section id="Comidas">
                         <form id="formAddComida" method="post" action="./anyadirComida">

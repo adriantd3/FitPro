@@ -2,8 +2,6 @@
     width: 400px;
 }
 
-<<<<<<< Updated upstream
-=======
 .table td{
     user-select: none;
     transition: 0.5s;
@@ -17,7 +15,6 @@
     cursor:pointer;
 }
 
->>>>>>> Stashed changes
 .id{
     width: 40px;
 }

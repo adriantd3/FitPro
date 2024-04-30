@@ -1,5 +1,6 @@
 package uma.fitpro.controller;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,19 +27,6 @@ public class DietistaController {
     @Autowired
     private SerieRepository serieRepository;
 
-<<<<<<< Updated upstream
-    @PostMapping("/home")
-    public String doHome(@RequestParam String user, @RequestParam String password) {
-
-        return null;
-    }
-
-    @GetMapping("/menus")
-    public String doMenus(@RequestParam("id") Integer id, Model model){
-        List<Menu> menus = this.menuRepository.findAll();
-        Menu menu = this.menuRepository.findById(id).orElse(null);
-        List<Comida> comidasMenu = null;
-=======
     @GetMapping("/home")
     public String doHome() {
         return "home";
@@ -55,14 +43,9 @@ public class DietistaController {
             menu = this.menuRepository.findById(id).orElse(null);
         }
 
->>>>>>> Stashed changes
         if(menu!=null){
             comidasMenu = menu.getComidas();
         }
-        List<Comida> comidas = this.comidaRepository.findAll();
-
-
-        //lista con todas las comidas del menu concreto
 
         model.addAttribute("menus", menus);
         model.addAttribute("menu", menu);
@@ -71,8 +54,6 @@ public class DietistaController {
 
         return "dietista/menus";
     }
-<<<<<<< Updated upstream
-=======
 
     @PostMapping("/anyadirComida")
     public String doAnyadirComida(@RequestParam(value = "menuId") Integer menuId, @RequestParam(value = "comidaId") Integer comidaId, Model model){
@@ -120,5 +101,4 @@ public class DietistaController {
 
         return "dietista/clientes";
     }
->>>>>>> Stashed changes
 }

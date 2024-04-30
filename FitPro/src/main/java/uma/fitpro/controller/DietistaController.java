@@ -57,22 +57,40 @@ public class DietistaController {
     }
 
     @PostMapping("/anyadirComida")
-    public String doAnyadirComida(@RequestParam(value = "menuId") Integer menuId, @RequestParam(value = "comidaId") Integer comidaId, Model model){
-        Menu menu = menuRepository.findById(menuId).orElse(new Menu());
+    public String doAnyadirComida(@RequestParam(value = "id") Integer id, @RequestParam(value = "comidaId") Integer comidaId, Model model){
+        Menu menu = menuRepository.findById(id).orElse(new Menu());
         Comida comida = comidaRepository.findById(comidaId).orElse(null);
         List<Comida> comidasMenu = menu.getComidas();
         if(comida!=null){
             comidasMenu.add(comida);
         }
         menu.setComidas(comidasMenu);
+        menu.updateKcal();
         menuRepository.save(menu);
         return "redirect:/dietista/menus?id="+menu.getId();
     }
 
-    @PostMapping("/guardar")
+    @PostMapping("/eliminarComida")
+    public String doEliminarComida(@RequestParam(value = "id") Integer id, @RequestParam(value = "comidaId") Integer comidaId, Model model){
+        Menu menu = menuRepository.findById(id).orElse(null);
+        Comida comida = comidaRepository.findById(comidaId).orElse(null);
+        List<Comida> comidasMenu = menu.getComidas();
+        if(comida!=null){
+            comidasMenu.remove(comida);
+        }
+        menu.setComidas(comidasMenu);
+        menu.updateKcal();
+        menuRepository.save(menu);
+        return "redirect:/dietista/menus?id="+menu.getId();
+    }
+
+    @PostMapping("/guardarMenu")
     public String doGuardar(@RequestParam(value = "id") Integer id, @RequestParam("nombre") String nombre){
            Menu menu = menuRepository.findById(id).orElse(new Menu());
-           menu.setNombre(nombre);
+           if(!nombre.equals("")){
+               menu.setNombre(nombre);
+           }
+           menu.updateKcal();
            menuRepository.save(menu);
         return "redirect:./menus";
     }

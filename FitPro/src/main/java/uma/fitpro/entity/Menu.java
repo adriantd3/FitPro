@@ -3,10 +3,7 @@ package uma.fitpro.entity;
 import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
 
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "menu")
@@ -31,6 +28,12 @@ public class Menu {
             joinColumns = @JoinColumn(name = "menu_id"),
             inverseJoinColumns = @JoinColumn(name = "comida_id"))
     private List<Comida> comidaEntities = new ArrayList<>();
+
+    public Menu() {
+        setNombre("NuevoMenú");
+        setFechaCreacion(String.valueOf(new Date()));
+        setCalorias(0f);
+    }
 
     public Integer getId() {
         return id;
@@ -66,6 +69,14 @@ public class Menu {
 
     public List<Comida> getComidas() {
         return comidaEntities;
+    }
+
+    public void updateKcal(){
+        float kcal = 0;
+        for(Comida comida : comidaEntities){
+            kcal += comida.getCalorias();
+        }
+        setCalorias(kcal);
     }
 
     public void setComidas(List<Comida> comidaEntities) {

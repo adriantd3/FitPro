@@ -14,6 +14,7 @@
     Menu menu = (Menu) request.getAttribute("menu");
     List<Comida> comidasMenu = (List<Comida>) request.getAttribute("comidasMenu");
     List<Comida> comidas = (List<Comida>) request.getAttribute("comidas");
+    comidas.removeAll(comidasMenu);
 %>
 
 <html>
@@ -30,8 +31,21 @@
         }
 
         function addComida(comidaId){
-            document.getElementById("comidaSelector").value=comidaId;
-            document.getElementById("formAddComida").submit();
+            //if(!document.getElementById("nombre").value.equals("")){ Este if hace que no funcione
+                document.getElementById("addComidaSelector").value=comidaId;
+                document.getElementById("formAddComida").submit();
+            //}
+        }
+
+        function deleteComida(comidaId){
+            document.getElementById("deleteComidaSelector").value=comidaId;
+            document.getElementById("datosMenu").action="./eliminarComida";
+            document.getElementById("datosMenu").submit();
+        }
+
+        function guardarMenu(){
+            document.getElementById("datosMenu").action="./guardarMenu";
+            document.getElementById("datosMenu").submit();
         }
     </script>
 </head>
@@ -60,7 +74,7 @@
                         <%
                             for(Menu m : menus){
                         %>
-                            <tr>
+                            <tr class="menu" onclick="selectMenu(<%= m.getId() %>)">
                                 <td><%= m.getId() %></td>
                                 <td><%= m.getNombre() %></td>
                                 <td><%= m.getCalorias() %></td>
@@ -73,69 +87,76 @@
                 </form>
             </section>
         </div>
+
         <div class="col-md">
-            <section id="comidasMenu">
-                <form id="guardar" method="post" action="./guardar">
-                    <div class="pt-4 row ps-3">
-                            <span class="tag col-2 bg-secondary">Nombre</span>
-                            <div class="col pe-5">
-                                <%
-                                    String name = "";
-                                    if(menu!=null){name=menu.getNombre();}
-                                %>
-                                <input id="nombre" type="text" class="form-control" name="nombre" value=<%= name %>>
+                    <section id="nombreInput">
+                        <form id="datosMenu" method="post" action="./guardarMenu">
+                            <div class="pt-4 row ps-3">
+                                    <span class="tag col-2 bg-secondary">Nombre</span>
+                                    <div class="col pe-5">
+                                        <%
+                                            String name = "";
+                                            if(menu!=null){name=menu.getNombre();}
+                                        %>
+                                        <input id="nombre" type="text" class="form-control" name="nombre" value=<%= name %>>
+                                    </div>
                             </div>
-                    </div>
+                    </section>
                     <div class="row">
+
                         <div class="col-md">
                             <section id="ListaComidasMenu">
-                                <table class="table caption-top text-center table-hover">
-                                    <caption class="text-center text-white">Comidas del Menú</caption>
-                                    <thead class="table-dark">
-                                        <tr>
-                                            <th class="id"></th>
-                                            <th class="nombre-comida">Nombre</th>
-                                            <th class="kcal">Kcal</th>
-                                            <th class="table-button"></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class = "table-secondary">
-                                        <%
-                                            if(menu!=null){
-                                                for(Comida c : comidasMenu){
-                                        %>
+                                <form id="formDeleteComida" method="post" action="./eliminarComida">
+                                    <input type="hidden" name="comidaId" id="deleteComidaSelector">
+                                    <input type="hidden" name="id" value="<%= menu==null ? 0:menu.getId() %>">
+                                    <table class="table caption-top text-center table-hover">
+                                        <caption class="text-center text-white">Comidas del Menú</caption>
+                                        <thead class="table-dark">
                                             <tr>
-                                                <td><%= c.getId() %></td>
-                                                <td><%= c.getNombre() %></td>
-                                                <td><%= c.getCalorias() %></td>
-                                                <td><button class="btn bg-danger">E</button></td>
+                                                <th class="id"></th>
+                                                <th class="nombre-comida">Nombre</th>
+                                                <th class="kcal">Kcal</th>
+                                                <th class="table-button"></th>
                                             </tr>
-                                        <%
+                                        </thead>
+                                        <tbody class = "table-secondary">
+                                            <%
+                                                if(menu!=null){
+                                                    int index = 0;
+                                                    for(Comida comida : comidasMenu){
+                                                        index++;
+                                            %>
+                                                <tr>
+                                                    <td><%= index %></td>
+                                                    <td><%= comida.getNombre() %></td>
+                                                    <td><%= comida.getCalorias() %></td>
+                                                    <td><button class="btn bg-danger" onclick="deleteComida(<%= comida.getId() %>)">E</button></td>
+                                                </tr>
+                                            <%
+                                                    }
                                                 }
-                                            }
-                                        %>
-                                    </tbody>
-                                </table>
+                                            %>
+                                        </tbody>
+                                    </table>
+                                </form>
                             </section>
-                        </div>
+                            <div class="menuButtons">
+                                <button type="submit" class="btn btn-success me-3 saveButton" onclick="guardarMenu()">Guardar</button>
+                                </form>
+                                <form method="get" action="./limpiar">
+                                    <button type="submit" class="btn btn-primary me-3">Limpiar</button>
+                                </form>
+                                <form method="post" action="./borrar">
+                                    <button type="<%= menu==null ? "button":"submit" %>" class="btn btn-danger me-3" name="id" value="<%= menu==null ? 0:menu.getId() %>">Borrar</button>
+                                </form>
+                            </div>
                     </div>
-                    <div class="menuButtons">
-                        <button type="submit" class="btn btn-success me-3 saveButton" name="id" value="<%= menu==null ? 0:menu.getId() %>" onclick="guardar()">Guardar</button>
-                        <form method="get" action="./limpiar">
-                            <button type="submit" class="btn btn-primary me-3">Limpiar</button>
-                        </form>
-                        <form method="post" action="./borrar">
-                            <button type="submit" class="btn btn-danger me-3" name="id" value="<%= menu==null ? 0:menu.getId() %>">Borrar</button>
-                        </form>
-                    </div>
-                </form>
-            </section>
+
                 <div class="col-md">
                     <section id="Comidas">
                         <form id="formAddComida" method="post" action="./anyadirComida">
-                            <input type="hidden" name="comidaId" id="comidaSelector">
-                            <input type="hidden" name="menuId" value="<%= menu==null ? 0:menu.getId() %>">
-
+                            <input type="hidden" name="comidaId" id="addComidaSelector">
+                            <input type="hidden" name="id" value="<%= menu==null ? 0:menu.getId() %>">
                             <table class="table caption-top text-center table-hover">
                                 <caption class="text-center text-white">Comidas</caption>
                                 <thead class="table-dark">
@@ -148,10 +169,12 @@
                                 </thead>
                                 <tbody class = "table-secondary">
                                 <%
+                                    int index = 0;
                                     for(Comida comida : comidas){
+                                        index++;
                                 %>
                                 <tr>
-                                    <td><%= comida.getId() %></td>
+                                    <td><%= index %></td>
                                     <td><%= comida.getNombre() %></td>
                                     <td><%= comida.getCalorias() %></td>
                                     <td><button  class="btn btn-primary" onclick="addComida(<%= comida.getId() %>)">A</button></td>

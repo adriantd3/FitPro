@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import uma.fitpro.dao.UsuarioRepository;
 import uma.fitpro.entity.Usuario;
 
+import java.util.List;
+
 @Controller
 public class LoginController {
 
@@ -25,8 +27,16 @@ public class LoginController {
     }
 
     @PostMapping("/home")
-    public String doHome(@RequestParam String user, @RequestParam String password) {
+    public String doHome(@RequestParam String mail, @RequestParam String password, Model model, HttpSession session) {
+        List<Usuario> user = usuarioRepository.findByMail(mail);
+        if (!user.isEmpty()) {
+            Usuario usuario = user.get(0);
+            if (usuario != null && usuario.getContrasenya().equals(password)) {
+                session.setAttribute("user", usuario);
+                return usuario.getRol().getNombre()+"/home";
+            }
+        }
+        return "redirect:/";
 
-        return "cliente/index";
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import uma.fitpro.dao.ComidaRepository;
 import uma.fitpro.dao.MenuRepository;
+import uma.fitpro.dao.SerieRepository;
 import uma.fitpro.entity.*;
 
 import java.util.ArrayList;
@@ -24,25 +25,27 @@ public class DietistaController {
     protected MenuRepository menuRepository;
     @Autowired
     protected ComidaRepository comidaRepository;
+    @Autowired
+    private SerieRepository serieRepository;
 
-    @PostMapping("/home")
+    @GetMapping("/home")
     public String doHome() {
         return "home";
     }
 
-    @PostMapping("/menus")
+    @GetMapping("/menus")
     public String doMenus(@RequestParam(value = "id", required = false) Integer id, Model model){
         List<Menu> menus = this.menuRepository.findAll();
         List<Comida> comidas = this.comidaRepository.findAll();
         Menu menu = null;
-        List<Comida> comidasMenu = null;
+        List<Comida> comidasMenu = new ArrayList<>();
 
         if(id!=null){
             menu = this.menuRepository.findById(id).orElse(null);
         }
 
         if(menu!=null){
-            comidasMenu = new ArrayList<>(menu.getComidas());
+            comidasMenu = menu.getComidas();
         }
 
         model.addAttribute("menus", menus);
@@ -53,19 +56,30 @@ public class DietistaController {
         return "dietista/menus";
     }
 
-    @PostMapping("/guardar")
-    public String doGuardar(@RequestParam(value = "id", required = false) Integer id, @RequestParam(value = "comidasMenu", required = false) List<Comida> comidasMenu){
-        if(id!=null){
-           Menu menu = menuRepository.findById(id).orElse(null);
-           menu.setComidas((Set<Comida>) comidasMenu);
-           menuRepository.save(menu);
+    @PostMapping("/anyadirComida")
+    public String doAnyadirComida(@RequestParam(value = "menuId") Integer menuId, @RequestParam(value = "comidaId") Integer comidaId, Model model){
+        Menu menu = menuRepository.findById(menuId).orElse(new Menu());
+        Comida comida = comidaRepository.findById(comidaId).orElse(null);
+        List<Comida> comidasMenu = menu.getComidas();
+        if(comida!=null){
+            comidasMenu.add(comida);
         }
-        return "reditec:/dietista/menus";
+        menu.setComidas(comidasMenu);
+        menuRepository.save(menu);
+        return "redirect:/dietista/menus?id="+menu.getId();
     }
 
-    @PostMapping("/limpiar")
+    @PostMapping("/guardar")
+    public String doGuardar(@RequestParam(value = "id") Integer id, @RequestParam("nombre") String nombre){
+           Menu menu = menuRepository.findById(id).orElse(new Menu());
+           menu.setNombre(nombre);
+           menuRepository.save(menu);
+        return "redirect:./menus";
+    }
+
+    @GetMapping("/limpiar")
     public String doLimpiar(Model model){
-        return "reditect:/dietista/menus";
+        return "redirect:./menus";
     }
 
     @PostMapping("/borrar")
@@ -73,7 +87,7 @@ public class DietistaController {
         if(id!=null){
             menuRepository.deleteById(id);
         }
-        return "reditec:/dietista/menus";
+        return "redirect:./menus";
     }
 
 

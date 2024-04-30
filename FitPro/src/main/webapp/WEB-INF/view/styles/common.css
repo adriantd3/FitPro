@@ -22,7 +22,7 @@ body{
     left: 0;
     width: 3em;
     border-radius:12.3%;
-    padding-left: 1p;
+    padding-left: 1px;
 }
 .back-button:hover{
     filter: brightness(85%);
@@ -35,4 +35,15 @@ body{
     justify-content: center;
     align-items: center;
     color:white;
+}
+
+.form-wrapper {
+    text-align: center;
+    padding-top: 200px;
+}
+
+.table td{
+    user-select: none;
+    transition: 0.5s;
+    transition-timing-function: ease;
 }

@@ -23,13 +23,13 @@
 </header>
 
 <div id="menu">
-    <form method="post" action="/dietista/menus">
+    <form method="get" action="/dietista/menus">
         <button type="submit" class="btn  btn-secondary">Menús</button><br/>
     </form>
-    <form method="post" action="/dietista/menus">
+    <form method="get" action="/dietista/menus">
         <button type="submit" class="btn  btn-secondary">Dietas</button><br/>
     </form>
-    <form method="post" action="/dietista/clientes">
+    <form method="get" action="/dietista/clientes">
         <button type="submit" class="btn  btn-secondary">Clientes</button>
     </form>
 </div>

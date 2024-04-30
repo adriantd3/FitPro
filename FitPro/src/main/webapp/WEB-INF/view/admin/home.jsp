@@ -20,13 +20,13 @@
         <form method="post" action="/admin/users?id=0">
             <button type="submit" class="btn btn-primary">Users</button>
         </form>
-        <form method="post" action="/admin/exercises">
+        <form method="post" action="/admin/exercises?id=0">
             <button type="submit" class="btn btn-primary">Exercises</button>
         </form>
-        <form method="post" action="/admin/food">
+        <form method="post" action="/admin/food?id=0">
             <button type="submit" class="btn btn-primary">Food</button>
         </form>
-        <form method="post" action="/admin/assignment">
+        <form method="post" action="/admin/assignment?id=0">
             <button type="submit" class="btn btn-primary">Assignment</button>
         </form>
     </div>

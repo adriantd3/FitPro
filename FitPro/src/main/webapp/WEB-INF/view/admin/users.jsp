@@ -55,8 +55,8 @@
         <table class="table table-borderless">
             <tbody>
             <tr>
-                <td>Nombre:<input name="Nombre" type="text" placeholder="Nombre" value=<%=usuario == null ? "" : usuario.getNombre()%>></td>
-                <td>Apellidos:<input name="Apellidos" type="text" placeholder="Apellidos" value=<%=usuario == null ? "" : usuario.getApellidos()%>></td>
+                <td>Nombre:<input name="Nombre" type="text" placeholder="Nombre" value="<%=usuario == null ? "" : usuario.getNombre()%>"></td>
+                <td>Apellidos:<input name="Apellidos" type="text" placeholder="Apellidos" value="<%=usuario == null ? "" : usuario.getApellidos()%>"></td>
                 <td>DNI:<input name="DNI" type="text"  placeholder="DNI" value=<%=usuario == null ? "" : usuario.getDni()%>></td>
                 <td>Rol: <select name="Rol">
                     <% for(Rol rol : roles){ %>
@@ -79,17 +79,15 @@
             </tr>
             </tbody>
         </table>
-        <div class="form-buttons">
-                <button type="submit" class="btn btn-primary">Guardar</button>
-            <form method="post" action="/admin/delete-user">
-                <input name="Id" type="hidden" value=<%=usuario == null ? "0" : usuario.getId()%>>
-                <button <%= usuario != null ? "" : "disabled" %> type="submit" class="btn btn-primary">Eliminar</button>
-            </form>
-            <form method="post" action="/admin/users?id=0">
-                <button type="submit" class="btn btn-primary">Limpiar</button>
-            </form>
-        </div>
+        <button type="submit" class="btn btn-primary">Guardar</button>
     </form>
+    <div class="form-buttons">
+        <form method="post" action="/admin/delete-exercise">
+            <input name="Id" type="hidden" value=<%=usuario == null ? "0" : usuario.getId()%>>
+            <button <%= usuario != null ? "" : "disabled" %> type="submit" class="btn btn-primary user-delete-button">Eliminar</button>
+        </form>
+        <button type="submit" class="btn btn-primary user-clean-button" onclick="rellenarDatos(0)">Limpiar</button>
+    </div>
 </div>
 </body>
 </html>

@@ -26,42 +26,44 @@
     </a>
     <h1 class="header-text text-center"><%= cliente!= null ? "Rutinas de " + cliente.getNombre() : "Rutinas"%></h1>
 </header>
-<section class="table-container">
-    <table class="table table-striped table-dark">
-        <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Rutina</th>
-            <th scope="col">Fecha</th>
-            <th scope="col">Borrar</th>
-        </tr>
-        </thead>
-        <tbody>
-        <%
-            int num = 1;
-            for (Rutina r : rutinas){
-        %>
-        <tr>
-            <th scope="row"><%= num %></th>
-            <td><%= r.getNombre() %></td>
-            <td><%=r.getFechaCreacion()%></td>
-            <td>
-                <form action="/entrenador_cross_training/borrar_rutina_cliente" method="post">
-                    <input type="hidden" name="rutina" value="<%=r.getId()%>">
-                    <input type="hidden" name="cliente" value="<%=cliente.getId()%>">
-                    <button type="submit" class="btn btn-danger">Borrar</button>
-                </form>
-            </td>
-        </tr>
-        <%
-                num++;
-            }
-        %>
+<section class="scrollable-section">
+    <section class="table-container">
+        <table class="table table-striped table-dark">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Rutina</th>
+                <th scope="col">Fecha</th>
+                <th scope="col">Borrar</th>
+            </tr>
+            </thead>
+            <tbody>
+            <%
+                int num = 1;
+                for (Rutina r : rutinas){
+            %>
+            <tr>
+                <th scope="row"><%= num %></th>
+                <td><%= r.getNombre() %></td>
+                <td><%=r.getFechaCreacion()%></td>
+                <td>
+                    <form action="/entrenador_cross_training/borrar_rutina_cliente" method="post">
+                        <input type="hidden" name="rutina" value="<%=r.getId()%>">
+                        <input type="hidden" name="cliente" value="<%=cliente.getId()%>">
+                        <button type="submit" class="btn btn-danger">Borrar</button>
+                    </form>
+                </td>
+            </tr>
+            <%
+                    num++;
+                }
+            %>
 
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </section>
 </section>
-<br/>
+
 <div class="sesion-buttons">
     <button class="btn btn-success" onclick="window.location.href='/entrenador_cross_training/clientes'">Guardar</button>
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#asignarRutina">

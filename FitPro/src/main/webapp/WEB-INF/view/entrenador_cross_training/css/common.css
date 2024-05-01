@@ -3,7 +3,8 @@ body {
 }
 
 header{
-    position: relative;
+    position: sticky;
+    top: 0;
     align-items: center;
     justify-content: center;
     background-color: #5B5B5B;
@@ -97,6 +98,15 @@ header{
 .form-editar-rutina {
     display: flex;
     gap: 20px;
+}
+
+.scrollable-section {
+    overflow-y: auto;
+    height: 540px;
+}
+
+.scrollable-content {
+    padding: 10px;
 }
 
 h1{

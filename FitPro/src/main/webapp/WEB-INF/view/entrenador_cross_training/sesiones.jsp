@@ -22,42 +22,43 @@
     </a>
     <h1 class="header-text text-center">Sesiones</h1>
 </header>
-<section class="table-container">
-    <table class="table table-striped table-dark">
-        <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Sesion</th>
-            <th scope="col">Editar</th>
-            <th scope="col">Borrar</th>
-        </tr>
-        </thead>
-        <tbody>
-        <%
-            int num = 1;
-            for (Sesion s : sesiones){
+<section class="scrollable-section">
+    <section class="table-container">
+        <table class="table table-striped table-dark">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Sesion</th>
+                <th scope="col">Editar</th>
+                <th scope="col">Borrar</th>
+            </tr>
+            </thead>
+            <tbody>
+            <%
+                int num = 1;
+                for (Sesion s : sesiones){
 
 
-        %>
-        <tr>
-            <th scope="row"><%= num %></th>
-            <td><%= s.getNombre() %></td>
-            <td><button class="btn btn-secondary" onclick="window.location.href='/entrenador_cross_training/sesion?id=<%= s.getId()%>'">Editar</button></td>
-            <td>
-                <form action="/entrenador_cross_training/borrar_sesion" method="post">
-                    <input type="hidden" name="id" value="<%=s.getId()%>">
-                    <button type="submit" class="btn btn-danger">Borrar</button>
-                </form>
-            </td>
-        </tr>
-        <%
-                num++;
-            }
-        %>
-        </tbody>
-    </table>
+            %>
+            <tr>
+                <th scope="row"><%= num %></th>
+                <td><%= s.getNombre() %></td>
+                <td><button class="btn btn-secondary" onclick="window.location.href='/entrenador_cross_training/sesion?id=<%= s.getId()%>'">Editar</button></td>
+                <td>
+                    <form action="/entrenador_cross_training/borrar_sesion" method="post">
+                        <input type="hidden" name="id" value="<%=s.getId()%>">
+                        <button type="submit" class="btn btn-danger">Borrar</button>
+                    </form>
+                </td>
+            </tr>
+            <%
+                    num++;
+                }
+            %>
+            </tbody>
+        </table>
+    </section>
 </section>
-<br/>
 
 <div class="sesion-buttons">
     <button class="btn btn-success" onclick="window.location.href='/entrenador_cross_training/home'">Guardar</button>

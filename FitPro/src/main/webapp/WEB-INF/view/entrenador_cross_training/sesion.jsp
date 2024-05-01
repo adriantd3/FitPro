@@ -28,56 +28,59 @@
     </a>
     <h1 class="header-text text-center">Sesion <%= sesion.getNombre()%></h1>
 </header>
-<section class="sesion-table-container">
-    <%
-        String nombre_ejercicio = "";
-        for (Ejercicio e : mapa.keySet()){
-            nombre_ejercicio = e.getNombre();
-    %>
-    <div>
-        <table style="width: 700px" class="table table-striped table-dark">
-            <thead>
-            <tr><th style="background-color: transparent; color: darkblue;width: 300px"><%= nombre_ejercicio %></th></tr>
-            <tr>
-                <th scope="col">Serie</th>
-                <th scope="col">Peso</th>
-                <th scope="col">Repeticiones</th>
-            </tr>
-            </thead>
-            <tbody>
-            <%
-                int cont = 1;
-                for (Serie s : mapa.get(e)){
+<section class="scrollable-section">
+    <section class="sesion-table-container scrollable-content">
+        <%
+            String nombre_ejercicio = "";
+            for (Ejercicio e : mapa.keySet()){
+                nombre_ejercicio = e.getNombre();
+        %>
+        <div>
+            <table style="width: 700px" class="table table-striped table-dark">
+                <thead>
+                <tr><th style="background-color: transparent; color: darkblue;width: 300px"><%= nombre_ejercicio %></th></tr>
+                <tr>
+                    <th scope="col">Serie</th>
+                    <th scope="col">Peso</th>
+                    <th scope="col">Repeticiones</th>
+                </tr>
+                </thead>
+                <tbody>
+                <%
+                    int cont = 1;
+                    for (Serie s : mapa.get(e)){
 
-            %>
-            <tr>
-                <th scope="row"><%= cont %></th>
-                <td><%= s.getPeso() %></td>
-                <td><%= s.getRepeticiones() %></td>
-                <td style="box-shadow: none;background-color: #434343;border-bottom-width: 0px;">
-                    <form action="/entrenador_cross_training/borrar_serie" method="post">
-                        <input type="hidden" name="sesion" value="<%=sesion.getId()%>">
-                        <input type="hidden" name="serie" value="<%=s.getId().getId()%>">
-                        <input type="hidden" name="ejercicio" value="<%=e.getId()%>">
-                        <button type="submit" class="btn btn-link">Borrar</button>
-                    </form>
-                </td>
-            </tr>
-            <%
-                    cont++;
-                }
-            %>
-            </tbody>
-        </table>
-        <div style="display: flex;justify-content: center;">
-            <button type="button" class="btn btn-primary" onclick="window.location.href='/entrenador_cross_training/anyadir_serie?sesion=<%=sesion.getId()%>&ejercicio=<%=e.getId()%>'">Añadir serie</button>
+                %>
+                <tr>
+                    <th scope="row"><%= cont %></th>
+                    <td><%= s.getPeso() %></td>
+                    <td><%= s.getRepeticiones() %></td>
+                    <td style="box-shadow: none;background-color: #434343;border-bottom-width: 0px;">
+                        <form action="/entrenador_cross_training/borrar_serie" method="post">
+                            <input type="hidden" name="sesion" value="<%=sesion.getId()%>">
+                            <input type="hidden" name="serie" value="<%=s.getId().getId()%>">
+                            <input type="hidden" name="ejercicio" value="<%=e.getId()%>">
+                            <button type="submit" class="btn btn-link">Borrar</button>
+                        </form>
+                    </td>
+                </tr>
+                <%
+                        cont++;
+                    }
+                %>
+                </tbody>
+            </table>
+            <div style="display: flex;justify-content: center;">
+                <button type="button" class="btn btn-primary" onclick="window.location.href='/entrenador_cross_training/anyadir_serie?sesion=<%=sesion.getId()%>&ejercicio=<%=e.getId()%>'">Añadir serie</button>
+            </div>
         </div>
-    </div>
-    <%
-        }
-    %>
+        <%
+            }
+        %>
 
+    </section>
 </section>
+
 <section class="sesion-buttons">
     <button type="button" class="btn btn-success" onclick="window.location.href='/entrenador_cross_training/sesiones'">Guardar</button>
     <button type="button" class="btn btn-danger" onclick="window.location.href='/entrenador_cross_training/borrar_sesion?id=<%= sesion.getId()%>'">Borrar</button>

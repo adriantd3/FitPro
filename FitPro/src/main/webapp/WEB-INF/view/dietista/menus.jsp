@@ -61,29 +61,35 @@
             <section id="Menus" class="menu_table pt-2">
                 <form method="get" action="./menus">
                     <input type="hidden" name="id" id="menuSelector">
-                    <table class="table caption-top text-center table-hover">
-                        <caption class="text-center text-white">Menús</caption>
-                        <thead class="table-dark">
-                            <tr>
-                                <th class="id">º\</th>
-                                <th class="nombre-menu">Nombre</th>
-                                <th class="kcal">Kcal</th>
-                            </tr>
-                        </thead>
-                        <tbody class = "table-group-divider table-secondary">
-                        <%
-                            for(Menu m : menus){
-                        %>
-                            <tr class="menu" onclick="selectMenu(<%= m.getId() %>)">
-                                <td><%= m.getId() %></td>
-                                <td><%= m.getNombre() %></td>
-                                <td><%= m.getCalorias() %></td>
-                            </tr>
-                        <%
-                            }
-                        %>
-                        </tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table class="table caption-top text-center table-hover">
+                            <caption class="text-center text-white">Menús</caption>
+                            <thead class="header table-dark">
+                                <tr>
+                                    <th class="id">º\</th>
+                                    <th class="nombre-menu">Nombre</th>
+                                    <th class="kcal">Kcal</th>
+                                    <th class="fecha">FechaCreación</th>
+                                </tr>
+                            </thead>
+                            <tbody class = "table-group-divider table-secondary">
+                            <%
+                                int menuIndex = 0;
+                                for(Menu m : menus){
+                                    menuIndex++;
+                            %>
+                                <tr class="menu" onclick="selectMenu(<%= m.getId() %>)">
+                                    <td><%= menuIndex %></td>
+                                    <td><%= m.getNombre() %></td>
+                                    <td><%= m.getCalorias() %></td>
+                                    <td><%= m.getFechaCreacion() %></td>
+                                </tr>
+                            <%
+                                }
+                            %>
+                            </tbody>
+                        </table>
+                    </div>
                 </form>
             </section>
         </div>
@@ -109,35 +115,37 @@
                                 <form id="formDeleteComida" method="post" action="./eliminarComida">
                                     <input type="hidden" name="comidaId" id="deleteComidaSelector">
                                     <input type="hidden" name="id" value="<%= menu==null ? 0:menu.getId() %>">
-                                    <table class="table caption-top text-center table-hover">
-                                        <caption class="text-center text-white">Comidas del Menú</caption>
-                                        <thead class="table-dark">
-                                            <tr>
-                                                <th class="id"></th>
-                                                <th class="nombre-comida">Nombre</th>
-                                                <th class="kcal">Kcal</th>
-                                                <th class="table-button"></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class = "table-secondary">
-                                            <%
-                                                if(menu!=null){
-                                                    int index = 0;
-                                                    for(Comida comida : comidasMenu){
-                                                        index++;
-                                            %>
+                                    <div class="table-responsive">
+                                        <table class="table caption-top text-center table-hover">
+                                            <caption class="text-center text-white">Comidas del Menú</caption>
+                                            <thead class="header table-dark">
                                                 <tr>
-                                                    <td><%= index %></td>
-                                                    <td><%= comida.getNombre() %></td>
-                                                    <td><%= comida.getCalorias() %></td>
-                                                    <td><button class="btn bg-danger" onclick="deleteComida(<%= comida.getId() %>)">E</button></td>
+                                                    <th class="id"></th>
+                                                    <th class="nombre-comida">Nombre</th>
+                                                    <th class="kcal">Kcal</th>
+                                                    <th class="table-button"></th>
                                                 </tr>
-                                            <%
+                                            </thead>
+                                            <tbody class = "table-secondary">
+                                                <%
+                                                    if(menu!=null){
+                                                        int comidasMenuIndex = 0;
+                                                        for(Comida comida : comidasMenu){
+                                                            comidasMenuIndex++;
+                                                %>
+                                                    <tr>
+                                                        <td><%= comidasMenuIndex %></td>
+                                                        <td><%= comida.getNombre() %></td>
+                                                        <td><%= comida.getCalorias() %></td>
+                                                        <td><button class="btn bg-danger" onclick="deleteComida(<%= comida.getId() %>)">E</button></td>
+                                                    </tr>
+                                                <%
+                                                        }
                                                     }
-                                                }
-                                            %>
-                                        </tbody>
-                                    </table>
+                                                %>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </form>
                             </section>
                             <div class="menuButtons">
@@ -157,34 +165,35 @@
                         <form id="formAddComida" method="post" action="./anyadirComida">
                             <input type="hidden" name="comidaId" id="addComidaSelector">
                             <input type="hidden" name="id" value="<%= menu==null ? 0:menu.getId() %>">
-                            <table class="table caption-top text-center table-hover">
-                                <caption class="text-center text-white">Comidas</caption>
-                                <thead class="table-dark">
-                                <tr>
-                                    <th class="id"></th>
-                                    <th class="nombre-comida">Nombre</th>
-                                    <th class="kcal">Kcal</th>
-                                    <th class="table-button"></th>
-                                </tr>
-                                </thead>
-                                <tbody class = "table-secondary">
-                                <%
-                                    int index = 0;
-                                    for(Comida comida : comidas){
-                                        index++;
-                                %>
-                                <tr>
-                                    <td><%= index %></td>
-                                    <td><%= comida.getNombre() %></td>
-                                    <td><%= comida.getCalorias() %></td>
-                                    <td><button  class="btn btn-primary" onclick="addComida(<%= comida.getId() %>)">A</button></td>
-                                </tr>
-                                <%
-                                    }
-                                %>
-                                </tbody>
-                            </table>
-
+                            <div class="table-responsive">
+                                <table class="table caption-top text-center table-hover">
+                                    <caption class="header text-center text-white">Comidas</caption>
+                                    <thead class="header table-dark">
+                                    <tr>
+                                        <th class="id"></th>
+                                        <th class="nombre-comida">Nombre</th>
+                                        <th class="kcal">Kcal</th>
+                                        <th class="table-button"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class = "table-secondary">
+                                    <%
+                                        int comidaIndex = 0;
+                                        for(Comida comida : comidas){
+                                            comidaIndex++;
+                                    %>
+                                    <tr>
+                                        <td><%= comidaIndex %></td>
+                                        <td><%= comida.getNombre() %></td>
+                                        <td><%= comida.getCalorias() %></td>
+                                        <td><button  class="btn btn-primary" onclick="addComida(<%= comida.getId() %>)">A</button></td>
+                                    </tr>
+                                    <%
+                                        }
+                                    %>
+                                    </tbody>
+                                </table>
+                            </div>
                         </form>
                     </section>
                 </div>

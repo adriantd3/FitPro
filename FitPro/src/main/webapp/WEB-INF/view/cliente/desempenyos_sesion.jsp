@@ -16,7 +16,7 @@
     <style>
         <%@ include file="../styles/common.css"%>
     </style>
-    <title>Cliente - DesempeñoSesion</title>
+    <title>Cliente - DesempeñosSesion</title>
 </head>
 <body>
 <header>
@@ -26,10 +26,12 @@
 <ul>
     <%
         for (DesempenyoSesion desempenyoSesion : desempenyoSesions){
+            String fecha = desempenyoSesion.getFecha().toString().equals("0001-01-01") ? "Desempeño sin terminar" :
+            desempenyoSesion.getFecha().toString();
     %>
     <li>
-        <a href="/cliente/resultados_sesion?id=<%=desempenyoSesion.getId()%>">
-            <%=desempenyoSesion.getFecha().toString()%>
+        <a href="/cliente/desempenyo_sesion?id=<%=desempenyoSesion.getId()%>">
+            <%=fecha%>
         </a>
     </li>
     <%
@@ -37,7 +39,7 @@
     %>
 </ul>
 
-<form method="post" action="nuevo_desempenyo">
+<form method="post" action="prev_desempenyo">
     <button type="submit" class="btn btn-primary">Nuevo entrenamiento</button>
 </form>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

@@ -1,12 +1,10 @@
 package uma.fitpro.utils;
 
+import uma.fitpro.entity.DesempenyoSerie;
 import uma.fitpro.entity.Ejercicio;
 import uma.fitpro.entity.Serie;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class UtilityFunctions {
     public static String getDayByNumber(Integer number){
@@ -22,9 +20,22 @@ public class UtilityFunctions {
         }
     }
 
-    public static Map<Ejercicio, List<Serie>> generateDictionary(List<Serie> seriesList){
+    public static Map<Ejercicio, List<Serie>> generateDictionaryFromSerie(List<Serie> seriesList){
         HashMap<Ejercicio,List<Serie>> sesion_dict = new HashMap<>();
         for(Serie serie: seriesList) {
+            Ejercicio ejercicio = serie.getEjercicio();
+            if(!sesion_dict.containsKey(ejercicio)) {
+                sesion_dict.put(ejercicio, new ArrayList<>());
+            }
+            sesion_dict.get(ejercicio).add(serie);
+        }
+
+        return sesion_dict;
+    }
+
+    public static Map<Ejercicio, List<DesempenyoSerie>> generateDictionaryFromDesempenyoSerie(Set<DesempenyoSerie> seriesList){
+        HashMap<Ejercicio,List<DesempenyoSerie>> sesion_dict = new HashMap<>();
+        for(DesempenyoSerie serie: seriesList) {
             Ejercicio ejercicio = serie.getEjercicio();
             if(!sesion_dict.containsKey(ejercicio)) {
                 sesion_dict.put(ejercicio, new ArrayList<>());

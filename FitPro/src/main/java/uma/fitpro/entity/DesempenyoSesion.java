@@ -26,10 +26,10 @@ public class DesempenyoSesion {
     @JoinColumn(name = "sesion_id", nullable = false)
     private Sesion sesion;
 
-    @Column(name = "fecha")
+    @Column(name = "fecha" ,nullable = false)
     private LocalDate fecha;
 
-    @OneToMany(mappedBy = "desempenyoSesion")
+    @OneToMany(mappedBy = "desempenyoSesion",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<DesempenyoSerie> desempenyoSeryEntities = new LinkedHashSet<>();
 
     public Integer getId() {

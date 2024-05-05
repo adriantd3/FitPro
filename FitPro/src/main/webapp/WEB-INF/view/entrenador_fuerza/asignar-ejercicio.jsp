@@ -1,4 +1,7 @@
-<%--
+<%@ page import="uma.fitpro.entity.Sesion" %>
+<%@ page import="uma.fitpro.entity.Ejercicio" %>
+<%@ page import="java.util.List" %>
+<%@ page import="uma.fitpro.dao.EjercicioRepository" %><%--
   Created by IntelliJ IDEA.
   User: victor
   Date: 12/4/24
@@ -6,6 +9,12 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<%
+    Sesion sesion = (Sesion) request.getAttribute("sesion");
+
+    List<Ejercicio> ejercicios = (List<Ejercicio>) request.getAttribute("ejercicios");
+%>
 <html>
 <head>
     <title>Ejercicios</title>
@@ -15,9 +24,38 @@
 <body>
 <header>
     <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back_button.png" alt="<-"
-         onclick="window.location.href='/entrenador_fuerza/crear-sesion'"> <!-- Controlar pagina anterior por modelo -->
+         onclick="window.location.href='/entrenador_fuerza/crear-sesion?sesion=<%=sesion.getId()%>'"> <!-- Controlar pagina anterior por modelo -->
     <h1 class="header-text text-center">Ejercicios</h1>
 </header>
+<form method="post" id="form" action="/entrenador_fuerza/guardar-ejercicio">
+    <input type="hidden" name="ejercicio" id="ejercicio_id" value="">
+    <input type="hidden" name="sesion" id="sesion_id" value=<%=sesion.getId()%>>
+</form>
 
+<section class="mt-3 ms-3 h-100">
+    <ul class="list-group m-3">
+        <%
+            for(Ejercicio ejercicio : ejercicios){
+        %>
+        <button onclick="submitForm(<%=ejercicio.getId()%>)" class="list-button list-group-item" id=<%=ejercicio.getId()%>>
+            <%=ejercicio.getNombre()%>
+        </button>
+            <%
+            }
+        %>
+</section>
+
+<script>
+
+    function submitForm(id){
+        const input_id = document.getElementById("ejercicio_id");
+
+        input_id.value = id;
+
+        const form = document.getElementById("form");
+        form.submit();
+        console.log("hola")
+    }
+</script>
 </body>
 </html>

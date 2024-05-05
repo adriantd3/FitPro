@@ -11,7 +11,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     Usuario cliente = (Usuario) session.getAttribute("cliente");
-    Rutina rutina = (Rutina) request.getAttribute("rutina");
+    Rutina rutina = (Rutina) session.getAttribute("rutina");
     List<Sesion> sesionesRutina = (List<Sesion>) request.getAttribute("sesiones");
 %>
 <html>
@@ -34,7 +34,7 @@
             <%
             for(Sesion sesion : sesionesRutina){
         %>
-        <button onclick="window.location.href='/entrenador_fuerza/crear-sesion?rutina=<%=rutina.getId()%>&sesion=<%=sesion.getId()%>'" class="list-button list-group-item">
+        <button onclick="window.location.href='/entrenador_fuerza/crear-sesion?sesion=<%=sesion.getId()%>'" class="list-button list-group-item">
             <%=sesion.getNombre()%>
         </button>
             <%

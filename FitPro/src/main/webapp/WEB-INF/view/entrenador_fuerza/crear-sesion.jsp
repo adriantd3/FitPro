@@ -14,7 +14,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%
-    Rutina rutina = (Rutina) request.getAttribute("rutina");
+    Rutina rutina = (Rutina) session.getAttribute("rutina");
     Sesion sesion = (Sesion) request.getAttribute("sesion");
     HashMap<Ejercicio, List<Serie>> tablas = new HashMap<>();
     for(Serie serie : sesion.getSeries()){
@@ -77,7 +77,7 @@
     <button class="btn btn-danger">
         Borrar
     </button>
-    <button class="btn btn-primary">
+    <button class="btn btn-primary" onclick="window.location.href='/entrenador_fuerza/asignar-ejercicio?sesion=<%=sesion.getId()%>'">
         Añadir Ejercicio
     </button>
 </footer>

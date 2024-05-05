@@ -9,12 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import uma.fitpro.dao.RutinaRepository;
-import uma.fitpro.dao.SesionRepository;
-import uma.fitpro.dao.UsuarioRepository;
-import uma.fitpro.entity.Rutina;
-import uma.fitpro.entity.Sesion;
-import uma.fitpro.entity.Usuario;
+import uma.fitpro.dao.*;
+import uma.fitpro.entity.*;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -39,6 +35,12 @@ public class EntrenadorFuerzaController {
 
     @Autowired
     private SesionRepository sesionRepository;
+
+    @Autowired
+    private EjercicioRepository ejercicioRepository;
+
+    @Autowired
+    private SerieRepository serieRepository;
 
     @PostMapping("/home")
     public String doEntrenadorFuerzaHome() {
@@ -81,17 +83,12 @@ public class EntrenadorFuerzaController {
     }
 
     @GetMapping("/crear-sesion")
-    public String doCrearSesion(@RequestParam("rutina") Integer rutina_id,
-                                @RequestParam("sesion")@Nullable Integer sesion_id, Model model, HttpSession session) {
-
-        Rutina rutina = rutinaRepository.findById(rutina_id).orElse(null);
-        model.addAttribute("rutina", rutina);
+    public String doCrearSesion(@RequestParam("sesion")@Nullable Integer sesion_id, Model model, HttpSession session) {
         Sesion sesion;
         if (sesion_id != null) {
             sesion = sesionRepository.findById(sesion_id).orElse(null);
             model.addAttribute("sesion", sesion);
         }
-
 
         return "/entrenador_fuerza/crear-sesion";
     }
@@ -99,8 +96,36 @@ public class EntrenadorFuerzaController {
     @GetMapping("/rutina")
     public String doRutina(@RequestParam("rutina") Integer rutina_id, Model model, HttpSession session) {
         Rutina rutina = rutinaRepository.findById(rutina_id).orElse(null);
-        model.addAttribute("rutina", rutina);
+        session.setAttribute("rutina", rutina);
         model.addAttribute("sesiones", sesionRepository.findAllByOrdenSesionRutina(rutina.getOrdenSesionRutinas()));
         return "/entrenador_fuerza/rutina";
+    }
+
+    @GetMapping("/asignar-ejercicio")
+    public String doAsignarEjercicio(@RequestParam("sesion") Integer sesion_id, Model model, HttpSession session) {
+        Sesion sesion = sesionRepository.findById(sesion_id).orElse(null);
+        model.addAttribute("sesion", sesion);
+
+        model.addAttribute("ejercicios", ejercicioRepository.findAll());
+
+        return "/entrenador_fuerza/asignar-ejercicio";
+    }
+
+    @PostMapping("/guardar-ejercicio")
+    public String doGuardarClientes(@RequestParam("ejercicio") Integer ejercicio_id,
+                                    @RequestParam("sesion") Integer sesion_id, Model model, HttpSession session) {
+        Sesion sesion = sesionRepository.findById(sesion_id).orElse(null);
+        Ejercicio ejercicio = ejercicioRepository.findById(ejercicio_id).orElse(null);
+        model.addAttribute("sesion", sesion);
+
+        Serie serieNueva = new Serie();
+        serieNueva.setRepeticiones(0);
+        serieNueva.setPeso((float)0);
+        serieNueva.setEjercicio(ejercicio);
+        serieNueva.setSesion(sesion);
+
+        serieRepository.saveAndFlush(serieNueva);
+
+        return "/entrenador_fuerza/crear-sesion";
     }
 }

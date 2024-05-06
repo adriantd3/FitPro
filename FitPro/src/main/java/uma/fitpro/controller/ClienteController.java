@@ -3,6 +3,7 @@ package uma.fitpro.controller;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import uma.fitpro.dao.*;
@@ -30,6 +31,9 @@ public class ClienteController {
 
     @Autowired
     private DesempenyoSerieRepository desempenyoSerieRepository;
+
+    @Autowired
+    private EjercicioRepository ejercicioRepository;
 
     @GetMapping("/rutinas")
     public String doRutinas(Model model, HttpSession session) {
@@ -124,6 +128,7 @@ public class ClienteController {
         return "cliente/prev_entrenamiento";
     }
 
+
     @PostMapping("/nuevo_desempenyo_sesion")
     public String doNuevoDesempenyoSesion(Model model,HttpSession session) {
         Sesion sesion = (Sesion) session.getAttribute("sesion");
@@ -136,20 +141,57 @@ public class ClienteController {
         des.setFecha(LocalDate.of(1,1,1));
         des.setSesion(sesion);
         des.setUsuario(cliente);
-        //Necesito que se cree al instante, pues necesito su id.
+
         desempenyoSesionRepository.saveAndFlush(des);
 
-        Set<DesempenyoSerie> desempenyoSeries = new HashSet<>();
         for(Serie serie : series_list){
             DesempenyoSerie des_serie = getDesempenyoSerie(serie, des);
-            desempenyoSeries.add(des_serie);
+            desempenyoSerieRepository.saveAndFlush(des_serie);
         }
 
-        des.setDesempenyoSeries(desempenyoSeries);
-        desempenyoSesionRepository.saveAndFlush(des);
-
         return "redirect:/cliente/entrenamiento?id=" + des.getId();
+    }
 
+    @PostMapping("/borrar_serie")
+    public String doBorrarSerie(@RequestParam("id") Integer desempenyoSerieId,
+                                @RequestParam("desempenyo_sesion_id") Integer desempenyo_sesion_id) {
+        desempenyoSerieRepository.deleteById(desempenyoSerieId);
+
+        return "redirect:/cliente/entrenamiento?id=" + desempenyo_sesion_id;
+    }
+
+    @PostMapping("/terminar_entrenamiento")
+    public String doTerminarEntrenamiento(@RequestParam("desempenyo_sesion_id") Integer desempenyo_sesion_id,
+            Model model,HttpSession session) {
+        Sesion sesion = (Sesion) session.getAttribute("sesion");
+        DesempenyoSesion des = desempenyoSesionRepository.findById(desempenyo_sesion_id).orElse(null);
+        if(des != null){
+            des.setFecha(LocalDate.now());
+        }
+
+        desempenyoSesionRepository.save(des);
+
+        return "redirect:/cliente/desempenyos_sesion?id=" + sesion.getId();
+    }
+
+    @PostMapping("/cancelar_entrenamiento")
+    public String doCancelarEntrenamiento(@RequestParam("desempenyo_sesion_id") Integer desempenyo_sesion_id,
+                                          Model model,HttpSession session) {
+        Sesion sesion = (Sesion) session.getAttribute("sesion");
+        desempenyoSesionRepository.deleteById(desempenyo_sesion_id);
+
+        return "redirect:/cliente/desempenyos_sesion?id=" + sesion.getId();
+    }
+
+    @PostMapping("/nueva_serie")
+    public String doNuevaSerie(@RequestParam("desempenyo_sesion_id") Integer desempenyo_sesion_id,
+                               @RequestParam("ejercicio_id") Integer ejercicio_id,
+                               Model model){
+        DesempenyoSerie desSerie = new DesempenyoSerie();
+        desSerie.setDesempenyoSesion(desempenyoSesionRepository.findById(desempenyo_sesion_id).orElse(null));
+        desSerie.setEjercicio(ejercicioRepository.findById(ejercicio_id).orElse(null));
+
+        //TERMINAR
     }
 
     private DesempenyoSerie getDesempenyoSerie(Serie serie, DesempenyoSesion des) {
@@ -161,6 +203,7 @@ public class ClienteController {
         des_serie.setRepeticiones(serie.getRepeticiones());
         des_serie.setDistancia(serie.getDistancia());
         des_serie.setDuracion(serie.getDuracion());
+
         return des_serie;
     }
 

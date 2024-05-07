@@ -57,16 +57,28 @@ public class EntrenadorFuerzaController {
         if (cliente_id != null) {
             Usuario cliente = usuarioRepository.findById(cliente_id).orElse(null);
             session.setAttribute("cliente", cliente);
-            rutinas = rutinaRepository.findByClienteByEntrenador(cliente.getRutinasCliente(), entrenador);
-
+            rutinas = rutinaRepository.findByNotInRutinasCliente(cliente.getRutinasCliente());
         }
         else{
             rutinas = new ArrayList<>(entrenador.getRutinasEntrenador());
             session.setAttribute("cliente", null);
         }
-
         model.addAttribute("rutinas", rutinas);
         return "/entrenador_fuerza/crud-rutina";
+    }
+
+    @GetMapping("guardar-rutina")
+    public String doGuardarRutina(@RequestParam("rutina") Integer rutina_id, Model model, HttpSession session){
+        Rutina rutina = rutinaRepository.findById(rutina_id).orElse(null);
+        Usuario cliente = (Usuario) session.getAttribute("cliente");
+
+        Set<Rutina> nuevasRutinas = new HashSet<>(cliente.getRutinasCliente());
+        nuevasRutinas.add(rutina);
+        cliente.setRutinasCliente(nuevasRutinas);
+
+        usuarioRepository.save(cliente);
+        return "redirect:/entrenador_fuerza/crud-rutina?cliente=" + cliente.getId();
+
     }
 
     @GetMapping("/clientes")

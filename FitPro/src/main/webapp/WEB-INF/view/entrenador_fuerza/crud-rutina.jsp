@@ -1,6 +1,8 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page import="uma.fitpro.entity.Rutina" %>
 <%@ page import="java.util.List" %>
-<%@ page import="uma.fitpro.entity.Usuario" %><%--
+<%@ page import="uma.fitpro.entity.Usuario" %>
+<%@ page import="java.util.ArrayList" %><%--
   Created by IntelliJ IDEA.
   User: victor
   Date: 12/4/24
@@ -10,8 +12,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     List<Rutina> rutinas = (List<Rutina>) request.getAttribute("rutinas");
-
+    List<Rutina> rutinasPrincipales;
     Usuario cliente = (Usuario) session.getAttribute("cliente");
+    if(cliente != null) {
+        rutinasPrincipales = new ArrayList<Rutina>(cliente.getRutinasCliente());
+    }else{
+        rutinasPrincipales = rutinas;
+    }
 %>
 <html>
 <head>
@@ -26,12 +33,18 @@
     <h1 class="header-text text-center">Rutinas de entrenamiento <%if(cliente != null){%><%="de "+cliente.getNombre()%><%}%></h1> <!-- Controlar si es de un usario para añadir "de usuario" y solo sus listas -->
 </header>
 <section class="mt-3 ms-3 h-100">
-    <button class=" btn btn-primary top-50"
-            onclick="window.location.href='/entrenador_fuerza/rutina'">Añadir Rutina
-    </button>
+    <form >
+        <input type="text" placeholder="Nombre de la rutina nueva..."/>
+        <button type="submit" class=" btn btn-primary top-50"
+                onclick="window.location.href='/entrenador_fuerza/rutina?rutina='"
+        >Añadir Rutina
+        </button>
+    </form>
+
+    <% if(cliente != null){ %><h1 style="color: white">Rutinas asignadas</h1> <%}%>
     <ul class="list-group m-3">
         <%
-            for(Rutina rutina : rutinas){
+            for(Rutina rutina : rutinasPrincipales){
         %>
         <button onclick="window.location.href='/entrenador_fuerza/rutina?rutina=<%=rutina.getId()%>'" class="list-button list-group-item">
             <%=rutina.getNombre()+ " " + rutina.getFechaCreacion()%>
@@ -40,6 +53,21 @@
             }
         %>
     </ul>
+
+    <% if(cliente != null){ %>
+    <h1 style="color: white">Rutinas no asignadas</h1>
+        <ul class="list-group m-3">
+            <%
+                for(Rutina rutina : rutinas){
+            %>
+            <button onclick="window.location.href='/entrenador_fuerza/guardar-rutina?rutina=<%=rutina.getId()%>'" class="list-button list-group-item">
+                <%=rutina.getNombre()+ " " + rutina.getFechaCreacion()%>
+            </button>
+            <%
+                }
+            %>
+        </ul>
+    <%}%>
 </section>
 </body>
 </html>

@@ -10,6 +10,6 @@ import java.util.Set;
 
 public interface RutinaRepository extends JpaRepository<Rutina, Integer> {
 
-    @Query("select R from Rutina R where R.entrenador = :entrenador and R in :rutinasCliente")
-    public List<Rutina> findByClienteByEntrenador(Set<Rutina> rutinasCliente, Usuario entrenador);
+    @Query("select R from Rutina R where R not in :rutinasCliente")
+    public List<Rutina> findByNotInRutinasCliente(Set<Rutina> rutinasCliente);
 }

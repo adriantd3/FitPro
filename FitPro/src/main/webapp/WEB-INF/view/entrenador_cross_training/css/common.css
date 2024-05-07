@@ -137,3 +137,25 @@ h6 {
     margin-top: 20px;
     text-decoration: underline;
 }
+
+/* Estilos para la barra de desplazamiento */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Estilos para el track (el área no desplazada) */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 5px;
+}
+
+/* Estilos para el thumb (el control deslizante) */
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 5px;
+}
+
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}

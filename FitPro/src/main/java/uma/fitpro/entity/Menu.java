@@ -3,6 +3,7 @@ package uma.fitpro.entity;
 import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
 
+import java.time.LocalDate;
 import java.util.*;
 
 @Entity
@@ -20,8 +21,8 @@ public class Menu {
     @Column(name = "calorias", nullable = false)
     private Float calorias;
 
-    @Column(name = "fecha_creacion", nullable = false, length = 45)
-    private String fechaCreacion;
+    @Column(name = "fecha_creacion", nullable = false)
+    private LocalDate fechaCreacion;
 
     @ManyToMany
     @JoinTable(name = "comida_menu",
@@ -31,7 +32,7 @@ public class Menu {
 
     public Menu() {
         setNombre("NuevoMenú");
-        setFechaCreacion(String.valueOf(new Date()));
+        setFechaCreacion(LocalDate.now());
         setCalorias(0f);
     }
 
@@ -59,11 +60,11 @@ public class Menu {
         this.calorias = calorias;
     }
 
-    public String getFechaCreacion() {
+    public LocalDate getFechaCreacion() {
         return fechaCreacion;
     }
 
-    public void setFechaCreacion(String fechaCreacion) {
+    public void setFechaCreacion(LocalDate fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
 

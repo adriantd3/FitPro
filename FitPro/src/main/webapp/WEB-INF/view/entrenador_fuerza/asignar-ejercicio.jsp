@@ -1,7 +1,9 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page import="uma.fitpro.entity.Sesion" %>
 <%@ page import="uma.fitpro.entity.Ejercicio" %>
 <%@ page import="java.util.List" %>
-<%@ page import="uma.fitpro.dao.EjercicioRepository" %><%--
+<%@ page import="uma.fitpro.dao.EjercicioRepository" %>
+<%@ page import="uma.fitpro.entity.Serie" %><%--
   Created by IntelliJ IDEA.
   User: victor
   Date: 12/4/24
@@ -12,8 +14,10 @@
 
 <%
     Sesion sesion = (Sesion) request.getAttribute("sesion");
-
+    Serie serie = (Serie) request.getAttribute("serie");
     List<Ejercicio> ejercicios = (List<Ejercicio>) request.getAttribute("ejercicios");
+    System.out.println(ejercicios.size());
+    Ejercicio ejercicio = new Ejercicio();
 %>
 <html>
 <head>
@@ -27,18 +31,18 @@
          onclick="window.location.href='/entrenador_fuerza/crear-sesion?sesion=<%=sesion.getId()%>'"> <!-- Controlar pagina anterior por modelo -->
     <h1 class="header-text text-center">Ejercicios</h1>
 </header>
-<form method="post" id="form" action="/entrenador_fuerza/guardar-ejercicio">
-    <input type="hidden" name="ejercicio" id="ejercicio_id" value="">
-    <input type="hidden" name="sesion" id="sesion_id" value=<%=sesion.getId()%>>
-</form>
+<form:form id="form" method="post" action="/entrenador_fuerza/guardar-ejercicio" modelAttribute="serie">
+    <form:input type="hidden" path="ejercicio" id="ejercicio_id"/>
+    <form:input type="hidden" path="sesion" id="sesion_id" value="<%=sesion.getId()%>"/>
+</form:form>
 
 <section class="mt-3 ms-3 h-100">
     <ul class="list-group m-3">
         <%
-            for(Ejercicio ejercicio : ejercicios){
+            for(Ejercicio ej : ejercicios){
         %>
-        <button onclick="submitForm(<%=ejercicio.getId()%>)" class="list-button list-group-item" id=<%=ejercicio.getId()%>>
-            <%=ejercicio.getNombre()%>
+        <button onclick="submitForm(<%=ej.getId()%>)" class="list-button list-group-item" id=<%=ejercicio.getId()%>>
+            <%=ej.getNombre()%>
         </button>
             <%
             }
@@ -49,12 +53,14 @@
 
     function submitForm(id){
         const input_id = document.getElementById("ejercicio_id");
-
         input_id.value = id;
+
+        console.log(document.getElementById("ejercicio_id").value);
+        console.log(document.getElementById("sesion_id").value);
 
         const form = document.getElementById("form");
         form.submit();
-        console.log("hola")
+
     }
 </script>
 </body>

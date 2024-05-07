@@ -39,24 +39,26 @@
     <%
         for (Ejercicio ejercicio : tablas.keySet()){
     %>
-    <table class="table caption-top text-center w-50 ">
+    <table style="border-spacing: 0" class="table caption-top text-center w-50 ">
         <a href="#" class="d-block fs-3"><%=ejercicio.getNombre()%></a>
         <thead class="table-dark">
         <tr>
-            <th class="id">Serie</th>
             <th class="nombre-menu">Peso</th>
             <th class="kcal">Repeticiones</th>
+            <th style="background-color: transparent;border-bottom-width: 0"></th>
+            <th style="background-color: transparent;border-bottom-width: 0"></th>
         </tr>
         </thead>
-        <tbody class = "table-group-divider table-secondary">
+        <tbody style="border-top: 0 !important;" class = "table-group-divider table-secondary">
         <%
             for(Serie serie : tablas.get(ejercicio)){
         %>
 
         <tr onclick="">
-            <td><%= serie.getId().getId()%></td>
             <td><%= serie.getPeso() %></td>
             <td><%= serie.getRepeticiones() %></td>
+            <td style="background-color: transparent !important; border-bottom-width: 0"><a style="color: yellow" href="">Editar Serie</a></td>
+            <td style="background-color: transparent !important; border-bottom-width: 0"><a style="color: red" href="">Eliminar Serie</a></td>
         </tr>
 
         <%

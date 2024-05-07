@@ -5,10 +5,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import uma.fitpro.dao.*;
 import uma.fitpro.entity.*;
 
@@ -102,29 +99,28 @@ public class EntrenadorFuerzaController {
     }
 
     @GetMapping("/asignar-ejercicio")
-    public String doAsignarEjercicio(@RequestParam("sesion") Integer sesion_id, Model model, HttpSession session) {
+    public String doAsignarEjercicio(@ModelAttribute("sesion") Integer sesion_id, Model model, HttpSession session) {
         Sesion sesion = sesionRepository.findById(sesion_id).orElse(null);
         model.addAttribute("sesion", sesion);
 
-        model.addAttribute("ejercicios", ejercicioRepository.findAll());
+        List<Ejercicio> ejercicios = ejercicioRepository.findAll();
+        model.addAttribute("ejercicios", ejercicios);
+
+        Serie serie = new Serie();
+        model.addAttribute("serie", serie);
 
         return "/entrenador_fuerza/asignar-ejercicio";
     }
 
     @PostMapping("/guardar-ejercicio")
-    public String doGuardarClientes(@RequestParam("ejercicio") Integer ejercicio_id,
-                                    @RequestParam("sesion") Integer sesion_id, Model model, HttpSession session) {
-        Sesion sesion = sesionRepository.findById(sesion_id).orElse(null);
-        Ejercicio ejercicio = ejercicioRepository.findById(ejercicio_id).orElse(null);
-        model.addAttribute("sesion", sesion);
+    public String doGuardarEjercicio(@ModelAttribute("serie") Serie serie, Model model, HttpSession session) {
+        model.addAttribute("sesion", serie.getSesion());
 
-        Serie serieNueva = new Serie();
-        serieNueva.setRepeticiones(0);
-        serieNueva.setPeso((float)0);
-        serieNueva.setEjercicio(ejercicio);
-        serieNueva.setSesion(sesion);
-
-        serieRepository.saveAndFlush(serieNueva);
+        serie.setRepeticiones(0);
+        serie.setPeso((float)0);
+        serie.setDistancia((float)0);
+        serie.setDuracion(0);
+        serieRepository.save(serie);
 
         return "/entrenador_fuerza/crear-sesion";
     }

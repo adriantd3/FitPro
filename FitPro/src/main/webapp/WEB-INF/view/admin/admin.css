@@ -111,3 +111,9 @@ button {
 .trabajador-table {
     width: 410px;
 }
+
+.swap-button {
+    background-color: transparent;
+    border-style: none;
+    font-size: 50px;
+}

@@ -89,12 +89,12 @@
             <form action="/admin/add_trabajador_propio" method="post">
                 <input type="hidden" name="clienteId" value="<%=cliente.getId()%>">
                  <% if (trabajador_nuevo != null ) { %> <input type="hidden" name="trabajadorId" value="<%=trabajador_nuevo.getId()%>"> <% } %>
-                <button type="submit" <%= trabajador_nuevo != null ? "" : "disabled" %>> <- </button>
+                <button class="swap-button" type="submit" <%= trabajador_nuevo != null ? "" : "disabled" %>> ⬅️ </button>
             </form>
             <form action="/admin/delete_trabajador_propio" method="post">
                 <input type="hidden" name="clienteId" value="<%=cliente.getId()%>">
                 <% if (trabajador_propio != null ) { %> <input type="hidden" name="trabajadorId" value="<%=trabajador_propio.getId()%>"> <% } %>
-                <button type="submit" <%= trabajador_propio != null ? "" : "disabled" %>> -> </button>
+                <button class="swap-button" type="submit" <%= trabajador_propio != null ? "" : "disabled" %>> ➡️ </button>
             </form>
         </div>
         <div class="trabajador-table">

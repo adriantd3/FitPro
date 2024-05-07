@@ -94,7 +94,7 @@
                     <input type="hidden" name="cliente" value="<%=cliente.getId()%>">
 
                     <div style="display: flex; justify-content: flex-end; margin-top: 20px">
-                        <button type="submit" class="btn btn-primary">Asignar rutina</button>
+                        <button type="submit" <%=todasLasRutinas.size()==0 ? "disabled" : ""%> class="btn btn-primary">Asignar rutina</button>
                     </div>
                 </form>
             </div>

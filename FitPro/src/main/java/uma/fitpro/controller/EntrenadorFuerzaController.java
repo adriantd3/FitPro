@@ -141,4 +141,12 @@ public class EntrenadorFuerzaController {
 
         return "redirect:/entrenador_fuerza/crear-sesion?sesion=" + serie.getSesion().getId();
     }
+
+    @GetMapping("eliminar-serie")
+    public String doEliminarSerie(@RequestParam("serie") Integer serie_id, Model model, HttpSession session) {
+        Serie serie = serieRepository.findById(serie_id).orElse(null);
+        serieRepository.delete(serie);
+
+        return "redirect:/entrenador_fuerza/crear-sesion?sesion=" + serie.getSesion().getId();
+    }
 }

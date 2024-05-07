@@ -65,7 +65,7 @@
                     <a style="color: yellow" href="/entrenador_fuerza/editar-serie?serie=<%=s.getId()%>">Editar Serie</a>
                 </td>
                 <td style="background-color: transparent !important; border-bottom-width: 0">
-                    <a style="color: red" href="">Eliminar Serie</a>
+                    <a style="color: red" href="/entrenador_fuerza/eliminar-serie?serie=<%=s.getId()%>">Eliminar Serie</a>
                 </td>
             </tr>
 

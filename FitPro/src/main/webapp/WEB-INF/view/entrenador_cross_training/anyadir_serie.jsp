@@ -1,9 +1,12 @@
 <%@ page import="uma.fitpro.entity.Sesion" %>
 <%@ page import="uma.fitpro.entity.Ejercicio" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.Map" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     Sesion sesion = (Sesion) request.getAttribute("sesion");
     Ejercicio ejercicio = (Ejercicio) request.getAttribute("ejercicio");
+    Map<Integer, List<String>> ejercicioParametros = (Map<Integer, List<String>>) request.getAttribute("ejercicioParametros");
 %>
 <!doctype html>
 <html lang="en">
@@ -19,14 +22,19 @@
 <body>
 <h1 class="ejemplo">Nueva serie</h1>
 <form method="post" action="/entrenador_cross_training/guardar_serie">
+    <%
+        int n = 1;
+        for (String elemento : ejercicioParametros.get(ejercicio.getTipo().getId())) {
+
+    %>
     <div  style="width: 300px; margin-left: 40px" class="input-group mb-3">
-        <span class="input-group-text btn btn-success">Peso</span>
-        <input type="number" name="peso" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+        <span class="input-group-text btn btn-success"><%=elemento%></span>
+        <input type="number" name="param<%=n%>" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
     </div>
-    <div  style="width: 300px; margin-left: 40px" class="input-group mb-3">
-        <span class="input-group-text btn btn-success">Repeticiones</span>
-        <input type="number" name="repeticiones" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-    </div>
+    <%
+            n++;
+        }
+    %>
     <input type="hidden" name="sesion" value="<%= sesion.getId() %>">
     <input type="hidden" name="ejercicio" value="<%= ejercicio.getId() %>">
     <div class="div-nueva-serie">

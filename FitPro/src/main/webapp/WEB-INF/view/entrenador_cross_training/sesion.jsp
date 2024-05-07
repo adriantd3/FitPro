@@ -1,11 +1,12 @@
 <%@ page import="uma.fitpro.entity.Sesion" %>
-<%@ page import="java.util.HashMap" %>
 <%@ page import="uma.fitpro.entity.Ejercicio" %>
 <%@ page import="uma.fitpro.entity.Serie" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.TreeMap" %>
+<%@ page import="java.util.Map" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
+    Map<Integer, List<String>> ejercicioParametros = (Map<Integer, List<String>>) request.getAttribute("ejercicioParametros");
     Sesion sesion = (Sesion) request.getAttribute("sesion");
     TreeMap<Ejercicio, List<Serie>> mapa = (TreeMap<Ejercicio, List<Serie>>) request.getAttribute("mapa");
     session.setAttribute("sesion", sesion);
@@ -26,7 +27,7 @@
     <a href="/entrenador_cross_training/sesiones">
         <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back.png" alt="" onclick="">
     </a>
-    <h1 class="header-text text-center">Sesion <%= sesion.getNombre()%></h1>
+    <h1 class="header-text text-center"><%= sesion.getNombre()%></h1>
 </header>
 <section class="scrollable-section">
     <section class="sesion-table-container scrollable-content">
@@ -41,8 +42,8 @@
                 <tr><th style="background-color: transparent; color: darkblue;width: 300px"><%= nombre_ejercicio %></th></tr>
                 <tr>
                     <th scope="col">Serie</th>
-                    <th scope="col">Peso</th>
-                    <th scope="col">Repeticiones</th>
+                    <th scope="col"><%=ejercicioParametros.get(e.getTipo().getId()).get(0)%></th>
+                    <th scope="col"><%=ejercicioParametros.get(e.getTipo().getId()).get(1)%></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -53,13 +54,43 @@
                 %>
                 <tr>
                     <th scope="row"><%= cont %></th>
-                    <td><%= s.getPeso() %></td>
+                    <%
+                        if (e.getTipo().getId() == 1){
+                    %>
+                        <td><%= s.getPeso() %></td>
+                        <td><%= s.getRepeticiones() %></td>
+                    <%
+                        }
+                    %>
+                    <%
+                        if (e.getTipo().getId() == 2){
+                    %>
+                    <td><%= s.getDistancia() %></td>
+                    <td><%= s.getDuracion() %></td>
+                    <%
+                        }
+                    %>
+                    <%
+                        if (e.getTipo().getId() == 3){
+                    %>
+                    <td><%= s.getDuracion() %></td>
+                    <td><%= s.getDescanso() %></td>
+                    <%
+                        }
+                    %>
+                    <%
+                        if (e.getTipo().getId() == 4 || e.getTipo().getId() == 5){
+                    %>
                     <td><%= s.getRepeticiones() %></td>
+                    <td><%= s.getDescanso() %></td>
+                    <%
+                        }
+                    %>
+
                     <td style="box-shadow: none;background-color: #434343;border-bottom-width: 0px;">
                         <form action="/entrenador_cross_training/borrar_serie" method="post">
                             <input type="hidden" name="sesion" value="<%=sesion.getId()%>">
-                            <input type="hidden" name="serie" value="<%=s.getId().getId()%>">
-                            <input type="hidden" name="ejercicio" value="<%=e.getId()%>">
+                            <input type="hidden" name="serie" value="<%=s.getId()%>">
                             <button type="submit" class="btn btn-link">Borrar</button>
                         </form>
                     </td>

@@ -80,9 +80,22 @@
             </div>
             <div class="modal-body">
                 <form method="post" action="/entrenador_cross_training/asignar_rutina_cliente">
-
+                    <%
+                        String color = "secondary";
+                        if (todasLasRutinas.size() == 0) {
+                            color = "danger";
+                        }
+                    %>
                     Rutina a asignar:
-                    <select class="selectpicker" data-live-search="true" data-style="btn-secondary" name="rutina">
+                    <select class="selectpicker" data-live-search="true" data-style="btn-<%=color%>" name="rutina">
+                        <%
+                            if (todasLasRutinas.size() == 0){
+
+                        %>
+                            <option>No hay rutinas para asignar</option>
+                        <%
+                            }
+                        %>
                         <%
                             for (Rutina r : todasLasRutinas){
                         %>

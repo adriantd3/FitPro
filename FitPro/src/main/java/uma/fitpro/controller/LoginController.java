@@ -21,9 +21,7 @@ public class LoginController {
     @GetMapping("/")
     public String doLogin(HttpSession sesion) {
 
-        Usuario dietista = this.usuarioRepository.findById(1).orElse(null);
-        sesion.setAttribute("user", dietista);
-        return "dietista/home";
+        return "login/login";
     }
 
     @PostMapping("/home")

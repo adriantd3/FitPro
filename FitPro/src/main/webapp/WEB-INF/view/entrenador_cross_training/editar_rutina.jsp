@@ -28,7 +28,7 @@
     <a href="/entrenador_cross_training/rutinas">
         <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back.png" alt="" onclick="">
     </a>
-    <h1 class="header-text text-center">Editar rutina <%=rutina.getNombre()%></h1>
+    <h1 class="header-text text-center"><%=rutina.getNombre()%></h1>
 </header>
 <section class="table-container">
     <table class="table table-striped table-dark">

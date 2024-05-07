@@ -212,8 +212,6 @@ public class EntrenadorCrossTrainingController {
     }
 
 
-
-
     // --------------------------- SESIONES ---------------------------
 
     @GetMapping("/sesiones")
@@ -238,11 +236,24 @@ public class EntrenadorCrossTrainingController {
         Sesion sesion = sesionRepository.findById(id_sesion).orElse(null);
         List<Serie> series = new ArrayList<>(sesion.getSeries());
         Map<Ejercicio, List<Serie>> mapa = getEjercicioYSeries(series);
+        Map<Integer,List<String>> ejercicioParametros = getEjercicioParametros();
 
+        model.addAttribute("ejercicioParametros", ejercicioParametros);
         model.addAttribute("sesion", sesion);
         model.addAttribute("mapa", mapa);
 
         return "entrenador_cross_training/sesion";
+    }
+
+    private Map<Integer,List<String>> getEjercicioParametros(){
+        HashMap<Integer, List<String>> mapa = new HashMap<>();
+        mapa.put(1, Arrays.asList("Peso (kg)", "Repeticiones"));
+        mapa.put(2, Arrays.asList("Distancia (m)", "Duracion (seg)"));
+        mapa.put(3, Arrays.asList("Duracion (seg)", "Descanso (seg)"));
+        mapa.put(4, Arrays.asList("Repeticiones", "Descanso (seg)"));
+        mapa.put(5, Arrays.asList("Repeticiones", "Descanso (seg)"));
+
+        return mapa;
     }
 
     @PostMapping("/nueva_sesion")
@@ -303,7 +314,9 @@ public class EntrenadorCrossTrainingController {
         if (!mapa.containsKey(ejercicio)){
             mapa.put(ejercicio, new ArrayList<>());
         }
+        Map<Integer,List<String>> ejercicioParametros = getEjercicioParametros();
 
+        model.addAttribute("ejercicioParametros", ejercicioParametros);
         model.addAttribute("sesion", sesion);
         model.addAttribute("mapa", mapa);
 
@@ -318,7 +331,9 @@ public class EntrenadorCrossTrainingController {
                                  Model model){
         Sesion sesion = sesionRepository.findById(id_sesion).orElse(null);
         Ejercicio ejercicio = ejercicioRepository.findById(id_ejercicio).orElse(null);
+        Map<Integer,List<String>> ejercicioParametros = getEjercicioParametros();
 
+        model.addAttribute("ejercicioParametros", ejercicioParametros);
         model.addAttribute("ejercicio", ejercicio);
         model.addAttribute("sesion", sesion);
 
@@ -328,21 +343,34 @@ public class EntrenadorCrossTrainingController {
     @PostMapping("/guardar_serie")
     public String doGuardarSerie(@RequestParam("sesion") Integer id_sesion,
                                  @RequestParam("ejercicio") Integer id_ejercicio,
-                                 @RequestParam("repeticiones") Integer repeticiones,
-                                 @RequestParam("peso") float peso){
+                                 @RequestParam("param1") String parametro1,
+                                 @RequestParam("param2") String parametro2){
         Sesion sesion = sesionRepository.findById(id_sesion).orElse(null);
         Ejercicio ejercicio = ejercicioRepository.findById(id_ejercicio).orElse(null);
 
         Serie nueva_serie = new Serie();
-        SerieId serieId = new SerieId();
-        serieId.setEjercicioId(ejercicio.getId());
-        serieId.setSesionId(sesion.getId());
-
         nueva_serie.setEjercicio(ejercicio);
         nueva_serie.setSesion(sesion);
-        nueva_serie.setId(serieId);
-        nueva_serie.setPeso(peso);
-        nueva_serie.setRepeticiones(repeticiones);
+
+        // Guardamos los parametros de la nueva serie (segun el ejercicio)
+        switch (ejercicio.getTipo().getId()){
+            case 1:
+                nueva_serie.setPeso(Float.parseFloat(parametro1));
+                nueva_serie.setRepeticiones(Integer.parseInt(parametro2));
+                break;
+            case 2:
+                nueva_serie.setDistancia(Float.parseFloat(parametro1));
+                nueva_serie.setDuracion(Integer.parseInt(parametro2));
+                break;
+            case 3:
+                nueva_serie.setDuracion(Integer.parseInt(parametro1));
+                nueva_serie.setDescanso(Integer.parseInt(parametro2));
+                break;
+            case 4,5:
+                nueva_serie.setRepeticiones(Integer.parseInt(parametro1));
+                nueva_serie.setDescanso(Integer.parseInt(parametro2));
+                break;
+        }
         this.serieRepository.save(nueva_serie);
 
         return "redirect:/entrenador_cross_training/sesion?id=" + sesion.getId();
@@ -350,15 +378,9 @@ public class EntrenadorCrossTrainingController {
 
     @PostMapping("/borrar_serie")
     public String doBorrarSerie(@RequestParam("sesion") Sesion sesion,
-                                @RequestParam("serie") Integer id_serie,
-                                @RequestParam("ejercicio") Integer id_ejercicio){
+                                @RequestParam("serie") Integer id_serie){
 
-        SerieId serieId = new SerieId();
-        serieId.setId(id_serie);
-        serieId.setSesionId(sesion.getId());
-        serieId.setEjercicioId(id_ejercicio);
-
-        Serie serie = this.serieRepository.findById(serieId).orElse(null);
+        Serie serie = this.serieRepository.findById(id_serie).orElse(null);
         this.serieRepository.delete(serie);
 
         return "redirect:/entrenador_cross_training/sesion?id=" +sesion.getId();

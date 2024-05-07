@@ -28,7 +28,7 @@
     <a href="/entrenador_cross_training/sesion?id=<%=sesion.getId()%>">
         <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back.png" alt="" onclick="">
     </a>
-    <h1 class="header-text text-center">Ejercicios</h1>
+    <h1 class="header-text text-center"><%= sesion.getNombre()%></h1>
 </header>
 <div class="div-ejercicio-filtros">
     <nav class="navbar navbar-light" style="
@@ -80,24 +80,25 @@
         </form>
     </nav>
 </div>
+<h5 class="h5-ejercicios">Escoge el ejercicio a añadir:</h5>
+<section class="ejercicios-scrollable-section">
+    <div class="div-ejercicio-buttons">
+        <%
+            for (Ejercicio e : ejercicios){
 
-<ul style="margin: 40px;">
-    <%
-        for (Ejercicio e : ejercicios){
 
-
-    %>
-    <li>
+        %>
         <form method="post" action="/entrenador_cross_training/anyadir_ejercicio">
             <input type="hidden" name="sesion" value="<%=sesion.getId()%>">
             <input type="hidden" name="ejercicio" value="<%=e.getId()%>">
-            <button type="submit" class="btn btn-link"><%= e.getNombre() + ", MUSCULO: " + e.getGrupoMuscular().getGrupoMuscular() + ", TIPO: " + e.getTipo().getTipo()%></button>
+            <button type="submit" class="btn btn-secondary"><%= e.getNombre() %></button>
         </form>
-    </li>
-    <%
-        }
-    %>
-</ul>
+        <%
+            }
+        %>
+    </div>
+</section>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

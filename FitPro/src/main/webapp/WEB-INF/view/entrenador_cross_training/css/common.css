@@ -109,6 +109,19 @@ header{
     padding: 10px;
 }
 
+.div-ejercicio-buttons {
+    margin: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.ejercicios-scrollable-section {
+    margin-top: 20px;
+    overflow-y: auto;
+    height: 400px;
+}
+
 h1{
     color: white;
     text-align: center;
@@ -116,4 +129,11 @@ h1{
 
 h6 {
     color: beige;
+}
+
+.h5-ejercicios {
+    margin-left: 40px;
+    color: white;
+    margin-top: 20px;
+    text-decoration: underline;
 }

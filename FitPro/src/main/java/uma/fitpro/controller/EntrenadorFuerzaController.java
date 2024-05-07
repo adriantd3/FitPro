@@ -87,6 +87,8 @@ public class EntrenadorFuerzaController {
             model.addAttribute("sesion", sesion);
         }
 
+        //System.out.printf(String.valueOf(model.getAttribute("serie") == null));
+
         return "/entrenador_fuerza/crear-sesion";
     }
 
@@ -123,5 +125,20 @@ public class EntrenadorFuerzaController {
         serieRepository.save(serie);
 
         return "/entrenador_fuerza/crear-sesion";
+    }
+
+    @GetMapping("editar-serie")
+    public String doEditarSerie(@RequestParam("serie") Integer serie_id, Model model, HttpSession session) {
+        Serie serie = serieRepository.findById(serie_id).orElse(null);
+        model.addAttribute("serie", serie);
+        model.addAttribute("sesion", serie.getSesion());
+        return "/entrenador_fuerza/crear-sesion";
+    }
+
+    @PostMapping("/guardar-serie")
+    public String doGuardarSerie(@ModelAttribute("serie") Serie serie) {
+        serieRepository.save(serie);
+
+        return "redirect:/entrenador_fuerza/crear-sesion?sesion=" + serie.getSesion().getId();
     }
 }

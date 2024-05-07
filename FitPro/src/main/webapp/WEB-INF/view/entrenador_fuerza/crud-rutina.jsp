@@ -27,7 +27,8 @@
 </header>
 <section class="mt-3 ms-3 h-100">
     <button class=" btn btn-primary top-50"
-            onclick="window.location.href='/entrenador_fuerza/rutina'">Añadir Rutina</button>
+            onclick="window.location.href='/entrenador_fuerza/rutina'">Añadir Rutina
+    </button>
     <ul class="list-group m-3">
         <%
             for(Rutina rutina : rutinas){

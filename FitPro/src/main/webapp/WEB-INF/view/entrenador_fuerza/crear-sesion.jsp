@@ -1,3 +1,4 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page import="uma.fitpro.entity.Rutina" %>
 <%@ page import="uma.fitpro.entity.Ejercicio" %>
 <%@ page import="uma.fitpro.entity.Sesion" %>
@@ -21,6 +22,7 @@
         tablas.computeIfAbsent(serie.getEjercicio(), k -> new ArrayList<>());
         tablas.get(serie.getEjercicio()).add(serie);
     }
+    Serie serie = (Serie) request.getAttribute("serie");
 %>
 <html>
 <head>
@@ -35,41 +37,73 @@
     <h1 class="header-text text-center"><%=sesion.getNombre()%></h1> <!-- Mostrar informacion relevante en la X-->
 </header>
 
-<section class="mt-3 ms-3 h-100">
+<section class="mt-3 ms-3 h-100 d-flex">
+    <div class="w-50">
     <%
         for (Ejercicio ejercicio : tablas.keySet()){
     %>
-    <table style="border-spacing: 0" class="table caption-top text-center w-50 ">
-        <a href="#" class="d-block fs-3"><%=ejercicio.getNombre()%></a>
-        <thead class="table-dark">
-        <tr>
-            <th class="nombre-menu">Peso</th>
-            <th class="kcal">Repeticiones</th>
-            <th style="background-color: transparent;border-bottom-width: 0"></th>
-            <th style="background-color: transparent;border-bottom-width: 0"></th>
-        </tr>
-        </thead>
-        <tbody style="border-top: 0 !important;" class = "table-group-divider table-secondary">
-        <%
-            for(Serie serie : tablas.get(ejercicio)){
-        %>
 
-        <tr onclick="">
-            <td><%= serie.getPeso() %></td>
-            <td><%= serie.getRepeticiones() %></td>
-            <td style="background-color: transparent !important; border-bottom-width: 0"><a style="color: yellow" href="">Editar Serie</a></td>
-            <td style="background-color: transparent !important; border-bottom-width: 0"><a style="color: red" href="">Eliminar Serie</a></td>
-        </tr>
+        <table style="border-spacing: 0" class="table caption-top text-center w-100 ">
+            <a href="#" class="d-block fs-3"><%=ejercicio.getNombre()%></a>
+            <thead class="table-dark">
+            <tr>
+                <th class="nombre-menu">Peso</th>
+                <th class="kcal">Repeticiones</th>
+                <th style="background-color: transparent;border-bottom-width: 0"></th>
+                <th style="background-color: transparent;border-bottom-width: 0"></th>
+            </tr>
+            </thead>
+            <tbody style="border-top: 0 !important;" class = "table-group-divider table-secondary">
+            <%
+                for(Serie s : tablas.get(ejercicio)){
+            %>
 
+            <tr onclick="">
+                <td><%= s.getPeso() %></td>
+                <td><%= s.getRepeticiones() %></td>
+                <td style="background-color: transparent !important; border-bottom-width: 0">
+                    <a style="color: yellow" href="/entrenador_fuerza/editar-serie?serie=<%=s.getId()%>">Editar Serie</a>
+                </td>
+                <td style="background-color: transparent !important; border-bottom-width: 0">
+                    <a style="color: red" href="">Eliminar Serie</a>
+                </td>
+            </tr>
+
+            <%
+                }
+            %>
+            </tbody>
+        </table>
+
+        <button class="btn btn-primary mb-5">
+            Añadir Serie
+        </button>
         <%
             }
         %>
-        </tbody>
-    </table>
+    </div>
+    <%
+        if(serie != null){
+    %>
+    <div class="w-50 align-items-center d-flex flex-column">
+        <h1 class="pb-2" style="color: white"> Serie de <%=serie.getEjercicio().getNombre()%></h1>
+        <form:form method="post" action="/entrenador_fuerza/guardar-serie" modelAttribute="serie">
+            <form:label cssStyle="color: white; width: 110px" path="peso" >Peso: </form:label>
+            <form:input path="peso" type="number"/>
+            <br>
+            <form:label cssStyle="color: white; width: 110px" path="repeticiones" >Repeticiones: </form:label>
+            <form:input path="repeticiones" type="number"/>
+            <br>
 
-    <button class="btn btn-primary mb-5">
-        Añadir Serie
-    </button>
+            <form:input type="hidden" path="id" value="<%=serie.getId()%>"/>
+            <form:input type="hidden" path="sesion" value="<%=serie.getSesion().getId()%>"/>
+            <form:input type="hidden" path="ejercicio" value="<%=serie.getEjercicio().getId()%>"/>
+            <form:input type="hidden" path="distancia" value="0"/>
+            <form:input type="hidden" path="duracion" value="0"/>
+
+            <input class="btn btn-success" type="submit" value="Guardar">
+        </form:form>
+    </div>
     <%
         }
     %>

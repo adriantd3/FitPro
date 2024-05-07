@@ -3,8 +3,8 @@ package uma.fitpro.entity;
 import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.time.LocalDate;
+import java.util.*;
 
 @Entity
 @Table(name = "menu")
@@ -21,14 +21,20 @@ public class Menu {
     @Column(name = "calorias", nullable = false)
     private Float calorias;
 
-    @Column(name = "fecha_creacion", nullable = false, length = 45)
-    private String fechaCreacion;
+    @Column(name = "fecha_creacion", nullable = false)
+    private LocalDate fechaCreacion;
 
     @ManyToMany
     @JoinTable(name = "comida_menu",
             joinColumns = @JoinColumn(name = "menu_id"),
             inverseJoinColumns = @JoinColumn(name = "comida_id"))
-    private Set<Comida> comidaEntities = new LinkedHashSet<>();
+    private List<Comida> comidaEntities = new ArrayList<>();
+
+    public Menu() {
+        setNombre("NuevoMenú");
+        setFechaCreacion(LocalDate.now());
+        setCalorias(0f);
+    }
 
     public Integer getId() {
         return id;
@@ -54,19 +60,27 @@ public class Menu {
         this.calorias = calorias;
     }
 
-    public String getFechaCreacion() {
+    public LocalDate getFechaCreacion() {
         return fechaCreacion;
     }
 
-    public void setFechaCreacion(String fechaCreacion) {
+    public void setFechaCreacion(LocalDate fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
 
-    public Set<Comida> getComidas() {
+    public List<Comida> getComidas() {
         return comidaEntities;
     }
 
-    public void setComidas(Set<Comida> comidaEntities) {
+    public void updateKcal(){
+        float kcal = 0;
+        for(Comida comida : comidaEntities){
+            kcal += comida.getCalorias();
+        }
+        setCalorias(kcal);
+    }
+
+    public void setComidas(List<Comida> comidaEntities) {
         this.comidaEntities = comidaEntities;
     }
 

@@ -80,7 +80,7 @@ public class EntrenadorFuerzaController {
     }
 
     @GetMapping("/crear-sesion")
-    public String doCrearSesion(@RequestParam("sesion")@Nullable Integer sesion_id, Model model, HttpSession session) {
+    public String doCrearSesion(@RequestParam("sesion")@Nullable Integer sesion_id, Model model) {
         Sesion sesion;
         if (sesion_id != null) {
             sesion = sesionRepository.findById(sesion_id).orElse(null);
@@ -101,7 +101,7 @@ public class EntrenadorFuerzaController {
     }
 
     @GetMapping("/asignar-ejercicio")
-    public String doAsignarEjercicio(@ModelAttribute("sesion") Integer sesion_id, Model model, HttpSession session) {
+    public String doAsignarEjercicio(@ModelAttribute("sesion") Integer sesion_id, Model model) {
         Sesion sesion = sesionRepository.findById(sesion_id).orElse(null);
         model.addAttribute("sesion", sesion);
 
@@ -115,7 +115,7 @@ public class EntrenadorFuerzaController {
     }
 
     @PostMapping("/guardar-ejercicio")
-    public String doGuardarEjercicio(@ModelAttribute("serie") Serie serie, Model model, HttpSession session) {
+    public String doGuardarEjercicio(@ModelAttribute("serie") Serie serie, Model model) {
         model.addAttribute("sesion", serie.getSesion());
 
         serie.setRepeticiones(0);
@@ -128,7 +128,7 @@ public class EntrenadorFuerzaController {
     }
 
     @GetMapping("editar-serie")
-    public String doEditarSerie(@RequestParam("serie") Integer serie_id, Model model, HttpSession session) {
+    public String doEditarSerie(@RequestParam("serie") Integer serie_id, Model model) {
         Serie serie = serieRepository.findById(serie_id).orElse(null);
         model.addAttribute("serie", serie);
         model.addAttribute("sesion", serie.getSesion());
@@ -143,10 +143,27 @@ public class EntrenadorFuerzaController {
     }
 
     @GetMapping("eliminar-serie")
-    public String doEliminarSerie(@RequestParam("serie") Integer serie_id, Model model, HttpSession session) {
+    public String doEliminarSerie(@RequestParam("serie") Integer serie_id) {
         Serie serie = serieRepository.findById(serie_id).orElse(null);
         serieRepository.delete(serie);
 
         return "redirect:/entrenador_fuerza/crear-sesion?sesion=" + serie.getSesion().getId();
+    }
+
+    @GetMapping("anyadir-serie")
+    public String doAnyadirSerie(@RequestParam("sesion") Integer sesion_id ,
+                                 @RequestParam("ejercicio") Integer ejercicio_id) {
+        Sesion sesion = sesionRepository.findById(sesion_id).orElse(null);
+        Ejercicio ejercicio = ejercicioRepository.findById(ejercicio_id).orElse(null);
+        Serie serie = new Serie();
+        serie.setRepeticiones(0);
+        serie.setPeso((float)0);
+        serie.setDistancia((float)0);
+        serie.setDuracion(0);
+        serie.setSesion(sesion);
+        serie.setEjercicio(ejercicio);
+
+        serieRepository.save(serie);
+        return "redirect:/entrenador_fuerza/editar-serie?serie=" + serie.getId();
     }
 }

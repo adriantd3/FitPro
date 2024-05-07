@@ -75,7 +75,9 @@
             </tbody>
         </table>
 
-        <button class="btn btn-primary mb-5">
+        <button class="btn btn-primary mb-5"
+                onclick="window.location.href=
+                    '/entrenador_fuerza/anyadir-serie?sesion=<%=sesion.getId()%>&ejercicio=<%=ejercicio.getId()%>'">
             Añadir Serie
         </button>
         <%

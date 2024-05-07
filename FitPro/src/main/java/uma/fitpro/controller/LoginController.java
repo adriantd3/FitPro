@@ -19,21 +19,32 @@ public class LoginController {
     private UsuarioRepository usuarioRepository;
 
     @GetMapping("/")
-    public String doLogin() {
+    public String doLogin(HttpSession session) {
+        if(session.getAttribute("user") != null) {
+            session.removeAttribute("user");
+        }
         return "login/login";
     }
 
     @PostMapping("/home")
-    public String doHome(@RequestParam String mail, @RequestParam String password, Model model, HttpSession session) {
+    public String doHome(@RequestParam(required = false) String mail, @RequestParam(required = false) String password, Model model, HttpSession session) {
         List<Usuario> user = usuarioRepository.findByMail(mail);
-        if (!user.isEmpty()) {
-            Usuario usuario = user.get(0);
-            if (usuario != null && usuario.getContrasenya().equals(password)) {
-                session.setAttribute("user", usuario);
-                return usuario.getRol().getNombre()+"/home";
+            if (!user.isEmpty()) {
+                Usuario usuario = user.get(0);
+                if (usuario != null && usuario.getContrasenya().equals(password)) {
+                    session.setAttribute("user", usuario);
+                    return usuario.getRol().getNombre()+"/home";
+                }
             }
+        return "redirect:/";
+    }
+
+    @GetMapping("/home")
+    public String doReturnHome( HttpSession session) {
+        if(session.getAttribute("user") != null) {
+            Usuario logguedUser = (Usuario) session.getAttribute("user");
+            return logguedUser.getRol().getNombre()+"/home";
         }
         return "redirect:/";
-
     }
 }

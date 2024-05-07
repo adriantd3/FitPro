@@ -26,12 +26,13 @@
 </head>
 <body>
 <header>
-    <img class="back-button ms-1 mt-1 " src="./assets/image.png" alt="">
+    <img class="back-button ms-1 mt-1 " src="../assets/back_button.png" alt="Back" onclick="window.location.href = '/home'">
     <h1 class="header-text text-center">Ejercicios</h1>
 </header>
 <div class="user-wrapper">
-    <table class="table-exercises table table-dark">
-        <thead>
+    <table class="table-exercises table caption-top text-center">
+        <caption class="text-center text-white">Lista de ejercicios</caption>
+        <thead class="table-dark">
         <tr>
             <th scope="col">ID</th>
             <th scope="col">Nombre</th>
@@ -41,7 +42,7 @@
         </thead>
         <tbody>
         <% for(Ejercicio e : ejercicios){ %>
-        <tr class="<%= ejercicio!=null && e.getId() == ejercicio.getId() ? "selected-row" : ""%>" onclick=rellenarDatos(<%=e.getId()%>)>
+        <tr role="button" class="<%= ejercicio!=null && e.getId() == ejercicio.getId() ? "selected-row" : ""%>" onclick=rellenarDatos(<%=e.getId()%>)>
             <td><%=e.getId()%></td>
             <td><%=e.getNombre()%></td>
             <td><%=e.getTipo().getTipo()%></td>

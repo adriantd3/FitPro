@@ -24,12 +24,13 @@
 </head>
 <body>
 <header>
-    <img class="back-button ms-1 mt-1 " src="./assets/image.png" alt="">
+    <img class="back-button ms-1 mt-1 " src="../assets/back_button.png" alt="back" onclick="window.location.href = '/home'">
     <h1 class="header-text text-center">Comidas</h1>
 </header>
 <div class="user-wrapper">
-    <table class="table-food table table-dark">
-        <thead>
+    <table class="table-food table caption-top text-center">
+        <caption class="text-center text-white">Lista de comidas</caption>
+        <thead class="table-dark">
         <tr>
             <th scope="col">ID</th>
             <th scope="col">Nombre</th>
@@ -38,7 +39,7 @@
         </thead>
         <tbody>
         <% for(Comida c : comidas){ %>
-        <tr class="<%= comida!=null && c.getId() == comida.getId() ? "selected-row" : ""%>" onclick=rellenarDatos(<%=c.getId()%>)>
+        <tr role="button" class="<%= comida!=null && c.getId() == comida.getId() ? "selected-row" : ""%>" onclick=rellenarDatos(<%=c.getId()%>)>
             <td><%=c.getId()%></td>
             <td><%=c.getNombre()%></td>
             <td><%=c.getCalorias()%></td>

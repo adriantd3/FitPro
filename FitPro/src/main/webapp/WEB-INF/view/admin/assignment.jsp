@@ -37,13 +37,16 @@
 </head>
 <body>
 <header>
-    <img class="back-button ms-1 mt-1 " src="./assets/image.png" alt="">
+    <form>
+        <img class="back-button ms-1 mt-1 " src="../assets/back_button.png" alt="Back" onclick="window.location.href = '/home'">
+    </form>
     <h1 class="header-text text-center">Asignación</h1>
 </header>
 <div class="user-wrapper assignment-gap">
     <div>
-        <table class="table-assignment table table-dark">
-            <thead>
+        <table class="table-assignment table caption-top text-center">
+            <caption class="text-center text-white">Lista de Clientes</caption>
+            <thead class="table-dark">
             <tr>
                 <th scope="col">ID</th>
                 <th scope="col">Cliente</th>
@@ -51,7 +54,7 @@
             </thead>
             <tbody>
             <% for(Usuario c : clientes){ %>
-            <tr class="<%= cliente!=null && c.getId() == cliente.getId() ? "selected-row" : ""%>" onclick=rellenarDatos(<%=c.getId()%>)>
+            <tr role="button" class="<%= cliente!=null && c.getId() == cliente.getId() ? "selected-row" : ""%>" onclick=rellenarDatos(<%=c.getId()%>)>
                 <td><%=c.getId()%></td>
                 <td><%=c.getNombre()%></td>
             </tr>
@@ -62,8 +65,9 @@
     <% if(cliente != null) { %>
     <div class="assignment-wrapper">
         <div class="trabajador-table">
-        <table class="trabajador-table table table-dark">
-            <thead>
+        <table class="table caption-top text-center">
+            <caption class="text-center text-white">Lista de trabajadores asignados</caption>
+            <thead class="table-dark">
             <tr>
                 <th scope="col">ID</th>
                 <th scope="col">Trabajador del cliente</th>
@@ -72,7 +76,7 @@
             </thead>
             <tbody>
             <% for(Usuario c : cliente_trabajadores){ %>
-            <tr class="<%= trabajador_propio!=null && c.getId() == trabajador_propio.getId() ? "selected-row" : ""%>" onclick="seleccionarEntrenadorPropio(<%=cliente.getId()%>,<%=c.getId()%>)">
+            <tr role="button" class="<%= trabajador_propio!=null && c.getId() == trabajador_propio.getId() ? "selected-row" : ""%>" onclick="seleccionarEntrenadorPropio(<%=cliente.getId()%>,<%=c.getId()%>)">
                 <td><%=c.getId()%></td>
                 <td><%=c.getNombre()%></td>
                 <td><%=c.getRol().getNombre()%></td>
@@ -94,8 +98,9 @@
             </form>
         </div>
         <div class="trabajador-table">
-        <table class="table table-dark">
-            <thead>
+        <table class="table caption-top text-center">
+            <caption class="text-center text-white">Lista de trabajadores sin asignar</caption>
+            <thead class="table-dark">
             <tr>
                 <th scope="col">ID</th>
                 <th scope="col">Trabajador</th>
@@ -104,7 +109,7 @@
             </thead>
             <tbody>
             <% for(Usuario c : todos_trabajadores){ %>
-            <tr class="<%= trabajador_nuevo!=null && c.getId() == trabajador_nuevo.getId() ? "selected-row" : ""%>" onclick="seleccionarEntrenadorNuevo(<%=cliente.getId()%>,<%=c.getId()%>)">
+            <tr role="button" class="<%= trabajador_nuevo!=null && c.getId() == trabajador_nuevo.getId() ? "selected-row" : ""%>" onclick="seleccionarEntrenadorNuevo(<%=cliente.getId()%>,<%=c.getId()%>)">
                 <td><%=c.getId()%></td>
                 <td><%=c.getNombre()%></td>
                 <td><%=c.getRol().getNombre()%></td>

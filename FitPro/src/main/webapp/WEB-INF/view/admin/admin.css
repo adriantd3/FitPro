@@ -93,7 +93,7 @@ button {
 }
 
 .selected-row * {
-    background-color: #706f6e !important;
+    background-color: #ced4da !important;
     color: black !important;
 }
 

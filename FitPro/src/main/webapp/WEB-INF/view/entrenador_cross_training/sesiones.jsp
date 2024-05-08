@@ -70,14 +70,14 @@
 
 <div class="modal fade" id="nuevaSesion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <div style="background-color: #c4c3c3" class="modal-content">
+        <div style="background-color: #696767;color: white" class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Nueva sesion</h5>
             </div>
             <div class="modal-body">
                 <form method="post" action="/entrenador_cross_training/nueva_sesion">
                     Nombre de la sesion: <input type="text" name="nombre">
-                    <div style="display: flex; justify-content: center; margin-top: 20px">
+                    <div style="display: flex; justify-content: flex-end; margin-top: 20px">
                         <button type="submit" class="btn btn-primary">Guardar sesion</button>
                     </div>
                 </form>

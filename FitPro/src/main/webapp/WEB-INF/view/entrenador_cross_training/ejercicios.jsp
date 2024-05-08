@@ -26,7 +26,7 @@
 <body>
 <header>
     <a href="/entrenador_cross_training/sesion?id=<%=sesion.getId()%>">
-        <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back.png" alt="" onclick="">
+        <img style="margin: 4px" class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back.png" alt="" onclick="">
     </a>
     <h1 class="header-text text-center"><%= sesion.getNombre()%></h1>
 </header>
@@ -91,7 +91,7 @@
         <form method="post" action="/entrenador_cross_training/anyadir_ejercicio">
             <input type="hidden" name="sesion" value="<%=sesion.getId()%>">
             <input type="hidden" name="ejercicio" value="<%=e.getId()%>">
-            <button type="submit" class="btn btn-secondary"><%= e.getNombre() %></button>
+            <button type="submit" class="btn btn-secondary" ><%= e.getNombre() %></button>
         </form>
         <%
             }

@@ -74,7 +74,7 @@
 
 <div class="modal fade" id="asignarRutina" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <div style="background-color: #c4c3c3" class="modal-content">
+        <div style="background-color: #696767;color: white" class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Asignar nueva rutina</h5>
             </div>

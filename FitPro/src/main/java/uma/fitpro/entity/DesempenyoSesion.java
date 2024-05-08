@@ -5,7 +5,9 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -26,11 +28,14 @@ public class DesempenyoSesion {
     @JoinColumn(name = "sesion_id", nullable = false)
     private Sesion sesion;
 
-    @Column(name = "fecha" ,nullable = false)
+    @Column(name = "fecha", nullable = false)
     private LocalDate fecha;
 
-    @OneToMany(mappedBy = "desempenyoSesion",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<DesempenyoSerie> desempenyoSeryEntities = new LinkedHashSet<>();
+    @Column(name = "terminado", nullable = false)
+    private Byte terminado;
+
+    @OneToMany(mappedBy = "desempenyoSesion", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<DesempenyoSerie> desempenyoSeries = new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -64,12 +69,20 @@ public class DesempenyoSesion {
         this.fecha = fecha;
     }
 
-    public Set<DesempenyoSerie> getDesempenyoSeries() {
-        return desempenyoSeryEntities;
+    public Byte getTerminado() {
+        return terminado;
     }
 
-    public void setDesempenyoSeries(Set<DesempenyoSerie> desempenyoSeryEntities) {
-        this.desempenyoSeryEntities = desempenyoSeryEntities;
+    public void setTerminado(Byte terminado) {
+        this.terminado = terminado;
+    }
+
+    public List<DesempenyoSerie> getDesempenyoSeries() {
+        return desempenyoSeries;
+    }
+
+    public void setDesempenyoSeries(List<DesempenyoSerie> desempenyoSeries) {
+        this.desempenyoSeries = desempenyoSeries;
     }
 
 }

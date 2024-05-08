@@ -34,6 +34,9 @@ public class DesempenyoSerie {
     @Column(name = "duracion")
     private Integer duracion;
 
+    @Column(name = "descanso")
+    private Integer descanso;
+
     public Integer getId() {
         return id;
     }
@@ -88,6 +91,14 @@ public class DesempenyoSerie {
 
     public void setDuracion(Integer duracion) {
         this.duracion = duracion;
+    }
+
+    public Integer getDescanso() {
+        return descanso;
+    }
+
+    public void setDescanso(Integer descanso) {
+        this.descanso = descanso;
     }
 
 }

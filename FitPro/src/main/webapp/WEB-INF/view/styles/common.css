@@ -22,7 +22,7 @@ body{
     left: 0;
     width: 3em;
     border-radius:12.3%;
-    padding-left: 1p;
+    padding-left: 1px;
 }
 .back-button:hover{
     filter: brightness(85%);
@@ -37,11 +37,23 @@ body{
     color:white;
 }
 
-li{
-    color: white;
-    font-size: x-large;
+.form-wrapper {
+    text-align: center;
+    padding-top: 200px;
 }
 
-h1{
-    color: white;
+.table-responsive{
+    max-height:475px;
+    margin-bottom: 5px;
+}
+
+.table td{
+    user-select: none;
+    transition: 0.5s;
+    transition-timing-function: ease;
+}
+
+.header{
+    position:sticky;
+    top:0;
 }

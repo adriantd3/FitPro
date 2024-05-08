@@ -191,7 +191,17 @@ public class ClienteController {
         desSerie.setDesempenyoSesion(desempenyoSesionRepository.findById(desempenyo_sesion_id).orElse(null));
         desSerie.setEjercicio(ejercicioRepository.findById(ejercicio_id).orElse(null));
 
-        //TERMINAR
+        model.addAttribute("desSerie",desSerie);
+
+        return "cliente/serie";
+    }
+
+    @PostMapping("/guardar_serie")
+    public String doGuardarSerie(@ModelAttribute("serie") DesempenyoSerie desempenyoSerie,
+                                 Model model) {
+        desempenyoSerieRepository.save(desempenyoSerie);
+
+        return "redirect:/cliente/entrenamiento?id=" + desempenyoSerie.getDesempenyoSesion().getId();
     }
 
     private DesempenyoSerie getDesempenyoSerie(Serie serie, DesempenyoSesion des) {

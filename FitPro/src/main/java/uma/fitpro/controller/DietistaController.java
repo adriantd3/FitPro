@@ -4,18 +4,19 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import uma.fitpro.dao.ComidaRepository;
 import uma.fitpro.dao.MenuRepository;
 import uma.fitpro.dao.SerieRepository;
 import uma.fitpro.entity.*;
+import uma.fitpro.ui.FiltroComida;
+import uma.fitpro.ui.FiltroMenu;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Controller
 @RequestMapping("/dietista")
@@ -43,7 +44,6 @@ public class DietistaController {
         if(id!=null){
             menu = this.menuRepository.findById(id).orElse(null);
         }
-
         if(menu!=null){
             comidasMenu = menu.getComidas();
         }
@@ -52,6 +52,8 @@ public class DietistaController {
         model.addAttribute("menu", menu);
         model.addAttribute("comidasMenu", comidasMenu);
         model.addAttribute("comidas", comidas);
+        model.addAttribute("filtroMenu", new FiltroMenu());
+        model.addAttribute("filtroComida", new FiltroComida());
 
         return "dietista/menus";
     }
@@ -85,7 +87,7 @@ public class DietistaController {
     }
 
     @PostMapping("/guardarMenu")
-    public String doGuardar(@RequestParam(value = "id") Integer id, @RequestParam("nombre") String nombre){
+    public String doGuardarMenu(@RequestParam(value = "id") Integer id, @RequestParam("nombre") String nombre){
            Menu menu = menuRepository.findById(id).orElse(new Menu());
            if(!nombre.equals("")){
                menu.setNombre(nombre);
@@ -95,17 +97,63 @@ public class DietistaController {
         return "redirect:./menus";
     }
 
-    @GetMapping("/limpiar")
-    public String doLimpiar(Model model){
+    @GetMapping("/limpiarMenu")
+    public String doLimpiarMenu(Model model){
         return "redirect:./menus";
     }
 
-    @PostMapping("/borrar")
-    public String doBorrar(@RequestParam(value = "id", required = false) Integer id){
+    @PostMapping("/borrarMenu")
+    public String doBorrarMenu(@RequestParam(value = "id", required = false) Integer id){
         if(id!=null){
             menuRepository.deleteById(id);
         }
         return "redirect:./menus";
+    }
+
+    @GetMapping("/filtrarMenu")
+    public String doFiltrarMenu(@ModelAttribute("filtroMenu") FiltroMenu filtroMenu, BindingResult result, ModelMap model, HttpSession session){
+        String strTo = "dietista/menus";
+        //if (dietistaAutenticado(session) == false) {
+        //    strTo = "redirect:/";
+        //} else if
+        if (filtroMenu.estaVacio()) {
+            strTo = "redirect:./menus";
+        } else {
+            List<Menu> menus = this.menuRepository.buscarConFiltro(filtroMenu.getNombre(), filtroMenu.getFloatKcal(), filtroMenu.getLocalDateFecha());
+            List<Comida> comidas = this.comidaRepository.findAll();
+
+            model.addAttribute("menus", menus);
+            model.addAttribute("menu", null);
+            model.addAttribute("comidasMenu", new ArrayList<Comida>());
+            model.addAttribute("comidas", comidas);
+            model.addAttribute("filtroMenu", filtroMenu);
+            model.addAttribute("filtroComida", new FiltroComida());
+        }
+
+        return strTo;
+    }
+
+    @GetMapping("/filtrarComida")
+    public String doFiltrarComida(@ModelAttribute("filtroComida") FiltroComida filtroComida, BindingResult result, ModelMap model, HttpSession session){
+        String strTo = "dietista/menus";
+        //if (dietistaAutenticado(session) == false) {
+        //    strTo = "redirect:/";
+        //} else if
+        if (filtroComida.estaVacio()) {
+            strTo = "redirect:./menus";
+        } else {
+            List<Menu> menus = this.menuRepository.findAll();
+            List<Comida> comidas = this.comidaRepository.buscarConFiltro(filtroComida.getNombre(), filtroComida.getFloatKcal());
+
+            model.addAttribute("menus", menus);
+            model.addAttribute("menu", null);
+            model.addAttribute("comidasMenu", new ArrayList<Comida>());
+            model.addAttribute("comidas", comidas);
+            model.addAttribute("filtroMenu", new FiltroMenu());
+            model.addAttribute("filtroComida", filtroComida);
+        }
+
+        return strTo;
     }
 
 

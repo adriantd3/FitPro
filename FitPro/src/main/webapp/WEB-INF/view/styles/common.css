@@ -57,3 +57,24 @@ body{
     position:sticky;
     top:0;
 }
+
+::-webkit-scrollbar {
+    width: 5px;
+    color: aliceblue;
+}
+
+::-webkit-scrollbar-track {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    background: #434343;;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}

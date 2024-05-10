@@ -128,9 +128,10 @@ public class ClienteController {
         Set<Serie> series_list = sesion.getSeries();
 
         DesempenyoSesion des = new DesempenyoSesion();
-        des.setFecha(LocalDate.of(1,1,1));
+        des.setFecha(LocalDate.now());
         des.setSesion(sesion);
         des.setUsuario(cliente);
+        des.setTerminado((byte) 0);
 
         desempenyoSesionRepository.saveAndFlush(des);
 
@@ -155,10 +156,8 @@ public class ClienteController {
             HttpSession session) {
         Sesion sesion = (Sesion) session.getAttribute("sesion");
         DesempenyoSesion des = desempenyoSesionRepository.findById(desempenyo_sesion_id).orElse(null);
-        if(des != null){
-            des.setFecha(LocalDate.now());
-        }
 
+        des.setTerminado((byte) 1);
         desempenyoSesionRepository.save(des);
 
         return "redirect:/cliente/desempenyos_sesion?id=" + sesion.getId();
@@ -180,14 +179,22 @@ public class ClienteController {
         DesempenyoSerie desSerie = new DesempenyoSerie();
         desSerie.setDesempenyoSesion(desempenyoSesionRepository.findById(desempenyo_sesion_id).orElse(null));
         desSerie.setEjercicio(ejercicioRepository.findById(ejercicio_id).orElse(null));
+        desempenyoSerieRepository.save(desSerie);
 
         model.addAttribute("desSerie",desSerie);
 
         return "cliente/serie";
     }
 
+    @PostMapping("/editar_serie")
+    public String doEditarSerie(@RequestParam("id") Integer desempenyo_serie_id, Model model){
+        DesempenyoSerie desSerie = desempenyoSerieRepository.findById(desempenyo_serie_id).orElse(null);
+        model.addAttribute("desSerie",desSerie);
+        return "cliente/serie";
+    }
+
     @PostMapping("/guardar_serie")
-    public String doGuardarSerie(@ModelAttribute("serie") DesempenyoSerie desempenyoSerie) {
+    public String doGuardarSerie(@ModelAttribute("desSerie") DesempenyoSerie desempenyoSerie) {
         desempenyoSerieRepository.save(desempenyoSerie);
 
         return "redirect:/cliente/entrenamiento?id=" + desempenyoSerie.getDesempenyoSesion().getId();

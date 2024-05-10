@@ -3,7 +3,6 @@ package uma.fitpro.controller;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import uma.fitpro.dao.*;
@@ -69,9 +68,6 @@ public class ClienteController {
                                      Model model, HttpSession session) {
         //Encontrar los desempeños_sesion de aquellas que tengan el rutina_id y cliente_id
         Sesion sesion = sesionRepository.findById(sesion_id).orElse(null);
-        if(sesion == null) {
-            throw new RuntimeException("Sesion no encontrada");
-        }
         session.setAttribute("sesion",sesion);
 
         Integer cliente_id = (Integer) session.getAttribute("cliente_id");
@@ -79,17 +75,15 @@ public class ClienteController {
                 desempenyoSesionRepository.findByClientIDAndSesionID(sesion_id,cliente_id);
 
         model.addAttribute("desempenyos", desempenyoSesiones);
-        model.addAttribute("sesion_name", sesion.getNombre());
-
         return "cliente/desempenyos_sesion";
     }
 
     @GetMapping("/desempenyo_sesion")
-    public String doResultadosSesion(@RequestParam("id") Integer desempenyo_id, Model model,HttpSession session) {
+    public String doResultadosSesion(@RequestParam("id") Integer desempenyo_id) {
         DesempenyoSesion desempenyoSesion =
                 (DesempenyoSesion) desempenyoSesionRepository.findById(desempenyo_id).orElse(null);
 
-        if(desempenyoSesion.getFecha().toString().equals("0001-01-01")){
+        if(desempenyoSesion.getTerminado() == 0){
             //ENTRENAMIENTO SIN TERMINAR
             return "redirect:/cliente/entrenamiento?id=" + desempenyo_id;
         }
@@ -98,17 +92,15 @@ public class ClienteController {
     }
 
     @GetMapping("/entrenamiento")
-    public String doEntrenamiento(@RequestParam("id") Integer desempenyo_id, Model model, HttpSession session){
+    public String doEntrenamiento(@RequestParam("id") Integer desempenyo_id, Model model){
         DesempenyoSesion desempenyoSesion = desempenyoSesionRepository.findById(desempenyo_id).orElse(null);
-        Set<DesempenyoSerie> desempenyoSeries = desempenyoSesion.getDesempenyoSeries();
-        String tipo = new ArrayList<DesempenyoSerie>(desempenyoSeries).get(0).getPeso() != null ? "FUERZA" : "C-T";
+
+        List<DesempenyoSerie> desempenyoSeries = desempenyoSesion.getDesempenyoSeries();
         Map<Ejercicio,List<DesempenyoSerie>> series_dict =
                 UtilityFunctions.generateDictionaryFromDesempenyoSerie(desempenyoSeries);
 
-        model.addAttribute("tipo", tipo);
         model.addAttribute("desempenyo_sesion_id",desempenyo_id);
         model.addAttribute("series_dict",series_dict);
-        model.addAttribute("serie_name",desempenyoSesion.getSesion().getNombre());
 
         return "cliente/entrenamiento";
     }
@@ -117,12 +109,10 @@ public class ClienteController {
     public String doPrevDesempenyoSesion(Model model,HttpSession session) {
 
         Sesion sesion = (Sesion) session.getAttribute("sesion");
+
         List<Serie> series_list = new ArrayList<>(sesion.getSeries());
-        Map<Ejercicio,List<Serie>> sesion_dict = UtilityFunctions.generateDictionaryFromSerie(series_list);
+        Map<Ejercicio,List<Serie>> sesion_dict = UtilityFunctions.dictFromSerie(series_list);
 
-        String tipo = series_list.get(0).getPeso() != null ? "FUERZA" : "C-T";
-
-        model.addAttribute("tipo",tipo);
         model.addAttribute("sesion_dict", sesion_dict);
 
         return "cliente/prev_entrenamiento";
@@ -162,7 +152,7 @@ public class ClienteController {
 
     @PostMapping("/terminar_entrenamiento")
     public String doTerminarEntrenamiento(@RequestParam("desempenyo_sesion_id") Integer desempenyo_sesion_id,
-            Model model,HttpSession session) {
+            HttpSession session) {
         Sesion sesion = (Sesion) session.getAttribute("sesion");
         DesempenyoSesion des = desempenyoSesionRepository.findById(desempenyo_sesion_id).orElse(null);
         if(des != null){
@@ -176,7 +166,7 @@ public class ClienteController {
 
     @PostMapping("/cancelar_entrenamiento")
     public String doCancelarEntrenamiento(@RequestParam("desempenyo_sesion_id") Integer desempenyo_sesion_id,
-                                          Model model,HttpSession session) {
+                                          HttpSession session) {
         Sesion sesion = (Sesion) session.getAttribute("sesion");
         desempenyoSesionRepository.deleteById(desempenyo_sesion_id);
 
@@ -197,8 +187,7 @@ public class ClienteController {
     }
 
     @PostMapping("/guardar_serie")
-    public String doGuardarSerie(@ModelAttribute("serie") DesempenyoSerie desempenyoSerie,
-                                 Model model) {
+    public String doGuardarSerie(@ModelAttribute("serie") DesempenyoSerie desempenyoSerie) {
         desempenyoSerieRepository.save(desempenyoSerie);
 
         return "redirect:/cliente/entrenamiento?id=" + desempenyoSerie.getDesempenyoSesion().getId();

@@ -6,7 +6,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name = "desempenyo_serie")
-public class DesempenyoSerie {
+public class DesempenyoSerie implements SerieInterface{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -17,7 +17,7 @@ public class DesempenyoSerie {
     @JoinColumn(name = "desempenyo_sesion_id", nullable = false)
     private DesempenyoSesion desempenyoSesion;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "ejercicio_id", nullable = false)
     private Ejercicio ejercicio;

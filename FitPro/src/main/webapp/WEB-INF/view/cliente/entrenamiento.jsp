@@ -1,12 +1,13 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="uma.fitpro.entity.*" %>
+<%@ page import="uma.fitpro.utils.UtilityFunctions" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%
     Map<Ejercicio, List<DesempenyoSerie>> sesion_dict = (Map<Ejercicio, List<DesempenyoSerie>>) request.getAttribute("series_dict");
-    String tipo = (String) request.getAttribute("tipo");
-    String serieName = (String) request.getAttribute("serie_name");
+    Map<Integer,List<String>> params = UtilityFunctions.getEjercicioParametros();
+    Sesion sesion = (Sesion) session.getAttribute("sesion");
     Integer desempenyoSesionId = (Integer) request.getAttribute("desempenyo_sesion_id");
 %>
 
@@ -22,15 +23,14 @@
 <body>
 <header>
     <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back_button.png" alt="">
-    <h1 class="header-text text-center">Entrenamiento en curso : <%=serieName%></h1>
+    <h1 class="header-text text-center">Entrenamiento en curso : <%=sesion.getNombre()%></h1>
 </header>
 <section id="table-container">
     <div class="p-3" style="width: 70%">
         <%
-            String col1 = tipo.equals("FUERZA") ? "Peso" : "Distancia";
-            String col2 = tipo.equals("FUERZA") ? "Repeticiones" : "Duración(m)";
-
             for (Ejercicio ejercicio : sesion_dict.keySet()) {
+                int tipo = ejercicio.getTipo().getId();
+                List<String> cols = params.get(tipo);
         %>
 
         <a href="cliente/ejercicio?id=<%=ejercicio.getId()%>" class="text-primary fs-4"><%=ejercicio.getNombre()%></a>
@@ -38,8 +38,8 @@
             <thead class="table-dark">
             <tr>
                 <th scope="col">Serie</th>
-                <th scope="col"><%=col1%></th>
-                <th scope="col"><%=col2%></th>
+                <th scope="col"><%=cols.get(0)%></th>
+                <th scope="col"><%=cols.get(1)%></th>
             </tr>
             </thead>
             <tbody>
@@ -49,8 +49,29 @@
             %>
             <tr style="">
                 <th scope="row"><%=numSerie%></th>
-                <td><%=serie.getPeso()%></td>
-                <td><%=serie.getRepeticiones()%></td>
+                <%
+                    if(tipo == 1){
+                %>
+                    <td><%=serie.getPeso()%></td>
+                    <td><%=serie.getRepeticiones()%></td>
+                <%
+                    }else if(tipo == 2){
+                %>
+                    <td><%=serie.getDistancia()%></td>
+                    <td><%=serie.getDuracion()%></td>
+                <%
+                    }else if(tipo == 3){
+                %>
+                    <td><%=serie.getDuracion()%></td>
+                    <td><%=serie.getDescanso()%></td>
+                <%
+                    }else if(tipo == 4 || tipo == 5){
+                %>
+                    <td><%=serie.getRepeticiones()%></td>
+                    <td><%=serie.getDescanso()%></td>
+                <%
+                    }
+                %>
                 <td style="box-shadow: none;background-color: #434343;border-bottom-width: 0px;">
                     <form action="/cliente/borrar_serie" method="post" style="height: 8px;">
                         <input type="hidden" name="id" value="<%=serie.getId()%>">

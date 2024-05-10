@@ -7,7 +7,7 @@
 <!doctype html>
 <%
     List<DesempenyoSesion> desempenyoSesions = (List<DesempenyoSesion>) request.getAttribute("desempenyos");
-    String nombreSesion = (String) request.getAttribute("sesion_name");
+    Sesion sesion = (Sesion) session.getAttribute("sesion");
 %>
 <html lang="en">
 <head>
@@ -21,17 +21,16 @@
 <body>
 <header>
     <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back_button.png" alt="">
-    <h1 class="header-text text-center">Desempeños Sesion - <%=nombreSesion%></h1>
+    <h1 class="header-text text-center">Desempeños Sesion - <%=sesion.getNombre()%></h1>
 </header>
 <ul>
     <%
         for (DesempenyoSesion desempenyoSesion : desempenyoSesions){
-            String fecha = desempenyoSesion.getFecha().toString().equals("0001-01-01") ? "Desempeño sin terminar" :
-            desempenyoSesion.getFecha().toString();
+            String terminado = desempenyoSesion.getTerminado() == 1 ? "Terminado" : "No Terminado";
     %>
     <li>
         <a href="/cliente/desempenyo_sesion?id=<%=desempenyoSesion.getId()%>">
-            <%=fecha%>
+            <%=desempenyoSesion.getFecha()%> - <%=terminado%>
         </a>
     </li>
     <%

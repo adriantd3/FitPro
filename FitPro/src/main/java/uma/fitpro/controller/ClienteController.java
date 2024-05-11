@@ -212,6 +212,14 @@ public class ClienteController {
         return "redirect:/cliente/entrenamiento?id=" + desempenyoSerie.getDesempenyoSesion().getId();
     }
 
+    @GetMapping("/ejercicio")
+    public String doEjercicio(@RequestParam("id") Integer ejercicio_id, Model model){
+        Ejercicio ejercicio = ejercicioRepository.findById(ejercicio_id).orElse(null);
+
+        model.addAttribute("ejercicio",ejercicio);
+        return "cliente/ejercicio";
+    }
+
     private DesempenyoSerie getDesempenyoSerie(Serie serie, DesempenyoSesion des) {
         DesempenyoSerie des_serie = new DesempenyoSerie();
 

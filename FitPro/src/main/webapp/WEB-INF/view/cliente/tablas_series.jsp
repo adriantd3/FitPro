@@ -19,7 +19,7 @@
                 List<String> cols = params.get(tipo);
         %>
 
-        <a href="cliente/ejercicio?id=<%=ejercicio.getId()%>" class="text-primary fs-4"><%=ejercicio.getNombre()%></a>
+        <a href="/cliente/ejercicio?id=<%=ejercicio.getId()%>" class="text-primary fs-4"><%=ejercicio.getNombre()%></a>
         <table class="table table-striped text-center">
             <thead class="table-dark">
             <tr>

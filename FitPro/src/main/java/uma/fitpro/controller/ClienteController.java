@@ -79,14 +79,26 @@ public class ClienteController {
     }
 
     @GetMapping("/desempenyo_sesion")
-    public String doResultadosSesion(@RequestParam("id") Integer desempenyo_id) {
+    public String doResultadosSesion(@RequestParam("id") Integer desempenyo_id,
+                                     HttpSession session,
+                                     Model model) {
         DesempenyoSesion desempenyoSesion =
                 (DesempenyoSesion) desempenyoSesionRepository.findById(desempenyo_id).orElse(null);
 
         if(desempenyoSesion.getTerminado() == 0){
-            //ENTRENAMIENTO SIN TERMINAR
+            //Si no esta terminado se manda a entrenamiento
             return "redirect:/cliente/entrenamiento?id=" + desempenyo_id;
         }
+        //Si esta terminado se muestran los resultados.
+        Sesion sesion = (Sesion) session.getAttribute("sesion");
+
+        Map<Ejercicio,List<Serie>> sesion_dict = UtilityFunctions.dictFromSerie(sesion.getSeries());
+        Map<Ejercicio,List<DesempenyoSerie>> des_dict =
+                UtilityFunctions.dictFromDesempenyoSerie(desempenyoSesion.getDesempenyoSeries());
+
+        model.addAttribute("desempenyo_sesion_fecha",desempenyoSesion.getFecha().toString());
+        model.addAttribute("sesion_dict",sesion_dict);
+        model.addAttribute("des_dict",des_dict);
 
         return "cliente/resultados_sesion";
     }
@@ -97,7 +109,7 @@ public class ClienteController {
 
         List<DesempenyoSerie> desempenyoSeries = desempenyoSesion.getDesempenyoSeries();
         Map<Ejercicio,List<DesempenyoSerie>> series_dict =
-                UtilityFunctions.generateDictionaryFromDesempenyoSerie(desempenyoSeries);
+                UtilityFunctions.dictFromDesempenyoSerie(desempenyoSeries);
 
         model.addAttribute("desempenyo_sesion_id",desempenyo_id);
         model.addAttribute("series_dict",series_dict);
@@ -125,7 +137,7 @@ public class ClienteController {
         Integer cliente_id = (Integer) session.getAttribute("cliente_id");
         Usuario cliente = (Usuario) usuarioRepository.findById(cliente_id).orElse(null);
 
-        Set<Serie> series_list = sesion.getSeries();
+        List<Serie> series_list = sesion.getSeries();
 
         DesempenyoSesion des = new DesempenyoSesion();
         des.setFecha(LocalDate.now());

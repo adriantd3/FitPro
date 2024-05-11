@@ -33,7 +33,7 @@ public class UtilityFunctions {
         return sesion_dict;
     }
 
-    public static Map<Ejercicio, List<DesempenyoSerie>> generateDictionaryFromDesempenyoSerie(List<DesempenyoSerie> seriesList){
+    public static Map<Ejercicio, List<DesempenyoSerie>> dictFromDesempenyoSerie(List<DesempenyoSerie> seriesList){
         HashMap<Ejercicio,List<DesempenyoSerie>> sesion_dict = new HashMap<>();
         for(DesempenyoSerie serie: seriesList) {
             Ejercicio ejercicio = serie.getEjercicio();

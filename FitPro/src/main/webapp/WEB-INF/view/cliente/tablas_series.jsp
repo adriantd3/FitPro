@@ -13,7 +13,6 @@
 <html>
 <body>
 <section id="table-container">
-    <div>
         <%
             for (Ejercicio ejercicio : dict.keySet()) {
                 int tipo = ejercicio.getTipo().getId();

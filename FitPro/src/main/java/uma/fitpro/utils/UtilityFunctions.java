@@ -21,7 +21,7 @@ public class UtilityFunctions {
     }
 
     public static Map<Ejercicio, List<Serie>> dictFromSerie(List<Serie> seriesList){
-        HashMap<Ejercicio,List<Serie>> sesion_dict = new HashMap<>();
+        Map<Ejercicio,List<Serie>> sesion_dict = new LinkedHashMap<>();
         for(Serie serie: seriesList) {
             Ejercicio ejercicio = serie.getEjercicio();
             if(!sesion_dict.containsKey(ejercicio)) {
@@ -34,7 +34,7 @@ public class UtilityFunctions {
     }
 
     public static Map<Ejercicio, List<DesempenyoSerie>> dictFromDesempenyoSerie(List<DesempenyoSerie> seriesList){
-        HashMap<Ejercicio,List<DesempenyoSerie>> sesion_dict = new HashMap<>();
+        Map<Ejercicio,List<DesempenyoSerie>> sesion_dict = new LinkedHashMap<>();
         for(DesempenyoSerie serie: seriesList) {
             Ejercicio ejercicio = serie.getEjercicio();
             if(!sesion_dict.containsKey(ejercicio)) {

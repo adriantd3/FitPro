@@ -28,7 +28,7 @@
 <body>
 <header>
     <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back_button.png" alt="<-"
-         onclick="window.location.href='/entrenador_fuerza/crear-sesion?sesion=<%=sesion.getId()%>'"> <!-- Controlar pagina anterior por modelo -->
+         onclick="window.location.href='/entrenador_fuerza/sesion?sesion=<%=sesion.getId()%>'"> <!-- Controlar pagina anterior por modelo -->
     <h1 class="header-text text-center">Ejercicios</h1>
 </header>
 <form:form id="form" method="post" action="/entrenador_fuerza/guardar-ejercicio" modelAttribute="serie">

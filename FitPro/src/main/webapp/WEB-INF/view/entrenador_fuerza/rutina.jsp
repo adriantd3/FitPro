@@ -27,14 +27,17 @@
         <h1 class="header-text text-center"><%=(rutina != null ? rutina.getNombre() : "Crear rutina")%></h1> <!-- Controlar nombre rutina  -->
 </header>
 <section class="mt-3 ms-3 h-100">
-    <button class=" btn btn-primary top-50"
-            onclick="window.location.href='/entrenador_fuerza/crear-sesion?rutina=<%=rutina.getId()%>'">Añadir Sesion
-    </button>
+    <form method="post" action="/entrenador_fuerza/crear-sesion">
+        <input type="text" name="nombreSesion" placeholder="Nombre de la sesión nueva..."/>
+        <button type="submit" class=" btn btn-primary top-50"
+        >Añadir sesión
+        </button>
+    </form>
     <ul class="list-group m-3">
             <%
             for(Sesion sesion : sesionesRutina){
         %>
-        <button onclick="window.location.href='/entrenador_fuerza/crear-sesion?sesion=<%=sesion.getId()%>'" class="list-button list-group-item">
+        <button onclick="window.location.href='/entrenador_fuerza/sesion?sesion=<%=sesion.getId()%>'" class="list-button list-group-item">
             <%=sesion.getNombre()%>
         </button>
             <%

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import uma.fitpro.dao.*;
 import uma.fitpro.entity.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -38,6 +39,8 @@ public class EntrenadorFuerzaController {
 
     @Autowired
     private SerieRepository serieRepository;
+    @Autowired
+    private OrdenSesionRutinaRepository ordenSesionRutinaRepository;
 
     @PostMapping("/home")
     public String doEntrenadorFuerzaHome() {
@@ -67,6 +70,35 @@ public class EntrenadorFuerzaController {
         return "/entrenador_fuerza/crud-rutina";
     }
 
+    @PostMapping("/crear-rutina")
+    public String doNuevaRutina(@RequestParam("nombreRutina") String nombreRutina, Model model, HttpSession session){
+        Rutina rutina = new Rutina();
+
+        Usuario entrenador = (Usuario) session.getAttribute("user");
+        rutina.setEntrenador(entrenador);
+
+        Set<Rutina> rutinasEntrenador = entrenador.getRutinasEntrenador();
+        rutinasEntrenador.add(rutina);
+        entrenador.setRutinasEntrenador(rutinasEntrenador);
+        usuarioRepository.save(entrenador);
+
+
+        rutina.setNombre(nombreRutina);
+        rutina.setFechaCreacion(LocalDate.now());
+
+        Usuario cliente = (Usuario) session.getAttribute("cliente");
+        if(cliente != null){
+            Set<Rutina> rutinasCliente = cliente.getRutinasCliente();
+            rutinasCliente.add(rutina);
+            cliente.setRutinasCliente(rutinasCliente);
+            usuarioRepository.save(cliente);
+        }
+
+        rutinaRepository.save(rutina);
+        return "redirect:/entrenador_fuerza/rutina?rutina=" + rutina.getId();
+
+    }
+
     @GetMapping("guardar-rutina")
     public String doGuardarRutina(@RequestParam("rutina") Integer rutina_id, Model model, HttpSession session){
         Rutina rutina = rutinaRepository.findById(rutina_id).orElse(null);
@@ -91,8 +123,8 @@ public class EntrenadorFuerzaController {
         return "/entrenador_fuerza/clientes";
     }
 
-    @GetMapping("/crear-sesion")
-    public String doCrearSesion(@RequestParam("sesion")@Nullable Integer sesion_id, Model model) {
+    @GetMapping("/sesion")
+    public String doSesion(@RequestParam("sesion")@Nullable Integer sesion_id, Model model) {
         Sesion sesion;
         if (sesion_id != null) {
             sesion = sesionRepository.findById(sesion_id).orElse(null);
@@ -101,14 +133,51 @@ public class EntrenadorFuerzaController {
 
         //System.out.printf(String.valueOf(model.getAttribute("serie") == null));
 
-        return "/entrenador_fuerza/crear-sesion";
+        return "/entrenador_fuerza/sesion";
+    }
+
+    @PostMapping("/crear-sesion")
+    public String doCrearSesion(@RequestParam("nombreSesion") String nombreSesion, Model model, HttpSession session) {
+
+        Sesion sesion = new Sesion();
+        sesion.setNombre(nombreSesion);
+        sesionRepository.save(sesion);
+
+        Rutina rutina = (Rutina) session.getAttribute("rutina");
+        OrdenSesionRutina ordenSesion = new OrdenSesionRutina();
+        OrdenSesionRutinaId idOrdenSesion = new OrdenSesionRutinaId();
+        idOrdenSesion.setSesionId(sesion.getId());
+        idOrdenSesion.setRutinaId(rutina.getId());
+        idOrdenSesion.setOrden(1);
+        ordenSesion.setId(idOrdenSesion);
+        ordenSesion.setSesion(sesion);
+        ordenSesion.setRutina(rutina);
+        ordenSesionRutinaRepository.save(ordenSesion);
+
+        Set<OrdenSesionRutina> ordenSesionesRutina = rutina.getOrdenSesionRutinas();
+        ordenSesionesRutina.add(ordenSesion);
+        rutina.setOrdenSesionRutinas(ordenSesionesRutina);
+        rutinaRepository.save(rutina);
+
+        return "redirect:/entrenador_fuerza/sesion?sesion=" + sesion.getId();
+    }
+
+    @GetMapping("borrar-sesion")
+    public String doBorrarSesion(@RequestParam("sesion") Integer sesion_id, Model model, HttpSession session) {
+        Sesion sesion = sesionRepository.findById(sesion_id).orElse(null);
+        sesionRepository.delete(sesion);
+        Rutina rutina = (Rutina) session.getAttribute("rutina");
+
+        return "redirect:/entrenador_fuerza/rutina?rutina=" + rutina.getId();
     }
 
     @GetMapping("/rutina")
     public String doRutina(@RequestParam("rutina") Integer rutina_id, Model model, HttpSession session) {
         Rutina rutina = rutinaRepository.findById(rutina_id).orElse(null);
         session.setAttribute("rutina", rutina);
-        model.addAttribute("sesiones", sesionRepository.findAllByOrdenSesionRutina(rutina.getOrdenSesionRutinas()));
+        System.out.println(rutina.getOrdenSesionRutinas());
+        System.out.println(sesionRepository.findAllByOrdenSesionRutina(rutina));
+        model.addAttribute("sesiones", sesionRepository.findAllByOrdenSesionRutina(rutina));
         return "/entrenador_fuerza/rutina";
     }
 
@@ -144,14 +213,14 @@ public class EntrenadorFuerzaController {
         Serie serie = serieRepository.findById(serie_id).orElse(null);
         model.addAttribute("serie", serie);
         model.addAttribute("sesion", serie.getSesion());
-        return "/entrenador_fuerza/crear-sesion";
+        return "/entrenador_fuerza/sesion";
     }
 
     @PostMapping("/guardar-serie")
     public String doGuardarSerie(@ModelAttribute("serie") Serie serie) {
         serieRepository.save(serie);
 
-        return "redirect:/entrenador_fuerza/crear-sesion?sesion=" + serie.getSesion().getId();
+        return "redirect:/entrenador_fuerza/sesion?sesion=" + serie.getSesion().getId();
     }
 
     @GetMapping("eliminar-serie")
@@ -159,7 +228,7 @@ public class EntrenadorFuerzaController {
         Serie serie = serieRepository.findById(serie_id).orElse(null);
         serieRepository.delete(serie);
 
-        return "redirect:/entrenador_fuerza/crear-sesion?sesion=" + serie.getSesion().getId();
+        return "redirect:/entrenador_fuerza/sesion?sesion=" + serie.getSesion().getId();
     }
 
     @GetMapping("anyadir-serie")

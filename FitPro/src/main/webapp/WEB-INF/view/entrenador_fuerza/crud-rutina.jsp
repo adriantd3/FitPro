@@ -33,8 +33,8 @@
     <h1 class="header-text text-center">Rutinas de entrenamiento <%if(cliente != null){%><%="de "+cliente.getNombre()%><%}%></h1> <!-- Controlar si es de un usario para añadir "de usuario" y solo sus listas -->
 </header>
 <section class="mt-3 ms-3 h-100">
-    <form >
-        <input type="text" placeholder="Nombre de la rutina nueva..."/>
+    <form method="post" action="/entrenador_fuerza/crear-rutina">
+        <input type="text" name="nombreRutina" placeholder="Nombre de la rutina nueva..."/>
         <button type="submit" class=" btn btn-primary top-50"
                 onclick="window.location.href='/entrenador_fuerza/rutina?rutina='"
         >Añadir Rutina

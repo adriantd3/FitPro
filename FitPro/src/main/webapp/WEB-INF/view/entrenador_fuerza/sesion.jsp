@@ -112,7 +112,7 @@
 </section>
 
 <footer class="m-3 fixed-bottom">
-    <button class="btn btn-danger">
+    <button class="btn btn-danger" onclick="window.location.href='/entrenador_fuerza/borrar-sesion?sesion=<%=sesion.getId()%>'">
         Borrar
     </button>
     <button class="btn btn-primary" onclick="window.location.href='/entrenador_fuerza/asignar-ejercicio?sesion=<%=sesion.getId()%>'">

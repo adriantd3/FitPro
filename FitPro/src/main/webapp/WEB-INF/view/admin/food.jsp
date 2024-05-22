@@ -4,6 +4,9 @@
 <%
     List<Comida> comidas = (List<Comida>) request.getAttribute("comidas");
     Comida comida = (Comida) request.getAttribute("comida");
+
+    String filtroNombre = (String) request.getAttribute("filtroNombre");
+    int filtroCalorias = (int) request.getAttribute("filtroCalorias");
 %>
 <!doctype html>
 <html lang="en">
@@ -32,9 +35,11 @@
         <caption class="text-center text-white">Lista de comidas</caption>
         <thead class="table-dark">
         <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Calorias</th>
+            <form method="post" action=/admin/food/filter>
+                <th scope="col"><button type="submit">🔍</button></th>
+                <th scope="col"><input value="<%=filtroNombre%>" name="nombre" type="text" placeholder="Nombre"></th>
+                <th scope="col"><input value="<%=filtroCalorias%>" name="calorias" type="number" placeholder="Calorias"></th>
+            </form>
         </tr>
         </thead>
         <tbody>

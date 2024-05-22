@@ -47,6 +47,10 @@ public class AdminController {
         model.addAttribute("usuarios", usuarios);
         model.addAttribute("roles", roles);
 
+        model.addAttribute("filtroNombre", "");
+        model.addAttribute("filtroApellido", "");
+        model.addAttribute("filtroRol", "");
+
         return "admin/users";
     }
 
@@ -84,6 +88,22 @@ public class AdminController {
         return "redirect:/admin/users?id=0";
     }
 
+    @PostMapping("/user/filter")
+    public String doUserFilter(@RequestParam("nombre") String nombre,@RequestParam("apellido") String apellido,@RequestParam("rol") String rol, Model model) {
+        List<Usuario> usuarios = usuarioRepository.filterUsers(nombre, apellido, rol);
+        List<Rol> roles = rolRepository.findAll();
+
+        model.addAttribute("filtroNombre", nombre);
+        model.addAttribute("filtroApellido", apellido);
+        model.addAttribute("filtroRol", rol);
+
+        model.addAttribute("usuarios", usuarios);
+        model.addAttribute("roles", roles);
+        model.addAttribute("usuario", null);
+
+        return "admin/users";
+    }
+
     //////////////////////////////////////////////////////
     /////////            EXERCISES               /////////
     //////////////////////////////////////////////////////
@@ -103,6 +123,10 @@ public class AdminController {
         model.addAttribute("ejercicios", ejercicios);
         model.addAttribute("grupos", gruposMusculares);
         model.addAttribute("tipos", tiposEjercicios);
+
+        model.addAttribute("filtroNombre", "");
+        model.addAttribute("filtroTipo", "");
+        model.addAttribute("filtroGrupoMuscular", "");
 
         return "admin/exercises";
 
@@ -136,6 +160,24 @@ public class AdminController {
         return "redirect:/admin/exercises?id=0";
     }
 
+    @PostMapping("/exercise/filter")
+    public String doExerciseFilter(@RequestParam("nombre") String nombre,@RequestParam("tipo") String tipo,@RequestParam("grupoMuscular") String grupo, Model model) {
+        List<Ejercicio> ejercicios = ejercicioRepository.filterExercise(nombre, tipo, grupo);
+        List<GrupoMuscular> gruposMusculares = grupoMuscularRepository.findAll();
+        List<TipoEjercicio> tiposEjercicios = tipoEjercicioRepository.findAll();
+
+        model.addAttribute("filtroNombre", nombre);
+        model.addAttribute("filtroTipo", tipo);
+        model.addAttribute("filtroGrupoMuscular", grupo);
+
+        model.addAttribute("ejercicios", ejercicios);
+        model.addAttribute("grupos", gruposMusculares);
+        model.addAttribute("tipos", tiposEjercicios);
+        model.addAttribute("ejercicio", null);
+
+        return "admin/exercises";
+    }
+
     //////////////////////////////////////////////////////
     /////////               Food                 /////////
     //////////////////////////////////////////////////////
@@ -149,6 +191,9 @@ public class AdminController {
         }
         model.addAttribute("comidas", comidas);
         model.addAttribute("comida", comida);
+
+        model.addAttribute("filtroNombre", "");
+        model.addAttribute("filtroCalorias", 0);
 
 
         return "admin/food";
@@ -175,6 +220,20 @@ public class AdminController {
 
         return "redirect:/admin/food?id=0";
     }
+
+    @PostMapping("/food/filter")
+    public String doFoodFilter(@RequestParam("nombre") String nombre, @RequestParam("calorias") int calorias, Model model) {
+        List<Comida> comidas = comidaRepository.filterFood(nombre, calorias);
+
+        model.addAttribute("comidas", comidas);
+        model.addAttribute("comida", null);
+
+        model.addAttribute("filtroNombre", nombre);
+        model.addAttribute("filtroCalorias", calorias);
+
+        return "admin/food";
+    }
+
     //////////////////////////////////////////////////////
     /////////             ASSIGNMENT             /////////
     //////////////////////////////////////////////////////
@@ -216,6 +275,7 @@ public class AdminController {
         model.addAttribute("todos_trabajadores", todos_trabajadores);
         model.addAttribute("trabajador_propio", trabajador_propio);
         model.addAttribute("trabajador_nuevo", trabajador_nuevo);
+        model.addAttribute("filtroNombre", "");
 
         return "admin/assignment";
     }
@@ -254,6 +314,16 @@ public class AdminController {
         usuarioRepository.save(cliente);
 
         return "redirect:/admin/assignment?id="+clienteId;
+    }
+
+    @PostMapping("/assignment/filter")
+    public String doAssignmentFilter(@RequestParam("nombre") String nombre, Model model) {
+        List<Usuario> clientes = usuarioRepository.filterUsers(nombre,"","cliente");
+
+        model.addAttribute("clientes", clientes);
+        model.addAttribute("filtroNombre", nombre);
+
+        return "admin/assignment";
     }
 
 

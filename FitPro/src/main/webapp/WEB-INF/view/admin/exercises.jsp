@@ -6,6 +6,10 @@
     List<GrupoMuscular> grupos = (List<GrupoMuscular>) request.getAttribute("grupos");
     List<TipoEjercicio> tipos = (List<TipoEjercicio>) request.getAttribute("tipos");
     Ejercicio ejercicio = (Ejercicio) request.getAttribute("ejercicio");
+
+    String filtroNombre = (String) request.getAttribute("filtroNombre");
+    String filtroTipo = (String) request.getAttribute("filtroTipo");
+    String filtroGrupoMuscular = (String) request.getAttribute("filtroGrupoMuscular");
 %>
 <!doctype html>
 <html lang="en">
@@ -34,10 +38,12 @@
         <caption class="text-center text-white">Lista de ejercicios</caption>
         <thead class="table-dark">
         <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Tipo</th>
-            <th scope="col">Grupo Muscular</th>
+            <form method="post" action=/admin/exercise/filter>
+                <th scope="col"><button type="submit">🔍</button></th>
+                <th scope="col"><input value="<%=filtroNombre%>" name="nombre" type="text" placeholder="Nombre"></th>
+                <th scope="col"><input value="<%=filtroTipo%>" name="tipo" type="text" placeholder="Tipo"></th>
+                <th scope="col"><input value="<%=filtroGrupoMuscular%>" name="grupoMuscular" type="text" placeholder="Grupo Muscular"></th>
+            </form>
         </tr>
         </thead>
         <tbody>

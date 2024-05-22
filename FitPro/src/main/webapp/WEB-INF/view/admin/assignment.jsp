@@ -9,6 +9,8 @@
     Usuario cliente = (Usuario) request.getAttribute("cliente");
     Usuario trabajador_propio = (Usuario) request.getAttribute("trabajador_propio");
     Usuario trabajador_nuevo = (Usuario) request.getAttribute("trabajador_nuevo");
+
+    String filtroNombre = (String) request.getAttribute("filtroNombre");
 %>
 <!doctype html>
 <html lang="en">
@@ -48,8 +50,10 @@
             <caption class="text-center text-white">Lista de Clientes</caption>
             <thead class="table-dark">
             <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Cliente</th>
+                <form method="post" action=/admin/assignment/filter>
+                    <th scope="col"><button type="submit">🔍</button></th>
+                    <th scope="col"><input value="<%=filtroNombre%>" name="nombre" type="text" placeholder="Nombre"></th>
+                </form>
             </tr>
             </thead>
             <tbody>

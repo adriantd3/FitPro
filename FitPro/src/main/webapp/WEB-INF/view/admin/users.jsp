@@ -6,6 +6,10 @@
     List<Usuario> usuarios = (List<Usuario>) request.getAttribute("usuarios");
     List<Rol> roles = (List<Rol>) request.getAttribute("roles");
     Usuario usuario = (Usuario) request.getAttribute("usuario");
+
+    String filtroNombre = (String) request.getAttribute("filtroNombre");
+    String filtroApellido = (String) request.getAttribute("filtroApellido");
+    String filtroRol = (String) request.getAttribute("filtroRol");
 %>
 <!doctype html>
 <html lang="en">
@@ -26,7 +30,7 @@
 </head>
 <body>
 <header>
-    <img class="back-button ms-1 mt-1 " src="../assets/back_button.png" alt="back" onclick="window.location.href = '/home'">
+    <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back_button.png" alt="back" onclick="window.location.href = '/home'">
     <h1 class="header-text text-center">Usuarios</h1>
 </header>
 <div class="user-wrapper">
@@ -34,10 +38,12 @@
         <caption class="text-center text-white">Lista de usuarios</caption>
         <thead class="table-dark">
         <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Apellidos</th>
-            <th scope="col">Rol</th>
+            <form method="post" action=/admin/user/filter>
+                <th scope="col"><button type="submit">🔍</button></th>
+                <th scope="col"><input value="<%=filtroNombre%>" name="nombre" type="text" placeholder="Nombre"></th>
+                <th scope="col"><input value="<%=filtroApellido%>" name="apellido" type="text" placeholder="Apellidos"></th>
+                <th scope="col"><input value="<%=filtroRol%>" name="rol" type="text" placeholder="Rol"></th>
+            </form>
         </tr>
         </thead>
         <tbody>

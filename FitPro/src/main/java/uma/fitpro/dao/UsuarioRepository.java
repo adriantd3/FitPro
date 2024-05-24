@@ -14,4 +14,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
     @Query("select u from Usuario u where u.rol.id = :rol")
     public List<Usuario> findAllByRol(@Param("rol") Integer id);
+
+    @Query("select u from Usuario u where u.nombre like concat('%' , :nombre , '%') order by u.nombre")
+    public List<Usuario> findByNombre(@Param("nombre") String nombre);
+
 }

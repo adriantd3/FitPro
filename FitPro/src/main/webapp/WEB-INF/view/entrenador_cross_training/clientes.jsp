@@ -4,6 +4,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     List<Usuario> clientes = (List<Usuario>) request.getAttribute("clientes");
+    String nombreFiltrado = "";
+    if (request.getParameter("nombre")!=null) nombreFiltrado = request.getParameter("nombre");
 
 %>
 <!doctype html>
@@ -28,11 +30,18 @@
     <section class="table-container">
         <table class="table table-striped table-dark">
             <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Cliente</th>
-                <th scope="col">Rutinas</th>
-            </tr>
+            <form method="get" action="/entrenador_cross_training/filtrar_clientes">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">
+                        <div class="filter-flex">
+                            <input type="text" placeholder="Nombre" name="nombre" value="<%= nombreFiltrado %>" class="form-control filter-input" data-bs-theme="dark" >
+                            <button class="btn btn-dark">🔍</button>
+                        </div>
+                    </th>
+                    <th scope="col" >Rutinas</th>
+                </tr>
+            </form>
             </thead>
             <tbody>
             <%

@@ -3,6 +3,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     List<Sesion> sesiones = (List<Sesion>) request.getAttribute("sesiones");
+    String sesionFiltrada = "";
+    if (request.getParameter("nombre")!=null) sesionFiltrada = request.getParameter("nombre");
 %>
 <!doctype html>
 <html lang="en">
@@ -26,12 +28,19 @@
     <section class="table-container">
         <table class="table table-striped table-dark">
             <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Sesion</th>
-                <th scope="col">Editar</th>
-                <th scope="col">Borrar</th>
-            </tr>
+            <form method="get" action="/entrenador_cross_training/filtrar_sesiones">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">
+                        <div class="filter-flex">
+                            <input type="text" placeholder="Sesion" name="nombre" value="<%= sesionFiltrada %>" class="form-control filter-input" data-bs-theme="dark" >
+                            <button class="btn btn-dark">🔍</button>
+                        </div>
+                    </th>
+                    <th scope="col">Editar</th>
+                    <th scope="col">Borrar</th>
+                </tr>
+            </form>
             </thead>
             <tbody>
             <%

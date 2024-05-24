@@ -63,6 +63,24 @@ public class EntrenadorCrossTrainingController {
         return "entrenador_cross_training/clientes";
     }
 
+    @GetMapping("/filtrar_clientes")
+    public String doFiltrarClientes(@RequestParam("nombre") String nombre,Model model,HttpSession session){
+
+        String str = "redirect:/entrenador_cross_training/clientes";
+        if (!nombre.isEmpty()){
+
+            Usuario user = (Usuario) session.getAttribute("user");
+            Usuario entrenador =  usuarioRepository.findById(user.getId()).orElse(null);
+            List<Usuario> clientes = usuarioRepository.findByNombre(nombre);
+
+            model.addAttribute("clientes", clientes);
+            str = "entrenador_cross_training/clientes";
+
+        }
+
+        return str;
+    }
+
     @GetMapping("/rutinas_cliente")
     public String doRutinasCliente(Model model, @RequestParam("id") Integer id_cliente,
                                    HttpSession session){
@@ -221,6 +239,23 @@ public class EntrenadorCrossTrainingController {
         modelo.addAttribute("sesiones", sesiones);
 
         return "entrenador_cross_training/sesiones";
+    }
+
+    @GetMapping("/filtrar_sesiones")
+    public String doFiltrarSesiones(@RequestParam("nombre") String nombre,Model model,HttpSession session){
+
+        String str = "redirect:/entrenador_cross_training/sesiones";
+        if (!nombre.isEmpty()){
+
+            List<Sesion> sesiones = sesionRepository.findByNombre(nombre);
+
+            model.addAttribute("sesiones", sesiones);
+
+            str = "entrenador_cross_training/sesiones";
+
+        }
+
+        return str;
     }
 
     @PostMapping("/borrar_sesion")

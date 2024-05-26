@@ -32,7 +32,7 @@
             <thead>
             <form method="get" action="/entrenador_cross_training/filtrar_clientes">
                 <tr>
-                    <th scope="col">#</th>
+                    <th scope="col" >#</th>
                     <th scope="col">
                         <div class="filter-flex">
                             <input type="text" placeholder="Nombre" name="nombre" value="<%= nombreFiltrado %>" class="form-control filter-input" data-bs-theme="dark" >

@@ -12,6 +12,10 @@ header{
     height: 4em;
 }
 
+th {
+    vertical-align: middle;
+}
+
 .header-text {
     color: white;
     font-weight: bold;

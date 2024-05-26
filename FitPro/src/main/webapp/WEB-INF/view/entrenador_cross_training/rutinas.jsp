@@ -5,6 +5,8 @@
 <%
     List<Rutina> rutinas = (List<Rutina>) request.getAttribute("rutinas");
     Usuario cliente = (Usuario) request.getAttribute("cliente");
+    String rutinaFiltrada = "";
+    if (request.getParameter("nombre")!=null) rutinaFiltrada = request.getParameter("nombre");
 %>
 <!doctype html>
 <html lang="en">
@@ -28,13 +30,20 @@
     <section class="table-container">
         <table class="table table-striped table-dark">
             <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Rutina</th>
-                <th scope="col">Fecha</th>
-                <th scope="col">Editar</th>
-                <th scope="col">Borrar</th>
-            </tr>
+            <form method="get" action="/entrenador_cross_training/filtrar_rutinas">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">
+                        <div class="filter-flex">
+                            <input type="text" placeholder="Rutina" name="nombre" value="<%= rutinaFiltrada %>" class="form-control filter-input" data-bs-theme="dark" >
+                            <button class="btn btn-dark">🔍</button>
+                        </div>
+                    </th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Editar</th>
+                    <th scope="col">Borrar</th>
+                </tr>
+            </form>
             </thead>
             <tbody>
             <%

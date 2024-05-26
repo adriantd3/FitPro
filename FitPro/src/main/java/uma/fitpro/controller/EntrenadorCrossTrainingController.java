@@ -135,6 +135,25 @@ public class EntrenadorCrossTrainingController {
         return "entrenador_cross_training/rutinas";
     }
 
+    @GetMapping("/filtrar_rutinas")
+    public String doFiltrarRutinas(@RequestParam("nombre") String nombre,Model model,HttpSession session){
+
+        String str = "redirect:/entrenador_cross_training/rutinas";
+        if (!nombre.isEmpty()){
+
+            Usuario entrenador = (Usuario) session.getAttribute("user");
+            List<Rutina> rutinas = rutinaRepository.getFilteredRutinasByEntrenador(entrenador.getId(), nombre);
+            Collections.sort(rutinas);
+
+            model.addAttribute("rutinas", rutinas);
+
+            str = "entrenador_cross_training/rutinas";
+
+        }
+
+        return str;
+    }
+
     @PostMapping("/borrar_rutina")
     public String doBorrarRutina(@RequestParam("id") Integer id_rutina){
         Rutina rutina = rutinaRepository.findById(id_rutina).orElse(null);

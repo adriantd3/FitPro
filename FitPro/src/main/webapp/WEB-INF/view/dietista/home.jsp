@@ -18,7 +18,7 @@
 </head>
 <body>
 <header>
-    <img class="back-button ms-1 mt-1" src="./assets/image.png" alt="">
+    <img class="back-button ms-1 mt-1" src="${pageContext.request.contextPath}/assets/back_button.png" alt="">
     <h1 class="header-text text-center">Bienvenido, <%= user.getNombre() %></h1>
 </header>
 
@@ -26,7 +26,7 @@
     <form method="get" action="/dietista/menus">
         <button type="submit" class="btn  btn-secondary">Menús</button><br/>
     </form>
-    <form method="get" action="/dietista/menus">
+    <form method="get" action="/dietista/dietas">
         <button type="submit" class="btn  btn-secondary">Dietas</button><br/>
     </form>
     <form method="get" action="/dietista/clientes">

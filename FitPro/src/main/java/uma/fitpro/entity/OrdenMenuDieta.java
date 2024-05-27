@@ -22,6 +22,16 @@ public class OrdenMenuDieta {
     @JoinColumn(name = "dieta_id", nullable = false)
     private Dieta dieta;
 
+    public OrdenMenuDieta(OrdenMenuDietaId id, Menu menu, Dieta dieta) {
+        setId(id);
+        setMenu(menu);
+        setDieta(dieta);
+    }
+
+    public OrdenMenuDieta() {
+
+    }
+
     public OrdenMenuDietaId getId() {
         return id;
     }

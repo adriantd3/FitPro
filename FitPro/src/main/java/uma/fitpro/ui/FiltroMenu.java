@@ -1,12 +1,21 @@
 package uma.fitpro.ui;
 
-import java.sql.Timestamp;
 import java.time.LocalDate;
 
 public class FiltroMenu {
     String nombre;
     String kcal;
     String fecha;
+    int dietaId;
+
+    public int getDietaId() {
+        return dietaId;
+    }
+
+    public void setDietaId(int dietaId) {
+        this.dietaId = dietaId;
+    }
+
 
     public FiltroMenu() {
         nombre = "";

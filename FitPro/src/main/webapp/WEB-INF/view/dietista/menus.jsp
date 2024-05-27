@@ -65,7 +65,7 @@
 </head>
 <body>
 <header>
-    <img class="back-button ms-1 mt-1 " src="./assets/image.png" alt="">
+    <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back_button.png" alt="">
     <h1 class="header-text text-center">Menús</h1>
 </header>
 
@@ -186,6 +186,7 @@
                                     <caption class="header text-center text-white">Comidas</caption>
                                     <thead class="header table-dark">
                                     <form:form id="filtroComida" method="get" action="/dietista/filtrarComida" modelAttribute="filtroComida">
+                                        <form:input type="hidden" path="menuId" value="<%=menu!=null? menu.getId() : 0%>"/>
                                         <tr>
                                             <th class="id"><button class="btn btn-dark" onclick="filtrarComida">🔍</button></th>
                                             <th class="nombre-menu"><form:input path="nombre" class="form-control" data-bs-theme="dark" placeholder="Nombre"/></th>

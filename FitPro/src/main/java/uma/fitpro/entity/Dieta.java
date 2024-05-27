@@ -5,7 +5,9 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -28,7 +30,12 @@ public class Dieta {
     private LocalDate fechaCreacion;
 
     @OneToMany(mappedBy = "dieta")
-    private Set<OrdenMenuDieta> ordenMenuDietas = new LinkedHashSet<>();
+    private List<OrdenMenuDieta> ordenMenuDietas = new ArrayList<>();
+
+    public Dieta() {
+        setNombre("NuevaDieta");
+        setFechaCreacion(LocalDate.now());
+    }
 
     public Integer getId() {
         return id;
@@ -62,11 +69,11 @@ public class Dieta {
         this.fechaCreacion = fechaCreacion;
     }
 
-    public Set<OrdenMenuDieta> getOrdenMenuDietas() {
+    public List<OrdenMenuDieta> getOrdenMenuDietas() {
         return ordenMenuDietas;
     }
 
-    public void setOrdenMenuDietas(Set<OrdenMenuDieta> ordenMenuDietas) {
+    public void setOrdenMenuDietas(List<OrdenMenuDieta> ordenMenuDietas) {
         this.ordenMenuDietas = ordenMenuDietas;
     }
 

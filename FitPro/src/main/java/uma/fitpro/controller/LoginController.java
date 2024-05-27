@@ -19,10 +19,10 @@ public class LoginController {
     private UsuarioRepository usuarioRepository;
 
     @GetMapping("/")
-    public String doLogin(HttpSession sesion) {
+    public String doLogin(HttpSession session) {
 
         Usuario dietista = this.usuarioRepository.findById(1).orElse(null);
-        sesion.setAttribute("user", dietista);
+        session.setAttribute("user", dietista);
         return "dietista/home";
     }
 

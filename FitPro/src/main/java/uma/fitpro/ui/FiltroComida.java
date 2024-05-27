@@ -1,8 +1,20 @@
 package uma.fitpro.ui;
 
+import uma.fitpro.entity.Menu;
+
 public class FiltroComida {
     String nombre;
     String kcal;
+    int menuId;
+
+    public int getMenuId() {
+        return menuId;
+    }
+
+    public void setMenuId(int menuId) {
+        this.menuId = menuId;
+    }
+
 
     public String getKcal() {
         return kcal;

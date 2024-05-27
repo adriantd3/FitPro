@@ -14,4 +14,7 @@ public interface MenuRepository extends JpaRepository<Menu,Integer> {
 
     @Query("select m from Menu m where m.nombre like concat('%', :nombre, '%') and m.calorias>=:kcal and m.fechaCreacion >= :fecha")
     List<Menu> buscarConFiltro(String nombre, float kcal, LocalDate fecha);
+
+    @Query("select m from Menu m where m.nombre like concat('%', :nombre, '%') and m.calorias>=:kcal")
+    List<Menu> buscarConFiltro(String nombre, float kcal);
 }

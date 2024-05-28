@@ -21,7 +21,7 @@
     <p><b><u>Nombre:</u></b> <%=ejercicio.getNombre()%></p>
 
     <p><b><u>Descripción:</u></b></p>
-    <textarea style="width: 500px" rows="3"><%=ejercicio.getDescripcion()%></textarea>
+    <textarea style="width: 500px" rows="3" readonly><%=ejercicio.getDescripcion()%></textarea>
 
     <p><b><u>Tipo:</u></b> <%=ejercicio.getTipo().getTipo()%></p>
     <p><b><u>Grupo muscular:</u></b> <%=ejercicio.getGrupoMuscular().getGrupoMuscular()%></p>

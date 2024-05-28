@@ -29,35 +29,35 @@
         if(tipo == 1){
     %>
         <form:label path="peso">Peso (kg)</form:label>
-        <form:input path="peso" maxlength="6"/><br>
+        <form:input path="peso" maxlength="6" name="input1"/><br>
         <form:label path="repeticiones">Repeticiones</form:label>
-        <form:input path="repeticiones" maxlength="3"/><br>
+        <form:input path="repeticiones" maxlength="3" name="input2"/><br>
     <%
     }else if(tipo == 2){
     %>
         <form:label path="distancia">Distancia(m)</form:label>
-        <form:input path="distancia" maxlength="5"/><br>
+        <form:input path="distancia" maxlength="5" name="input1"/><br>
         <form:label path="duracion">Duración (seg)</form:label>
-        <form:input path="duracion" maxlength="4"/><br>
+        <form:input path="duracion" maxlength="4" name="input2"/><br>
     <%
         } else if (tipo == 3) {
     %>
         <form:label path="duracion">Duración (seg)</form:label>
-        <form:input path="duracion" maxlength="3"/><br>
+        <form:input path="duracion" maxlength="3" name="input1"/><br>
         <form:label path="descanso">Descanso (seg)</form:label>
-        <form:input path="descanso" maxlength="3"/><br>
+        <form:input path="descanso" maxlength="3" name="input2"/><br>
     <%
         } else if (tipo == 4 || tipo == 5) {
 
     %>
         <form:label path="repeticiones">Repeticiones</form:label>
-        <form:input path="repeticiones" maxlength="3"/><br>
+        <form:input path="repeticiones" maxlength="3" name="input1"/><br>
         <form:label path="descanso">Descanso (seg)</form:label>
-        <form:input path="descanso" maxlength="3"/><br>
+        <form:input path="descanso" maxlength="3" name="input2"/><br>
     <%
         }
     %>
-    <form:button>Guardar</form:button>
+    <form:button name="guardar">Guardar</form:button>
 </form:form>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"

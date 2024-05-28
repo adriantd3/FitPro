@@ -29,7 +29,7 @@
             <jsp:param name="dict" value="sesion"/>
         </jsp:include>
         <form method="post" action="nuevo_desempenyo_sesion">
-            <button type="submit" class="btn btn-primary">Nuevo entrenamiento</button>
+            <button type="submit" class="btn btn-primary" name="comenzar_entrenamiento">Nuevo entrenamiento</button>
         </form>
     </div>
 </div>

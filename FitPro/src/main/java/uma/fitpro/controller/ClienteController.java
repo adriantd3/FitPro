@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import uma.fitpro.dao.*;
+import uma.fitpro.dao.GrupoMuscularRepository;
 import uma.fitpro.entity.*;
 import uma.fitpro.utils.UtilityFunctions;
 
@@ -33,6 +34,12 @@ public class ClienteController {
 
     @Autowired
     private EjercicioRepository ejercicioRepository;
+
+    @Autowired
+    private TipoEjercicioRepository tipoEjercicioRepository;
+
+    @Autowired
+    private GrupoMuscularRepository grupoMuscularRepository;
 
     @GetMapping("/rutinas")
     public String doRutinas(Model model, HttpSession session) {
@@ -96,6 +103,13 @@ public class ClienteController {
         Map<Ejercicio,List<DesempenyoSerie>> des_dict =
                 UtilityFunctions.dictFromDesempenyoSerie(desempenyoSesion.getDesempenyoSeries());
 
+
+        //ATRIBUTOS FILTRO
+        model.addAttribute("filtro",new FiltroSerie());
+        model.addAttribute("grupo_muscular",grupoMuscularRepository.findAll());
+        model.addAttribute("tipo_ejercicio",tipoEjercicioRepository.findAll());
+
+        //INFORMACION TABLA
         model.addAttribute("desempenyo_sesion_fecha",desempenyoSesion.getFecha().toString());
         model.addAttribute("sesion_dict",sesion_dict);
         model.addAttribute("des_dict",des_dict);
@@ -219,6 +233,15 @@ public class ClienteController {
         model.addAttribute("ejercicio",ejercicio);
         return "cliente/ejercicio";
     }
+
+    @PostMapping("/filtro_series")
+    public String DoFiltroSeries(@ModelAttribute("filtro") FiltroSerie filtroString, Model model, HttpSession session){
+
+
+
+        return "cliente/resultados_sesion";
+    }
+
 
     private DesempenyoSerie getDesempenyoSerie(Serie serie, DesempenyoSesion des) {
         DesempenyoSerie des_serie = new DesempenyoSerie();

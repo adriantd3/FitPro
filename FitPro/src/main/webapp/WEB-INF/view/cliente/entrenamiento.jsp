@@ -29,11 +29,13 @@
 <section id="table-container">
     <div class="p-3" style="width: 70%">
         <%
+            int countEjercicio = 0;
             for (Ejercicio ejercicio : sesion_dict.keySet()) {
+                countEjercicio++;
                 int tipo = ejercicio.getTipo().getId();
                 List<String> cols = params.get(tipo);
         %>
-        <section class="ejercicio">
+        <section class="ejercicio<%=countEjercicio%>">
             <a href="/cliente/ejercicio?id=<%=ejercicio.getId()%>"
                class="text-primary fs-4 ejercicio"><%=ejercicio.getNombre()%>
             </a>

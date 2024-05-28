@@ -19,7 +19,7 @@ public class Serie implements SerieInterface {
     @JoinColumn(name = "sesion_id", nullable = false)
     private Sesion sesion;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "ejercicio_id", nullable = false)
     private Ejercicio ejercicio;

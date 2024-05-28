@@ -29,31 +29,31 @@
         if(tipo == 1){
     %>
         <form:label path="peso">Peso (kg)</form:label>
-        <form:input path="peso" maxlength="6" name="input1"/><br>
+        <form:input path="peso" maxlength="6" id="input1"/><br>
         <form:label path="repeticiones">Repeticiones</form:label>
-        <form:input path="repeticiones" maxlength="3" name="input2"/><br>
+        <form:input path="repeticiones" maxlength="3" id="input2"/><br>
     <%
     }else if(tipo == 2){
     %>
         <form:label path="distancia">Distancia(m)</form:label>
-        <form:input path="distancia" maxlength="5" name="input1"/><br>
+        <form:input path="distancia" maxlength="5" name="input1" id="input1"/><br>
         <form:label path="duracion">Duración (seg)</form:label>
-        <form:input path="duracion" maxlength="4" name="input2"/><br>
+        <form:input path="duracion" maxlength="4" name="input2" id="input2"/><br>
     <%
         } else if (tipo == 3) {
     %>
         <form:label path="duracion">Duración (seg)</form:label>
-        <form:input path="duracion" maxlength="3" name="input1"/><br>
+        <form:input path="duracion" maxlength="3" id="input1"/><br>
         <form:label path="descanso">Descanso (seg)</form:label>
-        <form:input path="descanso" maxlength="3" name="input2"/><br>
+        <form:input path="descanso" maxlength="3" id="input2"/><br>
     <%
         } else if (tipo == 4 || tipo == 5) {
 
     %>
         <form:label path="repeticiones">Repeticiones</form:label>
-        <form:input path="repeticiones" maxlength="3" name="input1"/><br>
+        <form:input path="repeticiones" maxlength="3" id="input1"/><br>
         <form:label path="descanso">Descanso (seg)</form:label>
-        <form:input path="descanso" maxlength="3" name="input2"/><br>
+        <form:input path="descanso" maxlength="3" id="input1"/><br>
     <%
         }
     %>

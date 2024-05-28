@@ -35,6 +35,7 @@ public class DesempenyoSesion {
     private Byte terminado;
 
     @OneToMany(mappedBy = "desempenyoSesion", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OrderBy("ejercicio.id ASC, id ASC")
     private List<DesempenyoSerie> desempenyoSeries = new ArrayList<>();
 
     public Integer getId() {

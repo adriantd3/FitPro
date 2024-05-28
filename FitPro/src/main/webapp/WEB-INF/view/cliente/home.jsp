@@ -20,11 +20,11 @@
 </header>
 <section id="buttons" class="position-relative start-50 w-25 mt-4">
     <button type="button" class="btn btn-secondary w-100 translate-middle-x"
-            onclick="window.location.href='cliente/rutinas'">Rutinas
+            onclick="window.location.href='cliente/rutinas'" name="rutinas">Rutinas
     </button>
     <br/>
     <button type="button" class="btn btn-secondary w-100 translate-middle-x mt-3"
-            onclick="window.location.href='cliente/dietas'">Dietas
+            onclick="window.location.href='cliente/dietas'" name="dietas">Dietas
     </button>
 </section>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

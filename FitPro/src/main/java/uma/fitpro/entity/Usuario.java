@@ -62,7 +62,7 @@ public class Usuario {
             inverseJoinColumns = @JoinColumn(name = "dieta_id"))
     private Set<Dieta> dietasCliente = new LinkedHashSet<>();
 
-    @ManyToMany
+    @ManyToMany()
     @JoinTable(name = "dietista_cliente",
             joinColumns = @JoinColumn(name = "dietista_id"),
             inverseJoinColumns = @JoinColumn(name = "cliente_id"))
@@ -74,7 +74,7 @@ public class Usuario {
             inverseJoinColumns = @JoinColumn(name = "dietista_id"))
     private Set<Usuario> dietistas = new LinkedHashSet<>();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "entrenador_cliente",
             joinColumns = @JoinColumn(name = "entrenador_id"),
             inverseJoinColumns = @JoinColumn(name = "cliente_id"))
@@ -86,10 +86,10 @@ public class Usuario {
             inverseJoinColumns = @JoinColumn(name = "entrenador_id"))
     private Set<Usuario> entrenadores = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "entrenador")
+    @OneToMany(fetch=FetchType.EAGER, mappedBy = "entrenador")
     private Set<Rutina> rutinasEntrenador = new LinkedHashSet<>();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "rutina_cliente",
             joinColumns = @JoinColumn(name = "cliente_id"),
             inverseJoinColumns = @JoinColumn(name = "rutina_id"))

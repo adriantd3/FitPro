@@ -37,6 +37,14 @@ body{
     color:white;
 }
 
+.list-button{
+    text-align: start;
+}
+
+.list-button:hover{
+    background-color: dodgerblue;
+    border: dodgerblue;
+}
 .form-wrapper {
     text-align: center;
     padding-top: 200px;

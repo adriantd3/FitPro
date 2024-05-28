@@ -13,20 +13,20 @@
 </head>
 <body>
     <header>
-        <img class="back-button ms-1 mt-1 " src="./assets/image.png" alt="">
+        <img class="back-button ms-1 mt-1 " src="../assets/back_button.png" alt="LogOut" onclick="window.location.href = '/'">
         <h1 class="header-text text-center">Admin Home</h1>
     </header>
     <div class="form-wrapper">
-        <form method="post" action="/admin/users">
+        <form method="post" action="/admin/users?id=0">
             <button type="submit" class="btn btn-primary">Users</button>
         </form>
-        <form method="post" action="/admin/exercises">
+        <form method="post" action="/admin/exercises?id=0">
             <button type="submit" class="btn btn-primary">Exercises</button>
         </form>
-        <form method="post" action="/admin/food">
+        <form method="post" action="/admin/food?id=0">
             <button type="submit" class="btn btn-primary">Food</button>
         </form>
-        <form method="post" action="/admin/assignment">
+        <form method="post" action="/admin/assignment?id=0">
             <button type="submit" class="btn btn-primary">Assignment</button>
         </form>
     </div>

@@ -53,7 +53,7 @@
             <tr>
                 <th scope="row"><%= num %></th>
                 <td><%= u.getNombre() + " " + u.getApellidos()%></td>
-                <td><button class="btn btn-secondary" onclick="window.location.href='/entrenador_cross_training/rutinas_cliente?id=<%= u.getId()%>'">Rutinas</button></td>
+                <td><button class="btn btn-secondary" name="rutinas_cliente" onclick="window.location.href='/entrenador_cross_training/rutinas_cliente?id=<%= u.getId()%>'">Rutinas</button></td>
             </tr>
             <%
                     num++;

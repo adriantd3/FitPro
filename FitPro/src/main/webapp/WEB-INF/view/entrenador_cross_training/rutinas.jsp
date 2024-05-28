@@ -58,7 +58,7 @@
                 <td>
                     <form action="/entrenador_cross_training/borrar_rutina" method="post">
                         <input type="hidden" name="id" value="<%=r.getId()%>">
-                        <button type="submit" class="btn btn-danger">Borrar</button>
+                        <button type="submit" name="borrar" class="btn btn-danger">Borrar</button>
                     </form>
                 </td>
             </tr>
@@ -74,7 +74,7 @@
 
 <div class="sesion-buttons">
     <button class="btn btn-success" onclick="window.location.href='/entrenador_cross_training/home'">Guardar</button>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#nuevaRutina">
+    <button type="button" name="anyadir_rutina" class="btn btn-primary" data-toggle="modal" data-target="#nuevaRutina">
         Añadir rutina
     </button>
 </div>
@@ -87,9 +87,9 @@
             </div>
             <div class="modal-body">
                 <form method="post" action="/entrenador_cross_training/nueva_rutina">
-                    Nombre de la rutina: <input type="text" name="nombre">
+                    Nombre de la rutina: <input name="nombre" type="text" name="nombre">
                     <div style="display: flex; justify-content: flex-end; margin-top: 20px">
-                        <button type="submit" class="btn btn-primary">Guardar rutina</button>
+                        <button name="guardar_rutina" type="submit" class="btn btn-primary">Guardar rutina</button>
                     </div>
                 </form>
             </div>

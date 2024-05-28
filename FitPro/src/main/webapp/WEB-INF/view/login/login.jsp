@@ -26,7 +26,7 @@
             <input type="text" name="mail"> </br>
             <span>Contraseña:</span>
             <input type="text" name="password"> </br>
-            <button>Login</button> </br>
+            <button name="login">Login</button> </br>
             <span> <%= errorMsg  %></span>
         </form>
     </div>

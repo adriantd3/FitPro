@@ -44,7 +44,7 @@
             %>
             <tr>
                 <th scope="row"><%= num %></th>
-                <td><%= r.getNombre() %></td>
+                <td name="nombre"><%= r.getNombre() %></td>
                 <td><%=r.getFechaCreacion()%></td>
                 <td>
                     <form action="/entrenador_cross_training/borrar_rutina_cliente" method="post">

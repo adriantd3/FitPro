@@ -34,7 +34,7 @@
                     <th scope="col">
                         <div class="filter-flex">
                             <input type="text" placeholder="Sesion" name="nombre" value="<%= sesionFiltrada %>" class="form-control filter-input" data-bs-theme="dark" >
-                            <button class="btn btn-dark">🔍</button>
+                            <button name="filtrar" class="btn btn-dark">🔍</button>
                         </div>
                     </th>
                     <th scope="col">Editar</th>

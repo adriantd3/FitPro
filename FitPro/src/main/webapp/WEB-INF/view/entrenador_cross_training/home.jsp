@@ -23,11 +23,11 @@
             bienvenida = "Bienvenida, ";
         }
     %>
-    <h1 class="ejemplo"><%= bienvenida + user.getNombre()%></h1>
+    <h1><%= bienvenida + user.getNombre()%></h1>
     <section class="button-container">
-        <button type="button" class="btn btn-secondary" onclick="window.location.href='/entrenador_cross_training/clientes'">Clientes</button><br/><br/>
-        <button type="button" class="btn btn-secondary" onclick="window.location.href='/entrenador_cross_training/rutinas'">Rutinas</button><br/><br/>
-        <button type="button" class="btn btn-secondary" onclick="window.location.href='/entrenador_cross_training/sesiones'">Sesiones</button><br/><br/>
+        <button type="button" class="btn btn-secondary" name="clientes" onclick="window.location.href='/entrenador_cross_training/clientes'">Clientes</button><br/><br/>
+        <button type="button" class="btn btn-secondary" name="rutinas" onclick="window.location.href='/entrenador_cross_training/rutinas'">Rutinas</button><br/><br/>
+        <button type="button" class="btn btn-secondary" name="sesiones" onclick="window.location.href='/entrenador_cross_training/sesiones'">Sesiones</button><br/><br/>
     </section>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>

@@ -168,12 +168,13 @@
                                 </form>
                             </section>
                             <div class="menuButtons">
-                                <button type="submit" class="btn btn-success me-3 saveButton" onclick="guardarMenu()">Guardar</button>
+                                <button name="guardar" type="submit" class="btn btn-success me-3 saveButton" onclick="guardarMenu()">Guardar</button>
                                 <form method="get" action="./limpiarMenu">
-                                    <button type="submit" class="btn btn-primary me-3">Limpiar</button>
+                                    <button name="limpiar" type="submit" class="btn btn-primary me-3">Limpiar</button>
                                 </form>
                                 <form method="post" action="./borrarMenu">
-                                    <button type="<%= menu==null ? "button":"submit" %>" class="btn btn-danger me-3" name="id" value="<%= menu==null ? 0:menu.getId() %>">Borrar</button>
+                                    <input type="hidden" name="id" value="<%= menu==null ? 0:menu.getId() %>">
+                                    <button name="eliminar" type="<%= menu==null ? "button":"submit" %>" class="btn btn-danger me-3">Borrar</button>
                                 </form>
                             </div>
                     </div>

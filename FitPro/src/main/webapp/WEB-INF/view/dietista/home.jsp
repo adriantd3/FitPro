@@ -19,18 +19,18 @@
 <body>
 <header>
     <img class="back-button ms-1 mt-1" src="${pageContext.request.contextPath}/assets/back_button.png" alt="">
-    <h1 class="header-text text-center">Bienvenido, <%= user.getNombre() %></h1>
+    <h1 class="header-text text-center"><%=user.getSexo()==1?"Bienvenido, ":"Bienvenida, "%><%= user.getNombre() %></h1>
 </header>
 
 <div id="menu">
     <form method="get" action="/dietista/menus">
-        <button type="submit" class="btn  btn-secondary">Menús</button><br/>
+        <button name="menus" type="submit" class="btn  btn-secondary">Menús</button><br/>
     </form>
     <form method="get" action="/dietista/dietas">
-        <button type="submit" class="btn  btn-secondary">Dietas</button><br/>
+        <button name="dietas" type="submit" class="btn  btn-secondary">Dietas</button><br/>
     </form>
     <form method="get" action="/dietista/clientes">
-        <button type="submit" class="btn  btn-secondary">Clientes</button>
+        <button name="clientes" type="submit" class="btn  btn-secondary">Clientes</button>
     </form>
 </div>
 

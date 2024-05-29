@@ -11,6 +11,6 @@ import java.util.Set;
 
 public interface SesionRepository extends JpaRepository<Sesion, Integer> {
 
-    @Query("select S from Sesion S, OrdenSesionRutina OSR where OSR.sesion = S and OSR.rutina = rutina")
+    @Query("select S from Sesion S, OrdenSesionRutina OSR where OSR.sesion = S and OSR.rutina = :rutina")
     List<Sesion> findAllByOrdenSesionRutina(Rutina rutina);
 }

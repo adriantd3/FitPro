@@ -19,7 +19,8 @@ public class LoginController {
     private UsuarioRepository usuarioRepository;
 
     @GetMapping("/")
-    public String doLogin() {
+    public String doLogin(HttpSession sesion) {
+
         return "login/login";
     }
 

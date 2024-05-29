@@ -6,7 +6,7 @@ import org.springframework.data.repository.query.Param;
 import uma.fitpro.entity.DesempenyoSerie;
 import uma.fitpro.entity.FiltroSerie;
 import uma.fitpro.entity.Serie;
-;import java.util.List;
+import java.util.List;
 
 public interface SerieRepository extends JpaRepository<Serie, Integer> {
     @Query("select d from Serie d order by d.ejercicio.id asc, d.id asc")

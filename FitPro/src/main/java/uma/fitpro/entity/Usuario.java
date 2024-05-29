@@ -9,7 +9,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "usuario")
-public class Usuario {
+public class Usuario implements Comparable<Usuario> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -263,4 +263,8 @@ public class Usuario {
         this.rutinasCliente = rutinasCliente;
     }
 
+    @Override
+    public int compareTo(Usuario o) {
+        return this.getNombre().compareTo(o.getNombre());
+    }
 }

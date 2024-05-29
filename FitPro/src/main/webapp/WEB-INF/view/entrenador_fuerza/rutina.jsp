@@ -29,7 +29,7 @@
 <section class="mt-3 ms-3 h-100">
     <form method="post" action="/entrenador_fuerza/crear-sesion">
         <input type="text" name="nombreSesion" placeholder="Nombre de la sesión nueva..."/>
-        <button type="submit" class=" btn btn-primary top-50"
+        <button type="submit" name="crearSesionButton" class=" btn btn-primary top-50"
         >Añadir sesión
         </button>
     </form>

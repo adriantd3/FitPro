@@ -35,8 +35,7 @@
 <section class="mt-3 ms-3 h-100">
     <form method="post" action="/entrenador_fuerza/crear-rutina">
         <input type="text" name="nombreRutina" placeholder="Nombre de la rutina nueva..."/>
-        <button type="submit" class=" btn btn-primary top-50"
-                onclick="window.location.href='/entrenador_fuerza/rutina?rutina='"
+        <button type="submit" name="crearRutinaButton" class=" btn btn-primary top-50"
         >Añadir Rutina
         </button>
     </form>
@@ -46,7 +45,7 @@
         <%
             for(Rutina rutina : rutinasPrincipales){
         %>
-        <button onclick="window.location.href='/entrenador_fuerza/rutina?rutina=<%=rutina.getId()%>'" class="list-button list-group-item">
+        <button name=<%=rutina.getNombre()%> onclick="window.location.href='/entrenador_fuerza/rutina?rutina=<%=rutina.getId()%>'" class="list-button list-group-item">
             <%=rutina.getNombre()+ " " + rutina.getFechaCreacion()%>
         </button>
         <%

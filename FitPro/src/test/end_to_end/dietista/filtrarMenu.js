@@ -36,26 +36,35 @@ export default async function () {
     sleep(0.5);
     await Promise.all([page.waitForNavigation({waitUntil: 'networkidle'}), menuButton.click()]);
     
-    const expectedLenght = page.$$('table[name="menu_table"] tbody tr').length+1;
     
     page.locator('input[name="nombreMenu"]').clear();
     page.locator('input[name="nombreMenu"]').type('MenuTest');
     sleep(0.5);
     
     const saveMenuButton = page.locator('button[name="guardar"]');
-    sleep(0.5);
     await Promise.all([page.waitForNavigation({waitUntil: 'networkidle'}), saveMenuButton.click()]);
-    page.$$('table[name="menu_table"] tbody tr')[expectedLenght-1].scrollIntoViewIfNeeded();
-    sleep(0.5);
+    
+    const expectedLenght = page.$$('table[name="menu_table"] tbody tr').length;
+    page.$('table[name="menu_table"] tbody tr[name="menu'+(expectedLenght)+'"]').scrollIntoViewIfNeeded();
 
-    const actualLenght = page.$$('table[name="menu_table"] tbody tr').length;
+    page.locator('table[name="menu_table"] input[name="nombre"]').clear();
+    page.locator('table[name="menu_table"] input[name="nombre"]').type('MenuTest');
+    sleep(0.5);
+    const filterButton = page.locator('table[name="menu_table"] button[name="filterButton"]');
+    await Promise.all([page.waitForNavigation({waitUntil: 'networkidle'}), filterButton.click()]);
+    
+    const actualMenusFiltradosLenght = page.$$('table[name="menu_table"] tbody tr').length;
+    
+    const menu = page.$('table[name="menu_table"] tbody tr[name="menu1"]')
+    await Promise.all([page.waitForNavigation({waitUntil: 'networkidle'}), menu.click()]);
+    sleep(0.5);
+    
+    const deleteMenuButton = page.locator('button[name="eliminar"]');
+    await Promise.all([page.waitForNavigation({waitUntil: 'networkidle'}), deleteMenuButton.click()]);
     
     check(page, {
-      'MenusLenght': p => actualLenght === expectedLenght,
+      'MenusFiltradosLenght': p => actualMenusFiltradosLenght === 1,
   });
-    check(page, {
-        'MenuAdded': p => (p.$('table[name="menu_table"] tbody tr[name="menu'+(actualLenght)+'"] td[name="nombre"]')).textContent() === "MenuTest",
-    });
 
   } finally {
     page.close();

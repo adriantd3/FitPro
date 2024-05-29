@@ -75,12 +75,12 @@
             <section id="Menus" class="pt-2">
 
                     <div class="table-responsive">
-                        <table class="table menu_table caption-top text-center table-hover">
+                        <table name="menu_table" class="table menu_table caption-top text-center table-hover">
                             <caption class="text-center text-white">Menús</caption>
                             <thead class="header table-dark">
                                 <form:form id="filtroMenu" method="get" action="/dietista/filtrarMenu" modelAttribute="filtroMenu">
                                     <tr>
-                                        <th class="id"><button class="btn btn-dark" onclick="filtrarMenu">🔍</button></th>
+                                        <th class="id"><button name="filterButton" class="btn btn-dark" onclick="filtrarMenu">🔍</button></th>
                                         <th class="nombre-menu"><form:input path="nombre" class="form-control" data-bs-theme="dark" placeholder="Nombre"/></th>
                                         <th class="kcal"><form:input path="kcal" class="form-control" data-bs-theme="dark" placeholder="Kcal"/></th>
                                         <th class="fecha"><form:input path="fecha" class="form-control" data-bs-theme="dark" placeholder="Fecha Creacion"/></th>
@@ -95,11 +95,11 @@
                                         for(Menu m : menus){
                                             menuIndex++;
                                     %>
-                                        <tr class="menu" onclick="selectMenu(<%= m.getId() %>)">
+                                        <tr name=<%= "menu" + menuIndex%> class="menu" onclick="selectMenu(<%= m.getId() %>)">
                                             <td><%= menuIndex %></td>
-                                            <td><%= m.getNombre() %></td>
-                                            <td><%= m.getCalorias() %></td>
-                                            <td><%= m.getFechaCreacion() %></td>
+                                            <td name="nombre"><%= m.getNombre() %></td>
+                                            <td name="kcal"><%= m.getCalorias() %></td>
+                                            <td name="fecha"><%= m.getFechaCreacion() %></td>
                                         </tr>
                                     <%
                                         }
@@ -122,7 +122,7 @@
                                             if(menu!=null){name=menu.getNombre();}
                                         %>
                                         <input type="hidden" name="id" value="<%= menu==null ? 0:menu.getId() %>">
-                                        <input id="nombre" type="text" class="form-control" name="nombre" value=<%= name %>>
+                                        <input id="nombre" type="text" class="form-control" name="nombreMenu" value=<%= name %>>
                                     </div>
                             </div>
                         </form>
@@ -135,7 +135,7 @@
                                     <input type="hidden" name="comidaId" id="deleteComidaSelector">
                                     <input type="hidden" name="id" value="<%= menu==null ? 0:menu.getId() %>">
                                     <div class="table-responsive">
-                                        <table class="table caption-top text-center table-hover">
+                                        <table name="comidasMenu" class="table caption-top text-center table-hover">
                                             <caption class="text-center text-white">Comidas del Menú</caption>
                                             <thead class="header table-dark">
                                                 <tr>
@@ -152,11 +152,11 @@
                                                         for(Comida comida : comidasMenu){
                                                             comidasMenuIndex++;
                                                 %>
-                                                    <tr>
+                                                    <tr name=<%="comidaMenu"+comidasMenuIndex%>>
                                                         <td><%= comidasMenuIndex %></td>
                                                         <td><%= comida.getNombre() %></td>
                                                         <td><%= comida.getCalorias() %></td>
-                                                        <td><button class="btn bg-danger" onclick="deleteComida(<%= comida.getId() %>)">E</button></td>
+                                                        <td name="eliminarComida"><button class="btn bg-danger" onclick="deleteComida(<%= comida.getId() %>)">E</button></td>
                                                     </tr>
                                                 <%
                                                         }
@@ -183,7 +183,7 @@
                     <section id="Comidas">
 
                             <div class="table-responsive">
-                                <table class="table caption-top text-center table-hover">
+                                <table name="comidas" class="table caption-top text-center table-hover">
                                     <caption class="header text-center text-white">Comidas</caption>
                                     <thead class="header table-dark">
                                     <form:form id="filtroComida" method="get" action="/dietista/filtrarComida" modelAttribute="filtroComida">
@@ -205,11 +205,11 @@
                                         for(Comida comida : comidas){
                                             comidaIndex++;
                                     %>
-                                    <tr>
+                                    <tr name=<%="comida"+comidaIndex%>>
                                         <td><%= comidaIndex %></td>
                                         <td><%= comida.getNombre() %></td>
                                         <td><%= comida.getCalorias() %></td>
-                                        <td><button  class="btn btn-primary" onclick="addComida(<%= comida.getId() %>)">A</button></td>
+                                        <td name="anyadirComida"><button  class="btn btn-primary" onclick="addComida(<%= comida.getId() %>)">A</button></td>
                                     </tr>
                                     <%
                                         }

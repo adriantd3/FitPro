@@ -1,3 +1,4 @@
+CREATE DATABASE  IF NOT EXISTS `fitpro` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `fitpro`;
 -- MySQL dump 10.13  Distrib 8.0.34, for Win64 (x86_64)
 --
@@ -60,7 +61,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `desempenyo_serie` WRITE;
 /*!40000 ALTER TABLE `desempenyo_serie` DISABLE KEYS */;
-INSERT INTO `desempenyo_serie` VALUES (44,15,2,50,8,NULL,NULL,NULL),(45,15,2,40,15,NULL,NULL,NULL),(46,15,1,60,12,NULL,NULL,NULL),(47,15,1,70,6,NULL,NULL,NULL),(48,15,2,45,12,NULL,NULL,NULL),(49,15,1,65,10,NULL,NULL,NULL);
+INSERT INTO `desempenyo_serie` VALUES (248,46,1,60,12,NULL,NULL,NULL),(249,46,1,65,10,NULL,NULL,NULL),(250,46,1,70,6,NULL,NULL,NULL),(251,46,2,40,15,NULL,NULL,NULL),(252,46,2,45,12,NULL,NULL,NULL),(253,46,2,50,8,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `desempenyo_serie` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -70,7 +71,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `desempenyo_sesion` WRITE;
 /*!40000 ALTER TABLE `desempenyo_sesion` DISABLE KEYS */;
-INSERT INTO `desempenyo_sesion` VALUES (15,1,1,'2024-05-06',0);
+INSERT INTO `desempenyo_sesion` VALUES (46,1,1,'2024-05-28',1);
 /*!40000 ALTER TABLE `desempenyo_sesion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -110,7 +111,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `ejercicio` WRITE;
 /*!40000 ALTER TABLE `ejercicio` DISABLE KEYS */;
-INSERT INTO `ejercicio` VALUES (1,'Incline Bench Press','The incline bench press is a variation of the bench press and an exercise used to build the muscles of the chest.','https://cdn.muscleandstrength.com/sites/default/files/incline-bench-press.jpg','https://youtu.be/uIzbJX5EVIY',1,6),(2,'Seated Cable Row','Your back must remain straight at all times. Your torso should be kept still throughout the entire set.','https://cdn.muscleandstrength.com/sites/default/files/styles/800x500/public/seated-cable-row.jpg?itok=b8Yzo0KK',NULL,1,14),(3,'Leg Press','The leg press is a variation of the squat and an exercise used to target the muscles of the leg.','https://cdn.muscleandstrength.com/sites/default/files/leg-press.jpg','https://youtu.be/sEM_zo9w2ss',1,19),(4,'Smith Machine Shoulder Press','The Smith machine shoulder press is a variation of the barbell shoulder press and is used to strengthen the muscles of the shoulders.','https://cdn.muscleandstrength.com/sites/default/files/seated-military-press.jpg',NULL,1,20),(5,'Rope Tricep Extension','The rope tricep extension is a variation of the cable tricep extension and an exercise used to build the muscles of the triceps.','https://cdn.muscleandstrength.com/sites/default/files/rope-tricep-extension-1.jpg',NULL,1,22);
+INSERT INTO `ejercicio` VALUES (1,'Incline Bench Press','The incline bench press is a variation of the bench press and an exercise used to build the muscles of the chest.','https://cdn.muscleandstrength.com/sites/default/files/incline-bench-press.jpg','https://youtube.com/embed/uIzbJX5EVIY',1,6),(2,'Seated Cable Row','Your back must remain straight at all times. Your torso should be kept still throughout the entire set.','https://cdn.muscleandstrength.com/sites/default/files/styles/800x500/public/seated-cable-row.jpg?itok=b8Yzo0KK',NULL,1,14),(3,'Leg Press','The leg press is a variation of the squat and an exercise used to target the muscles of the leg.','https://cdn.muscleandstrength.com/sites/default/files/leg-press.jpg','https://youtube.com/embed/sEM_zo9w2ss',1,19),(4,'Smith Machine Shoulder Press','The Smith machine shoulder press is a variation of the barbell shoulder press and is used to strengthen the muscles of the shoulders.','https://cdn.muscleandstrength.com/sites/default/files/seated-military-press.jpg',NULL,1,20),(5,'Rope Tricep Extension','The rope tricep extension is a variation of the cable tricep extension and an exercise used to build the muscles of the triceps.','https://cdn.muscleandstrength.com/sites/default/files/rope-tricep-extension-1.jpg',NULL,1,22);
 /*!40000 ALTER TABLE `ejercicio` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -120,7 +121,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `entrenador_cliente` WRITE;
 /*!40000 ALTER TABLE `entrenador_cliente` DISABLE KEYS */;
-INSERT INTO `entrenador_cliente` VALUES (3,1);
+INSERT INTO `entrenador_cliente` VALUES (3,1),(4,1);
 /*!40000 ALTER TABLE `entrenador_cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -243,4 +244,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-07 16:36:53
+-- Dump completed on 2024-05-29 18:12:43

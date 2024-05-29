@@ -37,7 +37,7 @@
                 nombre_ejercicio = e.getNombre();
         %>
         <div>
-            <table style="width: 700px" class="table table-striped table-dark">
+            <table name="tabla_ejercicio" style="width: 700px" class="table table-striped table-dark">
                 <thead>
                 <tr><th style="background-color: transparent; color: darkblue;width: 300px"><%= nombre_ejercicio %></th></tr>
                 <tr>
@@ -102,7 +102,7 @@
                 </tbody>
             </table>
             <div style="display: flex;justify-content: center;">
-                <button type="button" class="btn btn-primary" onclick="window.location.href='/entrenador_cross_training/anyadir_serie?sesion=<%=sesion.getId()%>&ejercicio=<%=e.getId()%>'">Añadir serie</button>
+                <button name="anyadir_serie" type="button" class="btn btn-primary" onclick="window.location.href='/entrenador_cross_training/anyadir_serie?sesion=<%=sesion.getId()%>&ejercicio=<%=e.getId()%>'">Añadir serie</button>
             </div>
         </div>
         <%
@@ -115,7 +115,7 @@
 <section class="sesion-buttons">
     <button type="button" class="btn btn-success" onclick="window.location.href='/entrenador_cross_training/sesiones'">Guardar</button>
     <button type="button" class="btn btn-danger" onclick="window.location.href='/entrenador_cross_training/borrar_sesion?id=<%= sesion.getId()%>'">Borrar</button>
-    <button type="button" class="btn btn-primary" onclick="window.location.href='/entrenador_cross_training/ejercicios?ejercicio=&musculo=&tipo='">Añadir ejercicio</button>
+    <button name="anyadir_ejercicio" type="button" class="btn btn-primary" onclick="window.location.href='/entrenador_cross_training/ejercicios?ejercicio=&musculo=&tipo='">Añadir ejercicio</button>
 </section>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>

@@ -91,7 +91,7 @@
         <form method="post" action="/entrenador_cross_training/anyadir_ejercicio">
             <input type="hidden" name="sesion" value="<%=sesion.getId()%>">
             <input type="hidden" name="ejercicio" value="<%=e.getId()%>">
-            <button type="submit" class="btn btn-secondary" ><%= e.getNombre() %></button>
+            <button name="<%= e.getNombre() %>" type="submit" class="btn btn-secondary" ><%= e.getNombre() %></button>
         </form>
         <%
             }

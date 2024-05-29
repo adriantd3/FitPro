@@ -51,8 +51,8 @@
             %>
             <tr>
                 <th scope="row"><%= num %></th>
-                <td><%= s.getNombre() %></td>
-                <td><button class="btn btn-secondary" onclick="window.location.href='/entrenador_cross_training/sesion?id=<%= s.getId()%>'">Editar</button></td>
+                <td name="nombre_sesion"><%= s.getNombre() %></td>
+                <td><button name="editar" class="btn btn-secondary" onclick="window.location.href='/entrenador_cross_training/sesion?id=<%= s.getId()%>'">Editar</button></td>
                 <td>
                     <form action="/entrenador_cross_training/borrar_sesion" method="post">
                         <input type="hidden" name="id" value="<%=s.getId()%>">

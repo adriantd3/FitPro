@@ -39,7 +39,7 @@
     <input type="hidden" name="ejercicio" value="<%= ejercicio.getId() %>">
     <div class="div-nueva-serie">
         <button type="button" class="btn btn-secondary" onclick="window.location.href='/entrenador_cross_training/sesion?id=<%=sesion.getId()%>'">Cancelar</button>
-        <button type="submit" class="btn btn-primary">Añadir serie</button>
+        <button name="guardar_serie" type="submit" class="btn btn-primary">Añadir serie</button>
     </div>
 </form>
 

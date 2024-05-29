@@ -46,7 +46,7 @@
 </header>
 <div class="user-wrapper assignment-gap">
     <div>
-        <table class="table-assignment table caption-top text-center">
+        <table id="clients" class="table-assignment table caption-top text-center">
             <caption class="text-center text-white">Lista de Clientes</caption>
             <thead class="table-dark">
             <tr>
@@ -57,19 +57,21 @@
             </tr>
             </thead>
             <tbody>
-            <% for(Usuario c : clientes){ %>
-            <tr role="button" class="<%= cliente!=null && c.getId() == cliente.getId() ? "selected-row" : ""%>" onclick=rellenarDatos(<%=c.getId()%>)>
+            <% int i=0;
+                for(Usuario c : clientes){ %>
+            <tr name="<%="client"+i%>" role="button" class="<%= cliente!=null && c.getId() == cliente.getId() ? "selected-row" : ""%>" onclick=rellenarDatos(<%=c.getId()%>)>
                 <td><%=c.getId()%></td>
                 <td><%=c.getNombre()%></td>
             </tr>
-            <% } %>
+            <% }
+                i++; %>
             </tbody>
         </table>
     </div>
     <% if(cliente != null) { %>
     <div class="assignment-wrapper">
         <div class="trabajador-table">
-        <table class="table caption-top text-center">
+        <table id="assigned" class="table caption-top text-center">
             <caption class="text-center text-white">Lista de trabajadores asignados</caption>
             <thead class="table-dark">
             <tr>
@@ -79,13 +81,14 @@
             </tr>
             </thead>
             <tbody>
-            <% for(Usuario c : cliente_trabajadores){ %>
-            <tr role="button" class="<%= trabajador_propio!=null && c.getId() == trabajador_propio.getId() ? "selected-row" : ""%>" onclick="seleccionarEntrenadorPropio(<%=cliente.getId()%>,<%=c.getId()%>)">
+            <% int j=0;
+                for(Usuario c : cliente_trabajadores){ %>
+            <tr name="<%="aWorker"+j%>" role="button" class="<%= trabajador_propio!=null && c.getId() == trabajador_propio.getId() ? "selected-row" : ""%>" onclick="seleccionarEntrenadorPropio(<%=cliente.getId()%>,<%=c.getId()%>)">
                 <td><%=c.getId()%></td>
                 <td><%=c.getNombre()%></td>
                 <td><%=c.getRol().getNombre()%></td>
             </tr>
-            <% } %>
+            <% j++; }  %>
             </tbody>
         </table>
         </div>
@@ -93,16 +96,16 @@
             <form action="/admin/add_trabajador_propio" method="post">
                 <input type="hidden" name="clienteId" value="<%=cliente.getId()%>">
                  <% if (trabajador_nuevo != null ) { %> <input type="hidden" name="trabajadorId" value="<%=trabajador_nuevo.getId()%>"> <% } %>
-                <button class="swap-button" type="submit" <%= trabajador_nuevo != null ? "" : "disabled" %>> ⬅️ </button>
+                <button name="assign" class="swap-button" type="submit" <%= trabajador_nuevo != null ? "" : "disabled" %>> ⬅️ </button>
             </form>
             <form action="/admin/delete_trabajador_propio" method="post">
                 <input type="hidden" name="clienteId" value="<%=cliente.getId()%>">
                 <% if (trabajador_propio != null ) { %> <input type="hidden" name="trabajadorId" value="<%=trabajador_propio.getId()%>"> <% } %>
-                <button class="swap-button" type="submit" <%= trabajador_propio != null ? "" : "disabled" %>> ➡️ </button>
+                <button name="unAssign" class="swap-button" type="submit" <%= trabajador_propio != null ? "" : "disabled" %>> ➡️ </button>
             </form>
         </div>
         <div class="trabajador-table">
-        <table class="table caption-top text-center">
+        <table id="non-assigned" class="table caption-top text-center">
             <caption class="text-center text-white">Lista de trabajadores sin asignar</caption>
             <thead class="table-dark">
             <tr>
@@ -112,13 +115,14 @@
             </tr>
             </thead>
             <tbody>
-            <% for(Usuario c : todos_trabajadores){ %>
-            <tr role="button" class="<%= trabajador_nuevo!=null && c.getId() == trabajador_nuevo.getId() ? "selected-row" : ""%>" onclick="seleccionarEntrenadorNuevo(<%=cliente.getId()%>,<%=c.getId()%>)">
+            <% int k=0;
+                for(Usuario c : todos_trabajadores){ %>
+            <tr name="<%="nWorker"+k%>" role="button" class="<%= trabajador_nuevo!=null && c.getId() == trabajador_nuevo.getId() ? "selected-row" : ""%>" onclick="seleccionarEntrenadorNuevo(<%=cliente.getId()%>,<%=c.getId()%>)">
                 <td><%=c.getId()%></td>
                 <td><%=c.getNombre()%></td>
                 <td><%=c.getRol().getNombre()%></td>
             </tr>
-            <% } %>
+            <% k++;} %>
             </tbody>
         </table>
         </div>

@@ -36,26 +36,39 @@ export default async function () {
     sleep(0.5);
     await Promise.all([page.waitForNavigation({waitUntil: 'networkidle'}), menuButton.click()]);
     
-    const expectedLenght = page.$$('table[name="menu_table"] tbody tr').length+1;
     
     page.locator('input[name="nombreMenu"]').clear();
     page.locator('input[name="nombreMenu"]').type('MenuTest');
     sleep(0.5);
     
     const saveMenuButton = page.locator('button[name="guardar"]');
-    sleep(0.5);
     await Promise.all([page.waitForNavigation({waitUntil: 'networkidle'}), saveMenuButton.click()]);
-    page.$$('table[name="menu_table"] tbody tr')[expectedLenght-1].scrollIntoViewIfNeeded();
+    
+    const expectedLenght = page.$$('table[name="menu_table"] tbody tr').length;
+    page.$('table[name="menu_table"] tbody tr[name="menu'+(expectedLenght)+'"]').scrollIntoViewIfNeeded();
+
+    const menu = page.$('table[name="menu_table"] tbody tr[name="menu'+(expectedLenght)+'"]')
+    await Promise.all([page.waitForNavigation({waitUntil: 'networkidle'}), menu.click()]);
     sleep(0.5);
 
-    const actualLenght = page.$$('table[name="menu_table"] tbody tr').length;
+    const expectedComidasMenuLenght = page.$$('table[name="comidasMenu"] tbody tr').length+1;
+    const expectedComidasLenght = page.$$('table[name="comidas"] tbody tr').length-1;
+
+    const comida = page.$('table[name="comidas"] tbody tr[name="comida1"] td[name="anyadirComida"] button')
+    await Promise.all([page.waitForNavigation({waitUntil: 'networkidle'}), comida.click()]);
+    sleep(0.5);
+
+    const actualComidasMenuLenght = page.$$('table[name="comidasMenu"] tbody tr').length;
+    const actualComidasLenght = page.$$('table[name="comidas"] tbody tr').length;
+
+    
+    const deleteMenuButton = page.locator('button[name="eliminar"]');
+    await Promise.all([page.waitForNavigation({waitUntil: 'networkidle'}), deleteMenuButton.click()]);
     
     check(page, {
-      'MenusLenght': p => actualLenght === expectedLenght,
+      'ComidasMenuLenght': p => actualComidasMenuLenght === expectedComidasMenuLenght,
+      'ComidasLenght': p=> actualComidasLenght === expectedComidasLenght,
   });
-    check(page, {
-        'MenuAdded': p => (p.$('table[name="menu_table"] tbody tr[name="menu'+(actualLenght)+'"] td[name="nombre"]')).textContent() === "MenuTest",
-    });
 
   } finally {
     page.close();

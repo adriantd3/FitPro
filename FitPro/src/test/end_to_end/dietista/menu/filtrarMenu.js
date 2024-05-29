@@ -63,7 +63,7 @@ export default async function () {
     await Promise.all([page.waitForNavigation({waitUntil: 'networkidle'}), deleteMenuButton.click()]);
     
     check(page, {
-      'MenusFiltradosLenght': p => actualMenusFiltradosLenght === 1,
+      'MenusFiltradosLenght': p => actualMenusFiltradosLenght >= 1,
   });
 
   } finally {

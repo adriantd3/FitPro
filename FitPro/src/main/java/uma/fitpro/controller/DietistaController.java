@@ -240,10 +240,10 @@ public class DietistaController {
     }
 
     @PostMapping("/guardarDieta")
-    public String doGuardarDieta(@RequestParam(value = "dietaId") Integer dietaId, @RequestParam("nombre") String nombre, HttpSession session){
+    public String doGuardarDieta(@RequestParam(value = "dietaId") Integer dietaId, @RequestParam("nombreDieta") String nombreDieta, HttpSession session){
         Dieta dieta = dietaRepository.findById(dietaId).orElse(new Dieta());
-        if(!nombre.equals("")){
-            dieta.setNombre(nombre);
+        if(!nombreDieta.equals("")){
+            dieta.setNombre(nombreDieta);
         }
 
         Usuario dietista = (Usuario) session.getAttribute("user");

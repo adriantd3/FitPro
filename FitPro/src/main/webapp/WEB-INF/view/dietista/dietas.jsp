@@ -95,12 +95,12 @@
             <section id="Dietas" class="pt-2">
 
                 <div class="table-responsive">
-                    <table class="table dieta_table caption-top text-center table-hover">
+                    <table name="dieta_table" class="table dieta_table caption-top text-center table-hover">
                         <caption class="text-center text-white">Dietas</caption>
                         <thead class="header table-dark">
                         <form:form id="filtroDietas" method="get" action="/dietista/filtrarDietas" modelAttribute="filtroDieta">
                             <tr>
-                                <th class="id"><button class="btn btn-dark" onclick="filtrarDietas">🔍</button></th>
+                                <th class="id"><button name="filterButton" class="btn btn-dark" onclick="filtrarDietas">🔍</button></th>
                                 <th class="nombre-dieta"><form:input path="nombre" class="form-control" data-bs-theme="dark" placeholder="Nombre"/></th>
                                 <th class="fecha">Fecha creación</th>
                             </tr>
@@ -114,10 +114,10 @@
                                 for(Dieta d : dietas){
                                     dietaIndex++;
                             %>
-                            <tr class="dieta" onclick="selectDieta(<%= d.getId() %>)">
+                            <tr name=<%= "dieta" + dietaIndex%> class="dieta" onclick="selectDieta(<%= d.getId() %>)">
                                 <td><%= dietaIndex %></td>
-                                <td><%= d.getNombre() %></td>
-                                <td><%= d.getFechaCreacion() %></td>
+                                <td name="nombre"><%= d.getNombre() %></td>
+                                <td name="fecha"><%= d.getFechaCreacion() %></td>
                             </tr>
                             <%
                                 }
@@ -140,7 +140,7 @@
                                 if(dieta!=null){name=dieta.getNombre();}
                             %>
                             <input type="hidden" name="dietaId" value="<%= dieta==null ? 0:dieta.getId() %>">
-                            <input id="nombre" type="text" class="form-control" name="nombre" value=<%= name %>>
+                            <input id="nombre" type="text" class="form-control" name="nombreDieta" value=<%= name %>>
                         </div>
                     </div>
                 </form>
@@ -148,7 +148,7 @@
 
                     <section id="ListaMenusDieta">
                             <div class="table-responsive menus_table">
-                                <table class="table caption-top text-center table-hover">
+                                <table name="menusDieta" class="table caption-top text-center table-hover">
                                     <caption class="text-center text-white">Menus de la Dieta</caption>
                                     <thead class="header table-dark">
                                     <tr>
@@ -168,15 +168,15 @@
                                             <input type="hidden" name="ordenMenu" id="deleteMenuOrden">
                                             <input type="hidden" name="dietaId" value="<%= dieta==null ? 0:dieta.getId() %>">
                                             <%
-
+                                                int menuDietaIndex=0;
                                                 for(OrdenMenuDieta m : menusDieta){
-
+                                                menuDietaIndex++;
                                             %>
-                                            <tr>
+                                            <tr name=<%="menuDieta"+menuDietaIndex%>>
                                                 <td onclick="selectMenu(<%= m.getMenu().getId() %>)"><%= m.getId().getOrden() %></td>
                                                 <td onclick="selectMenu(<%= m.getMenu().getId() %>)"><%= m.getMenu().getNombre() %></td>
                                                 <td onclick="selectMenu(<%= m.getMenu().getId() %>)"><%= m.getMenu().getCalorias() %></td>
-                                                <td><button  class="btn btn-danger" onclick="deleteMenu(<%= m.getMenu().getId() %>, <%= m.getId().getOrden()%>)">-</button></td>
+                                                <td  name="eliminarMenu"><button  class="btn btn-danger" onclick="deleteMenu(<%= m.getMenu().getId() %>, <%= m.getId().getOrden()%>)">-</button></td>
                                             </tr>
                                             <%
                                                 }
@@ -223,12 +223,13 @@
                         }
                     %>
                     <div class="dietaButtons">
-                        <button type="submit" class="btn btn-success me-3 saveButton" onclick="guardarDieta()">Guardar</button>
+                        <button name="guardar" type="submit" class="btn btn-success me-3 saveButton" onclick="guardarDieta()">Guardar</button>
                         <form method="get" action="./limpiarDieta">
-                            <button type="submit" class="btn btn-primary me-3">Limpiar</button>
+                            <button name="limpiar" type="submit" class="btn btn-primary me-3">Limpiar</button>
                         </form>
                         <form method="post" action="./borrarDieta">
-                            <button type="<%= dieta==null ? "button":"submit" %>" class="btn btn-danger me-3" name="dietaId" value="<%= dieta==null ? 0:dieta.getId() %>">Borrar</button>
+                            <input type="hidden" name="dietaId" value="<%= dieta==null ? 0:dieta.getId() %>">
+                            <button name="eliminar" type="<%= dieta==null ? "button":"submit" %>" class="btn btn-danger me-3">Borrar</button>
                         </form>
                     </div>
                 </div>
@@ -237,7 +238,7 @@
                     <section id="Menus">
 
                         <div class="table-responsive">
-                            <table class="table caption-top text-center table-hover">
+                            <table name="menus" class="table caption-top text-center table-hover">
                                 <caption class="header text-center text-white">Menus</caption>
                                 <thead class="header table-dark">
                                 <form:form id="filtroMenus" method="get" action="/dietista/filtrarMenusDieta" modelAttribute="filtroMenu">
@@ -263,11 +264,11 @@
                                         for(Menu m : menus){
                                             menuIndex++;
                                     %>
-                                    <tr>
+                                    <tr name=<%="menu"+menuIndex%>>
                                         <td onclick="selectMenu(<%= m.getId() %>)"><%= menuIndex %></td>
                                         <td onclick="selectMenu(<%= m.getId() %>)"><%= m.getNombre() %></td>
                                         <td onclick="selectMenu(<%= m.getId() %>)"><%= m.getCalorias() %></td>
-                                        <td><button  class="btn btn-primary" onclick="addMenu(<%= m.getId() %>)">+</button></td>
+                                        <td name="anyadirMenu"><button  class="btn btn-primary" onclick="addMenu(<%= m.getId() %>)">+</button></td>
                                     </tr>
                                     <%
                                         }

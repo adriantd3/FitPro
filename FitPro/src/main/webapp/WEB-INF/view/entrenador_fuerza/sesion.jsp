@@ -43,8 +43,8 @@
         for (Ejercicio ejercicio : tablas.keySet()){
     %>
 
-        <table style="border-spacing: 0" class="table caption-top text-center w-100 ">
-            <a href="#" class="d-block fs-3"><%=ejercicio.getNombre()%></a>
+        <table style="border-spacing: 0" id=<%=ejercicio.getNombre()%> class="table caption-top text-center w-100 ">
+            <a href="#" class="d-block fs-3" ><%=ejercicio.getNombre()%></a>
             <thead class="table-dark">
             <tr>
                 <th class="nombre-menu">Peso</th>
@@ -59,13 +59,13 @@
             %>
 
             <tr onclick="">
-                <td><%= s.getPeso() %></td>
-                <td><%= s.getRepeticiones() %></td>
+                <td id=<%="peso" + s.getId()%>><%= s.getPeso() %></td>
+                <td id=<%="repeticiones" + s.getId()%>><%= s.getRepeticiones() %></td>
                 <td style="background-color: transparent !important; border-bottom-width: 0">
-                    <a style="color: yellow" href="/entrenador_fuerza/editar-serie?serie=<%=s.getId()%>">Editar Serie</a>
+                    <a style="color: yellow" href="/entrenador_fuerza/editar-serie?serie=<%=s.getId()%>" id=<%=s.getId()%>>Editar Serie</a>
                 </td>
                 <td style="background-color: transparent !important; border-bottom-width: 0">
-                    <a style="color: red" href="/entrenador_fuerza/eliminar-serie?serie=<%=s.getId()%>">Eliminar Serie</a>
+                    <a style="color: red" href="/entrenador_fuerza/eliminar-serie?serie=<%=s.getId()%>" id=<%=s.getId()%>>Eliminar Serie</a>
                 </td>
             </tr>
 
@@ -91,10 +91,10 @@
         <h1 class="pb-2" style="color: white"> Serie de <%=serie.getEjercicio().getNombre()%></h1>
         <form:form method="post" action="/entrenador_fuerza/guardar-serie" modelAttribute="serie">
             <form:label cssStyle="color: white; width: 110px" path="peso" >Peso: </form:label>
-            <form:input path="peso" type="number"/>
+            <form:input path="peso" name="peso" type="number"/>
             <br>
             <form:label cssStyle="color: white; width: 110px" path="repeticiones" >Repeticiones: </form:label>
-            <form:input path="repeticiones" type="number"/>
+            <form:input path="repeticiones" name="repeticiones" type="number"/>
             <br>
 
             <form:input type="hidden" path="id" value="<%=serie.getId()%>"/>
@@ -103,7 +103,7 @@
             <form:input type="hidden" path="distancia" value="0"/>
             <form:input type="hidden" path="duracion" value="0"/>
 
-            <input class="btn btn-success" type="submit" value="Guardar">
+            <input class="btn btn-success" name="editar-serie" type="submit" value="Guardar">
         </form:form>
     </div>
     <%

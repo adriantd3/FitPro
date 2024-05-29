@@ -34,12 +34,12 @@
     <h1 class="header-text text-center">Usuarios</h1>
 </header>
 <div class="user-wrapper">
-    <table class="table-users table caption-top text-center table-hover ">
+    <table id="users" class="table-users table caption-top text-center table-hover ">
         <caption class="text-center text-white">Lista de usuarios</caption>
         <thead class="table-dark">
         <tr>
             <form method="post" action=/admin/user/filter>
-                <th scope="col"><button type="submit">🔍</button></th>
+                <th scope="col"><button name="filter" type="submit">🔍</button></th>
                 <th scope="col"><input value="<%=filtroNombre%>" name="nombre" type="text" placeholder="Nombre"></th>
                 <th scope="col"><input value="<%=filtroApellido%>" name="apellido" type="text" placeholder="Apellidos"></th>
                 <th scope="col"><input value="<%=filtroRol%>" name="rol" type="text" placeholder="Rol"></th>
@@ -47,14 +47,15 @@
         </tr>
         </thead>
         <tbody>
-        <% for(Usuario u : usuarios){ %>
-            <tr role="button" class="<%= usuario!=null && u.getId() == usuario.getId() ? "selected-row" : ""%>" onclick=rellenarDatos(<%=u.getId()%>)>
+        <%  int i = 0;
+            for(Usuario u : usuarios) { %>
+            <tr role="button" name="<%="user"+i%>" class="<%= usuario!=null && u.getId() == usuario.getId() ? "selected-row" : ""%>" onclick=rellenarDatos(<%=u.getId()%>)>
                 <td><%=u.getId()%></td>
                 <td><%=u.getNombre()%></td>
-                <td><%=u.getApellidos()%></td>
+                <td name="apellido"><%=u.getApellidos()%></td>
                 <td><%=u.getRol().getNombre()%></td>
             </tr>
-        <% } %>
+        <% i++;} %>
         </tbody>
     </table>
     <form class="user-form" method="post" action="/admin/add-users">
@@ -86,12 +87,12 @@
             </tr>
             </tbody>
         </table>
-        <button type="submit" class="btn btn-primary">Guardar</button>
+        <button type="submit" name="save-user" class="btn btn-primary">Guardar</button>
     </form>
     <div class="form-buttons">
-        <form method="post" action="/admin/delete-exercise">
+        <form method="post" action="/admin/delete-user">
             <input name="Id" type="hidden" value=<%=usuario == null ? "0" : usuario.getId()%>>
-            <button <%= usuario != null ? "" : "disabled" %> type="submit" class="btn btn-primary user-delete-button">Eliminar</button>
+            <button name="delete-user" <%= usuario != null ? "" : "disabled" %> type="submit" class="btn btn-primary user-delete-button">Eliminar</button>
         </form>
         <button type="submit" class="btn btn-primary user-clean-button" onclick="rellenarDatos(0)">Limpiar</button>
     </div>

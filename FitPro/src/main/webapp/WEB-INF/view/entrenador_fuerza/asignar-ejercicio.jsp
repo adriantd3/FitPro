@@ -41,7 +41,7 @@
         <%
             for(Ejercicio ej : ejercicios){
         %>
-        <button onclick="submitForm(<%=ej.getId()%>)" class="list-button list-group-item" id=<%=ejercicio.getId()%>>
+        <button name=<%=ej.getNombre()%> onclick="submitForm(<%=ej.getId()%>)" class="list-button list-group-item" id=<%=ejercicio.getId()%>>
             <%=ej.getNombre()%>
         </button>
             <%

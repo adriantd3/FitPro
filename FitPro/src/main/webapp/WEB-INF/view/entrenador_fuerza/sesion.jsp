@@ -44,7 +44,7 @@
     %>
 
         <table style="border-spacing: 0" id=<%=ejercicio.getNombre()%> class="table caption-top text-center w-100 ">
-            <a href="#" class="d-block fs-3" ><%=ejercicio.getNombre()%></a>
+            <a href="#" id="nombreEjercicio" class="d-block fs-3" ><%=ejercicio.getNombre()%></a>
             <thead class="table-dark">
             <tr>
                 <th class="nombre-menu">Peso</th>

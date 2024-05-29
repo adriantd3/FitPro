@@ -93,7 +93,7 @@ public class DietistaController {
     }
 
     @PostMapping("/guardarMenu")
-    public String doGuardarMenu(@RequestParam(value = "id") Integer id, @RequestParam("nombre") String nombre){
+    public String doGuardarMenu(@RequestParam(value = "id") Integer id, @RequestParam("nombreMenu") String nombre){
            Menu menu = menuRepository.findById(id).orElse(new Menu());
            if(!nombre.equals("")){
                menu.setNombre(nombre);

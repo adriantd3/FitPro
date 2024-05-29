@@ -36,26 +36,22 @@ export default async function () {
     sleep(0.5);
     await Promise.all([page.waitForNavigation({waitUntil: 'networkidle'}), menuButton.click()]);
     
-    const expectedLenght = page.$$('table[name="menu_table"] tbody tr').length+1;
     
-    page.locator('input[name="nombreMenu"]').clear();
-    page.locator('input[name="nombreMenu"]').type('MenuTest');
-    sleep(0.5);
-    
-    const saveMenuButton = page.locator('button[name="guardar"]');
-    sleep(0.5);
-    await Promise.all([page.waitForNavigation({waitUntil: 'networkidle'}), saveMenuButton.click()]);
-    page.$$('table[name="menu_table"] tbody tr')[expectedLenght-1].scrollIntoViewIfNeeded();
-    sleep(0.5);
+    const lastMenuIndex = page.$$('table[name="menu_table"] tbody tr').length;
+    page.$('table[name="menu_table"] tbody tr[name="menu'+(lastMenuIndex)+'"]').scrollIntoViewIfNeeded();
 
-    const actualLenght = page.$$('table[name="menu_table"] tbody tr').length;
+    let menu = page.$('table[name="menu_table"] tbody tr[name="menu'+(lastMenuIndex)+'"]')
+    await Promise.all([page.waitForNavigation({waitUntil: 'networkidle'}), menu.click()]);
+    sleep(0.5);
+    
+    const limpiarMenuButton = page.locator('button[name="limpiar"]');
+    await Promise.all([page.waitForNavigation({waitUntil: 'networkidle'}), limpiarMenuButton.click()]);
+    
+    const actualName = page.$('input[name="nombreMenu"]').inputValue().trim();
     
     check(page, {
-      'MenusLenght': p => actualLenght === expectedLenght,
+      'MenuName': p => actualName === "",
   });
-    check(page, {
-        'MenuAdded': p => (p.$('table[name="menu_table"] tbody tr[name="menu'+(actualLenght)+'"] td[name="nombre"]')).textContent() === "MenuTest",
-    });
 
   } finally {
     page.close();

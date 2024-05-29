@@ -25,11 +25,21 @@
 </header>
 <ul>
     <%
+        int countNT = 0;
+        int countT = 0;
         for (DesempenyoSesion desempenyoSesion : desempenyoSesions){
-            String terminado = desempenyoSesion.getTerminado() == 1 ? "Terminado" : "No Terminado";
+            String terminado;
+            if(desempenyoSesion.getTerminado() == 1){
+                terminado = "Terminado";
+                countT++;
+            }else{
+                terminado = "No terminado";
+                countNT++;
+            }
+            String idRes = "Ent" + (desempenyoSesion.getTerminado() == 1 ? "T" + countT: "NT" + countNT);
     %>
     <li>
-        <a href="/cliente/desempenyo_sesion?id=<%=desempenyoSesion.getId()%>">
+        <a href="/cliente/desempenyo_sesion?id=<%=desempenyoSesion.getId()%>" id="<%=idRes%>">
             <%=desempenyoSesion.getFecha()%> - <%=terminado%>
         </a>
     </li>

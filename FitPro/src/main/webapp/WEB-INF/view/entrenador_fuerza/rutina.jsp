@@ -37,7 +37,7 @@
             <%
             for(Sesion sesion : sesionesRutina){
         %>
-        <button onclick="window.location.href='/entrenador_fuerza/sesion?sesion=<%=sesion.getId()%>'" class="list-button list-group-item">
+        <button name=<%=sesion.getNombre()%> onclick="window.location.href='/entrenador_fuerza/sesion?sesion=<%=sesion.getId()%>'" class="list-button list-group-item">
             <%=sesion.getNombre()%>
         </button>
             <%

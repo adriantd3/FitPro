@@ -394,8 +394,8 @@ public class EntrenadorCrossTrainingController {
         return "entrenador_cross_training/anyadir_serie";
     }
 
-    @PostMapping("/guardar_serie")
-    public String doGuardarSerie(@RequestParam("sesion") Integer id_sesion,
+    @PostMapping("/crear_serie")
+    public String doCrearSerie(@RequestParam("sesion") Integer id_sesion,
                                  @RequestParam("ejercicio") Integer id_ejercicio,
                                  @RequestParam("param1") String parametro1,
                                  @RequestParam("param2") String parametro2){
@@ -406,26 +406,37 @@ public class EntrenadorCrossTrainingController {
         nueva_serie.setEjercicio(ejercicio);
         nueva_serie.setSesion(sesion);
 
-        // Guardamos los parametros de la nueva serie (segun el ejercicio)
-        switch (ejercicio.getTipo().getId()){
-            case 1:
-                nueva_serie.setPeso(Float.parseFloat(parametro1));
-                nueva_serie.setRepeticiones(Integer.parseInt(parametro2));
-                break;
-            case 2:
-                nueva_serie.setDistancia(Float.parseFloat(parametro1));
-                nueva_serie.setDuracion(Integer.parseInt(parametro2));
-                break;
-            case 3:
-                nueva_serie.setDuracion(Integer.parseInt(parametro1));
-                nueva_serie.setDescanso(Integer.parseInt(parametro2));
-                break;
-            case 4,5:
-                nueva_serie.setRepeticiones(Integer.parseInt(parametro1));
-                nueva_serie.setDescanso(Integer.parseInt(parametro2));
-                break;
-        }
+        guardarSerie(nueva_serie, parametro1, parametro2);
         this.serieRepository.save(nueva_serie);
+
+        return "redirect:/entrenador_cross_training/sesion?id=" + sesion.getId();
+    }
+
+    @GetMapping("editar_serie")
+    public String doEditarSerie(@RequestParam("sesion") Integer id_sesion,
+                                @RequestParam("serie") Integer id_serie,
+                                Model model){
+        Serie serie = serieRepository.findById(id_serie).orElse(null);
+        Sesion sesion = sesionRepository.findById(id_sesion).orElse(null);
+        Map<Integer,List<String>> ejercicioParametros = getEjercicioParametros();
+
+        model.addAttribute("ejercicioParametros", ejercicioParametros);
+        model.addAttribute("sesion", sesion);
+        model.addAttribute("serie", serie);
+
+        return "entrenador_cross_training/editar_serie";
+    }
+
+    @PostMapping("/guardar_serie")
+    public String doGuardarSerie(@RequestParam("sesion") Integer id_sesion,
+                                 @RequestParam("serie") Integer id_serie,
+                                 @RequestParam("param1") String parametro1,
+                                 @RequestParam("param2") String parametro2){
+        Sesion sesion = sesionRepository.findById(id_sesion).orElse(null);
+        Serie serie = serieRepository.findById(id_serie).orElse(null);
+
+        guardarSerie(serie, parametro1, parametro2);
+        this.serieRepository.save(serie);
 
         return "redirect:/entrenador_cross_training/sesion?id=" + sesion.getId();
     }
@@ -438,6 +449,29 @@ public class EntrenadorCrossTrainingController {
         this.serieRepository.delete(serie);
 
         return "redirect:/entrenador_cross_training/sesion?id=" +sesion.getId();
+    }
+
+    private void guardarSerie(Serie serie, String parametro1, String parametro2){
+        // Guardamos los parametros de la serie (segun el ejercicio)
+        switch (serie.getEjercicio().getTipo().getId()){
+            case 1:
+                serie.setPeso(Float.parseFloat(parametro1));
+                serie.setRepeticiones(Integer.parseInt(parametro2));
+                break;
+            case 2:
+                serie.setDistancia(Float.parseFloat(parametro1));
+                serie.setDuracion(Integer.parseInt(parametro2));
+                break;
+            case 3:
+                serie.setDuracion(Integer.parseInt(parametro1));
+                serie.setDescanso(Integer.parseInt(parametro2));
+                break;
+            case 4,5:
+                serie.setRepeticiones(Integer.parseInt(parametro1));
+                serie.setDescanso(Integer.parseInt(parametro2));
+                break;
+        }
+
     }
 
 

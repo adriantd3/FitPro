@@ -28,7 +28,7 @@
 </header>
 <section class="scrollable-section">
     <section class="table-container">
-        <table class="table table-striped table-dark">
+        <table class="table table-striped table-dark table-width">
             <thead>
             <tr>
                 <th scope="col">#</th>
@@ -50,7 +50,9 @@
                     <form action="/entrenador_cross_training/borrar_rutina_cliente" method="post">
                         <input type="hidden" name="rutina" value="<%=r.getId()%>">
                         <input type="hidden" name="cliente" value="<%=cliente.getId()%>">
-                        <button type="submit" class="btn btn-danger">Borrar</button>
+                        <button type="submit" class="btn btn-danger button-image">
+                            <img class="image-button" src="${pageContext.request.contextPath}/assets/delete_button.svg">
+                        </button>
                     </form>
                 </td>
             </tr>
@@ -107,7 +109,7 @@
                     <input type="hidden" name="cliente" value="<%=cliente.getId()%>">
 
                     <div style="display: flex; justify-content: flex-end; margin-top: 20px">
-                        <button type="submit" <%=todasLasRutinas.size()==0 ? "disabled" : ""%> class="btn btn-primary">Asignar rutina</button>
+                        <button type="submit" <%=todasLasRutinas.size()==0 ? "disabled" : ""%> class="btn btn-success">Asignar rutina</button>
                     </div>
                 </form>
             </div>

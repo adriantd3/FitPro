@@ -1,4 +1,3 @@
-<%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
 <%@ page import="uma.fitpro.entity.Usuario" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -28,7 +27,10 @@
 </header>
 <section class="scrollable-section">
     <section class="table-container">
-        <table class="table table-striped table-dark">
+        <% if (clientes.isEmpty()) { %>
+        <section class="mensaje-alerta"><h2>No hay rutinas disponibles</h2></section>
+        <% }else { %>
+        <table class="table table-striped table-dark table-width">
             <thead>
             <form method="get" action="/entrenador_cross_training/filtrar_clientes">
                 <tr>
@@ -39,6 +41,9 @@
                             <button class="btn btn-dark">🔍</button>
                         </div>
                     </th>
+                    <th scope="col" >Edad</th>
+                    <th scope="col" >Altura</th>
+                    <th scope="col" >Peso</th>
                     <th scope="col" >Rutinas</th>
                 </tr>
             </form>
@@ -53,6 +58,9 @@
             <tr>
                 <th scope="row"><%= num %></th>
                 <td><%= u.getNombre() + " " + u.getApellidos()%></td>
+                <td><%= u.getEdad()%></td>
+                <td><%= u.getAltura() + " m"%></td>
+                <td><%= u.getPeso() + " kg"%></td>
                 <td><button class="btn btn-secondary" name="rutinas_cliente" onclick="window.location.href='/entrenador_cross_training/rutinas_cliente?id=<%= u.getId()%>'">Rutinas</button></td>
             </tr>
             <%
@@ -62,6 +70,7 @@
 
             </tbody>
         </table>
+        <% } %>
     </section>
 </section>
 

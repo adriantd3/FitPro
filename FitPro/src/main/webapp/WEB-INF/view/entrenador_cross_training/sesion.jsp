@@ -30,6 +30,11 @@
     <h1 class="header-text text-center"><%= sesion.getNombre()%></h1>
 </header>
 <section class="scrollable-section">
+    <% if (mapa.keySet().isEmpty()) { %>
+    <section class="table-container">
+        <section class="mensaje-alerta"><h2>Aún no hay ejercicios en esta sesion</h2></section>
+    </section>
+    <% } %>
     <section class="sesion-table-container scrollable-content">
         <%
             String nombre_ejercicio = "";
@@ -88,11 +93,22 @@
                     %>
 
                     <td style="box-shadow: none;background-color: #434343;border-bottom-width: 0px;">
-                        <form action="/entrenador_cross_training/borrar_serie" method="post">
-                            <input type="hidden" name="sesion" value="<%=sesion.getId()%>">
-                            <input type="hidden" name="serie" value="<%=s.getId()%>">
-                            <button type="submit" class="btn btn-link">Borrar</button>
-                        </form>
+                        <div style="display: flex;gap: 10px">
+                            <form action="/entrenador_cross_training/editar_serie" method="get">
+                                <input type="hidden" name="sesion" value="<%=sesion.getId()%>">
+                                <input type="hidden" name="serie" value="<%=s.getId()%>">
+                                <button type="submit" class="btn btn-warning button-image">
+                                    <img class="image-button" src="${pageContext.request.contextPath}/assets/editar_button.svg">
+                                </button>
+                            </form>
+                            <form action="/entrenador_cross_training/borrar_serie" method="post">
+                                <input type="hidden" name="sesion" value="<%=sesion.getId()%>">
+                                <input type="hidden" name="serie" value="<%=s.getId()%>">
+                                <button type="submit" class="btn btn-danger button-image">
+                                    <img class="image-button" src="${pageContext.request.contextPath}/assets/delete_button.svg">
+                                </button>
+                            </form>
+                        </div>
                     </td>
                 </tr>
                 <%

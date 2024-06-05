@@ -1,4 +1,3 @@
-<%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
 <%@ page import="uma.fitpro.entity.Ejercicio" %>
 <%@ page import="uma.fitpro.entity.TipoEjercicio" %>

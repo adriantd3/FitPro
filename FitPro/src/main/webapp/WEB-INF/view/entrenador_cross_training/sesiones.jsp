@@ -26,7 +26,10 @@
 </header>
 <section class="scrollable-section">
     <section class="table-container">
-        <table class="table table-striped table-dark">
+        <% if (sesiones.isEmpty()) { %>
+        <section class="mensaje-alerta"><h2>No hay sesiones disponibles</h2></section>
+        <% }else { %>
+        <table class="table table-striped table-dark table-width">
             <thead>
             <form method="get" action="/entrenador_cross_training/filtrar_sesiones">
                 <tr>
@@ -52,11 +55,17 @@
             <tr>
                 <th scope="row"><%= num %></th>
                 <td name="nombre_sesion"><%= s.getNombre() %></td>
-                <td><button name="editar" class="btn btn-secondary" onclick="window.location.href='/entrenador_cross_training/sesion?id=<%= s.getId()%>'">Editar</button></td>
+                <td>
+                    <button name="editar" class="btn btn-warning button-image" onclick="window.location.href='/entrenador_cross_training/sesion?id=<%= s.getId()%>'">
+                        <img class="image-button" src="${pageContext.request.contextPath}/assets/editar_button.svg">
+                    </button>
+                </td>
                 <td>
                     <form action="/entrenador_cross_training/borrar_sesion" method="post">
                         <input type="hidden" name="id" value="<%=s.getId()%>">
-                        <button type="submit" class="btn btn-danger">Borrar</button>
+                        <button type="submit" class="btn btn-danger button-image">
+                            <img class="image-button" src="${pageContext.request.contextPath}/assets/delete_button.svg">
+                        </button>
                     </form>
                 </td>
             </tr>
@@ -66,6 +75,7 @@
             %>
             </tbody>
         </table>
+        <% } %>
     </section>
 </section>
 
@@ -87,7 +97,7 @@
                 <form method="post" action="/entrenador_cross_training/nueva_sesion">
                     Nombre de la sesion: <input type="text" name="nombre">
                     <div style="display: flex; justify-content: flex-end; margin-top: 20px">
-                        <button type="submit" class="btn btn-primary">Guardar sesion</button>
+                        <button type="submit" class="btn btn-success">Guardar sesion</button>
                     </div>
                 </form>
             </div>

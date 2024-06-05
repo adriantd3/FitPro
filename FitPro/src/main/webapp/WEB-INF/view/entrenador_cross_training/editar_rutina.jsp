@@ -1,6 +1,4 @@
-<%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
-<%@ page import="uma.fitpro.entity.Usuario" %>
 <%@ page import="uma.fitpro.entity.Rutina" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="uma.fitpro.entity.Sesion" %>
@@ -31,7 +29,7 @@
     <h1 class="header-text text-center"><%=rutina.getNombre()%></h1>
 </header>
 <section class="table-container">
-    <table class="table table-striped table-dark">
+    <table class="table table-striped table-dark table-width">
         <thead>
         <tr>
             <th scope="col">#</th>
@@ -78,7 +76,9 @@
                         <input type="hidden" name="dia" value=<%=dia%>>
                         <input type="hidden" name="rutina" value=<%=rutina.getId()%>>
                         <input type="hidden" name="antigua_sesion" value=<%= diaSesion.get(dia) !=null ? diaSesion.get(dia).getId() : -1%>>
-                        <button type="submit" class="btn btn-success">Guardar</button>
+                        <button type="submit" class="btn btn-success button-image">
+                            <img class="image-button" src="${pageContext.request.contextPath}/assets/tick.svg">
+                        </button>
                     </form>
                 </td>
             </tr>

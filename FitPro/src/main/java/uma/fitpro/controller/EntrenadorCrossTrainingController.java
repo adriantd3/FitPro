@@ -64,21 +64,21 @@ public class EntrenadorCrossTrainingController {
     }
 
     @GetMapping("/filtrar_clientes")
-    public String doFiltrarClientes(@RequestParam("nombre") String nombre,Model model,HttpSession session){
+    public String doFiltrarClientes(@RequestParam("nombre") String nombre,
+                                    @RequestParam("edad") String edad,
+                                    @RequestParam("altura") String altura,
+                                    @RequestParam("peso") String peso,
+                                    Model model,HttpSession session){
+        Usuario user = (Usuario) session.getAttribute("user");
+        Usuario entrenador =  usuarioRepository.findById(user.getId()).orElse(null);
+        Integer edadInt = Integer.parseInt(edad);
+        Float pesoFloat = Float.parseFloat(peso);
+        Float alturaFloat = Float.parseFloat(altura);
+        List<Usuario> clientes = usuarioRepository.filtrarCliente(nombre, entrenador, edadInt,pesoFloat, alturaFloat);
 
-        String str = "redirect:/entrenador_cross_training/clientes";
-        if (!nombre.isEmpty()){
+        model.addAttribute("clientes", clientes);
 
-            Usuario user = (Usuario) session.getAttribute("user");
-            Usuario entrenador =  usuarioRepository.findById(user.getId()).orElse(null);
-            List<Usuario> clientes = usuarioRepository.findByNombre(nombre);
-
-            model.addAttribute("clientes", clientes);
-            str = "entrenador_cross_training/clientes";
-
-        }
-
-        return str;
+        return "entrenador_cross_training/clientes";
     }
 
     @GetMapping("/rutinas_cliente")
@@ -136,22 +136,34 @@ public class EntrenadorCrossTrainingController {
     }
 
     @GetMapping("/filtrar_rutinas")
-    public String doFiltrarRutinas(@RequestParam("nombre") String nombre,Model model,HttpSession session){
+    public String doFiltrarRutinas(@RequestParam("nombre") String nombre,
+                                   @RequestParam("fecha") String fecha,
+                                   Model model,HttpSession session){
 
-        String str = "redirect:/entrenador_cross_training/rutinas";
-        if (!nombre.isEmpty()){
+        Usuario entrenador = (Usuario) session.getAttribute("user");
+        LocalDate fechaFiltrada = getFecha(fecha);
+        List<Rutina> rutinas = rutinaRepository.getFilteredRutinasByEntrenadorAndFecha(entrenador.getId(), nombre, fechaFiltrada);
+        Collections.sort(rutinas);
 
-            Usuario entrenador = (Usuario) session.getAttribute("user");
-            List<Rutina> rutinas = rutinaRepository.getFilteredRutinasByEntrenador(entrenador.getId(), nombre);
-            Collections.sort(rutinas);
+        model.addAttribute("rutinas", rutinas);
 
-            model.addAttribute("rutinas", rutinas);
+        return "entrenador_cross_training/rutinas";
+    }
 
-            str = "entrenador_cross_training/rutinas";
-
+    private LocalDate getFecha(String fecha){
+        LocalDate res;
+        if (fecha.isEmpty()){
+            res = LocalDate.of(1,1,1);
+        }else {
+            String[] aux = fecha.split("-");
+            if (aux.length == 3){
+                res = LocalDate.of(Integer.parseInt(aux[0]), Integer.parseInt(aux[1]), Integer.parseInt(aux[2]));
+            }else {
+                res = LocalDate.of(1,1,1);
+            }
         }
 
-        return str;
+        return res;
     }
 
     @PostMapping("/borrar_rutina")

@@ -3,8 +3,16 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     List<Usuario> clientes = (List<Usuario>) request.getAttribute("clientes");
+
+    // Parametros del filtrado de clientes
     String nombreFiltrado = "";
     if (request.getParameter("nombre")!=null) nombreFiltrado = request.getParameter("nombre");
+    String edadFiltrada = "";
+    if (request.getParameter("edad")!=null) edadFiltrada = request.getParameter("edad");
+    String alturaFiltrada = "";
+    if (request.getParameter("altura")!=null) alturaFiltrada = request.getParameter("altura");
+    String pesoFiltrado = "";
+    if (request.getParameter("peso")!=null) pesoFiltrado = request.getParameter("peso");
 
 %>
 <!doctype html>
@@ -27,9 +35,6 @@
 </header>
 <section class="scrollable-section">
     <section class="table-container">
-        <% if (clientes.isEmpty()) { %>
-        <section class="mensaje-alerta"><h2>No hay rutinas disponibles</h2></section>
-        <% }else { %>
         <table class="table table-striped table-dark table-width">
             <thead>
             <form method="get" action="/entrenador_cross_training/filtrar_clientes">
@@ -41,9 +46,9 @@
                             <button class="btn btn-dark">🔍</button>
                         </div>
                     </th>
-                    <th scope="col" >Edad</th>
-                    <th scope="col" >Altura</th>
-                    <th scope="col" >Peso</th>
+                    <th scope="col" ><input style="width: 80px" type="text" required placeholder="Edad" name="edad" value="<%= edadFiltrada %>" class="form-control filter-input" data-bs-theme="dark" ></th>
+                    <th scope="col" ><input style="width: 80px" type="text" required placeholder="Altura" name="altura" value="<%= alturaFiltrada %>" class="form-control filter-input" data-bs-theme="dark" ></th>
+                    <th scope="col" ><input style="width: 80px" type="text" required placeholder="Peso" name="peso" value="<%= pesoFiltrado %>" class="form-control filter-input" data-bs-theme="dark" ></th>
                     <th scope="col" >Rutinas</th>
                 </tr>
             </form>
@@ -70,8 +75,12 @@
 
             </tbody>
         </table>
-        <% } %>
     </section>
+    <% if (clientes.isEmpty()) { %>
+    <section class="seccion-alerta">
+        <section class="mensaje-alerta"><h2>No hay clientes disponibles</h2></section>
+    </section>
+    <% } %>
 </section>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

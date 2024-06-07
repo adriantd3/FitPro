@@ -192,6 +192,12 @@ h6 {
     background: #555;
 }
 
+.seccion-alerta {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .mensaje-alerta {
     background-color: #333;
     border: 1px solid #666;
@@ -199,8 +205,8 @@ h6 {
     border-radius: 5px;
     text-align: center;
 }
-.mensaje-alerta h2 {
-    color: #ff6f61; /* Rojo claro para el título en modo oscuro */
 
+.mensaje-alerta h2 {
+    color: #ff6f61;
 }
 

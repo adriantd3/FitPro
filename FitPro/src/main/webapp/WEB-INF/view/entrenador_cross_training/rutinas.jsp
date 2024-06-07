@@ -5,8 +5,12 @@
 <%
     List<Rutina> rutinas = (List<Rutina>) request.getAttribute("rutinas");
     Usuario cliente = (Usuario) request.getAttribute("cliente");
+
+    // Filtrado de rutinas
     String rutinaFiltrada = "";
     if (request.getParameter("nombre")!=null) rutinaFiltrada = request.getParameter("nombre");
+    String fechaFiltrada = "";
+    if (request.getParameter("fecha")!=null) fechaFiltrada = request.getParameter("fecha");
 %>
 <!doctype html>
 <html lang="en">
@@ -28,9 +32,6 @@
 </header>
 <section class="scrollable-section">
     <section class="table-container">
-        <% if (rutinas.isEmpty()) { %>
-        <section class="mensaje-alerta"><h2>No hay rutinas disponibles</h2></section>
-        <% }else { %>
         <table class="table table-striped table-dark table-width">
             <thead>
             <form method="get" action="/entrenador_cross_training/filtrar_rutinas">
@@ -42,7 +43,7 @@
                             <button class="btn btn-dark">🔍</button>
                         </div>
                     </th>
-                    <th scope="col">Fecha</th>
+                    <th scope="col"><input type="text" required placeholder="Fecha" name="fecha" value="<%= fechaFiltrada %>" class="form-control filter-input" data-bs-theme="dark" ></th>
                     <th scope="col">Editar</th>
                     <th scope="col">Borrar</th>
                 </tr>
@@ -78,8 +79,12 @@
 
             </tbody>
         </table>
-        <% } %>
     </section>
+    <% if (rutinas.isEmpty()) { %>
+    <section class="seccion-alerta">
+        <section class="mensaje-alerta"><h2>No hay rutinas disponibles</h2></section>
+    </section>
+    <% } %>
 </section>
 
 <div class="sesion-buttons">

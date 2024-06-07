@@ -26,9 +26,6 @@
 </header>
 <section class="scrollable-section">
     <section class="table-container">
-        <% if (sesiones.isEmpty()) { %>
-        <section class="mensaje-alerta"><h2>No hay sesiones disponibles</h2></section>
-        <% }else { %>
         <table class="table table-striped table-dark table-width">
             <thead>
             <form method="get" action="/entrenador_cross_training/filtrar_sesiones">
@@ -75,8 +72,12 @@
             %>
             </tbody>
         </table>
-        <% } %>
     </section>
+    <% if (sesiones.isEmpty()) { %>
+    <section class="seccion-alerta">
+        <section class="mensaje-alerta"><h2>No hay sesiones disponibles</h2></section>
+    </section>
+    <% } %>
 </section>
 
 <div class="sesion-buttons">

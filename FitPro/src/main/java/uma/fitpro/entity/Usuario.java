@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -48,31 +50,31 @@ public class Usuario implements Comparable<Usuario> {
     private String correo;
 
     @OneToMany(mappedBy = "usuario")
-    private Set<DesempenyoMenu> desempenyoMenuEntities = new LinkedHashSet<>();
+    private List<DesempenyoMenu> desempenyoMenuEntities = new ArrayList<>();
 
     @OneToMany(mappedBy = "usuario")
     private Set<DesempenyoSesion> desempenyoSesionEntities = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "dietista")
-    private Set<Dieta> dietasDietista = new LinkedHashSet<>();
+    private List<Dieta> dietasDietista = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(name = "dieta_cliente",
             joinColumns = @JoinColumn(name = "cliente_id"),
             inverseJoinColumns = @JoinColumn(name = "dieta_id"))
-    private Set<Dieta> dietasCliente = new LinkedHashSet<>();
+    private List<Dieta> dietasCliente = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(name = "dietista_cliente",
             joinColumns = @JoinColumn(name = "dietista_id"),
             inverseJoinColumns = @JoinColumn(name = "cliente_id"))
-    private Set<Usuario> clientesDietista = new LinkedHashSet<>();
+    private List<Usuario> clientesDietista = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(name = "dietista_cliente",
             joinColumns = @JoinColumn(name = "cliente_id"),
             inverseJoinColumns = @JoinColumn(name = "dietista_id"))
-    private Set<Usuario> dietistas = new LinkedHashSet<>();
+    private List<Usuario> dietistas = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(name = "entrenador_cliente",
@@ -183,11 +185,11 @@ public class Usuario implements Comparable<Usuario> {
         this.correo = correo;
     }
 
-    public Set<DesempenyoMenu> getDesempenyoMenus() {
+    public List<DesempenyoMenu> getDesempenyoMenus() {
         return desempenyoMenuEntities;
     }
 
-    public void setDesempenyoMenus(Set<DesempenyoMenu> desempenyoMenuEntities) {
+    public void setDesempenyoMenus(List<DesempenyoMenu> desempenyoMenuEntities) {
         this.desempenyoMenuEntities = desempenyoMenuEntities;
     }
 
@@ -199,35 +201,35 @@ public class Usuario implements Comparable<Usuario> {
         this.desempenyoSesionEntities = desempenyoSesionEntities;
     }
 
-    public Set<Dieta> getDietasDietista() {
+    public List<Dieta> getDietasDietista() {
         return dietasDietista;
     }
 
-    public void setDietasDietista(Set<Dieta> dietasDietista) {
+    public void setDietasDietista(List<Dieta> dietasDietista) {
         this.dietasDietista = dietasDietista;
     }
 
-    public Set<Dieta> getDietasCliente() {
+    public List<Dieta> getDietasCliente() {
         return dietasCliente;
     }
 
-    public void setDietasCliente(Set<Dieta> dietasCliente) {
+    public void setDietasCliente(List<Dieta> dietasCliente) {
         this.dietasCliente = dietasCliente;
     }
 
-    public Set<Usuario> getClientesDietista() {
+    public List<Usuario> getClientesDietista() {
         return clientesDietista;
     }
 
-    public void setClientesDietista(Set<Usuario> clientesDietista) {
+    public void setClientesDietista(List<Usuario> clientesDietista) {
         this.clientesDietista = clientesDietista;
     }
 
-    public Set<Usuario> getDietistas() {
+    public List<Usuario> getDietistas() {
         return dietistas;
     }
 
-    public void setDietistas(Set<Usuario> dietistas) {
+    public void setDietistas(List<Usuario> dietistas) {
         this.dietistas = dietistas;
     }
 

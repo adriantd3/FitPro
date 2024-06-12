@@ -324,10 +324,11 @@ public class DietistaController {
 
     //---------------------------------------- CLIENTES -----------------------------------------------------------------
 
-    @PostMapping("/clientes")
-    public String doClientes(@RequestParam(value = "id", required = false) Integer clienteId, Model model, HttpSession sesion){
-        Usuario dietista = (Usuario) sesion.getAttribute("user");
-        List<Usuario> clientes = new ArrayList<>(dietista.getClientesDietista());
+    @GetMapping("/clientes")
+    public String doClientes(@RequestParam(value = "id", required = false) Integer clienteId, Model model, HttpSession session){
+        Usuario dietista = (Usuario) session.getAttribute("user");
+        //List<Usuario> clientes = dietista.getClientesDietista();
+        List<Usuario> clientes = new ArrayList<>();
 
 
         model.addAttribute("clientes", clientes);

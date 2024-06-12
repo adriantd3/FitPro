@@ -30,7 +30,7 @@
         <button type="submit" class="btn  btn-secondary">Dietas</button><br/>
     </form>
     <form method="get" action="/dietista/clientes">
-        <button type="submit" class="btn  btn-secondary">Clientes</button>
+        <button type="submit" class="btn  btn-secondary" onclick="window.location.href='/dietista/clientes'">Clientes</button>
     </form>
 </div>
 

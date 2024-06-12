@@ -6,7 +6,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name = "ejercicio")
-public class Ejercicio {
+public class Ejercicio implements Comparable<Ejercicio> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -91,4 +91,8 @@ public class Ejercicio {
         this.grupoMuscular = grupoMuscular;
     }
 
+    @Override
+    public int compareTo(Ejercicio o) {
+        return this.getNombre().compareTo(o.getNombre());
+    }
 }

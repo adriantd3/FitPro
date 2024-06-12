@@ -4,7 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import uma.fitpro.entity.DesempenyoSerie;
-import uma.fitpro.entity.FiltroSerie;
 
 import java.util.List;
 
@@ -12,12 +11,12 @@ public interface DesempenyoSerieRepository extends JpaRepository<DesempenyoSerie
     @Query("select d from DesempenyoSerie d order by d.ejercicio.id asc, d.id asc")
     public List<DesempenyoSerie> findAllOrdered();
 
-    @Query("select s from DesempenyoSerie s " +
-            "where s.ejercicio.nombre like %:#{#filtro.ejercicio}% and" +
-            " s.peso >= :#{#filtro.peso} and " +
-            " s.repeticiones >= :#{#filtro.repeticiones} and " +
-            " s.distancia >= :#{#filtro.distancia} and " +
-            " s.duracion >= :#{#filtro.duracion} and " +
-            " s.descanso >= :#{#filtro.descanso}")
-    public List<DesempenyoSerie> buscarPorFiltro(@Param("filtro") FiltroSerie filtro);
+    @Query("select d from DesempenyoSerie d where d.ejercicio.nombre like %:ejercicio% and d.desempenyoSesion.id = :desSesion_id and " +
+            "(:grupo=0 or d.ejercicio.grupoMuscular.id = :grupo) and" +
+            "(:tipo=0 or d.ejercicio.tipo.id = :tipo) " +
+            "order by d.ejercicio.id asc, d.id asc")
+    public List<DesempenyoSerie> buscarPorFiltro(@Param("ejercicio") String ejercicio,
+                                                 @Param("grupo") Integer grupo,
+                                                 @Param("tipo") Integer tipo,
+                                                 @Param("desSesion_id") Integer desSesion_id);
 }

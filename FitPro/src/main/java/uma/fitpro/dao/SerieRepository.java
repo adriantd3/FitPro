@@ -12,12 +12,13 @@ public interface SerieRepository extends JpaRepository<Serie, Integer> {
     @Query("select d from Serie d order by d.ejercicio.id asc, d.id asc")
     public List<Serie> findAllOrdered();
 
-    @Query("select s from Serie s " +
-            "where s.ejercicio.nombre like %:#{#filtro.ejercicio}% and" +
-            " s.peso >= :#{#filtro.peso} and " +
-            " s.repeticiones >= :#{#filtro.repeticiones} and " +
-            " s.distancia >= :#{#filtro.distancia} and " +
-            " s.duracion >= :#{#filtro.duracion} and " +
-            " s.descanso >= :#{#filtro.descanso}")
-    public List<Serie> buscarPorFiltro(@Param("filtro") FiltroSerie filtro);
+    @Query("select d from Serie d where d.ejercicio.nombre like %:ejercicio% and d.sesion.id = :sesion_id and " +
+            "(:grupo=0 or d.ejercicio.grupoMuscular.id = :grupo) and" +
+            "(:tipo=0 or d.ejercicio.tipo.id = :tipo) " +
+            "order by d.ejercicio.id asc, d.id asc")
+    public List<Serie> buscarPorFiltro(@Param("ejercicio") String ejercicio,
+                                                 @Param("grupo") Integer grupo,
+                                                 @Param("tipo") Integer tipo,
+                                                 @Param("sesion_id") Integer sesion_id);
+
 }

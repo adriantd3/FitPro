@@ -21,17 +21,15 @@
 </header>
 <div class="text-center text-light pt-2">
     <form:form method="post" action="/cliente/filtro_series" modelAttribute="filtro">
+        <form:hidden path="sesionId"/>
+        <form:hidden path="desSesionId"/>
+
         Nombre <form:input path="ejercicio"/>
-        Peso > <form:input path="peso" size="5" maxlength="5" type="number"/>
-        Repeticiones > <form:input path="repeticiones" size="3" maxlength="3" type="number"/>
-        Distancia > <form:input path="distancia" size="5" maxlength="5" type="number"/>
-        Duracion > <form:input path="duracion" size="5" maxlength="5" type="number"/>
-        Descanso ><form:input type="number" path="descanso" maxlength="5"/>
-        Grupo muscular<form:select path="grupoMuscular">
-                            <form:option value="<%=0%>" label="Ninguno"/>
+        Grupo Muscular <form:select path="grupoMuscular">
+                            <form:option value="0" label="Ninguno"/>
                             <form:options items="${grupo_muscular}" itemLabel="grupoMuscular" itemValue="id"/>
                         </form:select>
-        Tipo de ejercicio<form:select path="tipoEjercicio">
+        Tipo de ejercicio <form:select path="tipoEjercicio">
                             <form:option value="<%=0%>" label="Ninguno"/>
                             <form:options items="${tipo_ejercicio}" itemLabel="tipo" itemValue="id"/>
                         </form:select>
@@ -40,8 +38,6 @@
     </form:form>
 </div>
 
-
-<jsp:include page="filtro.jsp"></jsp:include>
 <div class="container-fluid p-2">
     <div class="d-flex justify-content-between">
         <div class="w-50 m-4">

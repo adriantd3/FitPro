@@ -3,6 +3,8 @@ package uma.fitpro.entity;
 import java.util.Objects;
 
 public class FiltroSerie {
+    private int sesionId;
+    private int desSesionId;
     private String ejercicio;
     private float peso;
     private int repeticiones;
@@ -12,7 +14,9 @@ public class FiltroSerie {
     private int grupoMuscular;
     private int tipoEjercicio;
 
-    public FiltroSerie(){
+    public FiltroSerie(int sesionId, int desSesionId){
+        this.sesionId = sesionId;
+        this.desSesionId = desSesionId;
         ejercicio = "";
         peso = 0;
         repeticiones = 0;
@@ -21,6 +25,14 @@ public class FiltroSerie {
         descanso = 0;
         grupoMuscular = 0;
         tipoEjercicio = 0;
+    }
+
+    public int getSesionId() {
+        return sesionId;
+    }
+
+    public int getDesSesionId() {
+        return desSesionId;
     }
 
     public int getGrupoMuscular() {

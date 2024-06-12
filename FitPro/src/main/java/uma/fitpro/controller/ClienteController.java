@@ -40,6 +40,8 @@ public class ClienteController {
 
     @Autowired
     private GrupoMuscularRepository grupoMuscularRepository;
+    @Autowired
+    private SerieRepository serieRepository;
 
     @GetMapping("/rutinas")
     public String doRutinas(Model model, HttpSession session) {
@@ -105,7 +107,7 @@ public class ClienteController {
 
 
         //ATRIBUTOS FILTRO
-        model.addAttribute("filtro",new FiltroSerie());
+        model.addAttribute("filtro",new FiltroSerie(sesion.getId(),desempenyo_id));
         model.addAttribute("grupo_muscular",grupoMuscularRepository.findAll());
         model.addAttribute("tipo_ejercicio",tipoEjercicioRepository.findAll());
 
@@ -236,8 +238,33 @@ public class ClienteController {
 
     @PostMapping("/filtro_series")
     public String DoFiltroSeries(@ModelAttribute("filtro") FiltroSerie filtroString, Model model, HttpSession session){
+        DesempenyoSesion desempenyoSesion = desempenyoSesionRepository.findById(filtroString.getDesSesionId()).
+                orElse(null);
 
+        //FILTRO DE LISTAS
+        List<DesempenyoSerie> desempenyoSeriesFiltrado = desempenyoSerieRepository
+                .buscarPorFiltro(filtroString.getEjercicio(),
+                                 filtroString.getGrupoMuscular(),
+                                 filtroString.getTipoEjercicio(),
+                                 filtroString.getDesSesionId());
+        List<Serie> seriesFiltrado = serieRepository
+                .buscarPorFiltro(filtroString.getEjercicio(),
+                        filtroString.getGrupoMuscular(),
+                        filtroString.getTipoEjercicio(),
+                        filtroString.getSesionId());
 
+        Map<Ejercicio,List<Serie>> sesion_dict = UtilityFunctions.dictFromSerie(seriesFiltrado);
+        Map<Ejercicio,List<DesempenyoSerie>> des_dict = UtilityFunctions.dictFromDesempenyoSerie(desempenyoSeriesFiltrado);
+
+        //ATRIBUTOS FILTRO
+        model.addAttribute("filtro",filtroString);
+        model.addAttribute("grupo_muscular",grupoMuscularRepository.findAll());
+        model.addAttribute("tipo_ejercicio",tipoEjercicioRepository.findAll());
+
+        //INFORMACION TABLA
+        model.addAttribute("desempenyo_sesion_fecha",desempenyoSesion.getFecha().toString());
+        model.addAttribute("sesion_dict",sesion_dict);
+        model.addAttribute("des_dict",des_dict);
 
         return "cliente/resultados_sesion";
     }

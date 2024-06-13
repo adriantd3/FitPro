@@ -9,8 +9,8 @@ import java.util.List;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
-    @Query("select u from Usuario u where u.correo like :mail")
-    public List<Usuario> findByMail(@Param("mail") String mail);
+    @Query("select u from Usuario u where u.correo = :mail and u.contrasenya = :password")
+    public Usuario autenticar(@Param("mail") String mail, @Param("password") String password);
 
     @Query("select u from Usuario u where u.rol.id = :rol")
     public List<Usuario> findAllByRol(@Param("rol") Integer id);

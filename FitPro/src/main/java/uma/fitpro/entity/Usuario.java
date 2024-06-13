@@ -4,12 +4,17 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.io.Serializable;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import uma.fitpro.dto.DTO;
+import uma.fitpro.dto.UsuarioDTO;
 
 @Entity
 @Table(name = "usuario")
-public class Usuario {
+public class Usuario implements Serializable, DTO<UsuarioDTO> {
+    private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -263,4 +268,22 @@ public class Usuario {
         this.rutinasCliente = rutinasCliente;
     }
 
+
+    @Override
+    public UsuarioDTO toDTO() {
+        UsuarioDTO usuario = new UsuarioDTO();
+        usuario.setId(id);
+        usuario.setDni(dni);
+        usuario.setRol(rol.toDTO());
+        usuario.setNombre(nombre);
+        usuario.setApellidos(apellidos);
+        usuario.setSexo(sexo == 1);
+        usuario.setEdad(edad);
+        usuario.setAltura(altura);
+        usuario.setPeso(peso);
+        usuario.setContrasenya(contrasenya);
+        usuario.setCorreo(correo);
+
+        return usuario;
+    }
 }

@@ -1,8 +1,8 @@
-<%@ page import="uma.fitpro.entity.*" %>
+<%@ page import="uma.fitpro.dto.UsuarioDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!doctype html>
 <%
-    Usuario cliente = (Usuario) session.getAttribute("user");
+    UsuarioDTO cliente = (UsuarioDTO) session.getAttribute("user");
 %>
 <html lang="en">
 <head>

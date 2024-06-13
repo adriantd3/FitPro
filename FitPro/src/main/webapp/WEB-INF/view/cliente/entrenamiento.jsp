@@ -57,37 +57,8 @@
                 <tr style="">
                     <th scope="row"><%=numSerie%>
                     </th>
-                    <%
-                        if (tipo == 1) {
-                    %>
-                    <td><%=serie.getPeso()%>
-                    </td>
-                    <td><%=serie.getRepeticiones()%>
-                    </td>
-                    <%
-                    } else if (tipo == 2) {
-                    %>
-                    <td><%=serie.getDistancia()%>
-                    </td>
-                    <td><%=serie.getDuracion()%>
-                    </td>
-                    <%
-                    } else if (tipo == 3) {
-                    %>
-                    <td><%=serie.getDuracion()%>
-                    </td>
-                    <td><%=serie.getDescanso()%>
-                    </td>
-                    <%
-                    } else if (tipo == 4 || tipo == 5) {
-                    %>
-                    <td><%=serie.getRepeticiones()%>
-                    </td>
-                    <td><%=serie.getDescanso()%>
-                    </td>
-                    <%
-                        }
-                    %>
+                    <td><%=serie.getMetrica1()%></td>
+                    <td><%=serie.getMetrica2()%></td>
                     <td style="box-shadow: none;background-color: #434343;border-bottom-width: 0px;">
                         <form action="/cliente/borrar_serie" method="post" style="height: 8px;"
                               id="BorrarSerie<%=serie.getId()%>">

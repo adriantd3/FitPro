@@ -4,11 +4,9 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import java.io.Serializable;
-
 @Entity
 @Table(name = "serie")
-public class Serie implements SerieInterface {
+public class Serie implements SerieInterface{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -24,20 +22,11 @@ public class Serie implements SerieInterface {
     @JoinColumn(name = "ejercicio_id", nullable = false)
     private Ejercicio ejercicio;
 
-    @Column(name = "peso")
-    private Float peso;
+    @Column(name = "metrica1")
+    private Float metrica1;
 
-    @Column(name = "repeticiones")
-    private Integer repeticiones;
-
-    @Column(name = "distancia")
-    private Float distancia;
-
-    @Column(name = "duracion")
-    private Integer duracion;
-
-    @Column(name = "descanso")
-    private Integer descanso;
+    @Column(name = "metrica2")
+    private Float metrica2;
 
     public Integer getId() {
         return id;
@@ -63,44 +52,20 @@ public class Serie implements SerieInterface {
         this.ejercicio = ejercicio;
     }
 
-    public Float getPeso() {
-        return peso;
+    public Float getMetrica1() {
+        return metrica1;
     }
 
-    public void setPeso(Float peso) {
-        this.peso = peso;
+    public void setMetrica1(Float metrica1) {
+        this.metrica1 = metrica1;
     }
 
-    public Integer getRepeticiones() {
-        return repeticiones;
+    public Float getMetrica2() {
+        return metrica2;
     }
 
-    public void setRepeticiones(Integer repeticiones) {
-        this.repeticiones = repeticiones;
-    }
-
-    public Float getDistancia() {
-        return distancia;
-    }
-
-    public void setDistancia(Float distancia) {
-        this.distancia = distancia;
-    }
-
-    public Integer getDuracion() {
-        return duracion;
-    }
-
-    public void setDuracion(Integer duracion) {
-        this.duracion = duracion;
-    }
-
-    public Integer getDescanso() {
-        return descanso;
-    }
-
-    public void setDescanso(Integer descanso) {
-        this.descanso = descanso;
+    public void setMetrica2(Float metrica2) {
+        this.metrica2 = metrica2;
     }
 
 }

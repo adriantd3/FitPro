@@ -35,29 +35,8 @@
             %>
             <tr style="">
                 <th scope="row"><%=numSerie%></th>
-                <%
-                    if(tipo == 1){
-                %>
-                <td><%=serie.getPeso()%></td>
-                <td><%=serie.getRepeticiones()%></td>
-                <%
-                }else if(tipo == 2){
-                %>
-                <td><%=serie.getDistancia()%></td>
-                <td><%=serie.getDuracion()%></td>
-                <%
-                }else if(tipo == 3){
-                %>
-                <td><%=serie.getDuracion()%></td>
-                <td><%=serie.getDescanso()%></td>
-                <%
-                }else if(tipo == 4 || tipo == 5){
-                %>
-                <td><%=serie.getRepeticiones()%></td>
-                <td><%=serie.getDescanso()%></td>
-                <%
-                    }
-                %>
+                <td><%=serie.getMetrica1()%></td>
+                <td><%=serie.getMetrica2()%></td>
             </tr>
             <%
                     numSerie++;

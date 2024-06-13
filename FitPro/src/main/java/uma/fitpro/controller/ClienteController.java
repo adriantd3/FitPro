@@ -275,10 +275,8 @@ public class ClienteController {
 
         des_serie.setDesempenyoSesion(des);
         des_serie.setEjercicio(serie.getEjercicio());
-        des_serie.setPeso(serie.getPeso());
-        des_serie.setRepeticiones(serie.getRepeticiones());
-        des_serie.setDistancia(serie.getDistancia());
-        des_serie.setDuracion(serie.getDuracion());
+        des_serie.setMetrica1(serie.getMetrica1());
+        des_serie.setMetrica2(serie.getMetrica2());
 
         return des_serie;
     }

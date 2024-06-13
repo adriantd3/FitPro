@@ -74,7 +74,7 @@ public class Usuario implements Comparable<Usuario> {
             inverseJoinColumns = @JoinColumn(name = "dietista_id"))
     private Set<Usuario> dietistas = new LinkedHashSet<>();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "entrenador_cliente",
             joinColumns = @JoinColumn(name = "entrenador_id"),
             inverseJoinColumns = @JoinColumn(name = "cliente_id"))

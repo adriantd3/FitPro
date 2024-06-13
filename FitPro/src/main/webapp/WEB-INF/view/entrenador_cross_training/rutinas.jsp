@@ -37,13 +37,13 @@
             <form method="get" action="/entrenador_cross_training/filtrar_rutinas">
                 <tr>
                     <th scope="col">#</th>
+                    <th scope="col"><input type="text" placeholder="Rutina" name="nombre" value="<%= rutinaFiltrada %>" class="form-control filter-input" data-bs-theme="dark" ></th>
                     <th scope="col">
                         <div class="filter-flex">
-                            <input type="text" placeholder="Rutina" name="nombre" value="<%= rutinaFiltrada %>" class="form-control filter-input" data-bs-theme="dark" >
+                            <input type="text" required placeholder="Fecha" name="fecha" value="<%= fechaFiltrada %>" class="form-control filter-input" data-bs-theme="dark" >
                             <button class="btn btn-dark">🔍</button>
                         </div>
                     </th>
-                    <th scope="col"><input type="text" required placeholder="Fecha" name="fecha" value="<%= fechaFiltrada %>" class="form-control filter-input" data-bs-theme="dark" ></th>
                     <th scope="col">Editar</th>
                     <th scope="col">Borrar</th>
                 </tr>

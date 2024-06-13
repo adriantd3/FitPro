@@ -39,9 +39,12 @@ public class RutinaService {
     }
 
     public List<Rutina> getRestantesRutinasByEntrenador(Usuario entrenador, List<Rutina> rutinas){
-
-        List<Rutina> todasLasRutinas = rutinaRepository.getRestantesRutinasByEntrenador(entrenador.getId(),rutinas);
-
+        List<Rutina> todasLasRutinas;
+        if (rutinas.isEmpty()){
+            todasLasRutinas = rutinaRepository.getRutinasByEntrenador(entrenador.getId());
+        }else {
+            todasLasRutinas = rutinaRepository.getRestantesRutinasByEntrenador(entrenador.getId(),rutinas);
+        }
         return todasLasRutinas;
     }
 
@@ -50,7 +53,6 @@ public class RutinaService {
         LocalDate fechaFiltrada = getFecha(fecha);
         List<Rutina> rutinas = rutinaRepository.getFilteredRutinasByEntrenadorAndFecha(id_entrenador, nombre, fechaFiltrada);
         Collections.sort(rutinas);
-
         return rutinas;
     }
 

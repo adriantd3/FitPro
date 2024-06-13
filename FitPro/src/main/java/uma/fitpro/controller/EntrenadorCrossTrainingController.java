@@ -86,18 +86,22 @@ public class EntrenadorCrossTrainingController {
     }
 
     @PostMapping("/asignar_rutina_cliente")
-    public String doAsignarRutinaCliente(@RequestParam("rutina") Rutina rutina,
-                                         @RequestParam("cliente") Usuario cliente){
+    public String doAsignarRutinaCliente(@RequestParam("rutina") Integer id_rutina,
+                                         @RequestParam("cliente") Integer id_cliente){
 
+        Rutina rutina = rutinaService.getRutina(id_rutina);
+        Usuario cliente = usuarioService.getUsuario(id_cliente);
         usuarioService.asignarRutinaCliente(cliente, rutina);
 
         return "redirect:/entrenador_cross_training/rutinas_cliente?id=" + cliente.getId();
     }
 
     @PostMapping("/borrar_rutina_cliente")
-    public String doBorrarRutinaCliente(@RequestParam("rutina") Rutina rutina,
-                                        @RequestParam("cliente") Usuario cliente){
+    public String doBorrarRutinaCliente(@RequestParam("rutina") Integer id_rutina,
+                                        @RequestParam("cliente") Integer id_cliente){
 
+        Rutina rutina = rutinaService.getRutina(id_rutina);
+        Usuario cliente = usuarioService.getUsuario(id_cliente);
         usuarioService.borrarRutinaCliente(cliente, rutina);
 
         return "redirect:/entrenador_cross_training/rutinas_cliente?id=" + cliente.getId();

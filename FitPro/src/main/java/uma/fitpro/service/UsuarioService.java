@@ -18,6 +18,11 @@ public class UsuarioService  {
     @Autowired
     protected UsuarioRepository usuarioRepository;
 
+    public Usuario getUsuario(int id_usuario) {
+        Usuario usuario = usuarioRepository.findById(id_usuario).orElse(null);
+        return usuario;
+    }
+
     public List<Usuario> getClientesEntrenador(Usuario entrenador) {
 
         List<Usuario> clientes = new ArrayList<>(entrenador.getClientesEntrenador());

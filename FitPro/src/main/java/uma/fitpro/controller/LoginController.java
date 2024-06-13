@@ -19,8 +19,7 @@ public class LoginController {
     private UsuarioRepository usuarioRepository;
 
     @GetMapping("/")
-    public String doLogin(HttpSession sesion) {
-
+    public String doLogin() {
         return "login/login";
     }
 

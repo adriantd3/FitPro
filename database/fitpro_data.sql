@@ -1,4 +1,4 @@
-USE `fitpro`;
+use `fitpro`;
 -- MySQL dump 10.13  Distrib 8.0.34, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: fitpro
@@ -60,7 +60,6 @@ UNLOCK TABLES;
 
 LOCK TABLES `desempenyo_serie` WRITE;
 /*!40000 ALTER TABLE `desempenyo_serie` DISABLE KEYS */;
-INSERT INTO `desempenyo_serie` VALUES (44,15,2,50,8,NULL,NULL,NULL),(45,15,2,40,15,NULL,NULL,NULL),(46,15,1,60,12,NULL,NULL,NULL),(47,15,1,70,6,NULL,NULL,NULL),(48,15,2,45,12,NULL,NULL,NULL),(49,15,1,65,10,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `desempenyo_serie` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -70,7 +69,6 @@ UNLOCK TABLES;
 
 LOCK TABLES `desempenyo_sesion` WRITE;
 /*!40000 ALTER TABLE `desempenyo_sesion` DISABLE KEYS */;
-INSERT INTO `desempenyo_sesion` VALUES (15,1,1,'2024-05-06',0);
 /*!40000 ALTER TABLE `desempenyo_sesion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -110,7 +108,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `ejercicio` WRITE;
 /*!40000 ALTER TABLE `ejercicio` DISABLE KEYS */;
-INSERT INTO `ejercicio` VALUES (1,'Incline Bench Press','The incline bench press is a variation of the bench press and an exercise used to build the muscles of the chest.','https://cdn.muscleandstrength.com/sites/default/files/incline-bench-press.jpg','https://youtu.be/uIzbJX5EVIY',1,6),(2,'Seated Cable Row','Your back must remain straight at all times. Your torso should be kept still throughout the entire set.','https://cdn.muscleandstrength.com/sites/default/files/styles/800x500/public/seated-cable-row.jpg?itok=b8Yzo0KK',NULL,1,14),(3,'Leg Press','The leg press is a variation of the squat and an exercise used to target the muscles of the leg.','https://cdn.muscleandstrength.com/sites/default/files/leg-press.jpg','https://youtu.be/sEM_zo9w2ss',1,19),(4,'Smith Machine Shoulder Press','The Smith machine shoulder press is a variation of the barbell shoulder press and is used to strengthen the muscles of the shoulders.','https://cdn.muscleandstrength.com/sites/default/files/seated-military-press.jpg',NULL,1,20),(5,'Rope Tricep Extension','The rope tricep extension is a variation of the cable tricep extension and an exercise used to build the muscles of the triceps.','https://cdn.muscleandstrength.com/sites/default/files/rope-tricep-extension-1.jpg',NULL,1,22);
+INSERT INTO `ejercicio` VALUES (1,'Incline Bench Press','The incline bench press is a variation of the bench press and an exercise used to build the muscles of the chest.','https://cdn.muscleandstrength.com/sites/default/files/incline-bench-press.jpg','https://youtube.com/embed/uIzbJX5EVIY',1,6),(2,'Seated Cable Row','Your back must remain straight at all times. Your torso should be kept still throughout the entire set.','https://cdn.muscleandstrength.com/sites/default/files/styles/800x500/public/seated-cable-row.jpg?itok=b8Yzo0KK',NULL,1,14),(3,'Leg Press','The leg press is a variation of the squat and an exercise used to target the muscles of the leg.','https://cdn.muscleandstrength.com/sites/default/files/leg-press.jpg','https://youtube.com/embed/sEM_zo9w2ss',1,19),(4,'Smith Machine Shoulder Press','The Smith machine shoulder press is a variation of the barbell shoulder press and is used to strengthen the muscles of the shoulders.','https://cdn.muscleandstrength.com/sites/default/files/seated-military-press.jpg',NULL,1,20),(5,'Rope Tricep Extension','The rope tricep extension is a variation of the cable tricep extension and an exercise used to build the muscles of the triceps.','https://cdn.muscleandstrength.com/sites/default/files/rope-tricep-extension-1.jpg',NULL,1,22);
 /*!40000 ALTER TABLE `ejercicio` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -120,7 +118,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `entrenador_cliente` WRITE;
 /*!40000 ALTER TABLE `entrenador_cliente` DISABLE KEYS */;
-INSERT INTO `entrenador_cliente` VALUES (3,1);
+INSERT INTO `entrenador_cliente` VALUES (3,1),(4,1);
 /*!40000 ALTER TABLE `entrenador_cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -180,7 +178,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `rutina` WRITE;
 /*!40000 ALTER TABLE `rutina` DISABLE KEYS */;
-INSERT INTO `rutina` VALUES (2,3,'Rutina2','2024-04-12'),(3,3,'Rutina3','2024-04-13');
+INSERT INTO `rutina` VALUES (2,3,'Rutina2','2024-04-12'),(3,3,'Rutina3','2024-04-13'),(4,4,'Rutina 1','2024-05-29'),(5,4,'Rutina 2','2024-05-29'),(6,4,'Rutina 3','2024-05-29'),(7,4,'Rutina 4','2024-05-29');
 /*!40000 ALTER TABLE `rutina` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -200,7 +198,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `serie` WRITE;
 /*!40000 ALTER TABLE `serie` DISABLE KEYS */;
-INSERT INTO `serie` VALUES (1,1,1,60,12,NULL,NULL,NULL),(2,1,1,65,10,NULL,NULL,NULL),(3,1,1,70,6,NULL,NULL,NULL),(4,1,2,40,15,NULL,NULL,NULL),(5,1,2,45,12,NULL,NULL,NULL),(6,1,2,50,8,NULL,NULL,NULL),(7,2,3,70,10,NULL,NULL,NULL),(8,2,3,70,8,NULL,NULL,NULL),(9,2,3,75,5,NULL,NULL,NULL),(10,2,4,40,10,NULL,NULL,NULL),(11,2,4,45,8,NULL,NULL,NULL),(12,2,4,45,8,NULL,NULL,NULL);
+INSERT INTO `serie` VALUES (1,1,1,60,12),(2,1,1,65,10),(3,1,1,70,6),(4,1,2,40,15),(5,1,2,45,12),(6,1,2,50,8),(7,2,3,70,10),(8,2,3,70,8),(9,2,3,75,5),(10,2,4,40,10),(11,2,4,45,8),(12,2,4,45,8),(13,4,1,2,2),(14,4,2,4,4);
 /*!40000 ALTER TABLE `serie` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -210,7 +208,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `sesion` WRITE;
 /*!40000 ALTER TABLE `sesion` DISABLE KEYS */;
-INSERT INTO `sesion` VALUES (1,'Sesion1'),(2,'Sesion2'),(3,'Sesion3');
+INSERT INTO `sesion` VALUES (1,'Sesion1'),(2,'Sesion2'),(3,'Sesion3'),(4,'Sesion de prueba');
 /*!40000 ALTER TABLE `sesion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -243,4 +241,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-07 16:36:53
+-- Dump completed on 2024-06-13 12:18:24

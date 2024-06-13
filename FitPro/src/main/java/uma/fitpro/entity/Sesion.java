@@ -2,7 +2,9 @@ package uma.fitpro.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -16,8 +18,9 @@ public class Sesion {
     @Column(name = "nombre", nullable = false, length = 45)
     private String nombre;
 
-    @OneToMany(mappedBy = "sesion")
-    private Set<Serie> series = new LinkedHashSet<>();
+    @OneToMany(mappedBy = "sesion",fetch = FetchType.EAGER)
+    @OrderBy("ejercicio.id ASC, id ASC")
+    private List<Serie> series = new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -35,11 +38,11 @@ public class Sesion {
         this.nombre = nombre;
     }
 
-    public Set<Serie> getSeries() {
+    public List<Serie> getSeries() {
         return series;
     }
 
-    public void setSeries(Set<Serie> series) {
+    public void setSeries(List<Serie> series) {
         this.series = series;
     }
 

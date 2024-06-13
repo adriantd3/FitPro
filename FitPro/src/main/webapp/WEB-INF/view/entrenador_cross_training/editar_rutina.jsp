@@ -55,7 +55,7 @@
                             }
                         %>
                         <select class="selectpicker" data-live-search="true" data-style="btn-<%=color%>" name="nueva_sesion">
-                            <option selected value=-1><h6>Sin rutina asignada</h6></option>
+                            <option selected value=-1><h6>Sin sesión asignada</h6></option>
                             <%
                                 String selected = "";
                                 for (Sesion sesion : sesiones){

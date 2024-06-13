@@ -1,26 +1,28 @@
 package uma.fitpro.service;
 
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import uma.fitpro.dao.OrdenSesionRutinaRepository;
 import uma.fitpro.dao.RutinaRepository;
 import uma.fitpro.dao.UsuarioRepository;
-import uma.fitpro.entity.Rutina;
-import uma.fitpro.entity.Usuario;
+import uma.fitpro.entity.*;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class RutinaService {
 
     @Autowired
-    protected UsuarioRepository usuarioRepository;
+    protected RutinaRepository rutinaRepository;
 
     @Autowired
-    protected RutinaRepository rutinaRepository;
+    protected OrdenSesionRutinaRepository ordenSesionRutinaRepository;
+
+    public Rutina getRutina(int id_rutina) {
+        Rutina rutina = rutinaRepository.findById(id_rutina).orElse(null);
+        return rutina;
+    }
 
     public List<Rutina> getRutinasEntrenador(Usuario entrenador) {
 
@@ -65,6 +67,55 @@ public class RutinaService {
         this.rutinaRepository.save(rutina);
     }
 
+    public void asociarDiaSesion(Rutina rutina, Integer dia, Sesion nueva_sesion, Sesion antigua_sesion){
+        if (antigua_sesion != null){ // Ya habia una sesion asociada a ese dia
+            OrdenSesionRutinaId id = new OrdenSesionRutinaId();
+            id.setOrden(dia);
+            id.setSesionId(antigua_sesion.getId());
+            id.setRutinaId(rutina.getId());
+
+            OrdenSesionRutina antigua = ordenSesionRutinaRepository.findById(id).orElse(null);
+            ordenSesionRutinaRepository.delete(antigua);
+        }
+
+        if (nueva_sesion != null){ // No queremos asociar ninguna sesion
+            OrdenSesionRutinaId nueva_id = new OrdenSesionRutinaId();
+            nueva_id.setOrden(dia);
+            nueva_id.setSesionId(nueva_sesion.getId());
+            nueva_id.setRutinaId(rutina.getId());
+
+            OrdenSesionRutina nueva = new OrdenSesionRutina();
+            nueva.setId(nueva_id);
+            nueva.setSesion(nueva_sesion);
+            nueva.setRutina(rutina);
+            ordenSesionRutinaRepository.save(nueva);
+        }
+    }
+
+    public Map<Integer, String> getDiasSemana(){
+        Map<Integer, String> mapa = new HashMap<>();
+        mapa.put(1, "Lunes");
+        mapa.put(2, "Martes");
+        mapa.put(3, "Miércoles");
+        mapa.put(4, "Jueves");
+        mapa.put(5, "Viernes");
+        mapa.put(6, "Sábado");
+        mapa.put(7, "Domingo");
+        return mapa;
+    }
+
+    public Map<Integer, Sesion> getDiasSesion(Rutina rutina){
+
+        List<OrdenSesionRutina> ordenSesiones = new ArrayList<>(rutina.getOrdenSesionRutinas());
+        Map<Integer, Sesion> mapa = new HashMap<>();
+        for (OrdenSesionRutina o : ordenSesiones){
+            OrdenSesionRutinaId id = o.getId();
+            Integer orden = id.getOrden();
+            mapa.put(orden, o.getSesion());
+        }
+        return mapa;
+    }
+
 
     // --------------------------- METODOS AUXILIARES ---------------------------
 
@@ -83,4 +134,5 @@ public class RutinaService {
 
         return res;
     }
+
 }

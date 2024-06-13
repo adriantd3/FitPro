@@ -24,30 +24,8 @@
 <form method="post" action="/entrenador_cross_training/guardar_serie">
     <%
         int n = 1;
-        String value1 = "";
-        String value2 = "";
-        switch (serie.getEjercicio().getTipo().getId()){
-            case 1:
-                value1 = serie.getPeso().toString();
-                value2 = serie.getRepeticiones().toString();
-                break;
-            case 2:
-                value1 = serie.getDistancia().toString();
-                value2 = serie.getDuracion().toString();
-                break;
-            case 3:
-                value1 = serie.getDuracion().toString();
-                value2 = serie.getDescanso().toString();
-                break;
-            case 4:
-                value1 = serie.getRepeticiones().toString();
-                value2 = serie.getDescanso().toString();
-                break;
-            case 5:
-                value1 = serie.getRepeticiones().toString();
-                value2 = serie.getDescanso().toString();
-                break;
-        }
+        String value1 = serie.getMetrica1().toString();
+        String value2 = serie.getMetrica2().toString();
         for (String elemento : ejercicioParametros.get(serie.getEjercicio().getTipo().getId())) {
 
     %>

@@ -26,10 +26,8 @@ public class UsuarioService  {
         return clientes;
     }
 
-    public List<Usuario> filtrarClientes(HttpSession session, String nombre,
+    public List<Usuario> filtrarClientes(Usuario entrenador, String nombre,
                                          String edad, String altura, String peso) {
-        Usuario user = (Usuario) session.getAttribute("user");
-        Usuario entrenador =  usuarioRepository.findById(user.getId()).orElse(null);
         Integer edadInt = Integer.parseInt(edad);
         Float pesoFloat = Float.parseFloat(peso);
         Float alturaFloat = Float.parseFloat(altura);

@@ -32,7 +32,7 @@
 <section class="scrollable-section">
     <% if (mapa.keySet().isEmpty()) { %>
     <section class="table-container">
-        <section class="mensaje-alerta"><h2>Aún no hay ejercicios en esta sesion</h2></section>
+        <section class="mensaje-alerta"><h2>Aún no hay ejercicios en esta sesión</h2></section>
     </section>
     <% } %>
     <section class="sesion-table-container scrollable-content">
@@ -59,38 +59,8 @@
                 %>
                 <tr>
                     <th scope="row"><%= cont %></th>
-                    <%
-                        if (e.getTipo().getId() == 1){
-                    %>
-                        <td><%= s.getPeso() %></td>
-                        <td><%= s.getRepeticiones() %></td>
-                    <%
-                        }
-                    %>
-                    <%
-                        if (e.getTipo().getId() == 2){
-                    %>
-                    <td><%= s.getDistancia() %></td>
-                    <td><%= s.getDuracion() %></td>
-                    <%
-                        }
-                    %>
-                    <%
-                        if (e.getTipo().getId() == 3){
-                    %>
-                    <td><%= s.getDuracion() %></td>
-                    <td><%= s.getDescanso() %></td>
-                    <%
-                        }
-                    %>
-                    <%
-                        if (e.getTipo().getId() == 4 || e.getTipo().getId() == 5){
-                    %>
-                    <td><%= s.getRepeticiones() %></td>
-                    <td><%= s.getDescanso() %></td>
-                    <%
-                        }
-                    %>
+                    <td><%= s.getMetrica1() %></td>
+                    <td><%= s.getMetrica2() %></td>
 
                     <td style="box-shadow: none;background-color: #434343;border-bottom-width: 0px;">
                         <div style="display: flex;gap: 10px">

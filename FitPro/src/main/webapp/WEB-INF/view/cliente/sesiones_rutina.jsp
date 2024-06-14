@@ -1,11 +1,12 @@
 <%@ page import="uma.fitpro.entity.OrdenSesionRutina" %>
 <%@ page import="java.util.List" %>
 <%@ page import="uma.fitpro.utils.UtilityFunctions" %>
+<%@ page import="uma.fitpro.dto.RutinaDTO" %>
+<%@ page import="uma.fitpro.dto.OrdenSesionRutinaDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!doctype html>
 <%
-    String rutina = (String) request.getAttribute("nombre_rutina");
-    List<OrdenSesionRutina> ordenSesionRutinas = (List<OrdenSesionRutina>) request.getAttribute("ordenSesionRutinas");
+    RutinaDTO rutina = (RutinaDTO) request.getAttribute("nombre_rutina");
 %>
 
 <html lang="en">
@@ -20,16 +21,16 @@
 <body>
 <header>
     <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back_button.png" alt="">
-    <h1 class="header-text text-center"><%=rutina%> - Sesiones</h1>
+    <h1 class="header-text text-center"><%=rutina.getNombre()%> - Sesiones</h1>
 </header>
 <ul>
     <%
-        for (OrdenSesionRutina ordenSesionRutina : ordenSesionRutinas) {
-            String dayOfWeek = UtilityFunctions.getDayByNumber(ordenSesionRutina.getId().getOrden());
+        for (OrdenSesionRutinaDTO ordenSesionRutina : rutina.getOrdenSesionRutinaList()) {
+            String dayOfWeek = UtilityFunctions.getDayByNumber(ordenSesionRutina.getId());
     %>
     <li>
-        <a href="/cliente/desempenyos_sesion?id=<%=ordenSesionRutina.getSesion().getId()%>&nombre_sesion<%=ordenSesionRutina.getSesion().getNombre()%>">
-            <%=ordenSesionRutina.getSesion().getNombre()%> - <%=dayOfWeek%>
+        <a href="/cliente/desempenyos_sesion?id=<%=ordenSesionRutina.getIdSesion()%>">
+            <%=ordenSesionRutina.getNombreSesion()%> - <%=dayOfWeek%>
         </a>
     </li>
     <%

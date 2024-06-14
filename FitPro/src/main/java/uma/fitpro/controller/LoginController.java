@@ -7,18 +7,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import uma.fitpro.dao.UsuarioRepository;
 import uma.fitpro.dto.UsuarioDTO;
-import uma.fitpro.entity.Usuario;
-import uma.fitpro.service.LoginService;
-
-import java.util.List;
+import uma.fitpro.service.UsuarioService;
 
 @Controller
 public class LoginController {
 
     @Autowired
-    private LoginService loginService;
+    private UsuarioService usuarioService;
 
     @GetMapping("/")
     public String doLogin(Model model, HttpSession session) {
@@ -31,7 +27,7 @@ public class LoginController {
     @PostMapping("/autenticar")
     public String doHome(@RequestParam String mail, @RequestParam String password, Model model, HttpSession session) {
         String strTo = "redirect:/";
-        UsuarioDTO usuario = loginService.autenticar(mail, password);
+        UsuarioDTO usuario = usuarioService.autenticar(mail, password);
         if(usuario != null){
             session.setAttribute("user", usuario);
             strTo += "home";

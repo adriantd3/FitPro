@@ -69,5 +69,12 @@
         </ul>
     <%}%>
 </section>
+<% if(cliente != null){ %>
+    <footer class="fixed-bottom p-3" onclick="window.location.href='/entrenador_fuerza/seguimiento'">
+        <button class="btn btn-primary">
+            Seguimiento
+        </button>
+    </footer>
+<% } %>
 </body>
 </html>

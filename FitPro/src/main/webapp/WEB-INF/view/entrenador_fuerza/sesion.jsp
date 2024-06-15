@@ -59,8 +59,8 @@
             %>
 
             <tr onclick="">
-                <td><%= s.getPeso() %></td>
-                <td><%= s.getRepeticiones() %></td>
+                <td><%= s.getMetrica1()%></td>
+                <td><%= s.getMetrica2()%></td>
                 <td style="background-color: transparent !important; border-bottom-width: 0">
                     <a style="color: yellow" href="/entrenador_fuerza/editar-serie?serie=<%=s.getId()%>">Editar Serie</a>
                 </td>
@@ -90,18 +90,16 @@
     <div class="w-50 align-items-center d-flex flex-column">
         <h1 class="pb-2" style="color: white"> Serie de <%=serie.getEjercicio().getNombre()%></h1>
         <form:form method="post" action="/entrenador_fuerza/guardar-serie" modelAttribute="serie">
-            <form:label cssStyle="color: white; width: 110px" path="peso" >Peso: </form:label>
-            <form:input path="peso" type="number"/>
+            <form:label cssStyle="color: white; width: 110px" path="metrica1" >Peso: </form:label>
+            <form:input path="metrica1" type="number"/>
             <br>
-            <form:label cssStyle="color: white; width: 110px" path="repeticiones" >Repeticiones: </form:label>
-            <form:input path="repeticiones" type="number"/>
+            <form:label cssStyle="color: white; width: 110px" path="metrica2" >Repeticiones: </form:label>
+            <form:input path="metrica2" type="number"/>
             <br>
 
             <form:input type="hidden" path="id" value="<%=serie.getId()%>"/>
             <form:input type="hidden" path="sesion" value="<%=serie.getSesion().getId()%>"/>
             <form:input type="hidden" path="ejercicio" value="<%=serie.getEjercicio().getId()%>"/>
-            <form:input type="hidden" path="distancia" value="0"/>
-            <form:input type="hidden" path="duracion" value="0"/>
 
             <input class="btn btn-success" type="submit" value="Guardar">
         </form:form>

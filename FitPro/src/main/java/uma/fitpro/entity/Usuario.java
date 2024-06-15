@@ -1,6 +1,7 @@
 package uma.fitpro.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -50,7 +51,7 @@ public class Usuario {
     @OneToMany(mappedBy = "usuario")
     private Set<DesempenyoMenu> desempenyoMenuEntities = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "usuario")
+    @OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER)
     private Set<DesempenyoSesion> desempenyoSesionEntities = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "dietista")

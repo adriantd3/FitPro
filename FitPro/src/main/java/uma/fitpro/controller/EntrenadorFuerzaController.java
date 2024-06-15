@@ -42,6 +42,9 @@ public class EntrenadorFuerzaController {
     @Autowired
     private OrdenSesionRutinaRepository ordenSesionRutinaRepository;
 
+    @Autowired
+    private DesempenyoSesionRepository desempenyoSesionRepository;
+
     @PostMapping("/home")
     public String doEntrenadorFuerzaHome() {
         return "/entrenador_fuerza/home";
@@ -199,10 +202,8 @@ public class EntrenadorFuerzaController {
     public String doGuardarEjercicio(@ModelAttribute("serie") Serie serie, Model model) {
         model.addAttribute("sesion", serie.getSesion());
 
-        serie.setRepeticiones(0);
-        serie.setPeso((float)0);
-        serie.setDistancia((float)0);
-        serie.setDuracion(0);
+        serie.setMetrica2((float)0);
+        serie.setMetrica1((float)0);
         serieRepository.save(serie);
 
         return "/entrenador_fuerza/crear-sesion";
@@ -237,14 +238,27 @@ public class EntrenadorFuerzaController {
         Sesion sesion = sesionRepository.findById(sesion_id).orElse(null);
         Ejercicio ejercicio = ejercicioRepository.findById(ejercicio_id).orElse(null);
         Serie serie = new Serie();
-        serie.setRepeticiones(0);
-        serie.setPeso((float)0);
-        serie.setDistancia((float)0);
-        serie.setDuracion(0);
+        serie.setMetrica2((float)0);
+        serie.setMetrica1((float)0);
         serie.setSesion(sesion);
         serie.setEjercicio(ejercicio);
 
         serieRepository.save(serie);
         return "redirect:/entrenador_fuerza/editar-serie?serie=" + serie.getId();
+    }
+
+    @GetMapping("seguimiento")
+    public String doSeguimiento(Model model, HttpSession session) {
+
+        return "/entrenador_fuerza/seguimiento";
+    }
+
+    @GetMapping("desempenyos-sesion/{id}")
+    public String doDesempenyoSesion(@PathVariable Integer id, Model model) {
+        System.out.println("holi");
+        DesempenyoSesion desempenyoSesion = desempenyoSesionRepository.findById(id).orElse(null);
+
+        model.addAttribute("desempenyoSesion", desempenyoSesion);
+        return "/entrenador_fuerza/desempenyos-sesion";
     }
 }

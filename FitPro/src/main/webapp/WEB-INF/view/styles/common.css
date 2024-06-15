@@ -49,3 +49,19 @@ body{
     text-align: center;
     padding-top: 200px;
 }
+
+.table-responsive{
+    max-height:475px;
+    margin-bottom: 5px;
+}
+
+.table td{
+    user-select: none;
+    transition: 0.5s;
+    transition-timing-function: ease;
+}
+
+.header{
+    position:sticky;
+    top:0;
+}

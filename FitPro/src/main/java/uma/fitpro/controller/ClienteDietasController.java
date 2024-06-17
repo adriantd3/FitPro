@@ -29,7 +29,7 @@ public class ClienteDietasController {
     @Autowired
     private DesempenyoComidaService desempenyoComidaService;
 
-    @GetMapping("/listado")
+    @GetMapping("/")
     public String doDietas(Model model, HttpSession session){
         UsuarioDTO cliente = (UsuarioDTO) session.getAttribute("user");
         if(cliente == null){

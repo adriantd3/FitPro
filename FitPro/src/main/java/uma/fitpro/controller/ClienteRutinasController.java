@@ -33,7 +33,7 @@ public class ClienteRutinasController {
     @Autowired
     private EjercicioService ejercicioService;
 
-    @GetMapping("/listado")
+    @GetMapping("/")
     public String doRutinas(Model model, HttpSession session) {
         UsuarioDTO cliente = (UsuarioDTO) session.getAttribute("user");
         if(cliente == null){

@@ -3,10 +3,14 @@ package uma.fitpro.entity;
 import jakarta.persistence.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import uma.fitpro.dto.DTO;
+import uma.fitpro.dto.OrdenSesionRutinaDTO;
+
+import java.io.Serializable;
 
 @Entity
 @Table(name = "orden_sesion_rutina")
-public class OrdenSesionRutina {
+public class OrdenSesionRutina implements Serializable, DTO<OrdenSesionRutinaDTO> {
     @EmbeddedId
     private OrdenSesionRutinaId id;
 
@@ -46,4 +50,13 @@ public class OrdenSesionRutina {
         this.rutina = rutina;
     }
 
+    @Override
+    public OrdenSesionRutinaDTO toDTO() {
+        OrdenSesionRutinaDTO ordenSesionRutinaDTO = new OrdenSesionRutinaDTO();
+        ordenSesionRutinaDTO.setId(this.id.getOrden());
+        ordenSesionRutinaDTO.setIdSesion(this.sesion.getId());
+        ordenSesionRutinaDTO.setIdRutina(this.rutina.getId());
+        ordenSesionRutinaDTO.setNombreSesion(this.sesion.getNombre());
+        return ordenSesionRutinaDTO;
+    }
 }

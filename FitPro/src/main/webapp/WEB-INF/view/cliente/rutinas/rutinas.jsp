@@ -1,12 +1,10 @@
-<%@ page import="uma.fitpro.entity.OrdenSesionRutina" %>
-<%@ page import="java.util.List" %>
-<%@ page import="uma.fitpro.utils.UtilityFunctions" %>
 <%@ page import="uma.fitpro.dto.RutinaDTO" %>
-<%@ page import="uma.fitpro.dto.OrdenSesionRutinaDTO" %>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!doctype html>
+
 <%
-    RutinaDTO rutina = (RutinaDTO) request.getAttribute("nombre_rutina");
+    List<RutinaDTO> rutinas = (List<RutinaDTO>) request.getAttribute("rutinas");
 %>
 
 <html lang="en">
@@ -14,23 +12,22 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style>
-        <%@ include file="../styles/common.css"%>
+        <%@ include file="../../styles/common.css"%>
     </style>
-    <title>Cliente - Sesiones</title>
+    <title>Cliente - Rutinas</title>
 </head>
 <body>
 <header>
     <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back_button.png" alt="">
-    <h1 class="header-text text-center"><%=rutina.getNombre()%> - Sesiones</h1>
+    <h1 class="header-text text-center">Rutinas de entrenamiento</h1>
 </header>
-<ul>
+<ul class="text-light">
     <%
-        for (OrdenSesionRutinaDTO ordenSesionRutina : rutina.getOrdenSesionRutinaList()) {
-            String dayOfWeek = UtilityFunctions.getDayByNumber(ordenSesionRutina.getId());
+        for (RutinaDTO rutina : rutinas) {
     %>
     <li>
-        <a href="/cliente/desempenyos_sesion?id=<%=ordenSesionRutina.getIdSesion()%>">
-            <%=ordenSesionRutina.getNombreSesion()%> - <%=dayOfWeek%>
+        <a class="text-primary fs-5" href="sesiones_rutina?id=<%=rutina.getId()%>">
+            <%=rutina.getNombre()%>
         </a>
     </li>
     <%

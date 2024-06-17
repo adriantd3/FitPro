@@ -1,7 +1,10 @@
 package uma.fitpro.entity;
 
 import jakarta.persistence.*;
+import uma.fitpro.dto.DTO;
+import uma.fitpro.dto.SesionDTO;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -9,7 +12,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "sesion")
-public class Sesion {
+public class Sesion implements Serializable, DTO<SesionDTO> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -46,4 +49,18 @@ public class Sesion {
         this.series = series;
     }
 
+    @Override
+    public SesionDTO toDTO() {
+        SesionDTO sesionDTO = new SesionDTO();
+        sesionDTO.setId(this.id);
+        sesionDTO.setNombre(this.nombre);
+
+        List<Integer> series = new ArrayList<>();
+        for (Serie serie : this.series) {
+            series.add(serie.getId());
+        }
+        sesionDTO.setSeries(series);
+
+        return sesionDTO;
+    }
 }

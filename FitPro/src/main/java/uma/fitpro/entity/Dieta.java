@@ -3,14 +3,20 @@ package uma.fitpro.entity;
 import jakarta.persistence.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import uma.fitpro.dto.DTO;
+import uma.fitpro.dto.DietaDTO;
+import uma.fitpro.dto.OrdenMenuDietaDTO;
 
+import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "dieta")
-public class Dieta {
+public class Dieta implements Serializable, DTO<DietaDTO> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -70,4 +76,19 @@ public class Dieta {
         this.ordenMenuDietas = ordenMenuDietas;
     }
 
+    @Override
+    public DietaDTO toDTO() {
+        DietaDTO dietaDTO = new DietaDTO();
+        dietaDTO.setId(id);
+        dietaDTO.setDietista(dietista.toDTO());
+        dietaDTO.setNombre(nombre);
+        dietaDTO.setFechaCreacion(fechaCreacion);
+        List<OrdenMenuDietaDTO> ordenMenuDietaDTOList = new ArrayList<>();
+        for (OrdenMenuDieta ordenMenuDieta : ordenMenuDietas) {
+            ordenMenuDietaDTOList.add(ordenMenuDieta.toDTO());
+        }
+        dietaDTO.setOrdenMenuDietaList(ordenMenuDietaDTOList);
+
+        return dietaDTO;
+    }
 }

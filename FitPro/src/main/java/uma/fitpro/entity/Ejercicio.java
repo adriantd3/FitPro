@@ -3,10 +3,14 @@ package uma.fitpro.entity;
 import jakarta.persistence.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import uma.fitpro.dto.DTO;
+import uma.fitpro.dto.EjercicioDTO;
+
+import java.io.Serializable;
 
 @Entity
 @Table(name = "ejercicio")
-public class Ejercicio {
+public class Ejercicio implements Serializable, DTO<EjercicioDTO> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -91,4 +95,16 @@ public class Ejercicio {
         this.grupoMuscular = grupoMuscular;
     }
 
+    @Override
+    public EjercicioDTO toDTO() {
+        EjercicioDTO dto = new EjercicioDTO();
+        dto.setId(id);
+        dto.setNombre(nombre);
+        dto.setDescripcion(descripcion);
+        dto.setImagen(imagen);
+        dto.setVideo(video);
+        dto.setTipo(tipo.toDTO());
+        dto.setGrupoMuscular(grupoMuscular.toDTO());
+        return dto;
+    }
 }

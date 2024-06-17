@@ -3,10 +3,15 @@ package uma.fitpro.entity;
 import jakarta.persistence.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import uma.fitpro.dto.DTO;
+import uma.fitpro.dto.OrdenMenuDietaDTO;
+
+import java.io.Serializable;
 
 @Entity
 @Table(name = "orden_menu_dieta")
-public class OrdenMenuDieta {
+public class OrdenMenuDieta implements Serializable, DTO<OrdenMenuDietaDTO>{
+
     @EmbeddedId
     private OrdenMenuDietaId id;
 
@@ -46,4 +51,13 @@ public class OrdenMenuDieta {
         this.dieta = dieta;
     }
 
+    @Override
+    public OrdenMenuDietaDTO toDTO() {
+        OrdenMenuDietaDTO ordenMenuDietaDTO = new OrdenMenuDietaDTO();
+        ordenMenuDietaDTO.setId(this.id.getOrden());
+        ordenMenuDietaDTO.setMenuId(this.id.getMenuId());
+        ordenMenuDietaDTO.setDietaId(this.id.getDietaId());
+        ordenMenuDietaDTO.setNombreMenu(this.menu.getNombre());
+        return ordenMenuDietaDTO;
+    }
 }

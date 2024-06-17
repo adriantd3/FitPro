@@ -3,10 +3,14 @@ package uma.fitpro.entity;
 import jakarta.persistence.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import uma.fitpro.dto.DTO;
+import uma.fitpro.dto.DesempenyoComidaDTO;
+
+import java.io.Serializable;
 
 @Entity
 @Table(name = "desempenyo_comida")
-public class DesempenyoComida {
+public class DesempenyoComida implements Serializable, DTO<DesempenyoComidaDTO> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -67,4 +71,14 @@ public class DesempenyoComida {
         this.gustado = gustado;
     }
 
+    @Override
+    public DesempenyoComidaDTO toDTO() {
+        DesempenyoComidaDTO dto = new DesempenyoComidaDTO();
+        dto.setId(id);
+        dto.setComida(comida.toDTO());
+        dto.setDesempenyoMenu(desempenyoMenu.getId());
+        dto.setComido(comido == 1);
+        dto.setGustado(gustado == 1);
+        return dto;
+    }
 }

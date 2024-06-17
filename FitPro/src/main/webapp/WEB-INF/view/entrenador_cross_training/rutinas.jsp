@@ -1,10 +1,10 @@
-<%@ page import="uma.fitpro.entity.Rutina" %>
 <%@ page import="java.util.List" %>
-<%@ page import="uma.fitpro.entity.Usuario" %>
+<%@ page import="uma.fitpro.dto.RutinaDTO" %>
+<%@ page import="uma.fitpro.dto.UsuarioDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    List<Rutina> rutinas = (List<Rutina>) request.getAttribute("rutinas");
-    Usuario cliente = (Usuario) request.getAttribute("cliente");
+    List<RutinaDTO> rutinas = (List<RutinaDTO>) request.getAttribute("rutinas");
+    UsuarioDTO cliente = (UsuarioDTO) request.getAttribute("cliente");
 
     // Filtrado de rutinas
     String rutinaFiltrada = "";
@@ -25,7 +25,7 @@
 </head>
 <body>
 <header>
-    <a href="/entrenador_cross_training/home">
+    <a href="/entrenador_cross_training/">
         <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back.png" alt="" onclick="">
     </a>
     <h1 class="header-text text-center"><%= cliente!= null ? "Rutinas de " + cliente.getNombre() : "Rutinas"%></h1>
@@ -52,7 +52,7 @@
             <tbody>
             <%
                 int num = 1;
-                for (Rutina r : rutinas){
+                for (RutinaDTO r : rutinas){
             %>
             <tr>
                 <th scope="row"><%= num %></th>
@@ -88,7 +88,7 @@
 </section>
 
 <div class="sesion-buttons">
-    <button class="btn btn-success" onclick="window.location.href='/entrenador_cross_training/home'">Guardar</button>
+    <button class="btn btn-success" onclick="window.location.href='/entrenador_cross_training/'">Guardar</button>
     <button type="button" name="anyadir_rutina" class="btn btn-primary" data-toggle="modal" data-target="#nuevaRutina">
         Añadir rutina
     </button>

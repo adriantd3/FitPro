@@ -1,13 +1,13 @@
 <%@ page import="java.util.List" %>
-<%@ page import="uma.fitpro.entity.Rutina" %>
 <%@ page import="java.util.Map" %>
-<%@ page import="uma.fitpro.entity.Sesion" %>
+<%@ page import="uma.fitpro.dto.RutinaDTO" %>
+<%@ page import="uma.fitpro.dto.SesionDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    Rutina rutina = (Rutina) request.getAttribute("rutina");
-    Map<Integer, Sesion> diaSesion = (Map<Integer, Sesion>) request.getAttribute("diaSesion");
+    RutinaDTO rutina = (RutinaDTO) request.getAttribute("rutina");
+    Map<Integer, SesionDTO> diaSesion = (Map<Integer, SesionDTO>) request.getAttribute("diaSesion");
     Map<Integer, String> diasSemana = (Map<Integer, String>) request.getAttribute("diasSemana");
-    List<Sesion> sesiones = (List<Sesion>) request.getAttribute("sesiones");
+    List<SesionDTO> sesiones = (List<SesionDTO>) request.getAttribute("sesiones");
 %>
 <!doctype html>
 <html lang="en">
@@ -58,7 +58,7 @@
                             <option selected value=-1><h6>Sin sesión asignada</h6></option>
                             <%
                                 String selected = "";
-                                for (Sesion sesion : sesiones){
+                                for (SesionDTO sesion : sesiones){
                                     if (diaSesion.get(dia) !=null){
                                         if (diaSesion.get(dia).equals(sesion)){
                                             selected = "selected";
@@ -91,7 +91,11 @@
     </table>
 </section>
 <div class="sesion-buttons">
-    <button class="btn btn-success" onclick="window.location.href='/entrenador_cross_training/rutinas'">Guardar rutina</button>
+    <button class="btn btn-success" onclick="window.location.href='/entrenador_cross_training/rutinas'">Guardar</button>
+    <form method="post" action="/entrenador_cross_training/borrar_rutina">
+        <input type="hidden" name="id" value="<%=rutina.getId()%>">
+        <button class="btn btn-danger">Borrar</button>
+    </form>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>

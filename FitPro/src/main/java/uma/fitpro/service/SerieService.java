@@ -2,10 +2,13 @@ package uma.fitpro.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import uma.fitpro.dao.EjercicioRepository;
 import uma.fitpro.dao.SerieRepository;
 import uma.fitpro.dao.SesionRepository;
 import uma.fitpro.dto.EjercicioDTO;
 import uma.fitpro.dto.SerieDTO;
+import uma.fitpro.dto.SesionDTO;
+import uma.fitpro.entity.Ejercicio;
 import uma.fitpro.entity.Serie;
 import uma.fitpro.entity.Sesion;
 import uma.fitpro.ui.FiltroSerie;
@@ -23,6 +26,9 @@ public class SerieService extends DTOService{
 
     @Autowired
     private SerieRepository serieRepository;
+
+    @Autowired
+    private EjercicioRepository ejercicioRepository;
 
     @Autowired
     private EjercicioService ejercicioService;
@@ -69,25 +75,35 @@ public class SerieService extends DTOService{
         return sesion_dict;
     }
 
-    public Serie getSerie(int id_serie) {
+    public SerieDTO buscarSerie(int id_serie) {
         Serie serie = serieRepository.findById(id_serie).orElse(null);
-        return serie;
+        if (serie != null) {
+            return serie.toDTO();
+        } else {
+            return null;
+        }
     }
 
-    public void crearSerie(Ejercicio ejercicio, Sesion sesion, String parametro1, String parametro2){
+    public void crearSerie(EjercicioDTO ejercicioDTO, SesionDTO sesionDTO, String parametro1, String parametro2){
+        Ejercicio ejercicio = ejercicioRepository.findById(ejercicioDTO.getId()).orElse(null);
+        Sesion sesion = sesionRepository.findById(sesionDTO.getId()).orElse(null);
         Serie nueva_serie = new Serie();
         nueva_serie.setEjercicio(ejercicio);
         nueva_serie.setSesion(sesion);
-        guardarSerie(nueva_serie, parametro1, parametro2);
+        nueva_serie.setMetrica1(Float.parseFloat(parametro1));
+        nueva_serie.setMetrica2(Float.parseFloat(parametro2));
+        serieRepository.save(nueva_serie);
     }
 
-    public void guardarSerie(Serie serie, String parametro1, String parametro2){
+    public void guardarSerie(SerieDTO serieDTO, String parametro1, String parametro2){
+        Serie serie = serieRepository.findById(serieDTO.getId()).orElse(null);
         serie.setMetrica1(Float.parseFloat(parametro1));
         serie.setMetrica2(Float.parseFloat(parametro2));
         serieRepository.save(serie);
     }
 
-    public void borrarSerie(Serie serie){
+    public void borrarSerie(SerieDTO serieDTO){
+        Serie serie = serieRepository.findById(serieDTO.getId()).orElse(null);
         serieRepository.delete(serie);
     }
 }

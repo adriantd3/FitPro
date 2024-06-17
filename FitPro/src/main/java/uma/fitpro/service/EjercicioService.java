@@ -7,12 +7,16 @@ import uma.fitpro.dao.GrupoMuscularRepository;
 import uma.fitpro.dao.TipoEjercicioRepository;
 import uma.fitpro.dto.EjercicioDTO;
 import uma.fitpro.dto.GrupoMuscularDTO;
+import uma.fitpro.dto.SerieDTO;
 import uma.fitpro.dto.TipoEjercicioDTO;
 import uma.fitpro.entity.Ejercicio;
 import uma.fitpro.entity.GrupoMuscular;
+import uma.fitpro.entity.Serie;
 import uma.fitpro.entity.TipoEjercicio;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class EjercicioService extends DTOService{
@@ -44,22 +48,17 @@ public class EjercicioService extends DTOService{
         return this.entidadesADTO(gruposMusculares);
     }
 
-    public Ejercicio getEjercicio(Integer id_ejercicio) {
-        Ejercicio ejercicio = ejercicioRepository.findById(id_ejercicio).orElse(null);
-        return ejercicio;
-    }
-
-    public List<Ejercicio> filtrarEjercicioPorNombreMusculoYTipo(String nombre_ejercicio, String musculo, String tipo) {
+    public List<EjercicioDTO> filtrarEjercicioPorNombreMusculoYTipo(String nombre_ejercicio, String musculo, String tipo) {
         List<Ejercicio> ejercicios = ejercicios = ejercicioRepository.filtrarEjercicioPorNombreMusculoYTipo(nombre_ejercicio, musculo, tipo);
-        return ejercicios;
+        return this.entidadesADTO(ejercicios);
     }
 
-    public List<Ejercicio> filtrarEjercicioPorNombre(String nombre_ejercicio) {
+    public List<EjercicioDTO> filtrarEjercicioPorNombre(String nombre_ejercicio) {
         List<Ejercicio> ejercicios = ejercicios = ejercicioRepository.filtrarEjercicioPorNombre(nombre_ejercicio);
-        return ejercicios;
+        return this.entidadesADTO(ejercicios);
     }
 
-    public void anyadirEjercicio(Map<Ejercicio, List<Serie>> mapa, Ejercicio ejercicio) {
+    public void anyadirEjercicio(Map<EjercicioDTO, List<SerieDTO>> mapa, EjercicioDTO ejercicio) {
         if (!mapa.containsKey(ejercicio)){
             mapa.put(ejercicio, new ArrayList<>());
         }

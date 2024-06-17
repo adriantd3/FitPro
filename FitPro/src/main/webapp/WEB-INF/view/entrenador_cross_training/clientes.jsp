@@ -1,8 +1,8 @@
 <%@ page import="java.util.List" %>
-<%@ page import="uma.fitpro.entity.Usuario" %>
+<%@ page import="uma.fitpro.dto.UsuarioDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    List<Usuario> clientes = (List<Usuario>) request.getAttribute("clientes");
+    List<UsuarioDTO> clientes = (List<UsuarioDTO>) request.getAttribute("clientes");
 
     // Parametros del filtrado de clientes
     String nombreFiltrado = "";
@@ -28,7 +28,7 @@
 </head>
 <body>
 <header>
-    <a href="/entrenador_cross_training/home">
+    <a href="/entrenador_cross_training/">
         <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back.png" alt="" onclick="">
     </a>
     <h1 class="header-text text-center">Clientes</h1>
@@ -61,7 +61,7 @@
             <tbody>
             <%
                 int num = 1;
-                for (Usuario u : clientes){
+                for (UsuarioDTO u : clientes){
 
 
             %>

@@ -2,11 +2,22 @@ package uma.fitpro.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import uma.fitpro.dao.OrdenSesionRutinaRepository;
+import uma.fitpro.dao.SesionRepository;
+import uma.fitpro.dao.UsuarioRepository;
 import uma.fitpro.dto.RutinaDTO;
 import uma.fitpro.dao.RutinaRepository;
-import uma.fitpro.entity.Rutina;
-
+import uma.fitpro.dto.SesionDTO;
+import uma.fitpro.dto.UsuarioDTO;
+import uma.fitpro.entity.*;
+import uma.fitpro.utils.UtilityFunctions;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import static uma.fitpro.utils.UtilityFunctions.getFecha;
 
 @Service
 public class RutinaService extends DTOService{
@@ -15,43 +26,47 @@ public class RutinaService extends DTOService{
     private RutinaRepository rutinaRepository;
 
     @Autowired
+    private UsuarioRepository usuarioRepository;
+
+    @Autowired
     protected OrdenSesionRutinaRepository ordenSesionRutinaRepository;
+    @Autowired
+    private SesionRepository sesionRepository;
 
-    public Rutina getRutina(int id_rutina) {
-        Rutina rutina = rutinaRepository.findById(id_rutina).orElse(null);
-        return rutina;
-    }
-
-    public List<Rutina> getRutinasEntrenador(Usuario entrenador) {
-
+    public List<RutinaDTO> getRutinasEntrenador(UsuarioDTO entrenadorDTO) {
+        Usuario entrenador = this.usuarioRepository.findById(entrenadorDTO.getId()).orElse(null);
         List<Rutina> rutinas = rutinaRepository.getRutinasByEntrenador(entrenador.getId());
-        Collections.sort(rutinas);
-
-        return rutinas;
+        rutinas.sort((r1, r2) -> r1.getNombre().compareTo(r2.getNombre()));
+        return this.entidadesADTO(rutinas);
     }
 
-    public List<Rutina> getRutinasCliente(Usuario cliente) {
-
+    public List<RutinaDTO> getRutinasCliente(UsuarioDTO clienteDTO) {
+        Usuario cliente = this.usuarioRepository.findById(clienteDTO.getId()).orElse(null);
         List<Rutina> rutinas = new ArrayList<>(cliente.getRutinasCliente());
-        return rutinas;
+        return this.entidadesADTO(rutinas);
     }
 
-    public List<Rutina> getRestantesRutinasByEntrenador(Usuario entrenador, List<Rutina> rutinas){
+    public List<RutinaDTO> getRestantesRutinasByEntrenador(UsuarioDTO entrenadorDTO, List<RutinaDTO> rutinas){
+        Usuario entrenador = this.usuarioRepository.findById(entrenadorDTO.getId()).orElse(null);
+        List<Integer> rutinasIds = new ArrayList<>();
+        for (RutinaDTO rutinaDTO : rutinas) {
+            rutinasIds.add(rutinaDTO.getId());
+        }
         List<Rutina> todasLasRutinas;
         if (rutinas.isEmpty()){
             todasLasRutinas = rutinaRepository.getRutinasByEntrenador(entrenador.getId());
         }else {
-            todasLasRutinas = rutinaRepository.getRestantesRutinasByEntrenador(entrenador.getId(),rutinas);
+            todasLasRutinas = rutinaRepository.getRestantesRutinasByEntrenador(entrenador.getId(),rutinasIds);
         }
-        return todasLasRutinas;
+        return this.entidadesADTO(todasLasRutinas);
     }
 
-    public List<Rutina> filtrarRutinas(Integer id_entrenador, String nombre, String fecha) {
+    public List<RutinaDTO> filtrarRutinas(Integer id_entrenador, String nombre, String fecha) {
 
         LocalDate fechaFiltrada = getFecha(fecha);
         List<Rutina> rutinas = rutinaRepository.getFilteredRutinasByEntrenadorAndFecha(id_entrenador, nombre, fechaFiltrada);
-        Collections.sort(rutinas);
-        return rutinas;
+        rutinas.sort((r1, r2) -> r1.getNombre().compareTo(r2.getNombre()));
+        return this.entidadesADTO(rutinas);
     }
 
     public void borrarRutina(Integer id_rutina) {
@@ -59,7 +74,8 @@ public class RutinaService extends DTOService{
         rutinaRepository.delete(rutina);
     }
 
-    public void nuevaRutina(Usuario entrenador, String nombre){
+    public void nuevaRutina(UsuarioDTO entrenadorDTO, String nombre){
+        Usuario entrenador = this.usuarioRepository.findById(entrenadorDTO.getId()).orElse(null);
         Rutina rutina = new Rutina();
         rutina.setNombre(nombre);
         rutina.setEntrenador(entrenador);
@@ -67,7 +83,20 @@ public class RutinaService extends DTOService{
         this.rutinaRepository.save(rutina);
     }
 
-    public void asociarDiaSesion(Rutina rutina, Integer dia, Sesion nueva_sesion, Sesion antigua_sesion){
+    public void asociarDiaSesion(RutinaDTO rutinaDTO, Integer dia, SesionDTO nueva_sesionDTO, SesionDTO antigua_sesionDTO){
+        Sesion antigua_sesion;
+        Sesion nueva_sesion;
+        if (antigua_sesionDTO == null){
+            antigua_sesion = null;
+        }else {
+            antigua_sesion = sesionRepository.findById(antigua_sesionDTO.getId()).orElse(null);
+        }
+        if (nueva_sesionDTO == null){
+            nueva_sesion = null;
+        }else {
+            nueva_sesion = sesionRepository.findById(nueva_sesionDTO.getId()).orElse(null);
+        }
+        Rutina rutina = rutinaRepository.findById(rutinaDTO.getId()).orElse(null);
         if (antigua_sesion != null){ // Ya habia una sesion asociada a ese dia
             OrdenSesionRutinaId id = new OrdenSesionRutinaId();
             id.setOrden(dia);
@@ -92,26 +121,14 @@ public class RutinaService extends DTOService{
         }
     }
 
-    public Map<Integer, String> getDiasSemana(){
-        Map<Integer, String> mapa = new HashMap<>();
-        mapa.put(1, "Lunes");
-        mapa.put(2, "Martes");
-        mapa.put(3, "Miércoles");
-        mapa.put(4, "Jueves");
-        mapa.put(5, "Viernes");
-        mapa.put(6, "Sábado");
-        mapa.put(7, "Domingo");
-        return mapa;
-    }
-
-    public Map<Integer, Sesion> getDiasSesion(Rutina rutina){
-
+    public Map<Integer, SesionDTO> getDiasSesion(RutinaDTO rutinaDTO){
+        Rutina rutina = rutinaRepository.findById(rutinaDTO.getId()).orElse(null);
         List<OrdenSesionRutina> ordenSesiones = new ArrayList<>(rutina.getOrdenSesionRutinas());
-        Map<Integer, Sesion> mapa = new HashMap<>();
+        Map<Integer, SesionDTO> mapa = new HashMap<>();
         for (OrdenSesionRutina o : ordenSesiones){
             OrdenSesionRutinaId id = o.getId();
             Integer orden = id.getOrden();
-            mapa.put(orden, o.getSesion());
+            mapa.put(orden, o.getSesion().toDTO());
         }
         return mapa;
     }
@@ -130,22 +147,5 @@ public class RutinaService extends DTOService{
         }
     }
 
-    // --------------------------- METODOS AUXILIARES ---------------------------
-
-    private LocalDate getFecha(String fecha){
-        LocalDate res;
-        if (fecha.isEmpty()){
-            res = LocalDate.of(1,1,1);
-        }else {
-            String[] aux = fecha.split("-");
-            if (aux.length == 3){
-                res = LocalDate.of(Integer.parseInt(aux[0]), Integer.parseInt(aux[1]), Integer.parseInt(aux[2]));
-            }else {
-                res = LocalDate.of(1,1,1);
-            }
-        }
-
-        return res;
-    }
 
 }

@@ -2,15 +2,22 @@ package uma.fitpro.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import uma.fitpro.dao.RutinaRepository;
 import uma.fitpro.dao.UsuarioRepository;
+import uma.fitpro.dto.RutinaDTO;
 import uma.fitpro.dto.UsuarioDTO;
 import uma.fitpro.entity.Usuario;
+import uma.fitpro.entity.Rutina;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UsuarioService extends DTOService{
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+    @Autowired
+    private RutinaRepository rutinaRepository;
 
     public UsuarioDTO autenticar(String mail, String password) {
         Usuario usuario = this.usuarioRepository.autenticar(mail, password);
@@ -30,38 +37,36 @@ public class UsuarioService extends DTOService{
         }
     }
 
-    public Usuario getUsuario(int id_usuario) {
-        Usuario usuario = usuarioRepository.findById(id_usuario).orElse(null);
-        return usuario;
-    }
-
-    public List<Usuario> getClientesEntrenador(Usuario entrenador) {
-
+    public List<UsuarioDTO> getClientesEntrenador(UsuarioDTO entrenadorDTO) {
+        Usuario entrenador = this.usuarioRepository.findById(entrenadorDTO.getId()).orElse(null);
         List<Usuario> clientes = new ArrayList<>(entrenador.getClientesEntrenador());
-        Collections.sort(clientes);
-
-        return clientes;
+        //clientes.sort((u1, u2) -> u1.getNombre().compareTo(u2.getNombre()));
+        return this.entidadesADTO(clientes);
     }
 
-    public List<Usuario> filtrarClientes(Usuario entrenador, String nombre,
+    public List<UsuarioDTO> filtrarClientes(UsuarioDTO entrenadorDTO, String nombre,
                                          String edad, String altura, String peso) {
+        Usuario entrenador = this.usuarioRepository.findById(entrenadorDTO.getId()).orElse(null);
         Integer edadInt = Integer.parseInt(edad);
         Float pesoFloat = Float.parseFloat(peso);
         Float alturaFloat = Float.parseFloat(altura);
         List<Usuario> clientes = usuarioRepository.filtrarCliente(nombre, entrenador, edadInt,pesoFloat, alturaFloat);
-
-        return clientes;
+        return this.entidadesADTO(clientes);
     }
 
-    public void asignarRutinaCliente(Usuario cliente, Rutina rutina){
-        Set<Rutina> rutinas_cliente = cliente.getRutinasCliente();
+    public void asignarRutinaCliente(UsuarioDTO clienteDTO, RutinaDTO rutinaDTO){
+        Rutina rutina = rutinaRepository.findById(rutinaDTO.getId()).orElse(null);
+        Usuario cliente = usuarioRepository.findById(clienteDTO.getId()).orElse(null);
+        List<Rutina> rutinas_cliente = cliente.getRutinasCliente();
         rutinas_cliente.add(rutina);
         cliente.setRutinasCliente(rutinas_cliente);
         usuarioRepository.save(cliente);
     }
 
-    public void borrarRutinaCliente(Usuario cliente, Rutina rutina){
-        Set<Rutina> rutinas_cliente = cliente.getRutinasCliente();
+    public void borrarRutinaCliente(UsuarioDTO clienteDTO, RutinaDTO rutinaDTO){
+        Rutina rutina = rutinaRepository.findById(rutinaDTO.getId()).orElse(null);
+        Usuario cliente = usuarioRepository.findById(clienteDTO.getId()).orElse(null);
+        List<Rutina> rutinas_cliente = cliente.getRutinasCliente();
         rutinas_cliente.remove(rutina);
         cliente.setRutinasCliente(rutinas_cliente);
         usuarioRepository.save(cliente);

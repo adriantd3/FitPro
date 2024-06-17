@@ -8,9 +8,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import uma.fitpro.dto.*;
 import uma.fitpro.entity.*;
 import uma.fitpro.service.*;
 import java.util.*;
+
+import static uma.fitpro.utils.UtilityFunctions.getDiasSemana;
+import static uma.fitpro.utils.UtilityFunctions.getEjercicioParametros;
 
 @RequestMapping("/entrenador_cross_training")
 @Controller
@@ -31,17 +35,13 @@ public class EntrenadorCrossTrainingController {
     @Autowired
     protected EjercicioService ejercicioService;
 
-    @Autowired
-    protected GrupoMuscularService grupoMuscularService;
-
-    @Autowired
-    protected TipoEjercicioService tipoEjercicioService;
-
-
     // --------------------------- HOME ---------------------------
 
-    @GetMapping("/home")
-    public String doHome(Model model){
+    @GetMapping("/")
+    public String doHome(Model model, HttpSession session){
+        if (session.getAttribute("user") == null) {
+            return "redirect:/";
+        }
         return "entrenador_cross_training/home";
     }
     
@@ -49,9 +49,11 @@ public class EntrenadorCrossTrainingController {
 
     @GetMapping("/clientes")
     public String doClientes(Model model, HttpSession session){
-
-        Usuario entrenador = (Usuario) session.getAttribute("user");
-        List<Usuario> clientes = usuarioService.getClientesEntrenador(entrenador);
+        if (session.getAttribute("user") == null) {
+            return "redirect:/";
+        }
+        UsuarioDTO entrenador = (UsuarioDTO) session.getAttribute("user");
+        List<UsuarioDTO> clientes = usuarioService.getClientesEntrenador(entrenador);
         model.addAttribute("clientes", clientes);
 
         return "entrenador_cross_training/clientes";
@@ -63,20 +65,27 @@ public class EntrenadorCrossTrainingController {
                                     @RequestParam("altura") String altura,
                                     @RequestParam("peso") String peso,
                                     Model model,HttpSession session){
+        if (session.getAttribute("user") == null) {
+            return "redirect:/";
+        }
 
-        Usuario entrenador = (Usuario) session.getAttribute("user");
-        List<Usuario> clientes = usuarioService.filtrarClientes(entrenador, nombre, edad, altura, peso);
+        UsuarioDTO entrenador = (UsuarioDTO) session.getAttribute("user");
+        List<UsuarioDTO> clientes = usuarioService.filtrarClientes(entrenador, nombre, edad, altura, peso);
         model.addAttribute("clientes", clientes);
 
         return "entrenador_cross_training/clientes";
     }
 
     @GetMapping("/rutinas_cliente")
-    public String doRutinasCliente(Model model, @RequestParam("id") Usuario cliente,
+    public String doRutinasCliente(Model model, @RequestParam("id") Integer id_cliente,
                                    HttpSession session){
-        List<Rutina> rutinas = rutinaService.getRutinasCliente(cliente);
-        Usuario entrenador = (Usuario) session.getAttribute("user");
-        List<Rutina> todasLasRutinas = rutinaService.getRestantesRutinasByEntrenador(entrenador, rutinas);
+        if (session.getAttribute("user") == null) {
+            return "redirect:/";
+        }
+        UsuarioDTO cliente = usuarioService.findById(id_cliente);
+        List<RutinaDTO> rutinas = rutinaService.getRutinasCliente(cliente);
+        UsuarioDTO entrenador = (UsuarioDTO) session.getAttribute("user");
+        List<RutinaDTO> todasLasRutinas = rutinaService.getRestantesRutinasByEntrenador(entrenador, rutinas);
 
         model.addAttribute("todasLasRutinas", todasLasRutinas);
         model.addAttribute("rutinas", rutinas);
@@ -87,10 +96,13 @@ public class EntrenadorCrossTrainingController {
 
     @PostMapping("/asignar_rutina_cliente")
     public String doAsignarRutinaCliente(@RequestParam("rutina") Integer id_rutina,
-                                         @RequestParam("cliente") Integer id_cliente){
-
-        Rutina rutina = rutinaService.getRutina(id_rutina);
-        Usuario cliente = usuarioService.getUsuario(id_cliente);
+                                         @RequestParam("cliente") Integer id_cliente,
+                                         HttpSession session){
+        if (session.getAttribute("user") == null) {
+            return "redirect:/";
+        }
+        RutinaDTO rutina = rutinaService.buscarRutina(id_rutina);
+        UsuarioDTO cliente = usuarioService.findById(id_cliente);
         usuarioService.asignarRutinaCliente(cliente, rutina);
 
         return "redirect:/entrenador_cross_training/rutinas_cliente?id=" + cliente.getId();
@@ -98,10 +110,13 @@ public class EntrenadorCrossTrainingController {
 
     @PostMapping("/borrar_rutina_cliente")
     public String doBorrarRutinaCliente(@RequestParam("rutina") Integer id_rutina,
-                                        @RequestParam("cliente") Integer id_cliente){
-
-        Rutina rutina = rutinaService.getRutina(id_rutina);
-        Usuario cliente = usuarioService.getUsuario(id_cliente);
+                                        @RequestParam("cliente") Integer id_cliente,
+                                        HttpSession session){
+        if (session.getAttribute("user") == null) {
+            return "redirect:/";
+        }
+        RutinaDTO rutina = rutinaService.buscarRutina(id_rutina);
+        UsuarioDTO cliente = usuarioService.findById(id_cliente);
         usuarioService.borrarRutinaCliente(cliente, rutina);
 
         return "redirect:/entrenador_cross_training/rutinas_cliente?id=" + cliente.getId();
@@ -111,9 +126,11 @@ public class EntrenadorCrossTrainingController {
 
     @GetMapping("/rutinas")
     public String doRutinas(Model model, HttpSession session){
-
-        Usuario entrenador = (Usuario) session.getAttribute("user");
-        List<Rutina> rutinas = rutinaService.getRutinasEntrenador(entrenador);
+        if (session.getAttribute("user") == null) {
+            return "redirect:/";
+        }
+        UsuarioDTO entrenador = (UsuarioDTO) session.getAttribute("user");
+        List<RutinaDTO> rutinas = rutinaService.getRutinasEntrenador(entrenador);
 
         model.addAttribute("rutinas", rutinas);
 
@@ -124,9 +141,11 @@ public class EntrenadorCrossTrainingController {
     public String doFiltrarRutinas(@RequestParam("nombre") String nombre,
                                    @RequestParam("fecha") String fecha,
                                    Model model,HttpSession session){
-
-        Usuario entrenador = (Usuario) session.getAttribute("user");
-        List<Rutina> rutinas = rutinaService.filtrarRutinas(entrenador.getId(), nombre, fecha);
+        if (session.getAttribute("user") == null) {
+            return "redirect:/";
+        }
+        UsuarioDTO entrenador = (UsuarioDTO) session.getAttribute("user");
+        List<RutinaDTO> rutinas = rutinaService.filtrarRutinas(entrenador.getId(), nombre, fecha);
 
         model.addAttribute("rutinas", rutinas);
 
@@ -135,8 +154,10 @@ public class EntrenadorCrossTrainingController {
 
 
     @PostMapping("/borrar_rutina")
-    public String doBorrarRutina(@RequestParam("id") Integer id_rutina){
-
+    public String doBorrarRutina(@RequestParam("id") Integer id_rutina, HttpSession session){
+        if (session.getAttribute("user") == null) {
+            return "redirect:/";
+        }
         rutinaService.borrarRutina(id_rutina);
 
         return "redirect:/entrenador_cross_training/rutinas";
@@ -144,19 +165,24 @@ public class EntrenadorCrossTrainingController {
 
     @PostMapping("/nueva_rutina")
     public String doNuevaRutina(@RequestParam("nombre") String nombre, HttpSession session){
-
-        Usuario entrenador = (Usuario) session.getAttribute("user");
+        if (session.getAttribute("user") == null) {
+            return "redirect:/";
+        }
+        UsuarioDTO entrenador = (UsuarioDTO) session.getAttribute("user");
         rutinaService.nuevaRutina(entrenador, nombre);
 
         return "redirect:/entrenador_cross_training/rutinas";
     }
 
     @GetMapping("/editar_rutina")
-    public String doEditarRutina(@RequestParam("id") Integer id_rutina, Model model){
-        Rutina rutina = rutinaService.getRutina(id_rutina);
-        Map<Integer, Sesion> diaSesion = rutinaService.getDiasSesion(rutina);
-        Map<Integer, String> diasSemana = rutinaService.getDiasSemana();
-        List<Sesion> sesiones = sesionService.getSesiones();
+    public String doEditarRutina(@RequestParam("id") Integer id_rutina, Model model, HttpSession session){
+        if (session.getAttribute("user") == null) {
+            return "redirect:/";
+        }
+        RutinaDTO rutina = rutinaService.buscarRutina(id_rutina);
+        Map<Integer, SesionDTO> diaSesion = rutinaService.getDiasSesion(rutina);
+        Map<Integer, String> diasSemana = getDiasSemana();
+        List<SesionDTO> sesiones = sesionService.getSesiones();
 
         model.addAttribute("diaSesion", diaSesion);
         model.addAttribute("diasSemana", diasSemana);
@@ -170,11 +196,14 @@ public class EntrenadorCrossTrainingController {
     public String doAsociarDiaSesion(@RequestParam("rutina") Integer id_rutina,
                                      @RequestParam("dia") Integer dia,
                                      @RequestParam("nueva_sesion") Integer nueva_sesion_id,
-                                     @RequestParam("antigua_sesion") Integer antigua_sesion_id){
-
-        Rutina rutina = rutinaService.getRutina(id_rutina);
-        Sesion nueva_sesion = sesionService.getSesion(nueva_sesion_id);
-        Sesion antigua_sesion = sesionService.getSesion(antigua_sesion_id);
+                                     @RequestParam("antigua_sesion") Integer antigua_sesion_id,
+                                     HttpSession session){
+        if (session.getAttribute("user") == null) {
+            return "redirect:/";
+        }
+        RutinaDTO rutina = rutinaService.buscarRutina(id_rutina);
+        SesionDTO nueva_sesion = sesionService.buscarSesion(nueva_sesion_id);
+        SesionDTO antigua_sesion = sesionService.buscarSesion(antigua_sesion_id);
         rutinaService.asociarDiaSesion(rutina, dia, nueva_sesion, antigua_sesion);
 
         return "redirect:/entrenador_cross_training/editar_rutina?id=" + rutina.getId();
@@ -183,9 +212,11 @@ public class EntrenadorCrossTrainingController {
     // --------------------------- SESIONES ---------------------------
 
     @GetMapping("/sesiones")
-    public String doSesiones(Model modelo){
-        List<Sesion> sesiones = sesionService.getSesiones();
-
+    public String doSesiones(Model modelo, HttpSession session){
+        if (session.getAttribute("user") == null) {
+            return "redirect:/";
+        }
+        List<SesionDTO> sesiones = sesionService.getSesiones();
         modelo.addAttribute("sesiones", sesiones);
 
         return "entrenador_cross_training/sesiones";
@@ -193,10 +224,12 @@ public class EntrenadorCrossTrainingController {
 
     @GetMapping("/filtrar_sesiones")
     public String doFiltrarSesiones(@RequestParam("nombre") String nombre,Model model,HttpSession session){
-
+        if (session.getAttribute("user") == null) {
+            return "redirect:/";
+        }
         String str = "redirect:/entrenador_cross_training/sesiones";
         if (!nombre.isEmpty()){
-            List<Sesion> sesiones = sesionService.filtrarSesiones(nombre);
+            List<SesionDTO> sesiones = sesionService.filtrarSesiones(nombre);
             model.addAttribute("sesiones", sesiones);
             str = "entrenador_cross_training/sesiones";
         }
@@ -205,17 +238,23 @@ public class EntrenadorCrossTrainingController {
     }
 
     @PostMapping("/borrar_sesion")
-    public String doBorrarSesion(@RequestParam("id") Integer id_sesion){
+    public String doBorrarSesion(@RequestParam("id") Integer id_sesion, HttpSession session){
+        if (session.getAttribute("user") == null) {
+            return "redirect:/";
+        }
         sesionService.borrarSesion(id_sesion);
 
         return "redirect:/entrenador_cross_training/sesiones";
     }
 
     @GetMapping("/sesion")
-    public String doSesion(@RequestParam("id") Integer id_sesion, Model model){
-        Sesion sesion = sesionService.getSesion(id_sesion);
-        Map<Ejercicio, List<Serie>> mapa = sesionService.getEjercicioYSeries(sesion);
-        Map<Integer,List<String>> ejercicioParametros = sesionService.getEjercicioParametros();
+    public String doSesion(@RequestParam("id") Integer id_sesion, Model model, HttpSession session){
+        if (session.getAttribute("user") == null) {
+            return "redirect:/";
+        }
+        SesionDTO sesion = sesionService.buscarSesion(id_sesion);
+        Map<EjercicioDTO, List<SerieDTO>> mapa = sesionService.getEjercicioYSeries(sesion);
+        Map<Integer,List<String>> ejercicioParametros = getEjercicioParametros();
 
         model.addAttribute("ejercicioParametros", ejercicioParametros);
         model.addAttribute("sesion", sesion);
@@ -226,7 +265,10 @@ public class EntrenadorCrossTrainingController {
 
 
     @PostMapping("/nueva_sesion")
-    public String doNuevaSesion(@RequestParam("nombre") String nombre){
+    public String doNuevaSesion(@RequestParam("nombre") String nombre, HttpSession session){
+        if (session.getAttribute("user") == null) {
+            return "redirect:/";
+        }
         sesionService.nuevaSesion(nombre);
 
         return "redirect:/entrenador_cross_training/sesiones";
@@ -239,16 +281,21 @@ public class EntrenadorCrossTrainingController {
     public String doEjercicios(@RequestParam("ejercicio") String nombre_ejercicio,
                                @RequestParam("musculo") String musculo,
                                @RequestParam("tipo") String tipo,
-                               @RequestParam(value = "aplicar", required = false) Boolean aplicar, Model modelo){
-        List<Ejercicio> ejercicios;
+                               @RequestParam(value = "aplicar", required = false) Boolean aplicar,
+                               Model modelo,
+                               HttpSession session){
+        if (session.getAttribute("user") == null) {
+            return "redirect:/";
+        }
+        List<EjercicioDTO> ejercicios;
         if (aplicar!=null){ // Filtro por nombre, musculo y tipo
             ejercicios = ejercicioService.filtrarEjercicioPorNombreMusculoYTipo(nombre_ejercicio, musculo, tipo);
         }else { // Filtro por nombre solo
             ejercicios = ejercicioService.filtrarEjercicioPorNombre(nombre_ejercicio);
         }
 
-        List<TipoEjercicio> tipos = tipoEjercicioService.getTiposEjercicios();
-        List<GrupoMuscular> grupos = grupoMuscularService.getGruposMusculares();
+        List<TipoEjercicioDTO> tipos = ejercicioService.listarTiposEjercicio();
+        List<GrupoMuscularDTO> grupos = ejercicioService.listarGruposMusculares();
 
         modelo.addAttribute("ejercicios", ejercicios);
         modelo.addAttribute("tipos", tipos);
@@ -260,12 +307,15 @@ public class EntrenadorCrossTrainingController {
     @PostMapping("/anyadir_ejercicio")
     public String doAnyadirEjercicio(@RequestParam("sesion") Integer id_sesion,
                                      @RequestParam("ejercicio") Integer id_ejercicio,
-                                     Model model){
-        Ejercicio ejercicio = ejercicioService.getEjercicio(id_ejercicio);
-        Sesion sesion = sesionService.getSesion(id_sesion);
-        Map<Ejercicio, List<Serie>> mapa = sesionService.getEjercicioYSeries(sesion);
+                                     Model model, HttpSession session){
+        if (session.getAttribute("user") == null) {
+            return "redirect:/";
+        }
+        EjercicioDTO ejercicio = ejercicioService.buscarEjercicio(id_ejercicio);
+        SesionDTO sesion = sesionService.buscarSesion(id_sesion);
+        Map<EjercicioDTO, List<SerieDTO>> mapa = sesionService.getEjercicioYSeries(sesion);
         ejercicioService.anyadirEjercicio(mapa, ejercicio);
-        Map<Integer,List<String>> ejercicioParametros = sesionService.getEjercicioParametros();
+        Map<Integer,List<String>> ejercicioParametros = getEjercicioParametros();
 
         model.addAttribute("ejercicioParametros", ejercicioParametros);
         model.addAttribute("sesion", sesion);
@@ -279,10 +329,13 @@ public class EntrenadorCrossTrainingController {
     @GetMapping("/anyadir_serie")
     public String doAnyadirSerie(@RequestParam("sesion") Integer id_sesion,
                                  @RequestParam("ejercicio") Integer id_ejercicio,
-                                 Model model){
-        Sesion sesion = sesionService.getSesion(id_sesion);
-        Ejercicio ejercicio = ejercicioService.getEjercicio(id_ejercicio);
-        Map<Integer,List<String>> ejercicioParametros = sesionService.getEjercicioParametros();
+                                 Model model, HttpSession session){
+        if (session.getAttribute("user") == null) {
+            return "redirect:/";
+        }
+        SesionDTO sesion = sesionService.buscarSesion(id_sesion);
+        EjercicioDTO ejercicio = ejercicioService.buscarEjercicio(id_ejercicio);
+        Map<Integer,List<String>> ejercicioParametros = getEjercicioParametros();
 
         model.addAttribute("ejercicioParametros", ejercicioParametros);
         model.addAttribute("ejercicio", ejercicio);
@@ -295,9 +348,13 @@ public class EntrenadorCrossTrainingController {
     public String doCrearSerie(@RequestParam("sesion") Integer id_sesion,
                                  @RequestParam("ejercicio") Integer id_ejercicio,
                                  @RequestParam("param1") String parametro1,
-                                 @RequestParam("param2") String parametro2){
-        Sesion sesion = sesionService.getSesion(id_sesion);
-        Ejercicio ejercicio = ejercicioService.getEjercicio(id_ejercicio);
+                                 @RequestParam("param2") String parametro2,
+                               HttpSession session){
+        if (session.getAttribute("user") == null) {
+            return "redirect:/";
+        }
+        SesionDTO sesion = sesionService.buscarSesion(id_sesion);
+        EjercicioDTO ejercicio = ejercicioService.buscarEjercicio(id_ejercicio);
         serieService.crearSerie(ejercicio, sesion, parametro1, parametro2);
 
         return "redirect:/entrenador_cross_training/sesion?id=" + sesion.getId();
@@ -306,14 +363,21 @@ public class EntrenadorCrossTrainingController {
     @GetMapping("editar_serie")
     public String doEditarSerie(@RequestParam("sesion") Integer id_sesion,
                                 @RequestParam("serie") Integer id_serie,
-                                Model model){
-        Serie serie = serieService.getSerie(id_serie);
-        Sesion sesion = sesionService.getSesion(id_sesion);
-        Map<Integer,List<String>> ejercicioParametros = sesionService.getEjercicioParametros();
+                                Model model, HttpSession session){
+        if (session.getAttribute("user") == null) {
+            return "redirect:/";
+        }
+        SerieDTO serie = serieService.buscarSerie(id_serie);
+        SesionDTO sesion = sesionService.buscarSesion(id_sesion);
+        Map<Integer,List<String>> ejercicioParametros = getEjercicioParametros();
+        String ejercicio = ejercicioService.buscarEjercicio(serie.getEjercicio()).getNombre();
+        Integer tipoEjercicio = ejercicioService.buscarEjercicio(serie.getEjercicio()).getTipo().getId();
 
         model.addAttribute("ejercicioParametros", ejercicioParametros);
         model.addAttribute("sesion", sesion);
         model.addAttribute("serie", serie);
+        model.addAttribute("ejercicio", ejercicio);
+        model.addAttribute("tipoEjercicio", tipoEjercicio);
 
         return "entrenador_cross_training/editar_serie";
     }
@@ -322,9 +386,13 @@ public class EntrenadorCrossTrainingController {
     public String doGuardarSerie(@RequestParam("sesion") Integer id_sesion,
                                  @RequestParam("serie") Integer id_serie,
                                  @RequestParam("param1") String parametro1,
-                                 @RequestParam("param2") String parametro2){
-        Sesion sesion = sesionService.getSesion(id_sesion);
-        Serie serie = serieService.getSerie(id_serie);
+                                 @RequestParam("param2") String parametro2,
+                                 HttpSession session){
+        if (session.getAttribute("user") == null) {
+            return "redirect:/";
+        }
+        SesionDTO sesion = sesionService.buscarSesion(id_sesion);
+        SerieDTO serie = serieService.buscarSerie(id_serie);
         serieService.guardarSerie(serie, parametro1, parametro2);
 
         return "redirect:/entrenador_cross_training/sesion?id=" + sesion.getId();
@@ -332,9 +400,12 @@ public class EntrenadorCrossTrainingController {
 
     @PostMapping("/borrar_serie")
     public String doBorrarSerie(@RequestParam("sesion") Sesion sesion,
-                                @RequestParam("serie") Integer id_serie){
-
-        Serie serie = serieService.getSerie(id_serie);
+                                @RequestParam("serie") Integer id_serie,
+                                HttpSession session){
+        if (session.getAttribute("user") == null) {
+            return "redirect:/";
+        }
+        SerieDTO serie = serieService.buscarSerie(id_serie);
         serieService.borrarSerie(serie);
 
         return "redirect:/entrenador_cross_training/sesion?id=" +sesion.getId();

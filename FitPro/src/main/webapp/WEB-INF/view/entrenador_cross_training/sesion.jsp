@@ -1,14 +1,14 @@
-<%@ page import="uma.fitpro.entity.Sesion" %>
-<%@ page import="uma.fitpro.entity.Ejercicio" %>
-<%@ page import="uma.fitpro.entity.Serie" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.TreeMap" %>
 <%@ page import="java.util.Map" %>
+<%@ page import="uma.fitpro.dto.SesionDTO" %>
+<%@ page import="uma.fitpro.dto.EjercicioDTO" %>
+<%@ page import="uma.fitpro.dto.SerieDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     Map<Integer, List<String>> ejercicioParametros = (Map<Integer, List<String>>) request.getAttribute("ejercicioParametros");
-    Sesion sesion = (Sesion) request.getAttribute("sesion");
-    TreeMap<Ejercicio, List<Serie>> mapa = (TreeMap<Ejercicio, List<Serie>>) request.getAttribute("mapa");
+    SesionDTO sesion = (SesionDTO) request.getAttribute("sesion");
+    TreeMap<EjercicioDTO, List<SerieDTO>> mapa = (TreeMap<EjercicioDTO, List<SerieDTO>>) request.getAttribute("mapa");
     session.setAttribute("sesion", sesion);
 %>
 <!doctype html>
@@ -38,7 +38,7 @@
     <section class="sesion-table-container scrollable-content">
         <%
             String nombre_ejercicio = "";
-            for (Ejercicio e : mapa.keySet()){
+            for (EjercicioDTO e : mapa.keySet()){
                 nombre_ejercicio = e.getNombre();
         %>
         <div>
@@ -54,7 +54,7 @@
                 <tbody>
                 <%
                     int cont = 1;
-                    for (Serie s : mapa.get(e)){
+                    for (SerieDTO s : mapa.get(e)){
 
                 %>
                 <tr>
@@ -100,7 +100,10 @@
 
 <section class="sesion-buttons">
     <button type="button" class="btn btn-success" onclick="window.location.href='/entrenador_cross_training/sesiones'">Guardar</button>
-    <button type="button" class="btn btn-danger" onclick="window.location.href='/entrenador_cross_training/borrar_sesion?id=<%= sesion.getId()%>'">Borrar</button>
+    <form method="post" action="/entrenador_cross_training/borrar_sesion">
+        <input type="hidden" name="id" value="<%=sesion.getId()%>">
+        <button class="btn btn-danger">Borrar</button>
+    </form>
     <button name="anyadir_ejercicio" type="button" class="btn btn-primary" onclick="window.location.href='/entrenador_cross_training/ejercicios?ejercicio=&musculo=&tipo='">Añadir ejercicio</button>
 </section>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

@@ -1,11 +1,12 @@
-<%@ page import="uma.fitpro.entity.Rutina" %>
 <%@ page import="java.util.List" %>
 <%@ page import="uma.fitpro.entity.Usuario" %>
+<%@ page import="uma.fitpro.dto.RutinaDTO" %>
+<%@ page import="uma.fitpro.dto.UsuarioDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    List<Rutina> rutinas = (List<Rutina>) request.getAttribute("rutinas");
-    List<Rutina> todasLasRutinas = (List<Rutina>) request.getAttribute("todasLasRutinas");
-    Usuario cliente = (Usuario) request.getAttribute("cliente");
+    List<RutinaDTO> rutinas = (List<RutinaDTO>) request.getAttribute("rutinas");
+    List<RutinaDTO> todasLasRutinas = (List<RutinaDTO>) request.getAttribute("todasLasRutinas");
+    UsuarioDTO cliente = (UsuarioDTO) request.getAttribute("cliente");
 %>
 <!doctype html>
 <html lang="en">
@@ -45,7 +46,7 @@
             <tbody>
             <%
                 int num = 1;
-                for (Rutina r : rutinas){
+                for (RutinaDTO r : rutinas){
             %>
             <tr>
                 <th scope="row"><%= num %></th>
@@ -105,7 +106,7 @@
                             }
                         %>
                         <%
-                            for (Rutina r : todasLasRutinas){
+                            for (RutinaDTO r : todasLasRutinas){
                         %>
                         <option value="<%=r.getId()%>"><%=r.getNombre()%></option>
                         <%

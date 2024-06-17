@@ -1,14 +1,14 @@
 <%@ page import="java.util.List" %>
-<%@ page import="uma.fitpro.entity.Ejercicio" %>
-<%@ page import="uma.fitpro.entity.TipoEjercicio" %>
-<%@ page import="uma.fitpro.entity.GrupoMuscular" %>
-<%@ page import="uma.fitpro.entity.Sesion" %>
+<%@ page import="uma.fitpro.dto.EjercicioDTO" %>
+<%@ page import="uma.fitpro.dto.TipoEjercicioDTO" %>
+<%@ page import="uma.fitpro.dto.GrupoMuscularDTO" %>
+<%@ page import="uma.fitpro.dto.SesionDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    List<Ejercicio> ejercicios = (List<Ejercicio>) request.getAttribute("ejercicios");
-    List<TipoEjercicio> tipos = (List<TipoEjercicio>) request.getAttribute("tipos");
-    List<GrupoMuscular> grupos = (List<GrupoMuscular>) request.getAttribute("grupos");
-    Sesion sesion = (Sesion) session.getAttribute("sesion");
+    List<EjercicioDTO> ejercicios = (List<EjercicioDTO>) request.getAttribute("ejercicios");
+    List<TipoEjercicioDTO> tipos = (List<TipoEjercicioDTO>) request.getAttribute("tipos");
+    List<GrupoMuscularDTO> grupos = (List<GrupoMuscularDTO>) request.getAttribute("grupos");
+    SesionDTO sesion = (SesionDTO) session.getAttribute("sesion");
 
     String musculo = "";
     if (request.getParameter("musculo") != null) {musculo = request.getParameter("musculo");}
@@ -51,7 +51,7 @@
                     <select class="selectpicker" data-live-search="true" data-style="btn-primary" name="musculo">
                         <%
                             String selected = "";
-                            for (GrupoMuscular g : grupos){
+                            for (GrupoMuscularDTO g : grupos){
                                 if (g.getGrupoMuscular().equals(musculo)){
                                     selected = "selected";
                                 }else {
@@ -68,7 +68,7 @@
                     Categoria:
                     <select class="selectpicker" data-style="btn-primary" name="tipo">
                         <%
-                            for (TipoEjercicio t : tipos){
+                            for (TipoEjercicioDTO t : tipos){
                                 if (t.getTipo().equals(tipo)){
                                     selected = "selected";
                                 }else {
@@ -99,7 +99,7 @@
 <section class="ejercicios-scrollable-section">
     <div class="div-ejercicio-buttons">
         <%
-            for (Ejercicio e : ejercicios){
+            for (EjercicioDTO e : ejercicios){
 
 
         %>

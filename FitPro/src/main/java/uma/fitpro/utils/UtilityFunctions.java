@@ -1,5 +1,8 @@
 package uma.fitpro.utils;
 
+import uma.fitpro.dto.DesempenyoSerieDTO;
+import uma.fitpro.dto.EjercicioDTO;
+import uma.fitpro.dto.SerieDTO;
 import uma.fitpro.entity.DesempenyoSerie;
 import uma.fitpro.entity.Ejercicio;
 import uma.fitpro.entity.Serie;
@@ -18,32 +21,6 @@ public class UtilityFunctions {
             case 7: return "Domingo";
             default: throw new NumberFormatException("Invalid number");
         }
-    }
-
-    public static Map<Ejercicio, List<Serie>> dictFromSerie(List<Serie> seriesList){
-        Map<Ejercicio,List<Serie>> sesion_dict = new LinkedHashMap<>();
-        for(Serie serie: seriesList) {
-            Ejercicio ejercicio = serie.getEjercicio();
-            if(!sesion_dict.containsKey(ejercicio)) {
-                sesion_dict.put(ejercicio, new ArrayList<>());
-            }
-            sesion_dict.get(ejercicio).add(serie);
-        }
-
-        return sesion_dict;
-    }
-
-    public static Map<Ejercicio, List<DesempenyoSerie>> dictFromDesempenyoSerie(List<DesempenyoSerie> seriesList){
-        Map<Ejercicio,List<DesempenyoSerie>> sesion_dict = new LinkedHashMap<>();
-        for(DesempenyoSerie serie: seriesList) {
-            Ejercicio ejercicio = serie.getEjercicio();
-            if(!sesion_dict.containsKey(ejercicio)) {
-                sesion_dict.put(ejercicio, new ArrayList<>());
-            }
-            sesion_dict.get(ejercicio).add(serie);
-        }
-
-        return sesion_dict;
     }
 
     public static Map<Integer,List<String>> getEjercicioParametros(){

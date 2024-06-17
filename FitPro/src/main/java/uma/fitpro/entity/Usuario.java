@@ -4,12 +4,19 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
+import uma.fitpro.dto.DTO;
+import uma.fitpro.dto.UsuarioDTO;
 
 @Entity
 @Table(name = "usuario")
-public class Usuario implements Comparable<Usuario> {
+public class Usuario implements Serializable, DTO<UsuarioDTO> {
+    private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -60,7 +67,7 @@ public class Usuario implements Comparable<Usuario> {
     @JoinTable(name = "dieta_cliente",
             joinColumns = @JoinColumn(name = "cliente_id"),
             inverseJoinColumns = @JoinColumn(name = "dieta_id"))
-    private Set<Dieta> dietasCliente = new LinkedHashSet<>();
+    private List<Dieta> dietasCliente = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(name = "dietista_cliente",
@@ -93,7 +100,7 @@ public class Usuario implements Comparable<Usuario> {
     @JoinTable(name = "rutina_cliente",
             joinColumns = @JoinColumn(name = "cliente_id"),
             inverseJoinColumns = @JoinColumn(name = "rutina_id"))
-    private Set<Rutina> rutinasCliente = new LinkedHashSet<>();
+    private List<Rutina> rutinasCliente = new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -207,11 +214,11 @@ public class Usuario implements Comparable<Usuario> {
         this.dietasDietista = dietasDietista;
     }
 
-    public Set<Dieta> getDietasCliente() {
+    public List<Dieta> getDietasCliente() {
         return dietasCliente;
     }
 
-    public void setDietasCliente(Set<Dieta> dietasCliente) {
+    public void setDietasCliente(List<Dieta> dietasCliente) {
         this.dietasCliente = dietasCliente;
     }
 
@@ -255,16 +262,41 @@ public class Usuario implements Comparable<Usuario> {
         this.rutinasEntrenador = rutinasEntrenador;
     }
 
-    public Set<Rutina> getRutinasCliente() {
+    public List<Rutina> getRutinasCliente() {
         return rutinasCliente;
     }
 
-    public void setRutinasCliente(Set<Rutina> rutinasCliente) {
+    public void setRutinasCliente(List<Rutina> rutinasCliente) {
         this.rutinasCliente = rutinasCliente;
     }
 
+
     @Override
-    public int compareTo(Usuario o) {
-        return this.getNombre().compareTo(o.getNombre());
+    public UsuarioDTO toDTO() {
+        UsuarioDTO usuario = new UsuarioDTO();
+        usuario.setId(id);
+        usuario.setDni(dni);
+        usuario.setRol(rol.toDTO());
+        usuario.setNombre(nombre);
+        usuario.setApellidos(apellidos);
+        usuario.setSexo(sexo == 1);
+        usuario.setEdad(edad);
+        usuario.setAltura(altura);
+        usuario.setPeso(peso);
+        usuario.setContrasenya(contrasenya);
+        usuario.setCorreo(correo);
+        List<Integer> rutinasCliente = new ArrayList<>();
+        for (Rutina rutina : this.rutinasCliente) {
+            rutinasCliente.add(rutina.getId());
+        }
+        usuario.setRutinasCliente(rutinasCliente);
+
+        List<Integer> dietasCliente = new ArrayList<>();
+        for (Dieta dieta : this.dietasCliente) {
+            dietasCliente.add(dieta.getId());
+        }
+        usuario.setDietasCliente(dietasCliente);
+
+        return usuario;
     }
 }

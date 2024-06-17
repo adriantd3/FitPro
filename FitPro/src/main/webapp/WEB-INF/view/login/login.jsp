@@ -20,7 +20,7 @@
         <h1 class="header-text text-center">FitPro</h1>
     </header>
     <div class="form-wrapper">
-        <form  method="post" action="/home">
+        <form  method="post" action="/autenticar">
             <span>Usuario:</span>
             <input type="text" name="mail"> </br>
             <span>Contraseña:</span>

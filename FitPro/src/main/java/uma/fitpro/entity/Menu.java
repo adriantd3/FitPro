@@ -2,13 +2,16 @@ package uma.fitpro.entity;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
+import uma.fitpro.dto.DTO;
+import uma.fitpro.dto.MenuDTO;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.*;
 
 @Entity
 @Table(name = "menu")
-public class Menu {
+public class Menu implements Serializable, DTO<MenuDTO> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -28,6 +31,7 @@ public class Menu {
     @JoinTable(name = "comida_menu",
             joinColumns = @JoinColumn(name = "menu_id"),
             inverseJoinColumns = @JoinColumn(name = "comida_id"))
+    @OrderBy("id ASC")
     private List<Comida> comidaEntities = new ArrayList<>();
 
     public Menu() {
@@ -84,4 +88,20 @@ public class Menu {
         this.comidaEntities = comidaEntities;
     }
 
+    @Override
+    public MenuDTO toDTO() {
+        MenuDTO menuDTO = new MenuDTO();
+        menuDTO.setId(getId());
+        menuDTO.setNombre(getNombre());
+        menuDTO.setCalorias(getCalorias());
+        menuDTO.setFechaCreacion(getFechaCreacion());
+
+        List<Integer> comidas = new ArrayList<>();
+        for(Comida comida : comidaEntities){
+            comidas.add(comida.getId());
+        }
+        menuDTO.setComidas(comidas);
+
+        return menuDTO;
+    }
 }

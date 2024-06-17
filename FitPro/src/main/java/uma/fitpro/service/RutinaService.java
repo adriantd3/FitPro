@@ -2,19 +2,17 @@ package uma.fitpro.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import uma.fitpro.dao.OrdenSesionRutinaRepository;
+import uma.fitpro.dto.RutinaDTO;
 import uma.fitpro.dao.RutinaRepository;
-import uma.fitpro.dao.UsuarioRepository;
-import uma.fitpro.entity.*;
+import uma.fitpro.entity.Rutina;
 
-import java.time.LocalDate;
-import java.util.*;
+import java.util.List;
 
 @Service
-public class RutinaService {
+public class RutinaService extends DTOService{
 
     @Autowired
-    protected RutinaRepository rutinaRepository;
+    private RutinaRepository rutinaRepository;
 
     @Autowired
     protected OrdenSesionRutinaRepository ordenSesionRutinaRepository;
@@ -118,6 +116,19 @@ public class RutinaService {
         return mapa;
     }
 
+    public List<RutinaDTO> buscarRutinas(List<Integer> rutinas) {
+        List<Rutina> rutinasList = this.rutinaRepository.findAllById(rutinas);
+        return this.entidadesADTO(rutinasList);
+    }
+
+    public RutinaDTO buscarRutina(Integer id) {
+        Rutina rutina = this.rutinaRepository.findById(id).orElse(null);
+        if(rutina != null){
+            return rutina.toDTO();
+        } else {
+            return null;
+        }
+    }
 
     // --------------------------- METODOS AUXILIARES ---------------------------
 

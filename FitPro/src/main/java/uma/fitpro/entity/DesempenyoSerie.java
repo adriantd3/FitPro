@@ -3,10 +3,15 @@ package uma.fitpro.entity;
 import jakarta.persistence.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import uma.fitpro.dto.DTO;
+import uma.fitpro.dto.DesempenyoSerieDTO;
+import uma.fitpro.dto.SerieInterface;
+
+import java.io.Serializable;
 
 @Entity
 @Table(name = "desempenyo_serie")
-public class DesempenyoSerie implements SerieInterface{
+public class DesempenyoSerie implements Serializable, DTO<DesempenyoSerieDTO> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -68,4 +73,14 @@ public class DesempenyoSerie implements SerieInterface{
         this.metrica2 = metrica2;
     }
 
+    @Override
+    public DesempenyoSerieDTO toDTO() {
+        DesempenyoSerieDTO dto = new DesempenyoSerieDTO();
+        dto.setId(this.id);
+        dto.setMetrica1(this.metrica1);
+        dto.setMetrica2(this.metrica2);
+        dto.setEjercicio(this.ejercicio.getId());
+        dto.setDesempenyoSesion(this.desempenyoSesion.getId());
+        return dto;
+    }
 }

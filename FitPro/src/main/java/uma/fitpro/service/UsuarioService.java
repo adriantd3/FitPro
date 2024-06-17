@@ -1,22 +1,34 @@
 package uma.fitpro.service;
 
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uma.fitpro.dao.UsuarioRepository;
-import uma.fitpro.entity.Rutina;
+import uma.fitpro.dto.UsuarioDTO;
 import uma.fitpro.entity.Usuario;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
-
 @Service
-public class UsuarioService  {
+public class UsuarioService extends DTOService{
 
     @Autowired
-    protected UsuarioRepository usuarioRepository;
+    private UsuarioRepository usuarioRepository;
+
+    public UsuarioDTO autenticar(String mail, String password) {
+        Usuario usuario = this.usuarioRepository.autenticar(mail, password);
+        if(usuario != null){
+            return usuario.toDTO();
+        } else {
+            return null;
+        }
+    }
+
+    public UsuarioDTO findById(Integer id){
+        Usuario usuario = this.usuarioRepository.findById(id).orElse(null);
+        if(usuario != null){
+            return usuario.toDTO();
+        } else {
+            return null;
+        }
+    }
 
     public Usuario getUsuario(int id_usuario) {
         Usuario usuario = usuarioRepository.findById(id_usuario).orElse(null);
@@ -54,6 +66,4 @@ public class UsuarioService  {
         cliente.setRutinasCliente(rutinas_cliente);
         usuarioRepository.save(cliente);
     }
-
-
 }

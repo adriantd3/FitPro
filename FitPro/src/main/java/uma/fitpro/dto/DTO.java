@@ -1,6 +1,6 @@
 package uma.fitpro.dto;
 
-public interface DTO<DTOClass> {
-    public DTOClass toDTO ();
-}
 
+public interface DTO<DTOClass> {
+    public DTOClass toDTO();
+}

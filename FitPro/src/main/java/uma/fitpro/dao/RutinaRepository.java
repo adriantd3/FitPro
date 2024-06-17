@@ -21,4 +21,5 @@ public interface RutinaRepository extends JpaRepository<Rutina, Integer> {
     List<Rutina> getFilteredRutinasByEntrenadorAndFecha(@Param("entrenador") Integer entrenador,
                                                         @Param("nombre") String nombre,
                                                         @Param("fecha") LocalDate fecha);
+
 }

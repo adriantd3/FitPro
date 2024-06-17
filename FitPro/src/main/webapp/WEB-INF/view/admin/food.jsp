@@ -1,9 +1,10 @@
 <%@ page import="java.util.List" %>
 <%@ page import="uma.fitpro.entity.*" %>
+<%@ page import="uma.fitpro.dto.ComidaDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    List<Comida> comidas = (List<Comida>) request.getAttribute("comidas");
-    Comida comida = (Comida) request.getAttribute("comida");
+    List<ComidaDTO> comidas = (List<ComidaDTO>) request.getAttribute("comidas");
+    ComidaDTO comida = (ComidaDTO) request.getAttribute("comida");
 
     String filtroNombre = (String) request.getAttribute("filtroNombre");
     int filtroCalorias = (int) request.getAttribute("filtroCalorias");
@@ -43,7 +44,7 @@
         </tr>
         </thead>
         <tbody>
-        <% for(Comida c : comidas){ %>
+        <% for(ComidaDTO c : comidas){ %>
         <tr role="button" class="<%= comida!=null && c.getId() == comida.getId() ? "selected-row" : ""%>" onclick=rellenarDatos(<%=c.getId()%>)>
             <td><%=c.getId()%></td>
             <td><%=c.getNombre()%></td>
@@ -58,7 +59,7 @@
             <tbody>
             <tr>
                 <td>Nombre:<input name="Nombre" type="text" placeholder="Nombre" value="<%=comida == null ? "" : comida.getNombre()%>"></td>
-                <td>Calorías:<input name="Calorias" type="text" placeholder="Calorias" value="<%=comida == null || comida.getCalorias() == null ? "" : comida.getCalorias()%>"></td>
+                <td>Calorías:<input name="Calorias" type="text" placeholder="Calorias" value="<%=comida == null || comida.getCalorias() == null ? "0" : comida.getCalorias()%>"></td>
             </tbody>
         </table>
         <button type="submit" class="btn btn-primary">Guardar</button>

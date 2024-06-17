@@ -1,14 +1,15 @@
 <%@ page import="java.util.List" %>
 <%@ page import="uma.fitpro.entity.*" %>
 <%@ page import="java.util.Set" %>
+<%@ page import="uma.fitpro.dto.UsuarioDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    List<Usuario> clientes = (List<Usuario>) request.getAttribute("clientes");
-    List<Usuario> todos_trabajadores = (List<Usuario>) request.getAttribute("todos_trabajadores");
-    Set<Usuario> cliente_trabajadores = (Set<Usuario>) request.getAttribute("cliente_trabajadores");
-    Usuario cliente = (Usuario) request.getAttribute("cliente");
-    Usuario trabajador_propio = (Usuario) request.getAttribute("trabajador_propio");
-    Usuario trabajador_nuevo = (Usuario) request.getAttribute("trabajador_nuevo");
+    List<UsuarioDTO> clientes = (List<UsuarioDTO>) request.getAttribute("clientes");
+    List<UsuarioDTO> todos_trabajadores = (List<UsuarioDTO>) request.getAttribute("todos_trabajadores");
+    Set<UsuarioDTO> cliente_trabajadores = (Set<UsuarioDTO>) request.getAttribute("cliente_trabajadores");
+    UsuarioDTO cliente = (UsuarioDTO) request.getAttribute("cliente");
+    UsuarioDTO trabajador_propio = (UsuarioDTO) request.getAttribute("trabajador_propio");
+    UsuarioDTO trabajador_nuevo = (UsuarioDTO) request.getAttribute("trabajador_nuevo");
 
     String filtroNombre = (String) request.getAttribute("filtroNombre");
 %>
@@ -57,7 +58,7 @@
             </tr>
             </thead>
             <tbody>
-            <% for(Usuario c : clientes){ %>
+            <% for(UsuarioDTO c : clientes){ %>
             <tr role="button" class="<%= cliente!=null && c.getId() == cliente.getId() ? "selected-row" : ""%>" onclick=rellenarDatos(<%=c.getId()%>)>
                 <td><%=c.getId()%></td>
                 <td><%=c.getNombre()%></td>
@@ -79,7 +80,7 @@
             </tr>
             </thead>
             <tbody>
-            <% for(Usuario c : cliente_trabajadores){ %>
+            <% for(UsuarioDTO c : cliente_trabajadores){ %>
             <tr role="button" class="<%= trabajador_propio!=null && c.getId() == trabajador_propio.getId() ? "selected-row" : ""%>" onclick="seleccionarEntrenadorPropio(<%=cliente.getId()%>,<%=c.getId()%>)">
                 <td><%=c.getId()%></td>
                 <td><%=c.getNombre()%></td>
@@ -112,7 +113,7 @@
             </tr>
             </thead>
             <tbody>
-            <% for(Usuario c : todos_trabajadores){ %>
+            <% for(UsuarioDTO c : todos_trabajadores){ %>
             <tr role="button" class="<%= trabajador_nuevo!=null && c.getId() == trabajador_nuevo.getId() ? "selected-row" : ""%>" onclick="seleccionarEntrenadorNuevo(<%=cliente.getId()%>,<%=c.getId()%>)">
                 <td><%=c.getId()%></td>
                 <td><%=c.getNombre()%></td>

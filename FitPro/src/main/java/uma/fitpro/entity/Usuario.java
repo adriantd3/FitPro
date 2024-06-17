@@ -5,10 +5,8 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+
 import uma.fitpro.dto.DTO;
 import uma.fitpro.dto.UsuarioDTO;
 
@@ -279,7 +277,7 @@ public class Usuario implements Serializable, DTO<UsuarioDTO> {
         usuario.setRol(rol.toDTO());
         usuario.setNombre(nombre);
         usuario.setApellidos(apellidos);
-        usuario.setSexo(sexo == 1);
+        usuario.setSexo(sexo);
         usuario.setEdad(edad);
         usuario.setAltura(altura);
         usuario.setPeso(peso);
@@ -296,6 +294,18 @@ public class Usuario implements Serializable, DTO<UsuarioDTO> {
             dietasCliente.add(dieta.getId());
         }
         usuario.setDietasCliente(dietasCliente);
+
+        Set<UsuarioDTO> dietistasCliente = new HashSet<>();
+        for (Usuario diestista : this.getDietistas()) {
+            dietistasCliente.add(diestista.toDTO());
+        }
+        usuario.setDiestistasCliente(dietistasCliente);
+
+        Set<UsuarioDTO> entrenadoresCliente = new HashSet<>();
+        for (Usuario entrenador : this.getEntrenadores()) {
+            entrenadoresCliente.add(entrenador.toDTO());
+        }
+        usuario.setEntrenadoresCliente(entrenadoresCliente);
 
         return usuario;
     }

@@ -5,7 +5,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import uma.fitpro.dao.*;
+import uma.fitpro.dto.*;
 import uma.fitpro.entity.*;
+import uma.fitpro.service.*;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -17,17 +19,26 @@ import java.util.Set;
 public class AdminController {
 
     @Autowired
-    UsuarioRepository usuarioRepository;
+    UsuarioService usuarioService;
     @Autowired
-    RolRepository rolRepository;
+    RolService rolService;
     @Autowired
-    EjercicioRepository ejercicioRepository;
+    EjercicioService ejercicioService;
     @Autowired
-    ComidaRepository comidaRepository;
+    ComidaService comidaService;
     @Autowired
-    GrupoMuscularRepository grupoMuscularRepository;
+    GrupoMuscularService grupoMuscularService;
     @Autowired
-    TipoEjercicioRepository tipoEjercicioRepository;
+    TipoEjercicioService tipoEjercicioService;
+
+    //////////////////////////////////////////////////////
+    /////////               HOME                 /////////
+    //////////////////////////////////////////////////////
+
+    @GetMapping("")
+    public String doHome() {
+        return "admin/home";
+    }
 
     //////////////////////////////////////////////////////
     /////////               USER                 /////////
@@ -35,10 +46,10 @@ public class AdminController {
 
     @GetMapping("/users")
     public String doUsers(@RequestParam("id") Integer id, Model model) {
-        List<Usuario> usuarios = usuarioRepository.findAll();
-        List<Rol> roles = rolRepository.findAll();
+        List<UsuarioDTO> usuarios = usuarioService.findAll();
+        List<RolDTO> roles = rolService.findAll();
         if(id > 0) {
-            Usuario usuario = usuarioRepository.getReferenceById(id);
+            UsuarioDTO usuario = usuarioService.findById(id);
             model.addAttribute("usuario", usuario);
         } else {
             model.addAttribute("usuario", null);
@@ -63,8 +74,8 @@ public class AdminController {
         if(nombre.isEmpty() || apellidos.isEmpty() || dni.isEmpty() || contrasenya.isEmpty() || email.isEmpty()){
             return "redirect:/admin/users?id=0";
         }
-        Usuario usuario = new Usuario();
-        if (Id != 0) usuario = usuarioRepository.getReferenceById(Id);
+        UsuarioDTO usuario = new UsuarioDTO();
+        if (Id != 0) usuario = usuarioService.findById(Id);
         usuario.setDni(dni);
         usuario.setNombre(nombre);
         usuario.setApellidos(apellidos);
@@ -73,9 +84,9 @@ public class AdminController {
         usuario.setCorreo(email);
         usuario.setContrasenya(contrasenya);
         usuario.setPeso(peso);
-        usuario.setRol(rolRepository.getReferenceById(rol));
+        usuario.setRol(rolService.findById(rol));
         usuario.setSexo(sexo);
-        usuarioRepository.save(usuario);
+        usuarioService.saveData(usuario);
 
         return "redirect:/admin/users?id=" + Id;
     }
@@ -83,15 +94,14 @@ public class AdminController {
     @PostMapping("/delete-user")
     public String doDeleteUsers(@RequestParam("Id") Integer id, Model model) {
 
-        Usuario usuario = usuarioRepository.findById(id).orElse(null);
-        usuarioRepository.delete(usuario);
+        usuarioService.delete(id);
         return "redirect:/admin/users?id=0";
     }
 
     @PostMapping("/user/filter")
     public String doUserFilter(@RequestParam("nombre") String nombre,@RequestParam("apellido") String apellido,@RequestParam("rol") String rol, Model model) {
-        List<Usuario> usuarios = usuarioRepository.filterUsers(nombre, apellido, rol);
-        List<Rol> roles = rolRepository.findAll();
+        List<UsuarioDTO> usuarios = usuarioService.filterUsers(nombre, apellido, rol);
+        List<RolDTO> roles = rolService.findAll();
 
         model.addAttribute("filtroNombre", nombre);
         model.addAttribute("filtroApellido", apellido);
@@ -110,11 +120,11 @@ public class AdminController {
 
     @GetMapping("/exercises")
     public String doExercises(@RequestParam("id") Integer id, Model model) {
-        List<Ejercicio> ejercicios = ejercicioRepository.findAll();
-        List<GrupoMuscular> gruposMusculares = grupoMuscularRepository.findAll();
-        List<TipoEjercicio> tiposEjercicios = tipoEjercicioRepository.findAll();
+        List<EjercicioDTO> ejercicios = ejercicioService.findAll();
+        List<GrupoMuscularDTO> gruposMusculares = grupoMuscularService.findAll();
+        List<TipoEjercicioDTO> tiposEjercicios = tipoEjercicioService.findAll();
         if(id > 0) {
-            Ejercicio ejercicio = ejercicioRepository.getReferenceById(id);
+            EjercicioDTO ejercicio = ejercicioService.buscarEjercicio(id);
             model.addAttribute("ejercicio", ejercicio);
         } else {
             model.addAttribute("ejercicio", null);
@@ -139,32 +149,31 @@ public class AdminController {
         if(nombre.isEmpty()) {
             return "redirect:/admin/exercises?id=0";
         }
-        Ejercicio ejercicio = new Ejercicio();
-        if(Id != 0) ejercicio = ejercicioRepository.getReferenceById(Id);
+        EjercicioDTO ejercicio = new EjercicioDTO();
+        if(Id != 0) ejercicio = ejercicioService.buscarEjercicio(Id);
         ejercicio.setNombre(nombre);
         ejercicio.setDescripcion(desc);
         ejercicio.setVideo(video);
         ejercicio.setImagen(imagen);
-        ejercicio.setTipo(tipoEjercicioRepository.getReferenceById(tipo));
-        ejercicio.setGrupoMuscular(grupoMuscularRepository.getReferenceById(grupo));
-        ejercicioRepository.save(ejercicio);
+        ejercicio.setTipo(tipoEjercicioService.findById(tipo));
+        ejercicio.setGrupoMuscular(grupoMuscularService.findById(grupo));
+        ejercicioService.save(ejercicio);
 
         return "redirect:/admin/exercises?id=" + Id;
     }
 
     @PostMapping("/delete-exercise")
     public String doDeleteExercise(@RequestParam("Id") Integer id, Model model) {
-        Ejercicio ejercicio = ejercicioRepository.findById(id).orElse(null);
-        ejercicioRepository.delete(ejercicio);
+        ejercicioService.delete(id);
 
         return "redirect:/admin/exercises?id=0";
     }
 
     @PostMapping("/exercise/filter")
     public String doExerciseFilter(@RequestParam("nombre") String nombre,@RequestParam("tipo") String tipo,@RequestParam("grupoMuscular") String grupo, Model model) {
-        List<Ejercicio> ejercicios = ejercicioRepository.filterExercise(nombre, tipo, grupo);
-        List<GrupoMuscular> gruposMusculares = grupoMuscularRepository.findAll();
-        List<TipoEjercicio> tiposEjercicios = tipoEjercicioRepository.findAll();
+        List<EjercicioDTO> ejercicios = ejercicioService.filterExercise(nombre, tipo, grupo);
+        List<GrupoMuscularDTO> gruposMusculares = grupoMuscularService.findAll();
+        List<TipoEjercicioDTO> tiposEjercicios = tipoEjercicioService.findAll();
 
         model.addAttribute("filtroNombre", nombre);
         model.addAttribute("filtroTipo", tipo);
@@ -184,10 +193,10 @@ public class AdminController {
 
     @GetMapping("/food")
     public String doFood(@RequestParam("id") Integer id, Model model) {
-        List<Comida> comidas = comidaRepository.findAll();
-        Comida comida = null;
+        List<ComidaDTO> comidas = comidaService.findAll();
+        ComidaDTO comida = null;
         if(id > 0) {
-            comida = comidaRepository.getReferenceById(id);
+            comida = comidaService.findById(id);
         }
         model.addAttribute("comidas", comidas);
         model.addAttribute("comida", comida);
@@ -200,30 +209,29 @@ public class AdminController {
     }
 
     @PostMapping("/add-food")
-    public String doAddFood(@RequestParam("Id") Integer Id, @RequestParam("Nombre") String nombre, @RequestParam("Calorias") Integer cal, Model model) {
-        if(nombre.isEmpty() || cal.describeConstable().isEmpty()) {
+    public String doAddFood(@RequestParam("Id") Integer Id, @RequestParam("Nombre") String nombre, @RequestParam("Calorias") String cal, Model model) {
+        if(nombre.isEmpty() || cal.isEmpty()) {
             return "redirect:/admin/food?id=0";
         }
-        Comida comida = new Comida();
-        if(Id != 0) comida = comidaRepository.getReferenceById(Id);
+        ComidaDTO comida = new ComidaDTO();
+        if(Id != 0) comida = comidaService.findById(Id);
         comida.setNombre(nombre);
-        comida.setCalorias(cal);
-        comidaRepository.save(comida);
+        comida.setCalorias(Integer.parseInt(cal));
+        comidaService.save(comida);
 
         return "redirect:/admin/food?id=" + Id;
     }
 
     @PostMapping("/delete-food")
     public String doDeleteFood(@RequestParam("Id") Integer id, Model model) {
-        Comida comida = comidaRepository.findById(id).orElse(null);
-        comidaRepository.delete(comida);
+        comidaService.delete(id);
 
         return "redirect:/admin/food?id=0";
     }
 
     @PostMapping("/food/filter")
     public String doFoodFilter(@RequestParam("nombre") String nombre, @RequestParam("calorias") int calorias, Model model) {
-        List<Comida> comidas = comidaRepository.filterFood(nombre, calorias);
+        List<ComidaDTO> comidas = comidaService.filterComida(nombre, calorias);
 
         model.addAttribute("comidas", comidas);
         model.addAttribute("comida", null);
@@ -242,30 +250,30 @@ public class AdminController {
     public String doAssingment(@RequestParam("id") Integer id, @RequestParam(value = "id_propio",required = false) Integer id_trabajador_propio,
                                @RequestParam(value = "id_nuevo",required = false) Integer id_trabajdor_nuevo, Model model) {
 
-        List<Usuario> clientes = usuarioRepository.findAllByRol(5); // ID del rol. TODO enumerado
-        List<Usuario> todos_trabajadores = new ArrayList<>();
-        Set<Usuario> cliente_trabajadores = new HashSet<>();
+        List<UsuarioDTO> clientes = usuarioService.findAllByRol(5); // ID del rol. TODO enumerado
+        List<UsuarioDTO> todos_trabajadores = new ArrayList<>();
+        Set<UsuarioDTO> cliente_trabajadores = new HashSet<>();
 
-        Usuario cliente = null;
-        Usuario trabajador_propio = null;
-        Usuario trabajador_nuevo = null;
+        UsuarioDTO cliente = null;
+        UsuarioDTO trabajador_propio = null;
+        UsuarioDTO trabajador_nuevo = null;
         if(id > 0) {
-            cliente = usuarioRepository.getReferenceById(id);
+            cliente = usuarioService.findById(id);
 
-            todos_trabajadores = usuarioRepository.findAllByRol(2); // ID del rol. TODO enumerado
-            todos_trabajadores.addAll(usuarioRepository.findAllByRol(3)); // ID del rol. TODO enumerado
-            todos_trabajadores.addAll(usuarioRepository.findAllByRol(4)); // ID del rol. TODO enumerado
+            todos_trabajadores = usuarioService.findAllByRol(2); // ID del rol. TODO enumerado
+            todos_trabajadores.addAll(usuarioService.findAllByRol(3)); // ID del rol. TODO enumerado
+            todos_trabajadores.addAll(usuarioService.findAllByRol(4)); // ID del rol. TODO enumerado
 
-            cliente_trabajadores = cliente.getDietistas();
-            cliente_trabajadores.addAll(cliente.getEntrenadores());
+            cliente_trabajadores = cliente.getDiestistasCliente();
+            cliente_trabajadores.addAll(cliente.getEntrenadoresCliente());
             todos_trabajadores.removeAll(cliente_trabajadores);
         }
 
         if(id_trabajador_propio != null){
-            trabajador_propio = usuarioRepository.getReferenceById(id_trabajador_propio);
+            trabajador_propio = usuarioService.findById(id_trabajador_propio);
         }
         if(id_trabajdor_nuevo != null){
-            trabajador_nuevo = usuarioRepository.getReferenceById(id_trabajdor_nuevo);
+            trabajador_nuevo = usuarioService.findById(id_trabajdor_nuevo);
         }
 
 
@@ -282,43 +290,43 @@ public class AdminController {
 
     @PostMapping("/add_trabajador_propio")
     public String doAddTrabajdorPropio(@RequestParam("clienteId") Integer clienteId, @RequestParam("trabajadorId") Integer trabajadorId, Model model) {
-        Usuario trabajador = usuarioRepository.getReferenceById(trabajadorId);
-        Usuario cliente = usuarioRepository.getReferenceById(clienteId);
+        UsuarioDTO trabajador = usuarioService.findById(trabajadorId);
+        UsuarioDTO cliente = usuarioService.findById(clienteId);
         if(trabajador.getRol().getId() == 4){
-            Set<Usuario> dietistas = cliente.getDietistas();
+            Set<UsuarioDTO> dietistas = cliente.getDiestistasCliente();
             dietistas.add(trabajador);
-            cliente.setDietistas(dietistas);
+            cliente.setDiestistasCliente(dietistas);
         } else {
-            Set<Usuario> entrenadores = cliente.getEntrenadores();
+            Set<UsuarioDTO> entrenadores = cliente.getEntrenadoresCliente();
             entrenadores.add(trabajador);
-            cliente.setEntrenadores(entrenadores);
+            cliente.setEntrenadoresCliente(entrenadores);
         }
-        usuarioRepository.save(cliente);
+        usuarioService.saveWorkers(cliente);
 
         return "redirect:/admin/assignment?id="+clienteId;
     }
 
     @PostMapping("/delete_trabajador_propio")
     public String doDeleteTrabajdorPropio(@RequestParam("clienteId") Integer clienteId, @RequestParam("trabajadorId") Integer trabajadorId, Model model) {
-        Usuario trabajador = usuarioRepository.getReferenceById(trabajadorId);
-        Usuario cliente = usuarioRepository.getReferenceById(clienteId);
+        UsuarioDTO trabajador = usuarioService.findById(trabajadorId);
+        UsuarioDTO cliente = usuarioService.findById(clienteId);
         if(trabajador.getRol().getId() == 4){
-            Set<Usuario> dietistas = cliente.getDietistas();
+            Set<UsuarioDTO> dietistas = cliente.getDiestistasCliente();
             dietistas.remove(trabajador);
-            cliente.setDietistas(dietistas);
+            cliente.setDiestistasCliente(dietistas);
         } else {
-            Set<Usuario> entrenadores = cliente.getEntrenadores();
+            Set<UsuarioDTO> entrenadores = cliente.getEntrenadoresCliente();
             entrenadores.remove(trabajador);
-            cliente.setEntrenadores(entrenadores);
+            cliente.setEntrenadoresCliente(entrenadores);
         }
-        usuarioRepository.save(cliente);
+        usuarioService.saveWorkers(cliente);
 
         return "redirect:/admin/assignment?id="+clienteId;
     }
 
     @PostMapping("/assignment/filter")
     public String doAssignmentFilter(@RequestParam("nombre") String nombre, Model model) {
-        List<Usuario> clientes = usuarioRepository.filterUsers(nombre,"","cliente");
+        List<UsuarioDTO> clientes = usuarioService.filterUsers(nombre,"","cliente");
 
         model.addAttribute("clientes", clientes);
         model.addAttribute("filtroNombre", nombre);

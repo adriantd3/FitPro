@@ -1,11 +1,14 @@
 <%@ page import="java.util.List" %>
 <%@ page import="uma.fitpro.entity.*" %>
+<%@ page import="uma.fitpro.dto.EjercicioDTO" %>
+<%@ page import="uma.fitpro.dto.GrupoMuscularDTO" %>
+<%@ page import="uma.fitpro.dto.TipoEjercicioDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    List<Ejercicio> ejercicios = (List<Ejercicio>) request.getAttribute("ejercicios");
-    List<GrupoMuscular> grupos = (List<GrupoMuscular>) request.getAttribute("grupos");
-    List<TipoEjercicio> tipos = (List<TipoEjercicio>) request.getAttribute("tipos");
-    Ejercicio ejercicio = (Ejercicio) request.getAttribute("ejercicio");
+    List<EjercicioDTO> ejercicios = (List<EjercicioDTO>) request.getAttribute("ejercicios");
+    List<GrupoMuscularDTO> grupos = (List<GrupoMuscularDTO>) request.getAttribute("grupos");
+    List<TipoEjercicioDTO> tipos = (List<TipoEjercicioDTO>) request.getAttribute("tipos");
+    EjercicioDTO ejercicio = (EjercicioDTO) request.getAttribute("ejercicio");
 
     String filtroNombre = (String) request.getAttribute("filtroNombre");
     String filtroTipo = (String) request.getAttribute("filtroTipo");
@@ -47,7 +50,7 @@
         </tr>
         </thead>
         <tbody>
-        <% for(Ejercicio e : ejercicios){ %>
+        <% for(EjercicioDTO e : ejercicios){ %>
         <tr role="button" class="<%= ejercicio!=null && e.getId() == ejercicio.getId() ? "selected-row" : ""%>" onclick=rellenarDatos(<%=e.getId()%>)>
             <td><%=e.getId()%></td>
             <td><%=e.getNombre()%></td>
@@ -68,12 +71,12 @@
             </tr>
             <tr>
                 <td>Tipo: <select name="Tipo">
-                    <% for(TipoEjercicio tipoEjercicio : tipos){ %>
+                    <% for(TipoEjercicioDTO tipoEjercicio : tipos){ %>
                     <option <%=ejercicio != null && ejercicio.getTipo().getId() == tipoEjercicio.getId() ? "selected" : ""%> value=<%=tipoEjercicio.getId()%>> <%=tipoEjercicio.getTipo()%> </option>
                     <% } %>
                 </select></td>
                 <td>Grupo Mucular: <select name="Grupo">
-                    <% for(GrupoMuscular grupoMuscular : grupos){ %>
+                    <% for(GrupoMuscularDTO grupoMuscular : grupos){ %>
                     <option <%=ejercicio != null && ejercicio.getGrupoMuscular().getId() == grupoMuscular.getId() ? "selected" : ""%> value=<%=grupoMuscular.getId()%>> <%=grupoMuscular.getGrupoMuscular()%> </option>
                     <% } %>
                 </select></td>

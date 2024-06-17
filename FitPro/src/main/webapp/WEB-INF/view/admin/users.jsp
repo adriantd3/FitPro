@@ -1,11 +1,13 @@
 <%@ page import="java.util.List" %>
 <%@ page import="uma.fitpro.entity.Usuario" %>
 <%@ page import="uma.fitpro.entity.Rol" %>
+<%@ page import="uma.fitpro.dto.UsuarioDTO" %>
+<%@ page import="uma.fitpro.dto.RolDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    List<Usuario> usuarios = (List<Usuario>) request.getAttribute("usuarios");
-    List<Rol> roles = (List<Rol>) request.getAttribute("roles");
-    Usuario usuario = (Usuario) request.getAttribute("usuario");
+    List<UsuarioDTO> usuarios = (List<UsuarioDTO>) request.getAttribute("usuarios");
+    List<RolDTO> roles = (List<RolDTO>) request.getAttribute("roles");
+    UsuarioDTO usuario = (UsuarioDTO) request.getAttribute("usuario");
 
     String filtroNombre = (String) request.getAttribute("filtroNombre");
     String filtroApellido = (String) request.getAttribute("filtroApellido");
@@ -47,7 +49,7 @@
         </tr>
         </thead>
         <tbody>
-        <% for(Usuario u : usuarios){ %>
+        <% for(UsuarioDTO u : usuarios){ %>
             <tr role="button" class="<%= usuario!=null && u.getId() == usuario.getId() ? "selected-row" : ""%>" onclick=rellenarDatos(<%=u.getId()%>)>
                 <td><%=u.getId()%></td>
                 <td><%=u.getNombre()%></td>
@@ -66,7 +68,7 @@
                 <td>Apellidos:<input name="Apellidos" type="text" placeholder="Apellidos" value="<%=usuario == null ? "" : usuario.getApellidos()%>"></td>
                 <td>DNI:<input name="DNI" type="text"  placeholder="DNI" value=<%=usuario == null ? "" : usuario.getDni()%>></td>
                 <td>Rol: <select name="Rol">
-                    <% for(Rol rol : roles){ %>
+                    <% for(RolDTO rol : roles){ %>
                         <option <%=usuario != null && usuario.getRol().getId() == rol.getId() ? "selected" : ""%> value=<%=rol.getId()%>> <%=rol.getNombre()%> </option>
                     <% } %>
                 </select></td>
@@ -89,7 +91,7 @@
         <button type="submit" class="btn btn-primary">Guardar</button>
     </form>
     <div class="form-buttons">
-        <form method="post" action="/admin/delete-exercise">
+        <form method="post" action="/admin/delete-user">
             <input name="Id" type="hidden" value=<%=usuario == null ? "0" : usuario.getId()%>>
             <button <%= usuario != null ? "" : "disabled" %> type="submit" class="btn btn-primary user-delete-button">Eliminar</button>
         </form>

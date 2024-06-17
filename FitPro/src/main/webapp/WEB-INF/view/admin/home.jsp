@@ -13,7 +13,7 @@
 </head>
 <body>
     <header>
-        <img class="back-button ms-1 mt-1 " src="../assets/back_button.png" alt="LogOut" onclick="window.location.href = '/'">
+        <img class="back-button ms-1 mt-1 " src="../assets/back_button.png" alt="LogOut" onclick="window.location.href = '/salir'">
         <h1 class="header-text text-center">Admin Home</h1>
     </header>
     <div class="form-wrapper">

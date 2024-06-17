@@ -1,5 +1,18 @@
-.menu-table{
+.table{
     width: 400px;
+}
+
+.table td{
+    user-select: none;
+    transition: 0.5s;
+    transition-timing-function: ease;
+}
+
+.menu_table td{
+    user-select: none;
+    transition: 0.5s;
+    transition-timing-function: ease;
+    cursor:pointer;
 }
 
 .id{
@@ -18,6 +31,19 @@
     width: 40px;
 }
 
+.fecha{
+    width: 80px;
+}
+
 .table-button{
     width: 20px;
+}
+
+.saveButton{
+    height: 40px;
+}
+
+.menuButtons {
+    display: flex;
+    justify-content: space-evenly;
 }

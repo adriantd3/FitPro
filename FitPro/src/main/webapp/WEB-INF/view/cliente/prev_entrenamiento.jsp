@@ -1,10 +1,11 @@
-<%@ page import="uma.fitpro.entity.Rutina" %>
+<%@ page import="uma.fitpro.entity.*" %>
 <%@ page import="java.util.List" %>
+<%@ page import="java.util.Map" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!doctype html>
 
 <%
-    List<Rutina> rutinas = (List<Rutina>) request.getAttribute("rutinas");
+    Sesion sesion = (Sesion) session.getAttribute("sesion");
 %>
 
 <html lang="en">
@@ -14,26 +15,25 @@
     <style>
         <%@ include file="../styles/common.css"%>
     </style>
-    <title>Cliente - Rutinas</title>
+    <title>Cliente - DesempenyoSesion</title>
 </head>
 <body>
 <header>
     <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back_button.png" alt="">
-    <h1 class="header-text text-center">Rutinas de entrenamiento</h1>
+    <h1 class="header-text text-center">Información de sesión: <%=sesion.getNombre()%>
+    </h1>
 </header>
-<ul>
-    <%
-        for (Rutina rutina : rutinas) {
-    %>
-    <li>
-        <a href="/cliente/sesiones_rutina?id=<%=rutina.getId()%>&nombre_rutina=<%=rutina.getNombre()%>">
-            <%=rutina.getNombre()%>
-        </a>
-    </li>
-    <%
-        }
-    %>
-</ul>
+<div class="container-fluid d-flex justify-content-start">
+    <div class="p-3" style="width: 40%">
+        <jsp:include page="tablas_series.jsp">
+            <jsp:param name="dict" value="sesion"/>
+        </jsp:include>
+        <form method="post" action="nuevo_desempenyo_sesion">
+            <button type="submit" class="btn btn-primary" name="comenzar_entrenamiento">Nuevo entrenamiento</button>
+        </form>
+    </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>

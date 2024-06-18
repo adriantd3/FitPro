@@ -91,7 +91,7 @@ public class EntrenadorFuerzaController {
 
         Usuario cliente = (Usuario) session.getAttribute("cliente");
         if(cliente != null){
-            Set<Rutina> rutinasCliente = cliente.getRutinasCliente();
+            List<Rutina> rutinasCliente = cliente.getRutinasCliente();
             rutinasCliente.add(rutina);
             cliente.setRutinasCliente(rutinasCliente);
             usuarioRepository.save(cliente);
@@ -107,7 +107,7 @@ public class EntrenadorFuerzaController {
         Rutina rutina = rutinaRepository.findById(rutina_id).orElse(null);
         Usuario cliente = (Usuario) session.getAttribute("cliente");
 
-        Set<Rutina> nuevasRutinas = new HashSet<>(cliente.getRutinasCliente());
+        List<Rutina> nuevasRutinas = cliente.getRutinasCliente();
         nuevasRutinas.add(rutina);
         cliente.setRutinasCliente(nuevasRutinas);
 
@@ -185,7 +185,7 @@ public class EntrenadorFuerzaController {
         ordenSesion.setRutina(rutina);
         ordenSesionRutinaRepository.save(ordenSesion);
 
-        Set<OrdenSesionRutina> ordenSesionesRutina = rutina.getOrdenSesionRutinas();
+        List<OrdenSesionRutina> ordenSesionesRutina = rutina.getOrdenSesionRutinas();
         ordenSesionesRutina.add(ordenSesion);
         rutina.setOrdenSesionRutinas(ordenSesionesRutina);
         rutinaRepository.save(rutina);

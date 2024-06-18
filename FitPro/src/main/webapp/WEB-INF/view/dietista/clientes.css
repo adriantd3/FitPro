@@ -1,0 +1,37 @@
+
+.cliente_table{
+    width: 500px;
+}
+
+.table td{
+    user-select: none;
+    transition: 0.5s;
+    transition-timing-function: ease;
+}
+
+.cliente_table td{
+    user-select: none;
+    transition: 0.5s;
+    transition-timing-function: ease;
+    cursor:pointer;
+}
+
+.dietasCliente_table{
+    width: 500px;
+}
+
+.dietasCliente_table tr{
+    cursor: pointer;
+}
+
+.id{
+    width: 20px;
+}
+
+.nombre-cliente{
+    width: 100px;
+}
+
+.apellidos-cliente{
+    width: 110px;
+}

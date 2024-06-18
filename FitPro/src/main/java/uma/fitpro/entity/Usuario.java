@@ -64,7 +64,7 @@ public class Usuario implements Comparable<Usuario> {
             inverseJoinColumns = @JoinColumn(name = "dieta_id"))
     private List<Dieta> dietasCliente = new ArrayList<>();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "dietista_cliente",
             joinColumns = @JoinColumn(name = "dietista_id"),
             inverseJoinColumns = @JoinColumn(name = "cliente_id"))

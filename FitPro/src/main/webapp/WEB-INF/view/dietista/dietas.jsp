@@ -41,29 +41,21 @@
         }
 
         function  selectMenuDieta(menuId){
-            console.log(menuId);
-            console.log(<%=dieta==null ? 0:dieta.getId()%>);
             document.getElementById("menuFromDietaSelector").value=menuId;
             document.getElementById("formSelectMenuFromDieta").submit();
         }
 
         function  selectMenu(menuId){
-            console.log("SELECT")
             document.getElementById("menuSelector").value=menuId;
             document.getElementById("formSelectMenu").submit();
         }
 
         function addMenu(menuId){
-            //if(!document.getElementById("nombre").value.equals("")){ Este if hace que no funcione
-            console.log("ADD")
             document.getElementById("addMenuSelector").value=menuId;
             document.getElementById("formAddMenu").submit();
-            //}
         }
 
         function deleteMenu(menuId, ordenMenu){
-            
-            //console.log(ordenMenuId)
             document.getElementById("deleteMenuSelector").value=menuId;
             document.getElementById("deleteMenuOrden").value=ordenMenu;
             document.getElementById("formDeleteMenu").submit();
@@ -85,7 +77,7 @@
 </head>
 <body>
 <header>
-    <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back_button.png" alt="">
+    <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back_button.png" alt="back">
     <h1 class="header-text text-center">Dietas</h1>
 </header>
 
@@ -106,7 +98,7 @@
                             </tr>
                         </form:form>
                         </thead>
-                        <tbody class = "table-group-divider table-secondary">
+                        <tbody class = "table-secondary">
                         <form id="formSelectDieta" method="get" action="./dietas">
                             <input type="hidden" name="dietaId" id="dietaSelector">
                             <%
@@ -202,10 +194,9 @@
                             </thead>
                             <tbody class = "table-secondary">
                             <%
-                                if(menu!=null){
-                                    int comidasMenuIndex = 0;
-                                    for(Comida comida : comidasMenu){
-                                        comidasMenuIndex++;
+                                int comidasMenuIndex = 0;
+                                for(Comida comida : comidasMenu){
+                                    comidasMenuIndex++;
                             %>
                             <tr>
                                 <td><%= comidasMenuIndex %></td>
@@ -213,7 +204,6 @@
                                 <td><%= comida.getCalorias() %></td>
                             </tr>
                             <%
-                                    }
                                 }
                             %>
                             </tbody>

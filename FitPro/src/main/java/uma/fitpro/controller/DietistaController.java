@@ -9,11 +9,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import uma.fitpro.dao.*;
 import uma.fitpro.entity.*;
-import uma.fitpro.ui.FiltroComida;
-import uma.fitpro.ui.FiltroDieta;
-import uma.fitpro.ui.FiltroMenu;
+import uma.fitpro.ui.*;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,17 +18,19 @@ import java.util.List;
 @RequestMapping("/dietista")
 public class DietistaController {
 
+    private HttpSession httpSession;
     @Autowired
     protected MenuRepository menuRepository;
     @Autowired
     protected ComidaRepository comidaRepository;
-
     @Autowired
     protected DietaRepository dietaRepository;
-
     @Autowired
     protected OrdenMenuDietaRepository ordenMenuDietaRepository;
-    private HttpSession httpSession;
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+    @Autowired
+    private DesempenyoMenuRepository desempenyoMenuRepository;
 
     @GetMapping("/home")
     public String doHome() {
@@ -325,14 +324,196 @@ public class DietistaController {
     //---------------------------------------- CLIENTES -----------------------------------------------------------------
 
     @GetMapping("/clientes")
-    public String doClientes(@RequestParam(value = "id", required = false) Integer clienteId, Model model, HttpSession session){
+    public String doClientes(@RequestParam(value = "clienteId", required = false) Integer clienteId, Model model, HttpSession session){
         Usuario dietista = (Usuario) session.getAttribute("user");
-        //List<Usuario> clientes = dietista.getClientesDietista();
-        List<Usuario> clientes = new ArrayList<>();
+        List<Usuario> clientes = dietista.getClientesDietista();
+
+        Usuario cliente = null;
+        if(clienteId!=null){
+            cliente = usuarioRepository.findById(clienteId).orElse(null);
+        }
 
 
         model.addAttribute("clientes", clientes);
+        model.addAttribute("cliente", cliente);
+        model.addAttribute("filtroCliente", new FiltroCliente());
 
         return "dietista/clientes";
     }
+
+    @GetMapping("/asignarDietasClientes")
+    public String doAsignarDietasClientes(@RequestParam(value = "clienteId", required = false) Integer clienteId, @RequestParam(value = "dietaId", required = false) Integer dietaId, Model model, HttpSession session){
+        Usuario dietista = (Usuario) session.getAttribute("user");
+        List<Usuario> clientes = dietista.getClientesDietista();
+
+        Usuario cliente = null;
+        List<Dieta> dietas = this.dietaRepository.findAll();
+        List<Dieta> dietasCliente = new ArrayList<>();
+        Dieta dieta = null;
+        List<OrdenMenuDieta> menusDieta = new ArrayList<>();
+
+        if(clienteId!=null){
+            cliente = usuarioRepository.findById(clienteId).orElse(null);
+        }
+        if(cliente!=null){
+            dietasCliente = cliente.getDietasCliente();
+        }
+        if(dietaId!=null){
+            dieta = this.dietaRepository.findById(dietaId).orElse(null);
+        }
+        if(dieta!=null){
+            menusDieta = dieta.getOrdenMenuDietas();
+        }
+
+
+        model.addAttribute("clientes", clientes);
+        model.addAttribute("cliente", cliente);
+        model.addAttribute("dietas", dietas);
+        model.addAttribute("dietasCliente", dietasCliente);
+        model.addAttribute("dieta", dieta);
+        model.addAttribute("menusDieta", menusDieta);
+        model.addAttribute("filtroCliente", new FiltroCliente());
+        model.addAttribute("filtroDieta", new FiltroDieta());
+
+        return "dietista/clientes_asignar_dietas";
+    }
+
+    @PostMapping("/asignarDietaCliente")
+    public String doAsignarDietaCliente(@RequestParam(value = "clienteId") Integer clienteId, @RequestParam(value = "dietaId") Integer dietaId, Model model, HttpSession session){
+        Usuario cliente = usuarioRepository.findById(clienteId).orElse(null);
+        Dieta dieta = dietaRepository.findById(dietaId).orElse(null);
+        List<Dieta> dietasCliente = cliente.getDietasCliente();
+
+        if(dieta!=null){
+            dietasCliente.add(dieta);
+        }
+        cliente.setDietasCliente(dietasCliente);
+        usuarioRepository.save(cliente);
+
+        return "redirect:/dietista/asignarDietasClientes?clienteId="+cliente.getId();
+    }
+
+    @PostMapping("/eliminarDietaCliente")
+    public String doEliminarDietaCliente(@RequestParam(value = "clienteId") Integer clienteId, @RequestParam(value = "dietaId") Integer dietaId, Model model){
+        Usuario cliente = usuarioRepository.findById(clienteId).orElse(null);
+        Dieta dieta = dietaRepository.findById(dietaId).orElse(null);
+        List<Dieta> dietasCliente = cliente.getDietasCliente();
+        if(dieta!=null){
+            dietasCliente.remove(dieta);
+        }
+        cliente.setDietasCliente(dietasCliente);
+        usuarioRepository.save(cliente);
+
+        return "redirect:/dietista/asignarDietasClientes?clienteId="+cliente.getId();
+    }
+
+    @GetMapping("/filtrarClientes")
+    public String doFiltrarClientes(@ModelAttribute("filtroCliente") FiltroCliente filtroCliente, BindingResult result, ModelMap model, HttpSession session){
+        String strTo = "dietista/"+filtroCliente.getSourcePage();
+        Usuario dietista = (Usuario) session.getAttribute("user");
+        //if (dietistaAutenticado(session) == false) {
+        //    strTo = "redirect:/";
+        //} else if
+        if (filtroCliente.estaVacio()) {
+            if(filtroCliente.getSourcePage().equals("clientes_asignar_dietas")){
+                strTo = "redirect:./asignarDietasClientes";
+            } else if (filtroCliente.getSourcePage().equals("clientes_desempenyo")) {
+                strTo = "redirect:./desempenyoClientes";
+            }else {
+                strTo = "redirect:./" + filtroCliente.getSourcePage();
+            }
+        } else {
+            List<Usuario> clientes = this.usuarioRepository.buscarClientesDietistaConFiltro(dietista, filtroCliente.getNombre(), filtroCliente.getApellidos());
+            List<Dieta> dietas = this.dietaRepository.findAll();
+
+            model.addAttribute("clientes", clientes);
+            model.addAttribute("cliente", null);
+            model.addAttribute("dietas", dietas);
+            model.addAttribute("dietasCliente", new ArrayList<>());
+            model.addAttribute("dieta", null);
+            model.addAttribute("menusDieta", new ArrayList<>());
+            model.addAttribute("filtroCliente", filtroCliente);
+            model.addAttribute("filtroDieta", new FiltroDieta());
+        }
+
+        return strTo;
+    }
+
+    @GetMapping("/filtrarDietasCliente")
+    public String doFiltrarDietasCliente(@ModelAttribute("filtroDieta") FiltroDieta filtroDieta, BindingResult result, ModelMap model, HttpSession session){
+        String strTo = "dietista/clientes_asignar_dietas";
+        //if (dietistaAutenticado(session) == false) {
+        //    strTo = "redirect:/";
+        //} else if
+        if (filtroDieta.estaVacio()) {
+            strTo = "redirect:./asignarDietasClientes";
+        } else {
+            Usuario dietista = (Usuario) session.getAttribute("user");
+            List<Usuario> clientes = dietista.getClientesDietista();
+            Usuario cliente = usuarioRepository.findById(filtroDieta.getClienteId()).orElse(null);
+            List<Dieta> dietas = this.dietaRepository.buscarConFiltro(filtroDieta.getNombre());
+            List<Dieta> dietasCliente = new ArrayList<>();
+
+            if(cliente!=null){
+                dietasCliente = cliente.getDietasCliente();
+            }
+
+            model.addAttribute("clientes", clientes);
+            model.addAttribute("cliente", cliente);
+            model.addAttribute("dietas", dietas);
+            model.addAttribute("dietasCliente", dietasCliente);
+            model.addAttribute("dieta", null);
+            model.addAttribute("menusDieta", new ArrayList<>());
+            model.addAttribute("filtroCliente", new FiltroCliente());
+            model.addAttribute("filtroDieta", filtroDieta);
+        }
+
+        return strTo;
+    }
+
+
+    @GetMapping("/desempenyoClientes")
+    public String doDesempanyoClientes(@RequestParam(value = "clienteId", required = false) Integer clienteId,
+                                       @RequestParam(value = "dietaId", required = false) Integer dietaId,
+                                       @RequestParam(value = "menuId", required = false) Integer menuId,
+                                       Model model, HttpSession session){
+        Usuario dietista = (Usuario) session.getAttribute("user");
+        List<Usuario> clientes = dietista.getClientesDietista();
+
+        Usuario cliente = null;
+        List<Dieta> dietasCliente = new ArrayList<>();
+        Dieta dieta = null;
+        List<OrdenMenuDieta> menusDieta = new ArrayList<>();
+        List<DesempenyoMenu> desempenyosMenu = new ArrayList<>();
+
+        if(clienteId!=null){
+            cliente = usuarioRepository.findById(clienteId).orElse(null);
+            if(cliente!=null){
+                dietasCliente = cliente.getDietasCliente();
+            }
+        }
+        if(dietaId!=null){
+            dieta = this.dietaRepository.findById(dietaId).orElse(null);
+            if(dieta!=null){
+                menusDieta = dieta.getOrdenMenuDietas();
+            }
+        }
+        if(clienteId!=null && menuId!=null){
+            desempenyosMenu = desempenyoMenuRepository.getDesempenyosOfMenuByClient(menuId, clienteId);
+        }
+
+
+        model.addAttribute("clientes", clientes);
+        model.addAttribute("cliente", cliente);
+        model.addAttribute("dietasCliente", dietasCliente);
+        model.addAttribute("dieta", dieta);
+        model.addAttribute("menusDieta", menusDieta);
+        model.addAttribute("desempenyosMenu", desempenyosMenu);
+        model.addAttribute("filtroCliente", new FiltroCliente());
+        model.addAttribute("filtroDesempenyoMenu", new FiltroDesempenyoMenu());
+
+        return "dietista/clientes_desempenyo_menus";
+    }
+
+    //AÑADIR METODO QUE COMPRUEBE QUE USER == NULL AL PRINCIPIO DE CADA METODO Y EN CASO DE QUE LO SEA REDIRIGIR A LOGIN
 }

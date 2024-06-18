@@ -34,19 +34,19 @@
         <form:hidden path="desMenuId"/>
 
         Nombre <form:input path="nombre"/>
-        Calorías > <form:input path="calorias" size="5" maxlength="5" type="number"/>
+        Calorías > <form:input path="calorias" size="5" maxlength="5" type="number" />
         Terminado <form:select path="comido">
-                    <form:option value="${null}" label="Ambos"/>
+                    <form:option value="${null}" label="Todos"/>
                     <form:option value="${true}" label="Sí"/>
                     <form:option value="${false}" label="No"/>
                 </form:select>
         Gustado <form:select path="gustado">
-                    <form:option value="${null}" label="Ambos"/>
+                    <form:option value="${null}" label="Todos"/>
                     <form:option value="${true}" label="Sí"/>
                     <form:option value="${false}" label="No"/>
                 </form:select>
         <br>
-        <form:button>Filtrar</form:button>
+        <form:button class="btn btn-primary mt-3">Filtrar</form:button>
     </form:form>
 </div>
 <section id="table-container">
@@ -75,8 +75,8 @@
                 <th scope="row"><%=numSerie%></th>
                 <td><%=desComida.getComida().getNombre()%></td>
                 <td><%=desComida.getComida().getCalorias()%></td>
-                <td><%=desComida.isComido() ? "Sí" : "No"%></td>
-                <td><%=desComida.isGustado() ? "Sí" : "No"%></td>
+                <td><%=desComida.isComido() ? "✔" : "❌"%></td>
+                <td><%=desComida.isGustado() ? "✔" : "❌"%></td>
             </tr>
             <%
                     numSerie++;

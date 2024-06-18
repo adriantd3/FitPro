@@ -46,8 +46,8 @@
                 <th scope="row"><%=numSerie%></th>
                 <td><%=desComida.getComida().getNombre()%></td>
                 <td><%=desComida.getComida().getCalorias()%></td>
-                <td><%=desComida.isComido() ? "Sí" : "No"%></td>
-                <td><%=desComida.isGustado() ? "Sí" : "No"%></td>
+                <td><%=desComida.isComido() ? "✔" : "❌"%></td>
+                <td><%=desComida.isGustado() ? "✔" : "❌"%></td>
                 <td style="box-shadow: none;background-color: #434343;border-bottom-width: 0px;">
                     <form action="editar_des_comida" method="post" style="height: 8px">
                         <input type="hidden" name="id" value="<%=desComida.getId()%>">

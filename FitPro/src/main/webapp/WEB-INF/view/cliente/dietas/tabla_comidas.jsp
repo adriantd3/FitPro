@@ -10,8 +10,8 @@
     <table class="table table-striped text-center">
         <thead class="table-dark">
         <tr>
-            <th scope="col">Serie</th>
-            <th scope="col">Comida</th>
+            <th scope="col">Plato</th>
+            <th scope="col">Nombre</th>
             <th scope="col">Calorías</th>
         </tr>
         </thead>

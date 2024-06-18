@@ -23,12 +23,12 @@
     </a>
     <h1 class="header-text text-center">Mis dietas</h1>
 </header>
-<ul>
+<ul class="text-light fs-5">
     <%
         for (DietaDTO dieta : dietas) {
     %>
     <li>
-        <a href="dietas/menus_dieta?id=<%=dieta.getId()%>">
+        <a href="dietas/menus_dieta?id=<%=dieta.getId()%>" class="text-primary">
             <%=dieta.getNombre()%>
         </a>
     </li>

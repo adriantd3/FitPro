@@ -23,13 +23,13 @@
     </a>
     <h1 class="header-text text-center"><%=dieta.getNombre()%> - Menús</h1>
 </header>
-<ul>
+<ul class="text-light fs-5">
     <%
         for (OrdenMenuDietaDTO ordenMenuDieta : dieta.getOrdenMenuDietaList()) {
             String dayOfWeek = UtilityFunctions.getDayByNumber(ordenMenuDieta.getId());
     %>
     <li>
-        <a href="desempenyos_menu?id=<%=ordenMenuDieta.getMenuId()%>&dieta_id=<%=dieta.getId()%>">
+        <a href="desempenyos_menu?id=<%=ordenMenuDieta.getMenuId()%>&dieta_id=<%=dieta.getId()%>" class="text-primary">
             <%=ordenMenuDieta.getNombreMenu()%> - <%=dayOfWeek%>
         </a>
     </li>

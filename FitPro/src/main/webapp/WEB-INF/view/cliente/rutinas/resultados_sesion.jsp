@@ -32,15 +32,15 @@
 
         Nombre <form:input path="ejercicio"/>
         Grupo Muscular <form:select path="grupoMuscular">
-                            <form:option value="0" label="Ninguno"/>
+                            <form:option value="0" label="Todos"/>
                             <form:options items="${grupo_muscular}" itemLabel="grupoMuscular" itemValue="id"/>
                         </form:select>
         Tipo de ejercicio <form:select path="tipoEjercicio">
-                            <form:option value="<%=0%>" label="Ninguno"/>
+                            <form:option value="<%=0%>" label="Todos"/>
                             <form:options items="${tipo_ejercicio}" itemLabel="tipo" itemValue="id"/>
                         </form:select>
         <br>
-        <form:button>Filtrar</form:button>
+        <form:button class="btn btn-primary mt-3">Filtrar</form:button>
     </form:form>
 </div>
 

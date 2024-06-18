@@ -26,7 +26,7 @@
     </a>
     <h1 class="header-text text-center">Serie</h1>
 </header>
-<form:form method="POST" action="guardar_serie" modelAttribute="desSerie">
+<form:form method="POST" action="guardar_serie" modelAttribute="desSerie" cssClass="text-light fs-5 m-3">
     <form:hidden path="id"/>
     <form:hidden path="desempenyoSesion"/>
     <form:hidden path="ejercicio"/>
@@ -37,7 +37,7 @@
     <form:label path="metrica2"><%=cols.get(1)%>></form:label>
     <form:input path="metrica2" maxlength="6" id="input2" type="number"/><br>
 
-    <form:button name="guardar">Guardar</form:button>
+    <form:button name="guardar" class="btn btn-primary mt-2">Guardar</form:button>
 </form:form>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"

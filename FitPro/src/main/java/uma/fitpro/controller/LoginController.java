@@ -7,44 +7,50 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import uma.fitpro.dao.UsuarioRepository;
-import uma.fitpro.entity.Usuario;
-
-import java.util.List;
+import uma.fitpro.dto.UsuarioDTO;
+import uma.fitpro.service.UsuarioService;
 
 @Controller
 public class LoginController {
 
     @Autowired
-    private UsuarioRepository usuarioRepository;
+    private UsuarioService usuarioService;
 
     @GetMapping("/")
-    public String doLogin(HttpSession session) {
-        if(session.getAttribute("user") != null) {
-            session.removeAttribute("user");
+    public String doLogin(Model model, HttpSession session) {
+        if (estaAutenticado(session)) {
+            return "redirect:/home";
         }
         return "login/login";
     }
 
-    @PostMapping("/home")
-    public String doHome(@RequestParam(required = false) String mail, @RequestParam(required = false) String password, Model model, HttpSession session) {
-        List<Usuario> user = usuarioRepository.findByMail(mail);
-        if (!user.isEmpty()) {
-            Usuario usuario = user.get(0);
-            if (usuario != null && usuario.getContrasenya().equals(password)) {
-                session.setAttribute("user", usuario);
-                return usuario.getRol().getNombre()+"/home";
-            }
+    @PostMapping("/autenticar")
+    public String doHome(@RequestParam String mail, @RequestParam String password, Model model, HttpSession session) {
+        String strTo = "redirect:/";
+        UsuarioDTO usuario = usuarioService.autenticar(mail, password);
+        if(usuario != null){
+            session.setAttribute("user", usuario);
+            strTo += "home";
+        }
+        return strTo;
+    }
+
+    @GetMapping("/home")
+    public String doHome(Model model, HttpSession session) {
+        if (estaAutenticado(session)) {
+            UsuarioDTO usuario = (UsuarioDTO) session.getAttribute("user");
+            return "redirect:/"+usuario.getRol().getNombre() + "/";
         }
         return "redirect:/";
     }
 
-    @GetMapping("/home")
-    public String doReturnHome( HttpSession session) {
-        if(session.getAttribute("user") != null) {
-            Usuario logguedUser = (Usuario) session.getAttribute("user");
-            return logguedUser.getRol().getNombre()+"/home";
-        }
+    @GetMapping("/salir")
+    public String doSalir (HttpSession session) {
+        session.invalidate();
         return "redirect:/";
+    }
+
+    protected boolean estaAutenticado(HttpSession session) {
+        return session.getAttribute("user") != null;
     }
 }

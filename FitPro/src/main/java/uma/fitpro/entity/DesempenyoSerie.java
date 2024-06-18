@@ -3,10 +3,15 @@ package uma.fitpro.entity;
 import jakarta.persistence.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import uma.fitpro.dto.DTO;
+import uma.fitpro.dto.DesempenyoSerieDTO;
+import uma.fitpro.dto.SerieInterface;
+
+import java.io.Serializable;
 
 @Entity
 @Table(name = "desempenyo_serie")
-public class DesempenyoSerie {
+public class DesempenyoSerie implements Serializable, DTO<DesempenyoSerieDTO> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -17,25 +22,16 @@ public class DesempenyoSerie {
     @JoinColumn(name = "desempenyo_sesion_id", nullable = false)
     private DesempenyoSesion desempenyoSesion;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "ejercicio_id", nullable = false)
     private Ejercicio ejercicio;
 
-    @Column(name = "peso")
-    private Float peso;
+    @Column(name = "metrica1")
+    private Float metrica1;
 
-    @Column(name = "repeticiones")
-    private Integer repeticiones;
-
-    @Column(name = "distancia")
-    private Float distancia;
-
-    @Column(name = "duracion")
-    private Integer duracion;
-
-    @Column(name = "descanso")
-    private Integer descanso;
+    @Column(name = "metrica2")
+    private Float metrica2;
 
     public Integer getId() {
         return id;
@@ -61,44 +57,30 @@ public class DesempenyoSerie {
         this.ejercicio = ejercicio;
     }
 
-    public Float getPeso() {
-        return peso;
+    public Float getMetrica1() {
+        return metrica1;
     }
 
-    public void setPeso(Float peso) {
-        this.peso = peso;
+    public void setMetrica1(Float metrica1) {
+        this.metrica1 = metrica1;
     }
 
-    public Integer getRepeticiones() {
-        return repeticiones;
+    public Float getMetrica2() {
+        return metrica2;
     }
 
-    public void setRepeticiones(Integer repeticiones) {
-        this.repeticiones = repeticiones;
+    public void setMetrica2(Float metrica2) {
+        this.metrica2 = metrica2;
     }
 
-    public Float getDistancia() {
-        return distancia;
+    @Override
+    public DesempenyoSerieDTO toDTO() {
+        DesempenyoSerieDTO dto = new DesempenyoSerieDTO();
+        dto.setId(this.id);
+        dto.setMetrica1(this.metrica1);
+        dto.setMetrica2(this.metrica2);
+        dto.setEjercicio(this.ejercicio.getId());
+        dto.setDesempenyoSesion(this.desempenyoSesion.getId());
+        return dto;
     }
-
-    public void setDistancia(Float distancia) {
-        this.distancia = distancia;
-    }
-
-    public Integer getDuracion() {
-        return duracion;
-    }
-
-    public void setDuracion(Integer duracion) {
-        this.duracion = duracion;
-    }
-
-    public Integer getDescanso() {
-        return descanso;
-    }
-
-    public void setDescanso(Integer descanso) {
-        this.descanso = descanso;
-    }
-
 }

@@ -1,10 +1,14 @@
 package uma.fitpro.entity;
 
 import jakarta.persistence.*;
+import uma.fitpro.dto.DTO;
+import uma.fitpro.dto.TipoEjercicioDTO;
+
+import java.io.Serializable;
 
 @Entity
 @Table(name = "tipo_ejercicio")
-public class TipoEjercicio {
+public class TipoEjercicio implements Serializable, DTO<TipoEjercicioDTO> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -29,4 +33,11 @@ public class TipoEjercicio {
         this.tipo = tipo;
     }
 
+    @Override
+    public TipoEjercicioDTO toDTO() {
+        TipoEjercicioDTO dto = new TipoEjercicioDTO();
+        dto.setId(id);
+        dto.setTipo(tipo);
+        return dto;
+    }
 }

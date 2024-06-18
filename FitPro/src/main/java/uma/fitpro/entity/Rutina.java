@@ -3,14 +3,22 @@ package uma.fitpro.entity;
 import jakarta.persistence.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import uma.fitpro.dto.DTO;
+import uma.fitpro.dto.OrdenSesionRutinaDTO;
+import uma.fitpro.dto.RutinaDTO;
 
+import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "rutina")
-public class Rutina implements Comparable<Rutina> {
+public class Rutina implements Serializable, DTO<RutinaDTO> {
+    private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -28,7 +36,7 @@ public class Rutina implements Comparable<Rutina> {
     private LocalDate fechaCreacion;
 
     @OneToMany(mappedBy = "rutina")
-    private Set<OrdenSesionRutina> ordenSesionRutinas = new LinkedHashSet<>();
+    private List<OrdenSesionRutina> ordenSesionRutinas = new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -62,16 +70,28 @@ public class Rutina implements Comparable<Rutina> {
         this.fechaCreacion = fechaCreacion;
     }
 
-    public Set<OrdenSesionRutina> getOrdenSesionRutinas() {
+    public List<OrdenSesionRutina> getOrdenSesionRutinas() {
         return ordenSesionRutinas;
     }
 
-    public void setOrdenSesionRutinas(Set<OrdenSesionRutina> ordenSesionRutinas) {
+    public void setOrdenSesionRutinas(List<OrdenSesionRutina> ordenSesionRutinas) {
         this.ordenSesionRutinas = ordenSesionRutinas;
     }
 
     @Override
-    public int compareTo(Rutina o) {
-        return this.getNombre().compareTo(o.getNombre());
+    public RutinaDTO toDTO() {
+        RutinaDTO rutinaDTO = new RutinaDTO();
+        rutinaDTO.setId(this.id);
+        rutinaDTO.setEntrenador(this.entrenador.toDTO());
+        rutinaDTO.setNombre(this.nombre);
+        rutinaDTO.setFechaCreacion(this.fechaCreacion);
+
+        List<OrdenSesionRutinaDTO> ordenSesionRutinaList = new ArrayList<>();
+        for (OrdenSesionRutina ordenSesionRutina : this.ordenSesionRutinas) {
+            ordenSesionRutinaList.add(ordenSesionRutina.toDTO());
+        }
+        rutinaDTO.setOrdenSesionRutinaList(ordenSesionRutinaList);
+        
+        return rutinaDTO;
     }
 }

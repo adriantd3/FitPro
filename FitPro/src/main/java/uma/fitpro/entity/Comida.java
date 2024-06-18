@@ -1,10 +1,14 @@
 package uma.fitpro.entity;
 
 import jakarta.persistence.*;
+import uma.fitpro.dto.ComidaDTO;
+import uma.fitpro.dto.DTO;
+
+import java.io.Serializable;
 
 @Entity
 @Table(name = "comida")
-public class Comida {
+public class Comida implements Serializable, DTO<ComidaDTO> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -40,4 +44,12 @@ public class Comida {
         this.calorias = calorias;
     }
 
+    @Override
+    public ComidaDTO toDTO() {
+        ComidaDTO comidaDTO = new ComidaDTO();
+        comidaDTO.setId(id);
+        comidaDTO.setNombre(nombre);
+        comidaDTO.setCalorias(calorias);
+        return comidaDTO;
+    }
 }

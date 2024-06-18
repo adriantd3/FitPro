@@ -40,6 +40,7 @@
                 <th scope="col">#</th>
                 <th scope="col">Rutina</th>
                 <th scope="col">Fecha</th>
+                <th scope="col">Seguimiento</th>
                 <th scope="col">Borrar</th>
             </tr>
             </thead>
@@ -52,6 +53,11 @@
                 <th scope="row"><%= num %></th>
                 <td name="nombre"><%= r.getNombre() %></td>
                 <td><%=r.getFechaCreacion()%></td>
+                <td>
+                    <button class="btn btn-info button-image" onclick="window.location.href='/entrenador_cross_training/seguimiento_cliente?cliente=<%=cliente.getId()%>&rutina=<%=r.getId()%>'">
+                        <img class="image-button" src="${pageContext.request.contextPath}/assets/seguimiento.svg">
+                    </button>
+                </td>
                 <td>
                     <form action="/entrenador_cross_training/borrar_rutina_cliente" method="post">
                         <input type="hidden" name="rutina" value="<%=r.getId()%>">

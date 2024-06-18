@@ -35,6 +35,12 @@ public class EntrenadorCrossTrainingController {
     @Autowired
     protected EjercicioService ejercicioService;
 
+    @Autowired
+    protected DesempenyoSesionService desempenyoSesionService;
+
+    @Autowired
+    protected DesempenyoSerieService desempenyoSerieService;
+
     // --------------------------- HOME ---------------------------
 
     @GetMapping("/")
@@ -120,6 +126,43 @@ public class EntrenadorCrossTrainingController {
         usuarioService.borrarRutinaCliente(cliente, rutina);
 
         return "redirect:/entrenador_cross_training/rutinas_cliente?id=" + cliente.getId();
+    }
+
+    @GetMapping("/seguimiento_cliente")
+    public String doSeguimientoCliente(@RequestParam("cliente") Integer id_cliente,
+                                       @RequestParam("rutina") Integer id_rutina,
+                                       Model model, HttpSession session){
+        if (session.getAttribute("user") == null) {
+            return "redirect:/";
+        }
+        UsuarioDTO cliente = usuarioService.findById(id_cliente);
+        RutinaDTO rutina = rutinaService.buscarRutina(id_rutina);
+        HashMap<OrdenSesionRutinaDTO,List<DesempenyoSesionDTO>> seguimientoRutina = desempenyoSesionService.seguimientoRutina(cliente, rutina);
+
+        session.setAttribute("cliente", cliente);
+        session.setAttribute("rutina", rutina);
+        model.addAttribute("seguimientoRutina", seguimientoRutina);
+        model.addAttribute("cliente", cliente);
+        model.addAttribute("rutina", rutina);
+        return "entrenador_cross_training/seguimiento_cliente";
+    }
+
+    @GetMapping("seguimiento_sesion")
+    public String doSeguimientoSesion(@RequestParam("desempenyo_sesion") Integer id_desempenyo_sesion,
+                                       Model model, HttpSession session){
+        if (session.getAttribute("user") == null) {
+            return "redirect:/";
+        }
+        DesempenyoSesionDTO desempenyoSesion =
+                desempenyoSesionService.buscarDesempenyoSesion(id_desempenyo_sesion);
+        Map<EjercicioDTO,List<DesempenyoSerieDTO>> mapa =
+                desempenyoSerieService.buscarDesempenyoSeriesDictionary(desempenyoSesion.getDesempenyoSeries());
+        Map<Integer,List<String>> ejercicioParametros = getEjercicioParametros();
+
+        model.addAttribute("ejercicioParametros", ejercicioParametros);
+        model.addAttribute("mapa", mapa);
+        model.addAttribute("desempenyoSesion", desempenyoSesion);
+        return "entrenador_cross_training/seguimiento_sesion";
     }
 
     // --------------------------- RUTINAS ---------------------------

@@ -40,7 +40,7 @@ public class UsuarioService extends DTOService{
     public List<UsuarioDTO> getClientesEntrenador(UsuarioDTO entrenadorDTO) {
         Usuario entrenador = this.usuarioRepository.findById(entrenadorDTO.getId()).orElse(null);
         List<Usuario> clientes = new ArrayList<>(entrenador.getClientesEntrenador());
-        //clientes.sort((u1, u2) -> u1.getNombre().compareTo(u2.getNombre()));
+        clientes.sort((u1, u2) -> u1.getNombre().compareTo(u2.getNombre()));
         return this.entidadesADTO(clientes);
     }
 

@@ -1,4 +1,4 @@
-package uma.fitpro.entity;
+package uma.fitpro.ui;
 
 import java.util.Objects;
 

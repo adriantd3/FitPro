@@ -3,7 +3,10 @@ package uma.fitpro.entity;
 import jakarta.persistence.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import uma.fitpro.dto.DTO;
+import uma.fitpro.dto.DesempenyoSesionDTO;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -12,7 +15,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "desempenyo_sesion")
-public class DesempenyoSesion {
+public class DesempenyoSesion implements Serializable, DTO<DesempenyoSesionDTO> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -86,4 +89,21 @@ public class DesempenyoSesion {
         this.desempenyoSeries = desempenyoSeries;
     }
 
+    @Override
+    public DesempenyoSesionDTO toDTO() {
+        DesempenyoSesionDTO desempenyoSesionDTO = new DesempenyoSesionDTO();
+        desempenyoSesionDTO.setId(this.id);
+        desempenyoSesionDTO.setIdSesion(this.sesion.getId());
+        desempenyoSesionDTO.setNombreSesion(this.sesion.getNombre());
+        desempenyoSesionDTO.setFecha(this.fecha);
+        desempenyoSesionDTO.setTerminado(this.terminado == 1);
+
+        List<Integer> desempenyoSeries = new ArrayList<>();
+        for (DesempenyoSerie desempenyoSerie : this.desempenyoSeries) {
+            desempenyoSeries.add(desempenyoSerie.getId());
+        }
+        desempenyoSesionDTO.setDesempenyoSeries(desempenyoSeries);
+
+        return desempenyoSesionDTO;
+    }
 }

@@ -7,9 +7,6 @@ import uma.fitpro.entity.Serie;
 ;import java.util.List;
 
 public interface SerieRepository extends JpaRepository<Serie, Integer> {
-    @Query("select d from Serie d order by d.ejercicio.id asc, d.id asc")
-    public List<Serie> findAllOrdered();
-
     @Query("select d from Serie d where d.ejercicio.nombre like %:ejercicio% and d.sesion.id = :sesion_id and " +
             "(:grupo=0 or d.ejercicio.grupoMuscular.id = :grupo) and" +
             "(:tipo=0 or d.ejercicio.tipo.id = :tipo) " +

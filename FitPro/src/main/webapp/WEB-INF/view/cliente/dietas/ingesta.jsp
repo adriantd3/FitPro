@@ -19,7 +19,9 @@
 </head>
 <body>
 <header>
-    <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back_button.png" alt="">
+    <a href="desempenyos_menu?id=<%=desempenyoMenu.getMenuId()%>" >
+        <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back_button.png" alt="">
+    </a>
     <h1 class="header-text text-center">Ingesta en curso : <%=desempenyoMenu.getNombreMenu()%>
     </h1>
 </header>

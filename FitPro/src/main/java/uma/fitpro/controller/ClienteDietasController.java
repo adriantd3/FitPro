@@ -53,18 +53,24 @@ public class ClienteDietasController {
     }
 
     @GetMapping("desempenyos_menu")
-    public String doDesempenyosMenu(@RequestParam("id") Integer menu_id, Model model, HttpSession session){
+    public String doDesempenyosMenu(@RequestParam("id") Integer menu_id,
+                                    @RequestParam(value="dieta_id", required = false) Integer dieta_id
+                                    ,Model model, HttpSession session){
         if(session.getAttribute("user") == null){
             return "redirect:/";
         }
 
         MenuDTO menu = menuService.buscarMenu(menu_id);
+        if(dieta_id != null){
+            menu.setDietaId(dieta_id);
+        }
+
         Integer cliente_id = ((UsuarioDTO) session.getAttribute("user")).getId();
         List<DesempenyoMenuDTO> desempenyosMenu =
                 desempenyoMenuService.buscarDesempenyosMenuPorClienteYMenu(cliente_id, menu_id);
 
-        session.setAttribute("menu", menu);
         model.addAttribute("desempenyos", desempenyosMenu);
+        session.setAttribute("menu", menu);
 
         return "cliente/dietas/desempenyos_menu";
     }

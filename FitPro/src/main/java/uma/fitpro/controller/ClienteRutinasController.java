@@ -67,11 +67,9 @@ public class ClienteRutinasController {
         if(session.getAttribute("user") == null){
             return "redirect:/";
         }
-
-        if(session.getAttribute("sesion") == null){
-            SesionDTO sesion = sesionService.buscarSesion(sesion_id);
+        SesionDTO sesion = sesionService.buscarSesion(sesion_id);
+        if(rutina_id != null){
             sesion.setRutinaId(rutina_id);
-            session.setAttribute("sesion",sesion);
         }
 
         Integer client_id = ((UsuarioDTO) session.getAttribute("user")).getId();
@@ -79,6 +77,7 @@ public class ClienteRutinasController {
                 desempenyoSesionService.buscarDesempenyosSesionPorClienteYSesion(client_id,sesion_id);
 
         model.addAttribute("desempenyos", desempenyoSesiones);
+        session.setAttribute("sesion",sesion);
 
         return "cliente/rutinas/desempenyos_sesion";
     }

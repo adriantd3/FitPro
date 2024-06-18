@@ -31,7 +31,7 @@
             String dayOfWeek = UtilityFunctions.getDayByNumber(ordenSesionRutina.getId());
     %>
     <li>
-        <a class="text-primary fs-5" href="desempenyos_sesion?id=<%=ordenSesionRutina.getIdSesion()%>&rutina_id=<%=ordenSesionRutina.getIdRutina()%>">
+        <a class="text-primary fs-5" href="desempenyos_sesion?id=<%=ordenSesionRutina.getIdSesion()%>&rutina_id=<%=rutina.getId()%>">
             <%=ordenSesionRutina.getNombreSesion()%> - <%=dayOfWeek%>
         </a>
     </li>

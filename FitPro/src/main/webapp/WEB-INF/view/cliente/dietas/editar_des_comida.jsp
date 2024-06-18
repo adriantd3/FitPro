@@ -15,7 +15,9 @@
 </head>
 <body>
 <header>
-    <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back_button.png" alt="">
+    <a href="ingesta?id=<%=desComida.getDesempenyoMenu()%>" >
+        <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back_button.png" alt="">
+    </a>
     <h1 class="header-text text-center">Desempeño Comida: <%=desComida.getComida().getNombre()%></h1>
 </header>
 <form:form method="POST" action="guardar_des_comida" modelAttribute="des_comida" cssClass="text-light p-3 fs-4">

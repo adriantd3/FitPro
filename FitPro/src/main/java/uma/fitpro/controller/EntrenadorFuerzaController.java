@@ -147,6 +147,34 @@ public class EntrenadorFuerzaController {
         sesionRepository.save(sesion);
 
         Rutina rutina = (Rutina) session.getAttribute("rutina");
+
+        createOrdenSesionObject(rutina, sesion);
+
+        return "redirect:/entrenador_fuerza/sesion?sesion=" + sesion.getId();
+    }
+
+    @GetMapping("borrar-sesion")
+    public String doBorrarSesion(@RequestParam("sesion") Integer sesion_id, Model model, HttpSession session) {
+        Sesion sesion = sesionRepository.findById(sesion_id).orElse(null);
+        sesionRepository.delete(sesion);
+        Rutina rutina = (Rutina) session.getAttribute("rutina");
+
+        return "redirect:/entrenador_fuerza/rutina?rutina=" + rutina.getId();
+    }
+
+
+
+    @GetMapping("asignar-sesion")
+    public String doAsignarSesion(@RequestParam("sesion") Integer sesion_id, Model model, HttpSession session) {
+        Sesion sesion = sesionRepository.findById(sesion_id).orElse(null);
+        Rutina rutina = (Rutina) session.getAttribute("rutina");
+
+        createOrdenSesionObject(rutina, sesion);
+
+        return "redirect:/entrenador_fuerza/rutina?rutina=" + rutina.getId();
+    }
+
+    private void createOrdenSesionObject(Rutina rutina, Sesion sesion){
         OrdenSesionRutina ordenSesion = new OrdenSesionRutina();
         OrdenSesionRutinaId idOrdenSesion = new OrdenSesionRutinaId();
         idOrdenSesion.setSesionId(sesion.getId());
@@ -161,17 +189,6 @@ public class EntrenadorFuerzaController {
         ordenSesionesRutina.add(ordenSesion);
         rutina.setOrdenSesionRutinas(ordenSesionesRutina);
         rutinaRepository.save(rutina);
-
-        return "redirect:/entrenador_fuerza/sesion?sesion=" + sesion.getId();
-    }
-
-    @GetMapping("borrar-sesion")
-    public String doBorrarSesion(@RequestParam("sesion") Integer sesion_id, Model model, HttpSession session) {
-        Sesion sesion = sesionRepository.findById(sesion_id).orElse(null);
-        sesionRepository.delete(sesion);
-        Rutina rutina = (Rutina) session.getAttribute("rutina");
-
-        return "redirect:/entrenador_fuerza/rutina?rutina=" + rutina.getId();
     }
 
     @GetMapping("/rutina")
@@ -181,6 +198,7 @@ public class EntrenadorFuerzaController {
         System.out.println(rutina.getOrdenSesionRutinas());
         System.out.println(sesionRepository.findAllByOrdenSesionRutina(rutina));
         model.addAttribute("sesiones", sesionRepository.findAllByOrdenSesionRutina(rutina));
+        model.addAttribute("sesionesTotales", sesionRepository.findAll());
         return "/entrenador_fuerza/rutina";
     }
 

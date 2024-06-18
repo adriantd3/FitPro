@@ -14,6 +14,7 @@
     List<Rutina> rutinas = (List<Rutina>) request.getAttribute("rutinas");
     List<Rutina> rutinasPrincipales;
     Usuario cliente = (Usuario) session.getAttribute("cliente");
+    Usuario entrenador = (Usuario) session.getAttribute("user");
     if(cliente != null) {
         rutinasPrincipales = new ArrayList<Rutina>(cliente.getRutinasCliente());
     }else{
@@ -59,11 +60,13 @@
         <ul class="list-group m-3">
             <%
                 for(Rutina rutina : rutinas){
+                    if(rutina.getEntrenador().getId().equals(entrenador.getId())){
             %>
             <button onclick="window.location.href='/entrenador_fuerza/guardar-rutina?rutina=<%=rutina.getId()%>'" class="list-button list-group-item">
                 <%=rutina.getNombre()+ " " + rutina.getFechaCreacion()%>
             </button>
             <%
+                    }
                 }
             %>
         </ul>

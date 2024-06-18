@@ -13,6 +13,7 @@
     Usuario cliente = (Usuario) session.getAttribute("cliente");
     Rutina rutina = (Rutina) session.getAttribute("rutina");
     List<Sesion> sesionesRutina = (List<Sesion>) request.getAttribute("sesiones");
+    List<Sesion> sesionesTotales = (List<Sesion>) request.getAttribute("sesionesTotales");
 %>
 <html>
 <head>
@@ -33,6 +34,7 @@
         >Añadir sesión
         </button>
     </form>
+    <h1 style="color: white">Sesiones asignadas</h1>
     <ul class="list-group m-3">
             <%
             for(Sesion sesion : sesionesRutina){
@@ -43,6 +45,22 @@
             <%
             }
         %>
+    </ul>
+    <h1 style="color: white">Sesiones no asignadas</h1>
+    <ul class="list-group m-3">
+        <%
+            for(Sesion sesion : sesionesTotales){
+                if(!sesionesRutina.contains(sesion)){
+        %>
+        <button onclick="window.location.href='/entrenador_fuerza/asignar-sesion?sesion=<%=sesion.getId()%>'" class="list-button list-group-item">
+            <%=sesion.getNombre()%>
+        </button>
+        <%
+                }
+            }
+        %>
+
+    </ul>
 </section>
 </body>
 </html>

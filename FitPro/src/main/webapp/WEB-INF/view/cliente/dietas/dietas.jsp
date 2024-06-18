@@ -26,7 +26,7 @@
         for (DietaDTO dieta : dietas) {
     %>
     <li>
-        <a href="menus_dieta?id=<%=dieta.getId()%>">
+        <a href="dietas/menus_dieta?id=<%=dieta.getId()%>">
             <%=dieta.getNombre()%>
         </a>
     </li>

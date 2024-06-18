@@ -33,7 +33,7 @@ public class ClienteRutinasController {
     @Autowired
     private EjercicioService ejercicioService;
 
-    @GetMapping("/")
+    @GetMapping("")
     public String doRutinas(Model model, HttpSession session) {
         UsuarioDTO cliente = (UsuarioDTO) session.getAttribute("user");
         if(cliente == null){
@@ -62,18 +62,22 @@ public class ClienteRutinasController {
 
     @GetMapping("/desempenyos_sesion")
     public String doDesempenyoSesion(@RequestParam("id") Integer sesion_id,
+                                     @RequestParam(value = "rutina_id", required = false) Integer rutina_id,
                                      Model model, HttpSession session) {
         if(session.getAttribute("user") == null){
             return "redirect:/";
         }
 
-        //Encontrar los desempeños_sesion de aquellas que tengan el rutina_id y cliente_id
-        SesionDTO sesion = sesionService.buscarSesion(sesion_id);
+        if(session.getAttribute("sesion") == null){
+            SesionDTO sesion = sesionService.buscarSesion(sesion_id);
+            sesion.setRutinaId(rutina_id);
+            session.setAttribute("sesion",sesion);
+        }
+
         Integer client_id = ((UsuarioDTO) session.getAttribute("user")).getId();
         List<DesempenyoSesionDTO> desempenyoSesiones =
                 desempenyoSesionService.buscarDesempenyosSesionPorClienteYSesion(client_id,sesion_id);
 
-        session.setAttribute("sesion",sesion);
         model.addAttribute("desempenyos", desempenyoSesiones);
 
         return "cliente/rutinas/desempenyos_sesion";

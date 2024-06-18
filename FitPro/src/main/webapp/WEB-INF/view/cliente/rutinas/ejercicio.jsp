@@ -14,7 +14,6 @@
 </head>
 <body style="color: white">
 <header>
-    <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back_button.png" alt="">
     <h1 class="header-text text-center">Información ejercicio: <%=ejercicio.getNombre()%></h1>
 </header>
 <div class="p-3">

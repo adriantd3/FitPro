@@ -23,7 +23,9 @@
 </head>
 <body>
 <header>
-    <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back_button.png" alt="">
+    <a href="desempenyos_sesion?id=<%=desempenyoSesion.getIdSesion()%>" >
+        <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back_button.png" alt="">
+    </a>
     <h1 class="header-text text-center">Entrenamiento en curso : <%=desempenyoSesion.getNombreSesion()%>
     </h1>
 </header>

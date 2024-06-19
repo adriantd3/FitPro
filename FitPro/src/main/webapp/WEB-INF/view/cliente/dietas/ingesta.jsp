@@ -19,7 +19,9 @@
 </head>
 <body>
 <header>
-    <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back_button.png" alt="">
+    <a href="desempenyos_menu?id=<%=desempenyoMenu.getMenuId()%>" >
+        <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back_button.png" alt="">
+    </a>
     <h1 class="header-text text-center">Ingesta en curso : <%=desempenyoMenu.getNombreMenu()%>
     </h1>
 </header>
@@ -44,8 +46,8 @@
                 <th scope="row"><%=numSerie%></th>
                 <td><%=desComida.getComida().getNombre()%></td>
                 <td><%=desComida.getComida().getCalorias()%></td>
-                <td><%=desComida.isComido() ? "Sí" : "No"%></td>
-                <td><%=desComida.isGustado() ? "Sí" : "No"%></td>
+                <td><%=desComida.isComido() ? "✔" : "❌"%></td>
+                <td><%=desComida.isGustado() ? "✔" : "❌"%></td>
                 <td style="box-shadow: none;background-color: #434343;border-bottom-width: 0px;">
                     <form action="editar_des_comida" method="post" style="height: 8px">
                         <input type="hidden" name="id" value="<%=desComida.getId()%>">

@@ -18,16 +18,18 @@
 </head>
 <body>
 <header>
-    <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back_button.png" alt="">
+    <a href="/cliente/dietas">
+        <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back_button.png" alt="">
+    </a>
     <h1 class="header-text text-center"><%=dieta.getNombre()%> - Menús</h1>
 </header>
-<ul>
+<ul class="text-light fs-5">
     <%
         for (OrdenMenuDietaDTO ordenMenuDieta : dieta.getOrdenMenuDietaList()) {
             String dayOfWeek = UtilityFunctions.getDayByNumber(ordenMenuDieta.getId());
     %>
     <li>
-        <a href="desempenyos_menu?id=<%=ordenMenuDieta.getMenuId()%>">
+        <a href="desempenyos_menu?id=<%=ordenMenuDieta.getMenuId()%>&dieta_id=<%=dieta.getId()%>" class="text-primary">
             <%=ordenMenuDieta.getNombreMenu()%> - <%=dayOfWeek%>
         </a>
     </li>

@@ -6,10 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import uma.fitpro.dto.*;
-import uma.fitpro.entity.Comida;
 import uma.fitpro.service.*;
-import uma.fitpro.ui.DesempenyoComidasForm;
-import uma.fitpro.ui.FiltroMenu;
+import uma.fitpro.ui.FiltroDesempenyoComida;
 
 import java.util.List;
 
@@ -29,7 +27,7 @@ public class ClienteDietasController {
     @Autowired
     private DesempenyoComidaService desempenyoComidaService;
 
-    @GetMapping("/")
+    @GetMapping("")
     public String doDietas(Model model, HttpSession session){
         UsuarioDTO cliente = (UsuarioDTO) session.getAttribute("user");
         if(cliente == null){
@@ -55,18 +53,24 @@ public class ClienteDietasController {
     }
 
     @GetMapping("desempenyos_menu")
-    public String doDesempenyosMenu(@RequestParam("id") Integer menu_id, Model model, HttpSession session){
+    public String doDesempenyosMenu(@RequestParam("id") Integer menu_id,
+                                    @RequestParam(value="dieta_id", required = false) Integer dieta_id
+                                    ,Model model, HttpSession session){
         if(session.getAttribute("user") == null){
             return "redirect:/";
         }
 
         MenuDTO menu = menuService.buscarMenu(menu_id);
+        if(dieta_id != null){
+            menu.setDietaId(dieta_id);
+        }
+
         Integer cliente_id = ((UsuarioDTO) session.getAttribute("user")).getId();
         List<DesempenyoMenuDTO> desempenyosMenu =
                 desempenyoMenuService.buscarDesempenyosMenuPorClienteYMenu(cliente_id, menu_id);
 
-        session.setAttribute("menu", menu);
         model.addAttribute("desempenyos", desempenyosMenu);
+        session.setAttribute("menu", menu);
 
         return "cliente/dietas/desempenyos_menu";
     }
@@ -84,7 +88,7 @@ public class ClienteDietasController {
 
         List<DesempenyoComidaDTO> des_comidas = desempenyoComidaService.buscarDesempenyosComida(desempenyoMenu.getDesempenyoComidas());
 
-        model.addAttribute("filtro",new FiltroMenu(desempenyoMenu.getId()));
+        model.addAttribute("filtro",new FiltroDesempenyoComida(desempenyoMenu.getId()));
 
         model.addAttribute("desempenyo_menu", desempenyoMenu);
         model.addAttribute("des_comidas", des_comidas);
@@ -181,7 +185,7 @@ public class ClienteDietasController {
     }
 
     @PostMapping("/filtro_menu")
-    public String doFiltroMenu(@ModelAttribute("filtro") FiltroMenu filtro, Model model, HttpSession session){
+    public String doFiltroMenu(@ModelAttribute("filtro") FiltroDesempenyoComida filtro, Model model, HttpSession session){
         if(session.getAttribute("user") == null || session.getAttribute("menu") == null){
             return "redirect:/";
         }

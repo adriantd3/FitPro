@@ -8,6 +8,7 @@ import java.util.List;
 @Data
 public class MenuDTO {
     private Integer id;
+    private Integer dietaId;
     private String nombre;
     private Float calorias;
     private LocalDate fechaCreacion;

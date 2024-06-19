@@ -7,6 +7,12 @@
 <%
     List<DesempenyoSesionDTO> desempenyoSesions = (List<DesempenyoSesionDTO>) request.getAttribute("desempenyos");
     SesionDTO sesion = (SesionDTO) session.getAttribute("sesion");
+
+    String rutaBack = "/cliente/rutinas";
+    if(sesion.getRutinaId() != null){
+        rutaBack = "sesiones_rutina?id=" + sesion.getRutinaId();
+    }
+
 %>
 <html lang="en">
 <head>
@@ -19,7 +25,9 @@
 </head>
 <body>
 <header>
-    <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back_button.png" alt="">
+    <a href="<%=rutaBack%>">
+        <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back_button.png" alt="">
+    </a>
     <h1 class="header-text text-center">Desempeños Sesión - <%=sesion.getNombre()%></h1>
 </header>
 <div class="ms-2">

@@ -20,7 +20,9 @@
 </head>
 <body>
 <header>
-    <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back_button.png" alt="">
+    <a href="/cliente/rutinas">
+        <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back_button.png" alt="">
+    </a>
     <h1 class="header-text text-center"><%=rutina.getNombre()%> - Sesiones</h1>
 </header>
 <ul class="text-light">
@@ -29,7 +31,7 @@
             String dayOfWeek = UtilityFunctions.getDayByNumber(ordenSesionRutina.getId());
     %>
     <li>
-        <a class="text-primary fs-5" href="desempenyos_sesion?id=<%=ordenSesionRutina.getIdSesion()%>">
+        <a class="text-primary fs-5" href="desempenyos_sesion?id=<%=ordenSesionRutina.getIdSesion()%>&rutina_id=<%=rutina.getId()%>">
             <%=ordenSesionRutina.getNombreSesion()%> - <%=dayOfWeek%>
         </a>
     </li>

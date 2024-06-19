@@ -18,7 +18,9 @@
 </head>
 <body>
 <header>
-    <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back_button.png" alt="">
+    <a href="/">
+        <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back_button.png" alt="">
+    </a>
     <h1 class="header-text text-center">Rutinas de entrenamiento</h1>
 </header>
 <ul class="text-light">
@@ -26,7 +28,7 @@
         for (RutinaDTO rutina : rutinas) {
     %>
     <li>
-        <a class="text-primary fs-5" href="sesiones_rutina?id=<%=rutina.getId()%>">
+        <a class="text-primary fs-5" href="rutinas/sesiones_rutina?id=<%=rutina.getId()%>">
             <%=rutina.getNombre()%>
         </a>
     </li>

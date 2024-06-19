@@ -17,7 +17,9 @@
 </head>
 <body>
 <header>
-    <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back_button.png" alt="">
+    <a href="desempenyos_sesion?id=<%=sesion.getId()%>" >
+        <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back_button.png" alt="">
+    </a>
     <h1 class="header-text text-center">Información de <%=sesion.getNombre()%>
     </h1>
 </header>
@@ -27,7 +29,7 @@
             <jsp:param name="dict" value="sesion"/>
         </jsp:include>
         <form method="post" action="nuevo_desempenyo_sesion">
-            <button type="submit" class="btn btn-primary" name="comenzar_entrenamiento">Nuevo entrenamiento</button>
+            <button type="submit" class="btn btn-primary" name="comenzar_entrenamiento">Comenzar entrenamiento</button>
         </form>
     </div>
 </div>

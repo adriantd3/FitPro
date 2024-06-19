@@ -18,7 +18,9 @@
 </head>
 <body>
 <header>
-    <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back_button.png" alt="">
+    <a href="desempenyos_sesion?id=<%=desempenyoSesion.getIdSesion()%>" >
+        <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back_button.png" alt="">
+    </a>
     <h1 class="header-text text-center">
         <%=desempenyoSesion.getNombreSesion()%> - Resultados del <%=fecha%>
     </h1>
@@ -30,15 +32,15 @@
 
         Nombre <form:input path="ejercicio"/>
         Grupo Muscular <form:select path="grupoMuscular">
-                            <form:option value="0" label="Ninguno"/>
+                            <form:option value="0" label="Todos"/>
                             <form:options items="${grupo_muscular}" itemLabel="grupoMuscular" itemValue="id"/>
                         </form:select>
         Tipo de ejercicio <form:select path="tipoEjercicio">
-                            <form:option value="<%=0%>" label="Ninguno"/>
+                            <form:option value="<%=0%>" label="Todos"/>
                             <form:options items="${tipo_ejercicio}" itemLabel="tipo" itemValue="id"/>
                         </form:select>
         <br>
-        <form:button>Filtrar</form:button>
+        <form:button class="btn btn-primary mt-3">Filtrar</form:button>
     </form:form>
 </div>
 

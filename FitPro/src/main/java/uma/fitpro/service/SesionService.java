@@ -21,9 +21,6 @@ public class SesionService extends DTOService {
     private SesionRepository sesionRepository;
 
     @Autowired
-    private SerieRepository serieRepository;
-
-    @Autowired
     private EjercicioService ejercicioService;
 
     public SesionDTO buscarSesion(Integer id) {

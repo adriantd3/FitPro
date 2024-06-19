@@ -43,7 +43,7 @@ public class EntrenadorCrossTrainingController {
 
     // --------------------------- HOME ---------------------------
 
-    @GetMapping("/")
+    @GetMapping("")
     public String doHome(Model model, HttpSession session){
         if (session.getAttribute("user") == null) {
             return "redirect:/";
@@ -138,12 +138,14 @@ public class EntrenadorCrossTrainingController {
         UsuarioDTO cliente = usuarioService.findById(id_cliente);
         RutinaDTO rutina = rutinaService.buscarRutina(id_rutina);
         HashMap<OrdenSesionRutinaDTO,List<DesempenyoSesionDTO>> seguimientoRutina = desempenyoSesionService.seguimientoRutina(cliente, rutina);
+        Map<Integer,String> diasSemana = getDiasSemana();
 
         session.setAttribute("cliente", cliente);
         session.setAttribute("rutina", rutina);
         model.addAttribute("seguimientoRutina", seguimientoRutina);
         model.addAttribute("cliente", cliente);
         model.addAttribute("rutina", rutina);
+        model.addAttribute("diasSemana", diasSemana);
         return "entrenador_cross_training/seguimiento_cliente";
     }
 

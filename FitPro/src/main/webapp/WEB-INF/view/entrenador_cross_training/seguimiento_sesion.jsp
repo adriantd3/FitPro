@@ -25,7 +25,7 @@
     <a href="/entrenador_cross_training/seguimiento_cliente?cliente=<%=cliente.getId()%>&rutina=<%=rutina.getId()%>">
         <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back.png" alt="" onclick="">
     </a>
-    <h1 class="header-text text-center">Seguimiento <%= desempenyoSesion.getNombreSesion()%> - <%=cliente.getNombre()%></h1>
+    <h1 class="header-text text-center">Seguimiento - <%= desempenyoSesion.getNombreSesion()%> (<%=desempenyoSesion.getFecha()%>) - <%=cliente.getNombre()%></h1>
 </header>
 <section class="scrollable-section">
     <% if (mapa.keySet().isEmpty()) { %>

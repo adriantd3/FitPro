@@ -19,7 +19,7 @@
 </head>
 <body>
 <header>
-    <a href="/entrenador_cross_training/">
+    <a href="/entrenador_cross_training">
         <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back.png" alt="" onclick="">
     </a>
     <h1 class="header-text text-center">Sesiones</h1>
@@ -79,7 +79,7 @@
 </section>
 
 <div class="sesion-buttons">
-    <button class="btn btn-success" onclick="window.location.href='/entrenador_cross_training/'">Guardar</button>
+    <button class="btn btn-success" onclick="window.location.href='/entrenador_cross_training'">Guardar</button>
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#nuevaSesion">
         Añadir sesion
     </button>

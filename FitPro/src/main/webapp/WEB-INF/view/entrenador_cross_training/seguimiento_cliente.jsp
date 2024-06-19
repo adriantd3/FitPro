@@ -1,11 +1,13 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.HashMap" %>
 <%@ page import="uma.fitpro.dto.*" %>
+<%@ page import="java.util.Map" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     HashMap<OrdenSesionRutinaDTO,List<DesempenyoSesionDTO>> seguimientoRutina = (HashMap<OrdenSesionRutinaDTO, List<DesempenyoSesionDTO>>) request.getAttribute("seguimientoRutina");
     UsuarioDTO cliente = (UsuarioDTO) request.getAttribute("cliente");
     RutinaDTO rutina = (RutinaDTO) request.getAttribute("rutina");
+    Map<Integer,String> diasSemana = (Map<Integer, String>) request.getAttribute("diasSemana");
 %>
 <!doctype html>
 <html lang="en">
@@ -35,7 +37,7 @@
         <%
             String nombre_sesion = "";
             for (OrdenSesionRutinaDTO o : seguimientoRutina.keySet()){
-                nombre_sesion = o.getNombreSesion();
+                nombre_sesion = o.getNombreSesion() + " - " + diasSemana.get(o.getId());
         %>
         <div>
             <table name="tabla_ejercicio" style="width: 700px" class="table table-striped table-dark">
@@ -54,7 +56,7 @@
                 <tr>
                     <th scope="row"><%= cont %></th>
                     <td>
-                        <button class="btn btn-secondary" onclick="window.location.href='/entrenador_cross_training/seguimiento_sesion?desempenyo_sesion=<%=d.getId()%>'"><%=d.getNombreSesion()%> - <%=d.getFecha()%> - <%=d.isTerminado() ? "Finalizado" : "Sin finalizar"%></button>
+                        <button class="btn btn-secondary" onclick="window.location.href='/entrenador_cross_training/seguimiento_sesion?desempenyo_sesion=<%=d.getId()%>'"><%=d.getFecha()%> - <%=d.isTerminado() ? "Finalizado" : "Sin finalizar"%></button>
                     </td>
 
                 </tr>

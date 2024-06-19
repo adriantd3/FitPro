@@ -28,17 +28,12 @@
 </head>
 <body>
 <header>
-    <a href="/entrenador_cross_training/">
+    <a href="/entrenador_cross_training">
         <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back.png" alt="" onclick="">
     </a>
     <h1 class="header-text text-center">Clientes</h1>
 </header>
 <section class="scrollable-section">
-    <% if (clientes.isEmpty()) { %>
-    <section class="table-container">
-        <section class="mensaje-alerta"><h2>No tienes ningún cliente asociado</h2></section>
-    </section>
-    <% }else { %>
     <section class="table-container">
         <table class="table table-striped table-dark table-width">
             <thead>
@@ -80,6 +75,10 @@
 
             </tbody>
         </table>
+    </section>
+    <% if (clientes.isEmpty()) { %>
+    <section class="seccion-alerta">
+        <section class="mensaje-alerta"><h2>No hay ningún cliente disponible</h2></section>
     </section>
     <% } %>
 </section>

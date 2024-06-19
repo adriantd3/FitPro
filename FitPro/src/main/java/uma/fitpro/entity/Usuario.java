@@ -271,7 +271,6 @@ public class Usuario implements Serializable, DTO<UsuarioDTO> {
         this.rutinasCliente = rutinasCliente;
     }
 
-
     @Override
     public UsuarioDTO toDTO() {
         UsuarioDTO usuario = new UsuarioDTO();

@@ -10,6 +10,6 @@ import java.util.List;
 public interface DesempenyoSesionRepository extends JpaRepository<DesempenyoSesion, Integer> {
     @Query("select d from DesempenyoSesion d where d.sesion.id = :sesion_id " +
             "and d.usuario.id = :cliente_id order by d.fecha asc, d.id desc")
-    public List<DesempenyoSesion> findByClientIDAndSesionID(@Param("sesion_id") Integer sesion_id,
-                                                            @Param("cliente_id") Integer cliente_id);
+    public List<DesempenyoSesion> findByClientIDAndSesionID(@Param("cliente_id") Integer cliente_id,
+                                                            @Param("sesion_id") Integer sesion_id);
 }

@@ -1,11 +1,11 @@
-<%@ page import="uma.fitpro.entity.Sesion" %>
-<%@ page import="uma.fitpro.entity.Ejercicio" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Map" %>
+<%@ page import="uma.fitpro.dto.SesionDTO" %>
+<%@ page import="uma.fitpro.dto.EjercicioDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    Sesion sesion = (Sesion) request.getAttribute("sesion");
-    Ejercicio ejercicio = (Ejercicio) request.getAttribute("ejercicio");
+    SesionDTO sesion = (SesionDTO) request.getAttribute("sesion");
+    EjercicioDTO ejercicio = (EjercicioDTO) request.getAttribute("ejercicio");
     Map<Integer, List<String>> ejercicioParametros = (Map<Integer, List<String>>) request.getAttribute("ejercicioParametros");
 %>
 <!doctype html>

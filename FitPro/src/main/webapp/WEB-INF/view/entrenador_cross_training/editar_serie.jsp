@@ -1,12 +1,14 @@
-<%@ page import="uma.fitpro.entity.Sesion" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Map" %>
-<%@ page import="uma.fitpro.entity.Serie" %>
+<%@ page import="uma.fitpro.dto.SesionDTO" %>
+<%@ page import="uma.fitpro.dto.SerieDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    Sesion sesion = (Sesion) request.getAttribute("sesion");
-    Serie serie = (Serie) request.getAttribute("serie");
+    SesionDTO sesion = (SesionDTO) request.getAttribute("sesion");
+    SerieDTO serie = (SerieDTO) request.getAttribute("serie");
     Map<Integer, List<String>> ejercicioParametros = (Map<Integer, List<String>>) request.getAttribute("ejercicioParametros");
+    String ejercicio = (String) request.getAttribute("ejercicio");
+    Integer tipoEjercicio = (Integer) request.getAttribute("tipoEjercicio");
 %>
 <!doctype html>
 <html lang="en">
@@ -20,35 +22,13 @@
     <style><%@include file="css/common.css"%></style>
 </head>
 <body>
-<h1 class="ejemplo">Editar serie de <%=serie.getEjercicio().getNombre()%></h1>
+<h1 class="ejemplo">Editar serie de <%=ejercicio%></h1>
 <form method="post" action="/entrenador_cross_training/guardar_serie">
     <%
         int n = 1;
-        String value1 = "";
-        String value2 = "";
-        switch (serie.getEjercicio().getTipo().getId()){
-            case 1:
-                value1 = serie.getPeso().toString();
-                value2 = serie.getRepeticiones().toString();
-                break;
-            case 2:
-                value1 = serie.getDistancia().toString();
-                value2 = serie.getDuracion().toString();
-                break;
-            case 3:
-                value1 = serie.getDuracion().toString();
-                value2 = serie.getDescanso().toString();
-                break;
-            case 4:
-                value1 = serie.getRepeticiones().toString();
-                value2 = serie.getDescanso().toString();
-                break;
-            case 5:
-                value1 = serie.getRepeticiones().toString();
-                value2 = serie.getDescanso().toString();
-                break;
-        }
-        for (String elemento : ejercicioParametros.get(serie.getEjercicio().getTipo().getId())) {
+        String value1 = serie.getMetrica1().toString();
+        String value2 = serie.getMetrica2().toString();
+        for (String elemento : ejercicioParametros.get(tipoEjercicio)) {
 
     %>
     <div  style="width: 300px; margin-left: 40px" class="input-group mb-3">

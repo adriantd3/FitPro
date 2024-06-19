@@ -83,7 +83,7 @@ public class Usuario implements Serializable, DTO<UsuarioDTO> {
             inverseJoinColumns = @JoinColumn(name = "dietista_id"))
     private List<Usuario> dietistas = new ArrayList<>();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "entrenador_cliente",
             joinColumns = @JoinColumn(name = "entrenador_id"),
             inverseJoinColumns = @JoinColumn(name = "cliente_id"))
@@ -271,7 +271,6 @@ public class Usuario implements Serializable, DTO<UsuarioDTO> {
     public void setRutinasCliente(List<Rutina> rutinasCliente) {
         this.rutinasCliente = rutinasCliente;
     }
-
 
     @Override
     public UsuarioDTO toDTO() {

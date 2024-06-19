@@ -1,13 +1,13 @@
 <%@ page import="java.util.List" %>
-<%@ page import="uma.fitpro.entity.Rutina" %>
 <%@ page import="java.util.Map" %>
-<%@ page import="uma.fitpro.entity.Sesion" %>
+<%@ page import="uma.fitpro.dto.RutinaDTO" %>
+<%@ page import="uma.fitpro.dto.SesionDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    Rutina rutina = (Rutina) request.getAttribute("rutina");
-    Map<Integer, Sesion> diaSesion = (Map<Integer, Sesion>) request.getAttribute("diaSesion");
+    RutinaDTO rutina = (RutinaDTO) request.getAttribute("rutina");
+    Map<Integer, SesionDTO> diaSesion = (Map<Integer, SesionDTO>) request.getAttribute("diaSesion");
     Map<Integer, String> diasSemana = (Map<Integer, String>) request.getAttribute("diasSemana");
-    List<Sesion> sesiones = (List<Sesion>) request.getAttribute("sesiones");
+    List<SesionDTO> sesiones = (List<SesionDTO>) request.getAttribute("sesiones");
 %>
 <!doctype html>
 <html lang="en">
@@ -16,7 +16,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Editar rutina</title>
+    <title>Editar rutina - <%=rutina.getNombre()%></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/css/bootstrap-select.min.css">
     <style><%@include file="css/common.css"%></style>
@@ -55,10 +55,10 @@
                             }
                         %>
                         <select class="selectpicker" data-live-search="true" data-style="btn-<%=color%>" name="nueva_sesion">
-                            <option selected value=-1><h6>Sin rutina asignada</h6></option>
+                            <option selected value=-1><h6>Sin sesión asignada</h6></option>
                             <%
                                 String selected = "";
-                                for (Sesion sesion : sesiones){
+                                for (SesionDTO sesion : sesiones){
                                     if (diaSesion.get(dia) !=null){
                                         if (diaSesion.get(dia).equals(sesion)){
                                             selected = "selected";
@@ -91,7 +91,11 @@
     </table>
 </section>
 <div class="sesion-buttons">
-    <button class="btn btn-success" onclick="window.location.href='/entrenador_cross_training/rutinas'">Guardar rutina</button>
+    <button class="btn btn-success" onclick="window.location.href='/entrenador_cross_training/rutinas'">Guardar</button>
+    <form method="post" action="/entrenador_cross_training/borrar_rutina">
+        <input type="hidden" name="id" value="<%=rutina.getId()%>">
+        <button class="btn btn-danger">Borrar</button>
+    </form>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>

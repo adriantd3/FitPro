@@ -1,8 +1,8 @@
 <%@ page import="java.util.List" %>
-<%@ page import="uma.fitpro.entity.Usuario" %>
+<%@ page import="uma.fitpro.dto.UsuarioDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    List<Usuario> clientes = (List<Usuario>) request.getAttribute("clientes");
+    List<UsuarioDTO> clientes = (List<UsuarioDTO>) request.getAttribute("clientes");
 
     // Parametros del filtrado de clientes
     String nombreFiltrado = "";
@@ -28,27 +28,32 @@
 </head>
 <body>
 <header>
-    <a href="/entrenador_cross_training/home">
+    <a href="/entrenador_cross_training/">
         <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back.png" alt="" onclick="">
     </a>
     <h1 class="header-text text-center">Clientes</h1>
 </header>
 <section class="scrollable-section">
+    <% if (clientes.isEmpty()) { %>
+    <section class="table-container">
+        <section class="mensaje-alerta"><h2>No tienes ningún cliente asociado</h2></section>
+    </section>
+    <% }else { %>
     <section class="table-container">
         <table class="table table-striped table-dark table-width">
             <thead>
             <form method="get" action="/entrenador_cross_training/filtrar_clientes">
                 <tr>
                     <th scope="col" >#</th>
-                    <th scope="col">
+                    <th scope="col"><input type="text" placeholder="Nombre" name="nombre" value="<%= nombreFiltrado %>" class="form-control filter-input" data-bs-theme="dark" ></th>
+                    <th scope="col" ><input style="width: 80px" type="text" required placeholder="Edad" name="edad" value="<%= edadFiltrada %>" class="form-control filter-input" data-bs-theme="dark" ></th>
+                    <th scope="col" ><input style="width: 80px" type="text" required placeholder="Altura" name="altura" value="<%= alturaFiltrada %>" class="form-control filter-input" data-bs-theme="dark" ></th>
+                    <th scope="col" >
                         <div class="filter-flex">
-                            <input type="text" placeholder="Nombre" name="nombre" value="<%= nombreFiltrado %>" class="form-control filter-input" data-bs-theme="dark" >
+                            <input style="width: 80px" type="text" required placeholder="Peso" name="peso" value="<%= pesoFiltrado %>" class="form-control filter-input" data-bs-theme="dark" >
                             <button class="btn btn-dark">🔍</button>
                         </div>
                     </th>
-                    <th scope="col" ><input style="width: 80px" type="text" required placeholder="Edad" name="edad" value="<%= edadFiltrada %>" class="form-control filter-input" data-bs-theme="dark" ></th>
-                    <th scope="col" ><input style="width: 80px" type="text" required placeholder="Altura" name="altura" value="<%= alturaFiltrada %>" class="form-control filter-input" data-bs-theme="dark" ></th>
-                    <th scope="col" ><input style="width: 80px" type="text" required placeholder="Peso" name="peso" value="<%= pesoFiltrado %>" class="form-control filter-input" data-bs-theme="dark" ></th>
                     <th scope="col" >Rutinas</th>
                 </tr>
             </form>
@@ -56,7 +61,7 @@
             <tbody>
             <%
                 int num = 1;
-                for (Usuario u : clientes){
+                for (UsuarioDTO u : clientes){
 
 
             %>
@@ -75,10 +80,6 @@
 
             </tbody>
         </table>
-    </section>
-    <% if (clientes.isEmpty()) { %>
-    <section class="seccion-alerta">
-        <section class="mensaje-alerta"><h2>No hay clientes disponibles</h2></section>
     </section>
     <% } %>
 </section>

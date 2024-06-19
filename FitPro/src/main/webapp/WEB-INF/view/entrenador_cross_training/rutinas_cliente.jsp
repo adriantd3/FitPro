@@ -1,11 +1,12 @@
-<%@ page import="uma.fitpro.entity.Rutina" %>
 <%@ page import="java.util.List" %>
 <%@ page import="uma.fitpro.entity.Usuario" %>
+<%@ page import="uma.fitpro.dto.RutinaDTO" %>
+<%@ page import="uma.fitpro.dto.UsuarioDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    List<Rutina> rutinas = (List<Rutina>) request.getAttribute("rutinas");
-    List<Rutina> todasLasRutinas = (List<Rutina>) request.getAttribute("todasLasRutinas");
-    Usuario cliente = (Usuario) request.getAttribute("cliente");
+    List<RutinaDTO> rutinas = (List<RutinaDTO>) request.getAttribute("rutinas");
+    List<RutinaDTO> todasLasRutinas = (List<RutinaDTO>) request.getAttribute("todasLasRutinas");
+    UsuarioDTO cliente = (UsuarioDTO) request.getAttribute("cliente");
 %>
 <!doctype html>
 <html lang="en">
@@ -14,7 +15,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Rutinas</title>
+    <title>Rutinas de <%=cliente.getNombre()%></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/css/bootstrap-select.min.css">
     <style><%@include file="css/common.css"%></style>
@@ -27,6 +28,11 @@
     <h1 class="header-text text-center"><%= cliente!= null ? "Rutinas de " + cliente.getNombre() : "Rutinas"%></h1>
 </header>
 <section class="scrollable-section">
+    <% if (rutinas.isEmpty()) { %>
+    <section class="table-container">
+        <section class="mensaje-alerta"><h2><%=cliente.getNombre()%> no tiene ninguna rutina asignada</h2></section>
+    </section>
+    <% }else { %>
     <section class="table-container">
         <table class="table table-striped table-dark table-width">
             <thead>
@@ -34,18 +40,24 @@
                 <th scope="col">#</th>
                 <th scope="col">Rutina</th>
                 <th scope="col">Fecha</th>
+                <th scope="col">Seguimiento</th>
                 <th scope="col">Borrar</th>
             </tr>
             </thead>
             <tbody>
             <%
                 int num = 1;
-                for (Rutina r : rutinas){
+                for (RutinaDTO r : rutinas){
             %>
             <tr>
                 <th scope="row"><%= num %></th>
                 <td name="nombre"><%= r.getNombre() %></td>
                 <td><%=r.getFechaCreacion()%></td>
+                <td>
+                    <button class="btn btn-info button-image" onclick="window.location.href='/entrenador_cross_training/seguimiento_cliente?cliente=<%=cliente.getId()%>&rutina=<%=r.getId()%>'">
+                        <img class="image-button" src="${pageContext.request.contextPath}/assets/seguimiento.svg">
+                    </button>
+                </td>
                 <td>
                     <form action="/entrenador_cross_training/borrar_rutina_cliente" method="post">
                         <input type="hidden" name="rutina" value="<%=r.getId()%>">
@@ -64,6 +76,7 @@
             </tbody>
         </table>
     </section>
+    <% } %>
 </section>
 
 <div class="sesion-buttons">
@@ -85,7 +98,7 @@
                     <%
                         String color = "secondary";
                         if (todasLasRutinas.size() == 0) {
-                            color = "danger";
+                            color = "warning";
                         }
                     %>
                     Rutina a asignar:
@@ -99,7 +112,7 @@
                             }
                         %>
                         <%
-                            for (Rutina r : todasLasRutinas){
+                            for (RutinaDTO r : todasLasRutinas){
                         %>
                         <option value="<%=r.getId()%>"><%=r.getNombre()%></option>
                         <%

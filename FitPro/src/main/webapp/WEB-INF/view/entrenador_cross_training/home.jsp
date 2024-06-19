@@ -1,7 +1,7 @@
-<%@ page import="uma.fitpro.entity.Usuario" %>
+<%@ page import="uma.fitpro.dto.UsuarioDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    Usuario user = (Usuario) session.getAttribute("user");
+    UsuarioDTO user = (UsuarioDTO) session.getAttribute("user");
 %>
 <!doctype html>
 <html lang="en">
@@ -17,7 +17,7 @@
 <body>
     <%
         String bienvenida = "";
-        if (user.getSexo() == 1){
+        if (user.isSexo()){
             bienvenida = "Bienvenido, ";
         }else {
             bienvenida = "Bienvenida, ";

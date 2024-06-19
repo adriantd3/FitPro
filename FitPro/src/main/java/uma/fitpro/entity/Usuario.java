@@ -10,6 +10,8 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import uma.fitpro.dto.DTO;
+import uma.fitpro.dto.DietaDTO;
+import uma.fitpro.dto.RutinaDTO;
 import uma.fitpro.dto.UsuarioDTO;
 
 @Entity
@@ -285,17 +287,30 @@ public class Usuario implements Serializable, DTO<UsuarioDTO> {
         usuario.setPeso(peso);
         usuario.setContrasenya(contrasenya);
         usuario.setCorreo(correo);
-        List<Integer> rutinasCliente = new ArrayList<>();
-        for (Rutina rutina : this.rutinasCliente) {
-            rutinasCliente.add(rutina.getId());
-        }
-        usuario.setRutinasCliente(rutinasCliente);
 
         List<Integer> dietasCliente = new ArrayList<>();
         for (Dieta dieta : this.dietasCliente) {
             dietasCliente.add(dieta.getId());
         }
         usuario.setDietasCliente(dietasCliente);
+
+        List<Integer> clientesDietista = new ArrayList<>();
+        for (Usuario cliente : this.clientesDietista) {
+            clientesDietista.add(cliente.getId());
+        }
+        usuario.setClientesDietista(clientesDietista);
+
+        List<Integer> rutinasCliente = new ArrayList<>();
+        for (Rutina rutina : this.rutinasCliente) {
+            rutinasCliente.add(rutina.getId());
+        }
+        usuario.setRutinasCliente(rutinasCliente);
+
+        List<Integer> clientesEntrenador = new ArrayList<>();
+        for (Usuario cliente : this.clientesEntrenador) {
+            clientesEntrenador.add(cliente.getId());
+        }
+        usuario.setClientesEntrenador(clientesEntrenador);
 
         return usuario;
     }

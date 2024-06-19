@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import uma.fitpro.dao.DesempenyoComidaRepository;
 import uma.fitpro.dto.DesempenyoComidaDTO;
 import uma.fitpro.entity.DesempenyoComida;
+import uma.fitpro.ui.FiltroDesempenyoComida;
 import uma.fitpro.ui.FiltroMenu;
 
 import java.util.List;
@@ -28,7 +29,7 @@ public class DesempenyoComidaService extends DTOService{
         return this.entidadesADTO(desempenyoComidaList);
     }
 
-    public List<DesempenyoComidaDTO> filtroBuscarDesempenyosComida(FiltroMenu filtro){
+    public List<DesempenyoComidaDTO> filtroBuscarDesempenyosComida(FiltroDesempenyoComida filtro){
         Byte comido = filtro.getComido() == null ? (byte) 2 : (byte) (filtro.getComido() ? 1 : 0);
         Byte gustado = filtro.getGustado() == null ? (byte) 2 : (byte) (filtro.getGustado() ? 1 : 0);
         List<DesempenyoComida> desempenyoComidaList = desempenyoComidaRepository.findByFiltroMenu(filtro.getDesMenuId(),

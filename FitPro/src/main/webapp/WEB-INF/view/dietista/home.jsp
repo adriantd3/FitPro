@@ -1,4 +1,5 @@
-<%@ page import="uma.fitpro.entity.Usuario" %><%--
+<%@ page import="uma.fitpro.entity.Usuario" %>
+<%@ page import="uma.fitpro.dto.UsuarioDTO" %><%--
   Created by IntelliJ IDEA.
   User: jabr3
   Date: 24/04/2024
@@ -7,7 +8,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    Usuario user = (Usuario) session.getAttribute("user");
+    UsuarioDTO user = (UsuarioDTO) session.getAttribute("user");
 %>
 <html>
 <head>

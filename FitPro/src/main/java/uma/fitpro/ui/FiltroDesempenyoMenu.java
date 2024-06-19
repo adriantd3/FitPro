@@ -2,42 +2,21 @@ package uma.fitpro.ui;
 
 import java.time.LocalDate;
 
+import lombok.Getter;
+import lombok.Setter;
+
+import java.util.Objects;
+
+@Getter
+@Setter
 public class FiltroDesempenyoMenu {
     String fecha;
     int clienteId;
     int dietaId;
     int menuId;
 
-    public int getClienteId() {
-        return clienteId;
-    }
-
-    public void setClienteId(int clienteId) {
-        this.clienteId = clienteId;
-    }
-
-    public int getDietaId() {
-        return dietaId;
-    }
-
-    public void setDietaId(int dietaId) {
-        this.dietaId = dietaId;
-    }
-
-    public int getMenuId() {
-        return menuId;
-    }
-
-    public void setMenuId(int menuId) {
-        this.menuId = menuId;
-    }
-
     public FiltroDesempenyoMenu() {
         fecha = "";
-    }
-
-    public String getFecha() {
-        return fecha;
     }
 
     public LocalDate getLocalDateFecha() {
@@ -53,13 +32,7 @@ public class FiltroDesempenyoMenu {
         }
     }
 
-    public void setFecha(String fecha) {
-        this.fecha = fecha;
-    }
-
-
     public boolean estaVacio () {
         return fecha.isEmpty();
-
     }
 }

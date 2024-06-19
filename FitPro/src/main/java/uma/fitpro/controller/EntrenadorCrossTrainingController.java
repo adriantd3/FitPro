@@ -17,7 +17,7 @@ import java.util.*;
 @RequestMapping("/entrenador_cross_training")
 @Controller
 public class EntrenadorCrossTrainingController {
-
+/*
     @Autowired
     protected UsuarioRepository usuarioRepository;
 
@@ -56,7 +56,7 @@ public class EntrenadorCrossTrainingController {
         Usuario user = (Usuario) session.getAttribute("user");
         Usuario entrenador =  usuarioRepository.findById(user.getId()).orElse(null);
         List<Usuario> clientes = new ArrayList<>(entrenador.getClientesEntrenador());
-        Collections.sort(clientes);
+        //Collections.sort(clientes);
 
         model.addAttribute("clientes", clientes);
 
@@ -486,5 +486,5 @@ public class EntrenadorCrossTrainingController {
 
     }
 
-
+*/
 }

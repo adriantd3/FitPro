@@ -6,10 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import uma.fitpro.dto.*;
-import uma.fitpro.entity.Comida;
 import uma.fitpro.service.*;
-import uma.fitpro.ui.DesempenyoComidasForm;
-import uma.fitpro.ui.FiltroMenu;
+import uma.fitpro.ui.FiltroDesempenyoComida;
 
 import java.util.List;
 
@@ -60,7 +58,7 @@ public class ClienteDietasController {
             return "redirect:/";
         }
 
-        MenuDTO menu = menuService.buscarMenu(menu_id);
+        MenuDTO menu = menuService.findById(menu_id);
         Integer cliente_id = ((UsuarioDTO) session.getAttribute("user")).getId();
         List<DesempenyoMenuDTO> desempenyosMenu =
                 desempenyoMenuService.buscarDesempenyosMenuPorClienteYMenu(cliente_id, menu_id);
@@ -84,7 +82,7 @@ public class ClienteDietasController {
 
         List<DesempenyoComidaDTO> des_comidas = desempenyoComidaService.buscarDesempenyosComida(desempenyoMenu.getDesempenyoComidas());
 
-        model.addAttribute("filtro",new FiltroMenu(desempenyoMenu.getId()));
+        model.addAttribute("filtro",new FiltroDesempenyoComida(desempenyoMenu.getId()));
 
         model.addAttribute("desempenyo_menu", desempenyoMenu);
         model.addAttribute("des_comidas", des_comidas);
@@ -181,7 +179,7 @@ public class ClienteDietasController {
     }
 
     @PostMapping("/filtro_menu")
-    public String doFiltroMenu(@ModelAttribute("filtro") FiltroMenu filtro, Model model, HttpSession session){
+    public String doFiltroMenu(@ModelAttribute("filtro") FiltroDesempenyoComida filtro, Model model, HttpSession session){
         if(session.getAttribute("user") == null || session.getAttribute("menu") == null){
             return "redirect:/";
         }

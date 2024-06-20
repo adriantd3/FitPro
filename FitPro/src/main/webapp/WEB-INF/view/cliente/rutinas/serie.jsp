@@ -26,7 +26,7 @@
     </a>
     <h1 class="header-text text-center">Serie</h1>
 </header>
-<form:form method="POST" action="guardar_serie" modelAttribute="desSerie" cssClass="text-light fs-5 m-3">
+<form:form method="POST" action="guardar_serie" modelAttribute="desSerie" cssClass="text-light fs-5 m-3 text-center">
     <form:hidden path="id"/>
     <form:hidden path="desempenyoSesion"/>
     <form:hidden path="ejercicio"/>

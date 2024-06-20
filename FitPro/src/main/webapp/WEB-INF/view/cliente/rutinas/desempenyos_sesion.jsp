@@ -30,38 +30,40 @@
     </a>
     <h1 class="header-text text-center">Desempeños Sesión - <%=sesion.getNombre()%></h1>
 </header>
-<div class="ms-2">
-    <ul class="text-light">
-        <%
-            int countNT = 0;
-            int countT = 0;
-            for (DesempenyoSesionDTO desempenyoSesion : desempenyoSesions){
-                String terminado;
-                if(desempenyoSesion.isTerminado()){
-                    terminado = "Terminado";
-                    countT++;
-                }else{
-                    terminado = "No terminado";
-                    countNT++;
+<div class="d-flex justify-content-center mt-4">
+    <div>
+        <ul class="text-light">
+            <%
+                int countNT = 0;
+                int countT = 0;
+                for (DesempenyoSesionDTO desempenyoSesion : desempenyoSesions){
+                    String terminado;
+                    if(desempenyoSesion.isTerminado()){
+                        terminado = "Terminado";
+                        countT++;
+                    }else{
+                        terminado = "No terminado";
+                        countNT++;
+                    }
+                    String idRes = "Ent" + (desempenyoSesion.isTerminado() ? "T" + countT: "NT" + countNT);
+
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                    String fecha = desempenyoSesion.getFecha().format(formatter);
+            %>
+            <li>
+                <a class="text-primary fs-5" href="resultados_sesion?id=<%=desempenyoSesion.getId()%>" id="<%=idRes%>">
+                    <%=fecha%> - <%=terminado%>
+                </a>
+            </li>
+            <%
                 }
-                String idRes = "Ent" + (desempenyoSesion.isTerminado() ? "T" + countT: "NT" + countNT);
+            %>
 
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                String fecha = desempenyoSesion.getFecha().format(formatter);
-        %>
-        <li>
-            <a class="text-primary fs-5" href="resultados_sesion?id=<%=desempenyoSesion.getId()%>" id="<%=idRes%>">
-                <%=fecha%> - <%=terminado%>
-            </a>
-        </li>
-        <%
-            }
-        %>
-
-    </ul>
-    <form method="post" action="prev_desempenyo">
-        <button type="submit" class="btn btn-primary ms-2" name="nuevo_entrenamiento">Nuevo entrenamiento</button>
-    </form>
+        </ul>
+        <form method="post" action="prev_desempenyo" class="text-center">
+            <button type="submit" class="btn btn-primary ms-2" name="nuevo_entrenamiento">Nuevo entrenamiento</button>
+        </form>
+    </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"

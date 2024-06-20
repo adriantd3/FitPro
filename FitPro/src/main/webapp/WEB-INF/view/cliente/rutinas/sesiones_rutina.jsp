@@ -25,20 +25,22 @@
     </a>
     <h1 class="header-text text-center"><%=rutina.getNombre()%> - Sesiones</h1>
 </header>
-<ul class="text-light">
-    <%
-        for (OrdenSesionRutinaDTO ordenSesionRutina : rutina.getOrdenSesionRutinaList()) {
-            String dayOfWeek = UtilityFunctions.getDayByNumber(ordenSesionRutina.getId());
-    %>
-    <li>
-        <a class="text-primary fs-5" href="desempenyos_sesion?id=<%=ordenSesionRutina.getIdSesion()%>&rutina_id=<%=rutina.getId()%>">
-            <%=ordenSesionRutina.getNombreSesion()%> - <%=dayOfWeek%>
-        </a>
-    </li>
-    <%
-        }
-    %>
-</ul>
+<div class="d-flex justify-content-center mt-4">
+    <ul class="text-light">
+        <%
+            for (OrdenSesionRutinaDTO ordenSesionRutina : rutina.getOrdenSesionRutinaList()) {
+                String dayOfWeek = UtilityFunctions.getDayByNumber(ordenSesionRutina.getId());
+        %>
+        <li>
+            <a class="text-primary fs-5" href="desempenyos_sesion?id=<%=ordenSesionRutina.getIdSesion()%>&rutina_id=<%=rutina.getId()%>">
+                <%=ordenSesionRutina.getNombreSesion()%> - <%=dayOfWeek%>
+            </a>
+        </li>
+        <%
+            }
+        %>
+    </ul>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>

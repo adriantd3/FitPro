@@ -21,11 +21,11 @@
     <h1 class="header-text text-center">Bienvenido, <%=cliente.getNombre()%></h1>
 </header>
 <section id="buttons" class="position-relative start-50 w-25 mt-4">
-    <button type="button" class="btn btn-secondary w-100 translate-middle-x"
+    <button type="button" class="btn btn-secondary w-50 translate-middle-x"
             onclick="window.location.href='cliente/rutinas'" name="rutinas">Rutinas
     </button>
     <br/>
-    <button type="button" class="btn btn-secondary w-100 translate-middle-x mt-3"
+    <button type="button" class="btn btn-secondary w-50 translate-middle-x mt-3"
             onclick="window.location.href='cliente/dietas'" name="dietas">Dietas
     </button>
 </section>

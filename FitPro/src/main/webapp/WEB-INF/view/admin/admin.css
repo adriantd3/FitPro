@@ -117,3 +117,13 @@ button {
     border-style: none;
     font-size: 50px;
 }
+
+.etype-delete-button {
+    top: 175px;
+    right: 680px;
+}
+
+.etype-clean-button {
+    top: 175px;
+    right: 810px;
+}

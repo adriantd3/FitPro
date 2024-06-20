@@ -334,6 +334,62 @@ public class AdminController {
         return "admin/assignment";
     }
 
+    //////////////////////////////////////////////////////
+    /////////          Exercise Type             /////////
+    //////////////////////////////////////////////////////
+
+    @GetMapping("/exercisetype")
+    public String doEType(@RequestParam("id") Integer id, Model model) {
+        List<TipoEjercicioDTO> tipos = tipoEjercicioService.findAll();
+        TipoEjercicioDTO tipo = null;
+        if(id > 0) {
+            tipo = tipoEjercicioService.findById(id);
+        }
+        model.addAttribute("tipos", tipos);
+        model.addAttribute("tipo", tipo);
+
+        model.addAttribute("filtroNombre", "");
+        model.addAttribute("filtroMetrica1", "");
+        model.addAttribute("filtroMetrica2", "");
+
+        return "admin/exerciseType";
+    }
+
+    @PostMapping("/add-exercisetype")
+    public String doAddEType(@RequestParam("Id") Integer Id, @RequestParam("Nombre") String nombre, @RequestParam("Metrica1") String m1, @RequestParam("Metrica2") String m2, Model model) {
+        if(nombre.isEmpty() || m1.isEmpty()) {
+            return "redirect:/admin/exercisetype?id=0";
+        }
+        TipoEjercicioDTO tipo = new TipoEjercicioDTO();
+        if(Id != 0) tipo = tipoEjercicioService.findById(Id);
+        tipo.setTipo(nombre);
+        tipo.setMetrica1(m1);
+        tipo.setMetrica2(m2);
+        tipoEjercicioService.save(tipo);
+
+        return "redirect:/admin/exercisetype?id=" + Id;
+    }
+
+    @PostMapping("/delete-exercisetype")
+    public String doDeleteEType(@RequestParam("Id") Integer id, Model model) {
+        tipoEjercicioService.delete(id);
+
+        return "redirect:/admin/exercisetype?id=0";
+    }
+
+    @PostMapping("/exercisetype/filter")
+    public String doETypeFilter(@RequestParam("nombre") String nombre, @RequestParam("metrica1") String m1, @RequestParam("metrica2") String m2, Model model) {
+        List<TipoEjercicioDTO> tipos = tipoEjercicioService.filterTipos(nombre, m1, m2);
+
+        model.addAttribute("tipos", tipos);
+        model.addAttribute("tipo", null);
+
+        model.addAttribute("filtroNombre", nombre);
+        model.addAttribute("filtroMetrica1", m1);
+        model.addAttribute("filtroMetrica2", m2);
+
+        return "admin/exerciseType";
+    }
 
 }
 

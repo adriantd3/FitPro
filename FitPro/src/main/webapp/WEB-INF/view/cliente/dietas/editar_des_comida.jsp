@@ -20,7 +20,7 @@
     </a>
     <h1 class="header-text text-center">Desempeño Comida: <%=desComida.getComida().getNombre()%></h1>
 </header>
-<form:form method="POST" action="guardar_des_comida" modelAttribute="des_comida" cssClass="text-light p-3">
+<form:form method="POST" action="guardar_des_comida" modelAttribute="des_comida" cssClass="text-light p-3 text-center">
     <form:hidden path="id"/>
     <form:hidden path="desempenyoMenu"/>
 

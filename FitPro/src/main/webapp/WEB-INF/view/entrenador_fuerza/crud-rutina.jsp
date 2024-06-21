@@ -24,7 +24,7 @@
 <body>
 <header>
     <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back_button.png" alt="<-"
-         onclick="window.location.href='/entrenador_fuerza/'">
+         onclick="window.location.href='/entrenador_fuerza/<%=(cliente != null ? "clientes" : "")%>' ">
     <h1 class="header-text text-center">Rutinas de entrenamiento <%if(cliente != null){%><%="de "+cliente.getNombre()%><%}%></h1> <!-- Controlar si es de un usario para añadir "de usuario" y solo sus listas -->
 </header>
 <section class="mt-3 ms-3 h-100">

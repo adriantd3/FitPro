@@ -1,5 +1,5 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ page import="uma.fitpro.entity.Usuario" %>
+<%@ page import="uma.fitpro.dto.UsuarioDTO" %>
 <%@ page import="java.util.List" %>
 <%@ page import="uma.fitpro.ui.FiltroCliente" %><%--
   Created by IntelliJ IDEA.
@@ -10,8 +10,8 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    List<Usuario> clientes = (List<Usuario>) request.getAttribute("clientes");
-    Usuario cliente = (Usuario) request.getAttribute("cliente");
+    List<UsuarioDTO> clientes = (List<UsuarioDTO>) request.getAttribute("clientes");
+    UsuarioDTO cliente = (UsuarioDTO) request.getAttribute("cliente");
     FiltroCliente filtroCliente = (FiltroCliente) request.getAttribute("filtroCliente");
 %>
 
@@ -57,7 +57,7 @@
                     <form id="formSelectCliente" method="get" action="./clientes">
                         <input type="hidden" name="clienteId" id="clienteSelector">
                     <%
-                        for(Usuario c : clientes){
+                        for(UsuarioDTO c : clientes){
                     %>
 
                     <tr class="cliente" onclick="selectCliente(<%= c.getId() %>)">
@@ -93,12 +93,12 @@
         <section id="opciones">
             <div class="d-flex flex-column justify-content-center align-items-center">
                 <button class="btn  btn-secondary"
-                        onclick="window.location.href='/dietista/asignarDietasClientes?clienteId=<%=cliente!=null?cliente.getId():0%>'"
+                        onclick="window.location.href='/dietista/asignarDietasCliente?clienteId=<%=cliente!=null?cliente.getId():0%>'"
                     <%=cliente==null?"disabled":""%>>
                     Asignar Dietas
                 </button><br/>
                 <button class="btn  btn-secondary"
-                        onclick="window.location.href='/dietista/desempenyoClientes?clienteId=<%=cliente!=null?cliente.getId():0%>'"
+                        onclick="window.location.href='/dietista/desempenyoCliente?clienteId=<%=cliente!=null?cliente.getId():0%>'"
                         <%=cliente==null?"disabled":""%>>
                     Desempeño
                 </button>

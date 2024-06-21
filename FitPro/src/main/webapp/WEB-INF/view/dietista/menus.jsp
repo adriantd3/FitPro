@@ -1,5 +1,5 @@
-<%@ page import="uma.fitpro.entity.Menu" %>
-<%@ page import="uma.fitpro.entity.Comida" %>
+<%@ page import="uma.fitpro.dto.MenuDTO" %>
+<%@ page import="uma.fitpro.dto.ComidaDTO" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="uma.fitpro.ui.FiltroMenu" %>
@@ -14,12 +14,12 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    List<Menu> menus = (List<Menu>) request.getAttribute("menus");
-    Menu menu = (Menu) request.getAttribute("menu");
+    List<MenuDTO> menus = (List<MenuDTO>) request.getAttribute("menus");
+    MenuDTO menu = (MenuDTO) request.getAttribute("menu");
     FiltroMenu filtroMenu = (FiltroMenu) request.getAttribute("filtroMenu");
     FiltroComida filtroComida = (FiltroComida) request.getAttribute("filtroComida");
-    List<Comida> comidasMenu = (List<Comida>) request.getAttribute("comidasMenu");
-    List<Comida> comidas = (List<Comida>) request.getAttribute("comidas");
+    List<ComidaDTO> comidasMenu = (List<ComidaDTO>) request.getAttribute("comidasMenu");
+    List<ComidaDTO> comidas = (List<ComidaDTO>) request.getAttribute("comidas");
     comidas.removeAll(comidasMenu);
 %>
 
@@ -89,10 +89,10 @@
                             </thead>
                             <tbody class = "table-group-divider table-secondary">
                                 <form id="formSelectMenu" method="get" action="./menus">
-                                    <input type="hidden" name="id" id="menuSelector">
+                                    <input type="hidden" name="menuId" id="menuSelector">
                                     <%
                                         int menuIndex = 0;
-                                        for(Menu m : menus){
+                                        for(MenuDTO m : menus){
                                             menuIndex++;
                                     %>
                                         <tr class="menu" onclick="selectMenu(<%= m.getId() %>)">
@@ -121,7 +121,7 @@
                                             String name = "";
                                             if(menu!=null){name=menu.getNombre();}
                                         %>
-                                        <input type="hidden" name="id" value="<%= menu==null ? 0:menu.getId() %>">
+                                        <input type="hidden" name="menuId" value="<%= menu==null ? 0:menu.getId() %>">
                                         <input id="nombre" type="text" class="form-control" name="nombre" value=<%= name %>>
                                     </div>
                             </div>
@@ -133,7 +133,7 @@
                             <section id="ListaComidasMenu">
                                 <form id="formDeleteComida" method="post" action="./eliminarComida">
                                     <input type="hidden" name="comidaId" id="deleteComidaSelector">
-                                    <input type="hidden" name="id" value="<%= menu==null ? 0:menu.getId() %>">
+                                    <input type="hidden" name="menuId" value="<%= menu==null ? 0:menu.getId() %>">
                                     <div class="table-responsive">
                                         <table class="table caption-top text-center table-hover">
                                             <caption class="text-center text-white">Comidas del Menú</caption>
@@ -149,14 +149,14 @@
                                                 <%
                                                     if(menu!=null){
                                                         int comidasMenuIndex = 0;
-                                                        for(Comida comida : comidasMenu){
+                                                        for(ComidaDTO comida : comidasMenu){
                                                             comidasMenuIndex++;
                                                 %>
                                                     <tr>
                                                         <td><%= comidasMenuIndex %></td>
                                                         <td><%= comida.getNombre() %></td>
                                                         <td><%= comida.getCalorias() %></td>
-                                                        <td><button class="btn bg-danger" onclick="deleteComida(<%= comida.getId() %>)">E</button></td>
+                                                        <td><button class="btn bg-danger" onclick="deleteComida(<%= comida.getId() %>)">-</button></td>
                                                     </tr>
                                                 <%
                                                         }
@@ -170,10 +170,10 @@
                             <div class="menuButtons">
                                 <button type="submit" class="btn btn-success me-3 saveButton" onclick="guardarMenu()">Guardar</button>
                                 <form method="get" action="./limpiarMenu">
-                                    <button type="submit" class="btn btn-primary me-3">Limpiar</button>
+                                    <button type="submit" class="btn btn-primary me-3" <%=menu==null?"disabled":""%>>Limpiar</button>
                                 </form>
                                 <form method="post" action="./borrarMenu">
-                                    <button type="<%= menu==null ? "button":"submit" %>" class="btn btn-danger me-3" name="id" value="<%= menu==null ? 0:menu.getId() %>">Borrar</button>
+                                    <button type="<%= menu==null ? "button":"submit" %>" class="btn btn-danger me-3" name="menuId" value="<%= menu==null ? 0:menu.getId() %>" <%=menu==null?"disabled":""%>>Borrar</button>
                                 </form>
                             </div>
                     </div>
@@ -188,7 +188,7 @@
                                     <form:form id="filtroComida" method="get" action="/dietista/filtrarComida" modelAttribute="filtroComida">
                                         <form:input type="hidden" path="menuId" value="<%=menu!=null? menu.getId() : 0%>"/>
                                         <tr>
-                                            <th class="id"><button class="btn btn-dark" onclick="filtrarComida">🔍</button></th>
+                                            <th class="menuId"><button class="btn btn-dark" onclick="filtrarComida">🔍</button></th>
                                             <th class="nombre-menu"><form:input path="nombre" class="form-control" data-bs-theme="dark" placeholder="Nombre"/></th>
                                             <th class="kcal"><form:input path="kcal" class="form-control" data-bs-theme="dark" placeholder="Kcal"/></th>
                                             <th class="table-button"></th>
@@ -198,17 +198,17 @@
                                     <tbody class = "table-secondary">
                                     <form id="formAddComida" method="post" action="./anyadirComida">
                                         <input type="hidden" name="comidaId" id="addComidaSelector">
-                                        <input type="hidden" name="id" value="<%= menu==null ? 0:menu.getId() %>">
+                                        <input type="hidden" name="menuId" value="<%= menu==null ? 0:menu.getId() %>">
                                     <%
                                         int comidaIndex = 0;
-                                        for(Comida comida : comidas){
+                                        for(ComidaDTO comida : comidas){
                                             comidaIndex++;
                                     %>
                                     <tr>
                                         <td><%= comidaIndex %></td>
                                         <td><%= comida.getNombre() %></td>
                                         <td><%= comida.getCalorias() %></td>
-                                        <td><button  class="btn btn-primary" onclick="addComida(<%= comida.getId() %>)">A</button></td>
+                                        <td><button  class="btn btn-primary" onclick="addComida(<%= comida.getId() %>)" <%=menu==null?"disabled":""%>>+</button></td>
                                     </tr>
                                     <%
                                         }

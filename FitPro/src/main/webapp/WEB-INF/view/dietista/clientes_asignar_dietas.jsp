@@ -1,9 +1,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ page import="uma.fitpro.entity.Usuario" %>
+<%@ page import="uma.fitpro.dto.*" %>
 <%@ page import="java.util.List" %>
-<%@ page import="uma.fitpro.entity.Dieta" %>
-<%@ page import="uma.fitpro.entity.Menu" %>
-<%@ page import="uma.fitpro.entity.OrdenMenuDieta" %>
 <%@ page import="uma.fitpro.ui.FiltroCliente" %>
 <%@ page import="uma.fitpro.ui.FiltroDieta" %><%--
   Created by IntelliJ IDEA.
@@ -14,22 +11,22 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    List<Usuario> clientes = (List<Usuario>) request.getAttribute("clientes");
-    Usuario cliente = (Usuario) request.getAttribute("cliente");
-    List<Dieta> dietas = (List<Dieta>) request.getAttribute("dietas");
-    List<Dieta> dietasCliente = (List<Dieta>) request.getAttribute("dietasCliente");
-    Dieta dieta = (Dieta) request.getAttribute("dieta");
-    List<OrdenMenuDieta> menusDieta = (List<OrdenMenuDieta>) request.getAttribute("menusDieta");
+    List<UsuarioDTO> clientes = (List<UsuarioDTO>) request.getAttribute("clientes");
+    UsuarioDTO cliente = (UsuarioDTO) request.getAttribute("cliente");
+    List<DietaDTO> dietas = (List<DietaDTO>) request.getAttribute("dietas");
+    List<DietaDTO> dietasCliente = (List<DietaDTO>) request.getAttribute("dietasCliente");
+    DietaDTO dieta = (DietaDTO) request.getAttribute("dieta");
+    List<OrdenMenuDietaDTO> menusDieta = (List<OrdenMenuDietaDTO>) request.getAttribute("menusDieta");
     FiltroCliente filtroCliente = (FiltroCliente) request.getAttribute("filtroCliente");
     FiltroDieta filtroDieta = (FiltroDieta) request.getAttribute("filtroDieta");
-    for(Dieta d : dietasCliente) {
+    for(DietaDTO d : dietasCliente) {
         dietas.remove(d);
     }
 %>
 
 <html>
 <head>
-    <title>AsignarDietasClientes</title>
+    <title>AsignarDietasCliente</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style><%@ include file="../styles/common.css"%></style>
     <style><%@ include file="./clientes.css"%></style>
@@ -90,10 +87,10 @@
                     </form:form>
                     </thead>
                     <tbody class = "table-secondary">
-                    <form id="formSelectCliente" method="get" action="./asignarDietasClientes">
+                    <form id="formSelectCliente" method="get" action="./asignarDietasCliente">
                         <input type="hidden" name="clienteId" id="clienteSelector">
                         <%
-                            for(Usuario c : clientes){
+                            for(UsuarioDTO c : clientes){
                         %>
 
                         <tr class="cliente" onclick="selectCliente(<%= c.getId() %>)">
@@ -137,7 +134,7 @@
                             <th class="table-button"></th>
                         </tr>
                         </thead>
-                        <form id="formSelectDietaFromCliente" method="get" action="./asignarDietasClientes">
+                        <form id="formSelectDietaFromCliente" method="get" action="./asignarDietasCliente">
                             <input type="hidden" name="clienteId" value=<%= cliente!=null?cliente.getId():0 %>>
                             <input type="hidden" name="dietaId" id="dietaFromClienteSelector">
                         </form>
@@ -147,7 +144,7 @@
                             <input type="hidden" name="clienteId" value="<%= cliente==null ? 0:cliente.getId() %>">
                             <%
                                 int dietasClienteIndex = 0;
-                                for(Dieta d : dietasCliente){
+                                for(DietaDTO d : dietasCliente){
                                     dietasClienteIndex++;
 
                             %>
@@ -182,7 +179,7 @@
                     <tbody class = "table-secondary">
                     <%
                         int ordenMenuDietaIndex = 0;
-                        for(OrdenMenuDieta ordenMenuDieta : menusDieta){
+                        for(OrdenMenuDietaDTO ordenMenuDieta : menusDieta){
                             ordenMenuDietaIndex++;
                     %>
                     <tr>
@@ -219,7 +216,7 @@
                         </form:form>
                         </thead>
                         <tbody class = "table-secondary">
-                        <form id="formSelectDieta" method="get" action="./asignarDietasClientes">
+                        <form id="formSelectDieta" method="get" action="./asignarDietasCliente">
                             <input type="hidden" name="clienteId" value=<%= cliente!=null ? cliente.getId() : 0 %>>
                             <input type="hidden" name="dietaId" id="dietaSelector">
                         </form>
@@ -228,14 +225,14 @@
                             <input type="hidden" name="clienteId" value="<%= cliente!=null ? cliente.getId() : 0 %>">
                             <%
                                 int dietaIndex = 0;
-                                for(Dieta d : dietas){
+                                for(DietaDTO d : dietas){
                                     dietaIndex++;
                             %>
                             <tr>
                                 <td onclick="selectDieta(<%= d.getId() %>)"><%= dietaIndex %></td>
                                 <td onclick="selectDieta(<%= d.getId() %>)"><%= d.getNombre() %></td>
                                 <td onclick="selectDieta(<%= d.getId() %>)"><%= d.getFechaCreacion() %></td>
-                                <td><button  class="btn btn-primary" onclick="addDieta(<%= d.getId() %>)">+</button></td>
+                                <td><button  class="btn btn-primary" onclick="addDieta(<%= d.getId() %>)" <%=cliente==null?"disabled":""%>>+</button></td>
                             </tr>
                             <%
                                 }

@@ -64,8 +64,8 @@ public class OrdenMenuDieta implements Serializable, DTO<OrdenMenuDietaDTO>{
     @Override
     public OrdenMenuDietaDTO toDTO() {
         OrdenMenuDietaDTO ordenMenuDietaDTO = new OrdenMenuDietaDTO();
-        ordenMenuDietaDTO.setId(this.id.getOrden());
-        ordenMenuDietaDTO.setMenuId(this.id.getMenuId());
+        ordenMenuDietaDTO.setOrden(this.id.getOrden());
+        ordenMenuDietaDTO.setMenu(this.menu.toDTO());
         ordenMenuDietaDTO.setDietaId(this.id.getDietaId());
         ordenMenuDietaDTO.setNombreMenu(this.menu.getNombre());
         return ordenMenuDietaDTO;

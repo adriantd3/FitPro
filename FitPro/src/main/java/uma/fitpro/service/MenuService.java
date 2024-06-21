@@ -7,7 +7,9 @@ import uma.fitpro.dao.MenuRepository;
 import uma.fitpro.dto.ComidaDTO;
 import uma.fitpro.dto.MenuDTO;
 import uma.fitpro.entity.Comida;
+import uma.fitpro.entity.Dieta;
 import uma.fitpro.entity.Menu;
+import uma.fitpro.ui.FiltroMenu;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,11 +23,13 @@ public class MenuService extends DTOService{
     @Autowired
     private ComidaRepository comidaRepository;
 
-    public MenuDTO findById(Integer id){
+    public MenuDTO findById(Integer menuId){
         MenuDTO menuDTO = null;
-        if(id!=null){
-            Menu menu = menuRepository.findById(id).orElse(null);
-            menuDTO = menu.toDTO();
+        if(menuId!=null){
+            Menu menu = menuRepository.findById(menuId).orElse(null);
+            if(menu!=null){
+                menuDTO = menu.toDTO();
+            }
         }
         return menuDTO;
     }
@@ -36,11 +40,56 @@ public class MenuService extends DTOService{
     }
 
     public List<MenuDTO> findAll(){
-        List<MenuDTO> menusDTO = new ArrayList<>();
         List<Menu> menus = menuRepository.findAll();
-        for(Menu menu : menus){
-            menusDTO.add(menu.toDTO());
+        return this.entidadesADTO(menus);
+    }
+
+    public void anyadirComidaAMenu(Integer menuId, Integer comidaId) {
+        Menu menu = menuRepository.findById(menuId).orElse(null);
+        Comida comida = comidaRepository.findById(comidaId).orElse(null);
+        List<Comida> comidasMenu = menu.getComidas();
+
+        comidasMenu.add(comida);
+        menu.setComidas(comidasMenu);
+        menu.updateKcal();
+
+        menuRepository.save(menu);
+    }
+
+    public void eliminarComidaDeMenu(Integer menuId, Integer comidaId) {
+        Menu menu = menuRepository.findById(menuId).orElse(null);
+        Comida comida = comidaRepository.findById(comidaId).orElse(null);
+        List<Comida> comidasMenu = menu.getComidas();
+
+        comidasMenu.remove(comida);
+        menu.setComidas(comidasMenu);
+        menu.updateKcal();
+
+        menuRepository.save(menu);
+    }
+
+    public void guardarMenu(Integer menuId, String nombre){
+        Menu menu = null;
+        if(menuId == null) {
+            menu = new Menu();
+        }else{
+            menu = menuRepository.findById(menuId).orElse(new Menu());
         }
-        return menusDTO;
+        if(!nombre.equals("")){
+            menu.setNombre(nombre);
+        }
+        menu.updateKcal();
+
+        menuRepository.save(menu);
+    }
+
+    public void borrarMenu(Integer menuId){
+        menuRepository.deleteById(menuId);
+    }
+
+    public List<MenuDTO> filtrar(FiltroMenu filtroMenu) {
+        List<Menu> menus = menuRepository.buscarConFiltro(filtroMenu.getNombre(), filtroMenu.getFloatKcal(), filtroMenu.getLocalDateFecha());
+
+        return this.entidadesADTO(menus);
     }
 }

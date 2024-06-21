@@ -1,6 +1,7 @@
 package uma.fitpro.dto;
 
 import lombok.Data;
+import uma.fitpro.entity.OrdenMenuDietaId;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -11,5 +12,5 @@ public class DietaDTO {
     private UsuarioDTO dietista;
     private String nombre;
     private LocalDate fechaCreacion;
-    private List<OrdenMenuDietaDTO> ordenMenuDietaList;
+    private List<OrdenMenuDietaId> ordenMenuDietaList;
 }

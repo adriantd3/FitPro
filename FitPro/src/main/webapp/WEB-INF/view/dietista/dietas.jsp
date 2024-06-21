@@ -3,7 +3,7 @@
 <%@ page import="uma.fitpro.ui.FiltroMenu" %>
 <%@ page import="uma.fitpro.ui.FiltroComida" %>
 <%@ page import="uma.fitpro.ui.FiltroDieta" %>
-<%@ page import="uma.fitpro.entity.*" %>
+<%@ page import="uma.fitpro.dto.*" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
@@ -14,15 +14,15 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    List<Dieta> dietas = (List<Dieta>) request.getAttribute("dietas");
-    Dieta dieta = (Dieta) request.getAttribute("dieta");
-    List<Menu> menus = (List<Menu>) request.getAttribute("menus");
-    List<OrdenMenuDieta> menusDieta = (List<OrdenMenuDieta>) request.getAttribute("menusDieta");
-    Menu menu = (Menu) request.getAttribute("menu");
-    List<Comida> comidasMenu = (List<Comida>) request.getAttribute("comidasMenu");
+    List<DietaDTO> dietas = (List<DietaDTO>) request.getAttribute("dietas");
+    DietaDTO dieta = (DietaDTO) request.getAttribute("dieta");
+    List<MenuDTO> menus = (List<MenuDTO>) request.getAttribute("menus");
+    List<OrdenMenuDietaDTO> menusDieta = (List<OrdenMenuDietaDTO>) request.getAttribute("menusDieta");
+    MenuDTO menu = (MenuDTO) request.getAttribute("menu");
+    List<ComidaDTO> comidasMenu = (List<ComidaDTO>) request.getAttribute("comidasMenu");
     FiltroDieta filtroDieta = (FiltroDieta) request.getAttribute("filtroDieta");
     FiltroMenu filtroMenu = (FiltroMenu) request.getAttribute("filtroMenu");
-    for(OrdenMenuDieta m : menusDieta) {
+    for(OrdenMenuDietaDTO m : menusDieta) {
         menus.remove(m.getMenu());
     }
 %>
@@ -103,7 +103,7 @@
                             <input type="hidden" name="dietaId" id="dietaSelector">
                             <%
                                 int dietaIndex = 0;
-                                for(Dieta d : dietas){
+                                for(DietaDTO d : dietas){
                                     dietaIndex++;
                             %>
                             <tr class="dieta" onclick="selectDieta(<%= d.getId() %>)">
@@ -161,14 +161,14 @@
                                             <input type="hidden" name="dietaId" value="<%= dieta==null ? 0:dieta.getId() %>">
                                             <%
 
-                                                for(OrdenMenuDieta m : menusDieta){
+                                                for(OrdenMenuDietaDTO m : menusDieta){
 
                                             %>
                                             <tr>
-                                                <td onclick="selectMenu(<%= m.getMenu().getId() %>)"><%= m.getId().getOrden() %></td>
+                                                <td onclick="selectMenu(<%= m.getMenu().getId() %>)"><%= m.getOrden() %></td>
                                                 <td onclick="selectMenu(<%= m.getMenu().getId() %>)"><%= m.getMenu().getNombre() %></td>
                                                 <td onclick="selectMenu(<%= m.getMenu().getId() %>)"><%= m.getMenu().getCalorias() %></td>
-                                                <td><button  class="btn btn-danger" onclick="deleteMenu(<%= m.getMenu().getId() %>, <%= m.getId().getOrden()%>)">-</button></td>
+                                                <td><button  class="btn btn-danger" onclick="deleteMenu(<%= m.getMenu().getId() %>, <%= m.getOrden()%>)">-</button></td>
                                             </tr>
                                             <%
                                                 }
@@ -195,7 +195,7 @@
                             <tbody class = "table-secondary">
                             <%
                                 int comidasMenuIndex = 0;
-                                for(Comida comida : comidasMenu){
+                                for(ComidaDTO comida : comidasMenu){
                                     comidasMenuIndex++;
                             %>
                             <tr>
@@ -215,10 +215,10 @@
                     <div class="dietaButtons">
                         <button type="submit" class="btn btn-success me-3 saveButton" onclick="guardarDieta()">Guardar</button>
                         <form method="get" action="./limpiarDieta">
-                            <button type="submit" class="btn btn-primary me-3">Limpiar</button>
+                            <button type="submit" class="btn btn-primary me-3" <%=dieta==null?"disabled":""%>>Limpiar</button>
                         </form>
                         <form method="post" action="./borrarDieta">
-                            <button type="<%= dieta==null ? "button":"submit" %>" class="btn btn-danger me-3" name="dietaId" value="<%= dieta==null ? 0:dieta.getId() %>">Borrar</button>
+                            <button type="<%= dieta==null ? "button":"submit" %>" class="btn btn-danger me-3" name="dietaId" value="<%= dieta==null ? 0:dieta.getId() %>" <%=dieta==null?"disabled":""%>>Borrar</button>
                         </form>
                     </div>
                 </div>
@@ -250,14 +250,14 @@
                                     <input type="hidden" name="dietaId" value="<%= dieta!=null ? dieta.getId() : 0 %>">
                                     <%
                                         int menuIndex = 0;
-                                        for(Menu m : menus){
+                                        for(MenuDTO m : menus){
                                             menuIndex++;
                                     %>
                                     <tr>
                                         <td onclick="selectMenu(<%= m.getId() %>)"><%= menuIndex %></td>
                                         <td onclick="selectMenu(<%= m.getId() %>)"><%= m.getNombre() %></td>
                                         <td onclick="selectMenu(<%= m.getId() %>)"><%= m.getCalorias() %></td>
-                                        <td><button  class="btn btn-primary" onclick="addMenu(<%= m.getId() %>)">+</button></td>
+                                        <td><button  class="btn btn-primary" onclick="addMenu(<%= m.getId() %>)" <%=dieta==null?"disabled":""%>>+</button></td>
                                     </tr>
                                     <%
                                         }

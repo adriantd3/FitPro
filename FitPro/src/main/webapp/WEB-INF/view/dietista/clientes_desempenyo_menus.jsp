@@ -2,7 +2,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="uma.fitpro.ui.FiltroCliente" %>
 <%@ page import="uma.fitpro.ui.FiltroDieta" %>
-<%@ page import="uma.fitpro.entity.*" %><%--
+<%@ page import="uma.fitpro.dto.*" %><%--
   Created by IntelliJ IDEA.
   User: jabr3
   Date: 22/05/2024
@@ -11,12 +11,13 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    List<Usuario> clientes = (List<Usuario>) request.getAttribute("clientes");
-    Usuario cliente = (Usuario) request.getAttribute("cliente");
-    List<Dieta> dietasCliente = (List<Dieta>) request.getAttribute("dietasCliente");
-    Dieta dieta = (Dieta) request.getAttribute("dieta");
-    List<OrdenMenuDieta> menusDieta = (List<OrdenMenuDieta>) request.getAttribute("menusDieta");
-    List<DesempenyoMenu> desempenyosMenu = (List<DesempenyoMenu>) request.getAttribute("desempenyosMenu");
+    List<UsuarioDTO> clientes = (List<UsuarioDTO>) request.getAttribute("clientes");
+    UsuarioDTO cliente = (UsuarioDTO) request.getAttribute("cliente");
+    List<DietaDTO> dietasCliente = (List<DietaDTO>) request.getAttribute("dietasCliente");
+    DietaDTO dieta = (DietaDTO) request.getAttribute("dieta");
+    List<OrdenMenuDietaDTO> menusDieta = (List<OrdenMenuDietaDTO>) request.getAttribute("menusDieta");
+    MenuDTO menu = (MenuDTO) request.getAttribute("menu");
+    List<DesempenyoMenuDTO> desempenyosMenu = (List<DesempenyoMenuDTO>) request.getAttribute("desempenyosMenu");
 
     FiltroCliente filtroCliente = (FiltroCliente) request.getAttribute("filtroCliente");
 %>
@@ -37,14 +38,14 @@
             document.getElementById("formSelectDietaFromCliente").submit();
         }
 
-        function addDieta(dietaId){
-            document.getElementById("addDietaSelector").value=dietaId;
-            document.getElementById("formAddDieta").submit();
+        function  selectMenuFromDieta(menuId){
+            document.getElementById("menuFromDietaSelector").value=menuId;
+            document.getElementById("formSelectMenuFromDieta").submit();
         }
 
-        function deleteDieta(dietaId){
-            document.getElementById("deleteDietaSelector").value=dietaId;
-            document.getElementById("formDeleteDieta").submit();
+        function  selectDesempenyoMenu(desempenyoMenuId){
+            document.getElementById("desempenyoMenuSelector").value=desempenyoMenuId;
+            document.getElementById("formSelectDesempenyoMenu").submit();
         }
 
         function filtrarClientes(){
@@ -64,13 +65,13 @@
 
 <div class="container-fluid" >
     <div class="row">
-        <div class="col-lg-5 ps-5 pt-5">
+        <div class="col-lg-4 ps-5 pt-5">
             <section id="Clientes">
                 <table class="table cliente_table caption-top text-center table-hover">
                     <caption class="text-center text-white">List of users</caption>
                     <thead class="table-dark">
                     <form:form id="filtroClientes" method="get" action="/dietista/filtrarClientes" modelAttribute="filtroCliente">
-                        <form:hidden path="sourcePage" value="clientes_asignar_dietas"/>
+                        <form:hidden path="sourcePage" value="clientes_desempenyo_menus"/>
                         <tr>
                             <th class="id"><button class="btn btn-dark" onclick="filtrarClientes">🔍</button></th>
                             <th class="nombre-cliente"><form:input path="nombre" class="form-control" data-bs-theme="dark" placeholder="Nombre"/></th>
@@ -79,10 +80,10 @@
                     </form:form>
                     </thead>
                     <tbody class = "table-secondary">
-                    <form id="formSelectCliente" method="get" action="./asignarDietasClientes">
+                    <form id="formSelectCliente" method="get" action="./desempenyoCliente">
                         <input type="hidden" name="clienteId" id="clienteSelector">
                         <%
-                            for(Usuario c : clientes){
+                            for(UsuarioDTO c : clientes){
                         %>
 
                         <tr class="cliente" onclick="selectCliente(<%= c.getId() %>)">
@@ -101,7 +102,7 @@
 
         <div class="col-md">
             <section id="nombreCliente">
-                <div class="pt-4 row ps-3 gap-0">
+                <div class="pt-4 row ps-3 gap-0 nombreCliente">
                     <label class="tag col-2 bg-secondary" for="nombre">Nombre:</label>
                     <div class="col">
                         <%
@@ -119,20 +120,20 @@
                     <table class="table caption-top text-center table-hover">
                         <caption class="text-center text-white">Dietas del Cliente</caption>
                         <thead class="header table-dark">
-                        <tr>
-                            <th class="id">Orden</th>
-                            <th class="nombre-dieta">Nombre</th>
-                            <th class="fecha">Fecha</th>
-                        </tr>
+                            <tr>
+                                <th class="id">Orden</th>
+                                <th class="nombre-dieta">Nombre</th>
+                                <th class="fecha">Fecha</th>
+                            </tr>
                         </thead>
-                        <form id="formSelectDietaFromCliente" method="get" action="./desempenyoClientes">
+                        <form id="formSelectDietaFromCliente" method="get" action="./desempenyoCliente">
                             <input type="hidden" name="clienteId" value=<%= cliente!=null?cliente.getId():0 %>>
                             <input type="hidden" name="dietaId" id="dietaFromClienteSelector">
                         </form>
                         <tbody class = "table-secondary">
                             <%
                                 int dietasClienteIndex = 0;
-                                for(Dieta d : dietasCliente){
+                                for(DietaDTO d : dietasCliente){
                                     dietasClienteIndex++;
 
                             %>
@@ -152,7 +153,7 @@
             <%
                 if(dieta!=null){
             %>
-            <div class="menus_table">
+            <div class="menusDietasCliente_table">
                 <table class="table caption-top text-center table-hover">
                     <caption class="text-center text-white"><%= "Menús de "+dieta.getNombre() %></caption>
                     <thead class="header table-dark">
@@ -162,14 +163,17 @@
                         <th class="kcal">Kcal</th>
                     </tr>
                     </thead>
+                    <form id="formSelectMenuFromDieta" method="get" action="./desempenyoCliente">
+                        <input type="hidden" name="clienteId" value=<%= cliente!=null?cliente.getId():0 %>>
+                        <input type="hidden" name="dietaId" value=<%= dieta!=null?dieta.getId():0 %>>
+                        <input type="hidden" name="menuId" id="menuFromDietaSelector">
+                    </form>
                     <tbody class = "table-secondary">
                     <%
-                        int ordenMenuDietaIndex = 0;
-                        for(OrdenMenuDieta ordenMenuDieta : menusDieta){
-                            ordenMenuDietaIndex++;
+                        for(OrdenMenuDietaDTO ordenMenuDieta : menusDieta){
                     %>
-                    <tr>
-                        <td><%= ordenMenuDietaIndex %></td>
+                    <tr onclick="selectMenuFromDieta(<%= ordenMenuDieta.getMenu().getId() %>)">
+                        <td><%= ordenMenuDieta.getOrden() %></td>
                         <td><%= ordenMenuDieta.getMenu().getNombre() %></td>
                         <td><%= ordenMenuDieta.getMenu().getCalorias() %></td>
                     </tr>
@@ -187,39 +191,41 @@
         <div class="col-md">
             <section id="DesempenyosMenu">
 
-                <div class="table-responsive">
+                <div class="table-responsive desempenyos_table">
                     <table class="table caption-top text-center table-hover">
                         <caption class="header text-center text-white">Desempeños Menu</caption>
                         <thead class="header table-dark">
                         <form:form id="filtroDesempenyoMenu" method="get" action="/dietista/filtrarDesempenyosMenuCliente" modelAttribute="filtroDesempenyoMenu">
                             <form:input type="hidden" path="clienteId" value="<%=cliente!=null? cliente.getId() : 0%>"/>
                             <form:input type="hidden" path="dietaId" value="<%=dieta!=null? dieta.getId() : 0%>"/>
-                            <form:input type="hidden" path="menuId" value="<%=desempenyosMenu.isEmpty()? 0 : desempenyosMenu.get(0).getMenu().getId()%>"/>
+                            <form:input type="hidden" path="menuId" value="<%=menu!=null ? menu.getId() : 0%>"/>
                             <tr>
                                 <th class="id"><button class="btn btn-dark" onclick="filtrarDesempenyosMenu">🔍</button></th>
                                 <th class="nombre-dieta">Nombre</th>
                                 <th class="kcal">Kcal</th>
-                                <th class="fecha"><form:input path="fecha" class="form-control" data-bs-theme="dark" placeholder="Fecha"/></th>
+                                <th class="fecha_desempenyo"><form:input path="fecha" class="form-control" data-bs-theme="dark" placeholder="Fecha"/></th>
                                 <th class="kcal">Terminado</th>
                             </tr>
                         </form:form>
                         </thead>
                         <tbody class = "table-secondary">
-                        <form id="formSelectDesempenyoMenu" method="get" action="./desempenyoMenuClientes">
+                        <form id="formSelectDesempenyoMenu" method="get" action="./desempenyoComidasMenuCliente">
                             <input type="hidden" name="clienteId" value=<%= cliente!=null ? cliente.getId() : 0 %>>
-                            <input type="hidden" name="desempenyoMenu" id="desempenyoMenuSelector">
+                            <input type="hidden" name="dietaId" value = <%= dieta!=null ? dieta.getId() : 0 %>>
+                            <input type="hidden" name="menuId" value = <%=menu!=null ? menu.getId() : 0%>>
+                            <input type="hidden" name="desempenyoMenuId" id="desempenyoMenuSelector">
                         </form>
                             <%
                                 int desempenyoIndex = 0;
-                                for(DesempenyoMenu desempenyoMenu : desempenyosMenu){
+                                for(DesempenyoMenuDTO desempenyoMenu : desempenyosMenu){
                                     desempenyoIndex++;
                             %>
-                            <tr>
-                                <td><%= desempenyoMenu %></td>
-                                <td><%= desempenyoMenu.getMenu().getNombre() %></td>
-                                <td><%= desempenyoMenu.getMenu().getCalorias() %></td>
+                            <tr onclick="selectDesempenyoMenu(<%= desempenyoMenu.getId() %>)">
+                                <td><%= desempenyoIndex %></td>
+                                <td><%= desempenyoMenu.getNombreMenu() %></td>
+                                <td><%= desempenyoMenu.getCaloriasMenu() %></td>
                                 <td><%= desempenyoMenu.getFechaCreacion() %></td>
-                                <td><%= desempenyoMenu.getTerminado() == (byte) 1?"✔":"❌" %></td>
+                                <td><%= desempenyoMenu.isTerminado()?"✔":"❌" %></td>
                             </tr>
                             <%
                                 }

@@ -40,6 +40,9 @@ public class SortedList<T> extends AbstractList<T> {
 
     @Override
     public T get(int index) {
+        if(index >= list.size()){
+            return null;
+        }
         return list.get(index);
     }
 

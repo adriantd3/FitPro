@@ -29,14 +29,15 @@
 </header>
 <section class="mt-3 ms-3 h-100">
     <div class="d-flex justify-content-between">
-        <form method="post" action="/entrenador_fuerza/crear-rutina" class="p-2">
+        <form method="post" action="/entrenador_fuerza/crear-rutina" class="p-2" style="border: 1px solid white; border-radius: 10px">
             <input type="text" name="nombreRutina" placeholder="Nombre de la rutina nueva..."/>
             <button type="submit" class=" btn btn-primary top-50"
                     onclick="window.location.href='/entrenador_fuerza/rutina?rutina='"
             >Añadir Rutina
             </button>
         </form>
-        <form:form cssStyle="border: 1px solid white" cssClass="me-2 p-2" method="post" action="/entrenador_fuerza/crud-rutina/filtro" modelAttribute="filtroRutina">
+        <form:form cssStyle="border: 1px solid white; border-radius: 10px" cssClass="me-2 p-2"
+                   method="post" action="/entrenador_fuerza/crud-rutina/filtro" modelAttribute="filtroRutina">
             <form:label cssStyle="color: white" path="nombre">Nombre: </form:label>
             <form:input cssClass="me-3" path="nombre"/>
 

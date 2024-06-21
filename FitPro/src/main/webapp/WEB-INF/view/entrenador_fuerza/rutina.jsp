@@ -25,12 +25,14 @@
         <h1 class="header-text text-center"><%=(rutina != null ? rutina.getNombre() : "Crear rutina")%></h1> <!-- Controlar nombre rutina  -->
 </header>
 <section class="mt-3 ms-3 h-100">
-    <form method="post" action="/entrenador_fuerza/crear-sesion">
-        <input type="text" name="nombreSesion" placeholder="Nombre de la sesión nueva..."/>
-        <button type="submit" class=" btn btn-primary top-50"
-        >Añadir sesión
-        </button>
-    </form>
+    <div class="d-flex justify-content-start">
+        <form method="post" action="/entrenador_fuerza/crear-sesion" class="p-2" style="border: 1px solid white; border-radius: 10px">
+            <input type="text" name="nombreSesion" placeholder="Nombre de la sesión nueva..."/>
+            <button type="submit" class=" btn btn-primary top-50"
+            >Añadir sesión
+            </button>
+        </form>
+    </div>
     <h1 style="color: white">Sesiones asignadas</h1>
     <ul class="list-group m-3">
             <%

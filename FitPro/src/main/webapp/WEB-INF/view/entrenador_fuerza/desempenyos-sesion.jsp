@@ -3,7 +3,8 @@
 <%@ page import="uma.fitpro.dto.EjercicioDTO" %>
 <%@ page import="uma.fitpro.dto.DesempenyoSerieDTO" %>
 <%@ page import="java.util.Map" %>
-<%@ page import="uma.fitpro.dto.SerieDTO" %><%--
+<%@ page import="uma.fitpro.dto.SerieDTO" %>
+<%@ page import="uma.fitpro.utils.SortedList" %><%--
   Created by IntelliJ IDEA.
   User: victor
   Date: 15/6/24
@@ -14,6 +15,7 @@
 <%
     DesempenyoSesionDTO desempenyoSesion = (DesempenyoSesionDTO) request.getAttribute("desempenyoSesion");
     Map<EjercicioDTO, List<SerieDTO>> tablas = (Map<EjercicioDTO, List<SerieDTO>>) request.getAttribute("tablas");
+    Map<EjercicioDTO, List<SerieDTO>> tablasEsperadas = (Map<EjercicioDTO, List<SerieDTO>>) request.getAttribute("tablasEsperadas");
 %>
 <html>
 <head>
@@ -32,7 +34,7 @@
     <%
         for(EjercicioDTO ejercicio : tablas.keySet()){
     %>
-    <table style="border-spacing: 0" class="table caption-top text-center w-50 ">
+    <table style="border-spacing: 0; border-collapse: collapse" class="table caption-top text-center w-50 ">
         <a href="/entrenador_fuerza/ejercicio/<%=ejercicio.getId()%>%>" class="d-block fs-3" target="_blank"><%=ejercicio.getNombre()%></a>
         <thead class="table-dark">
             <tr>
@@ -42,13 +44,32 @@
         </thead>
         <tbody>
         <%
-            for(SerieDTO desempenyoSerie : tablas.get(ejercicio)){
+            List<SerieDTO> seriesEsperadas = tablasEsperadas.get(ejercicio);
+            List<SerieDTO> seriesDesmpenyo = tablas.get(ejercicio);
+            for(int i = 0; i < seriesEsperadas.size(); i++){
+                SerieDTO serie ;
+                if(i < seriesDesmpenyo.size()) {
+                    serie = seriesDesmpenyo.get(i);
+                    SerieDTO serieEsperada = seriesEsperadas.get(i);
+                    String color = "#77de77";
+                    if(serie.getMetrica1() < serieEsperada.getMetrica1() || serie.getMetrica2() < serieEsperada.getMetrica2()){
+                        color = "#e15959";
+                    }
         %>
         <tr>
-            <td><%=desempenyoSerie.getMetrica1()%></td>
-            <td><%=desempenyoSerie.getMetrica2()%></td>
+            <td style="background-color: <%=color%>"><%=serie.getMetrica1()%></td>
+            <td style="background-color: <%=color%>"><%=serie.getMetrica2()%></td>
         </tr>
         <%
+                }else{
+                    serie = seriesEsperadas.get(i);
+        %>
+        <tr>
+            <td style="background-color: #888888" class="fst-italic"><%=serie.getMetrica1()%></td>
+            <td style="background-color: #888888" class="fst-italic"><%=serie.getMetrica2()%></td>
+        </tr>
+        <%
+                }
             }
         %>
         </tbody>

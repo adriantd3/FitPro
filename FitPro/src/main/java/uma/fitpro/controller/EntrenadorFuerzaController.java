@@ -397,8 +397,11 @@ public class EntrenadorFuerzaController {
         }
 
         DesempenyoSesionDTO desempenyoSesion = desempenyoSesionService.buscarDesempenyoSesion(id);
+        SesionDTO sesionDTO = sesionService.buscarSesion(desempenyoSesion.getIdSesion());
+        Map<EjercicioDTO, SortedList<SerieDTO>> tablasEsperadas = serieService.buscarSeriesDictionary(sesionDTO.getSeries());
         Map<EjercicioDTO, SortedList<SerieDTO>> tablas = serieService.buscarSeriesDictionary(desempenyoSesion.getDesempenyoSeries());
         model.addAttribute("tablas", tablas);
+        model.addAttribute("tablasEsperadas", tablasEsperadas);
 
         model.addAttribute("desempenyoSesion", desempenyoSesion);
         return "/entrenador_fuerza/desempenyos-sesion";

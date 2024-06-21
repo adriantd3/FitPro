@@ -168,7 +168,7 @@ public class EntrenadorFuerzaController {
         }
     }
 
-    @GetMapping("/desasignar")
+    @GetMapping("/desasignar-rutina")
     public String doDesasignar(@RequestParam("rutina") Integer rutina_id, HttpSession session) {
         RutinaDTO rutina = rutinaService.buscarRutina(rutina_id);
         UsuarioDTO cliente = (UsuarioDTO) session.getAttribute("cliente");
@@ -178,12 +178,14 @@ public class EntrenadorFuerzaController {
         return "redirect:/entrenador_fuerza/crud-rutina?cliente=" + cliente.getId();
     }
 
-    @GetMapping("asignar-sesion")
-    public String doAsignarSesion(@RequestParam("sesion") Integer sesion_id, HttpSession session) {
+    @PostMapping("/asignar-sesion")
+    public String doAsignarSesion(@RequestParam("sesionNueva") Integer sesion_id,
+                                  @RequestParam("dia") Integer dia,
+                                  HttpSession session) {
         SesionDTO sesion = sesionService.buscarSesion(sesion_id);
         RutinaDTO rutina = (RutinaDTO) session.getAttribute("rutina");
-        SesionDTO sesionAnterior = sesionService.getSesionByDia(rutina,1);
-        rutinaService.asociarDiaSesion(rutina,1, sesion, sesionAnterior);
+        SesionDTO sesionAnterior = sesionService.getSesionByDia(rutina,dia);
+        rutinaService.asociarDiaSesion(rutina,dia, sesion, sesionAnterior);
 
         return "redirect:/entrenador_fuerza/rutina?rutina=" + rutina.getId();
     }
@@ -271,6 +273,16 @@ public class EntrenadorFuerzaController {
         EjercicioDTO ejercicio = ejercicioService.buscarEjercicio(ejercicio_id);
         Integer serie_id = serieService.crearSerie(ejercicio, sesion, "0", "0");
         return "redirect:/entrenador_fuerza/editar-serie?serie=" + serie_id;
+    }
+
+    @GetMapping("/desasignar-sesion")
+    public String doDesasignarSesion(@RequestParam("sesion") Integer sesion_id, HttpSession session) {
+        RutinaDTO rutina = (RutinaDTO) session.getAttribute("rutina");
+        Integer dia = sesionService.getDiaBySesion(sesion_id, rutina);
+        SesionDTO sesion = sesionService.buscarSesion(sesion_id);
+        rutinaService.asociarDiaSesion(rutina, dia, null, sesion);
+
+        return "redirect:/entrenador_fuerza/rutina?rutina=" + rutina.getId();
     }
 
 

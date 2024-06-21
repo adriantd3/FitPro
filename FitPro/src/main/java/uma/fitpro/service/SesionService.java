@@ -79,6 +79,17 @@ public class SesionService extends DTOService {
         return buscarSesion(ordenSesionRutina.getIdSesion());
     }
 
+    public Integer getDiaBySesion(Integer id_sesion, RutinaDTO rutina){
+        Integer dia = null;
+        for(OrdenSesionRutinaDTO osr : rutina.getOrdenSesionRutinaList()){
+            if(osr.getIdSesion().equals(id_sesion)){
+                dia = osr.getId();
+                break;
+            }
+        }
+        return dia;
+    }
+
     public Map<EjercicioDTO, List<SerieDTO>> getEjercicioYSeries(SesionDTO sesionDTO){
         Sesion sesion = sesionRepository.findById(sesionDTO.getId()).orElse(null);
         List<Serie> series = new ArrayList<>(sesion.getSeries());

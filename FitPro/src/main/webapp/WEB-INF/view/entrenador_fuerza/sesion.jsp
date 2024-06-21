@@ -106,6 +106,9 @@
     <button class="btn btn-primary" onclick="window.location.href='/entrenador_fuerza/asignar-ejercicio?sesion=<%=sesion.getId()%>'">
         Añadir Ejercicio
     </button>
+    <button class="btn btn-warning" onclick="window.location.href='/entrenador_fuerza/desasignar-sesion?sesion=<%=sesion.getId()%>'">
+        Desasignar a <%=rutina.getNombre()%>
+    </button>
 </footer>
 
 </body>

@@ -19,7 +19,9 @@
 </head>
 <body>
 <header>
-    <img class="back-button ms-1 mt-1" src="${pageContext.request.contextPath}/assets/back_button.png" alt="">
+    <a href="/salir">
+        <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back_button.png" alt="back">
+    </a>
     <h1 class="header-text text-center">Bienvenido, <%= user.getNombre() %></h1>
 </header>
 

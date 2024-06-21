@@ -2,6 +2,7 @@
 <%@ page import="java.util.HashMap" %>
 <%@ page import="uma.fitpro.dto.*" %>
 <%@ page import="java.util.Map" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     HashMap<OrdenSesionRutinaDTO,List<DesempenyoSesionDTO>> seguimientoRutina = (HashMap<OrdenSesionRutinaDTO, List<DesempenyoSesionDTO>>) request.getAttribute("seguimientoRutina");
@@ -36,7 +37,9 @@
     <section class="sesion-table-container scrollable-content">
         <%
             String nombre_sesion = "";
-            for (OrdenSesionRutinaDTO o : seguimientoRutina.keySet()){
+            List<OrdenSesionRutinaDTO> sesiones = new ArrayList<OrdenSesionRutinaDTO>(seguimientoRutina.keySet());
+            sesiones.sort((o1, o2) -> o1.getId().compareTo(o2.getId()));
+            for (OrdenSesionRutinaDTO o : sesiones){
                 nombre_sesion = o.getNombreSesion() + " - " + diasSemana.get(o.getId());
         %>
         <div>

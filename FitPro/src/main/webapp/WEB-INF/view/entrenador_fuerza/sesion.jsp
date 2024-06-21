@@ -34,7 +34,7 @@
     %>
 
         <table style="border-spacing: 0" class="table caption-top text-center w-100 ">
-            <a href="/cliente/rutinas/ejercicio?id=<%=ejercicio.getId()%>" class="d-block fs-3"><%=ejercicio.getNombre()%></a>
+            <a href="/entrenador_fuerza/ejercicio/<%=ejercicio.getId()%>" class="d-block fs-3" target="_blank"><%=ejercicio.getNombre()%></a>
             <thead class="table-dark">
             <tr>
                 <th class="nombre-menu">Peso</th>

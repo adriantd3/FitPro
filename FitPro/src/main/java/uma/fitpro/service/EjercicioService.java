@@ -38,6 +38,11 @@ public class EjercicioService extends DTOService{
         return ejercicio.toDTO();
     }
 
+    public List<EjercicioDTO> getEjercicios(){
+        List<Ejercicio> ejercicios = ejercicioRepository.findAll();
+        return this.entidadesADTO(ejercicios);
+    }
+
     public List<TipoEjercicioDTO> listarTiposEjercicio(){
         List<TipoEjercicio> tiposEjercicio = tipoEjercicioRepository.findAll();
         return this.entidadesADTO(tiposEjercicio);

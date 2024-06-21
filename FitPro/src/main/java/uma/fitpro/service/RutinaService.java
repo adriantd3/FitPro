@@ -10,6 +10,7 @@ import uma.fitpro.dao.RutinaRepository;
 import uma.fitpro.dto.SesionDTO;
 import uma.fitpro.dto.UsuarioDTO;
 import uma.fitpro.entity.*;
+import uma.fitpro.ui.FiltroRutina;
 import uma.fitpro.utils.UtilityFunctions;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -40,9 +41,32 @@ public class RutinaService extends DTOService{
         return this.entidadesADTO(rutinas);
     }
 
+    public List<RutinaDTO> getRutinasEntrenador(UsuarioDTO entrenadorDTO, FiltroRutina filtro) {
+        Usuario entrenador = this.usuarioRepository.findById(entrenadorDTO.getId()).orElse(null);
+        List<Rutina> rutinas = rutinaRepository.getRutinasByEntrenadorAndFiltro(entrenador.getId(), filtro.getNombre(), filtro.getFechaCreacion(), filtro.getNumeroSesiones());
+        rutinas.sort((r1, r2) -> r1.getNombre().compareTo(r2.getNombre()));
+        return this.entidadesADTO(rutinas);
+    }
+
     public List<RutinaDTO> getRutinasCliente(UsuarioDTO clienteDTO) {
         Usuario cliente = this.usuarioRepository.findById(clienteDTO.getId()).orElse(null);
         List<Rutina> rutinas = new ArrayList<>(cliente.getRutinasCliente());
+        return this.entidadesADTO(rutinas);
+    }
+
+    public List<RutinaDTO> getRutinasCliente(UsuarioDTO clienteDTO, FiltroRutina filtro) {
+        List<Rutina> rutinas = rutinaRepository.getRutinasByClienteAndFiltro(filtro.getNombre(), filtro.getFechaCreacion(), filtro.getNumeroSesiones(), clienteDTO.getRutinasCliente());
+        return this.entidadesADTO(rutinas);
+    }
+
+
+    public List<RutinaDTO> getRutinasSinAsignarACliente(List<Integer> rutinasCliente){
+        List<Rutina> rutinasSinAsignar = rutinaRepository.getRutinasByNotInRutinasCliente(rutinasCliente);
+        return this.entidadesADTO(rutinasSinAsignar);
+    }
+
+    public List<RutinaDTO> getRutinasSinAsignarACliente(List<Integer> rutinasCliente, FiltroRutina filtro){
+        List<Rutina> rutinas = rutinaRepository.getRutinasByNotInRutinasClienteAndFiltro(rutinasCliente, filtro.getNombre(), filtro.getFechaCreacion(), filtro.getNumeroSesiones());
         return this.entidadesADTO(rutinas);
     }
 

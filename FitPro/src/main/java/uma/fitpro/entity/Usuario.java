@@ -1,6 +1,7 @@
 package uma.fitpro.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -59,7 +60,7 @@ public class Usuario implements Serializable, DTO<UsuarioDTO> {
     @OneToMany(mappedBy = "usuario")
     private List<DesempenyoMenu> desempenyoMenuEntities = new ArrayList<>();
 
-    @OneToMany(mappedBy = "usuario")
+    @OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER)
     private Set<DesempenyoSesion> desempenyoSesionEntities = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "dietista")
@@ -95,14 +96,14 @@ public class Usuario implements Serializable, DTO<UsuarioDTO> {
             inverseJoinColumns = @JoinColumn(name = "entrenador_id"))
     private Set<Usuario> entrenadores = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "entrenador")
+    @OneToMany(fetch=FetchType.EAGER, mappedBy = "entrenador")
     private Set<Rutina> rutinasEntrenador = new LinkedHashSet<>();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "rutina_cliente",
             joinColumns = @JoinColumn(name = "cliente_id"),
             inverseJoinColumns = @JoinColumn(name = "rutina_id"))
-    private List<Rutina> rutinasCliente = new ArrayList<>();
+    private Set<Rutina> rutinasCliente = new LinkedHashSet<>();
 
     public Integer getId() {
         return id;
@@ -264,11 +265,11 @@ public class Usuario implements Serializable, DTO<UsuarioDTO> {
         this.rutinasEntrenador = rutinasEntrenador;
     }
 
-    public List<Rutina> getRutinasCliente() {
+    public Set<Rutina> getRutinasCliente() {
         return rutinasCliente;
     }
 
-    public void setRutinasCliente(List<Rutina> rutinasCliente) {
+    public void setRutinasCliente(Set<Rutina> rutinasCliente) {
         this.rutinasCliente = rutinasCliente;
     }
 

@@ -27,6 +27,12 @@ public class DesempenyoSesionService extends DTOService{
     @Autowired
     private OrdenSesionRutinaRepository ordenSesionRutinaRepository;
 
+    public List<DesempenyoSesionDTO> getDesempenyosSesionesByCliente(UsuarioDTO clienteDTO){
+        Usuario cliente = usuarioRepository.findById(clienteDTO.getId()).orElse(null);
+        List<DesempenyoSesion> desempenyoSesions = new ArrayList<>(cliente.getDesempenyoSesions());
+        return this.entidadesADTO(desempenyoSesions);
+    }
+
     public DesempenyoSesionDTO buscarDesempenyoSesion(Integer id){
         DesempenyoSesion desempenyoSesion = desempenyoSesionRepository.findById(id).orElse(null);
         if(desempenyoSesion != null){

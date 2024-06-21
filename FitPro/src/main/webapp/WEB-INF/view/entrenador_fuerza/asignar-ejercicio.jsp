@@ -1,9 +1,8 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ page import="uma.fitpro.entity.Sesion" %>
-<%@ page import="uma.fitpro.entity.Ejercicio" %>
 <%@ page import="java.util.List" %>
-<%@ page import="uma.fitpro.dao.EjercicioRepository" %>
-<%@ page import="uma.fitpro.entity.Serie" %><%--
+<%@ page import="uma.fitpro.dto.EjercicioDTO" %>
+<%@ page import="uma.fitpro.dto.SesionDTO" %>
+<%@ page import="uma.fitpro.dto.SerieDTO" %><%--
   Created by IntelliJ IDEA.
   User: victor
   Date: 12/4/24
@@ -13,11 +12,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%
-    Sesion sesion = (Sesion) request.getAttribute("sesion");
-    Serie serie = (Serie) request.getAttribute("serie");
-    List<Ejercicio> ejercicios = (List<Ejercicio>) request.getAttribute("ejercicios");
+    SesionDTO sesion = (SesionDTO) request.getAttribute("sesion");
+    SerieDTO serie = (SerieDTO) request.getAttribute("serie");
+    List<EjercicioDTO> ejercicios = (List<EjercicioDTO>) request.getAttribute("ejercicios");
     System.out.println(ejercicios.size());
-    Ejercicio ejercicio = new Ejercicio();
+    EjercicioDTO ejercicio = new EjercicioDTO();
 %>
 <html>
 <head>
@@ -31,15 +30,15 @@
          onclick="window.location.href='/entrenador_fuerza/sesion?sesion=<%=sesion.getId()%>'"> <!-- Controlar pagina anterior por modelo -->
     <h1 class="header-text text-center">Ejercicios</h1>
 </header>
-<form:form id="form" method="post" action="/entrenador_fuerza/guardar-ejercicio" modelAttribute="serie">
-    <form:input type="hidden" path="ejercicio" id="ejercicio_id"/>
-    <form:input type="hidden" path="sesion" id="sesion_id" value="<%=sesion.getId()%>"/>
-</form:form>
+<form id="form" method="post" action="/entrenador_fuerza/guardar-ejercicio" modelAttribute="serie">
+    <input type="hidden" name="ejercicio" id="ejercicio_id"/>
+    <input type="hidden" name="sesion" id="sesion_id" value="<%=sesion.getId()%>"/>
+</form>
 
 <section class="mt-3 ms-3 h-100">
     <ul class="list-group m-3">
         <%
-            for(Ejercicio ej : ejercicios){
+            for(EjercicioDTO ej : ejercicios){
         %>
         <button onclick="submitForm(<%=ej.getId()%>)" class="list-button list-group-item" id=<%=ejercicio.getId()%>>
             <%=ej.getNombre()%>

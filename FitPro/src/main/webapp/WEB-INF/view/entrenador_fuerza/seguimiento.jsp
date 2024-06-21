@@ -1,15 +1,11 @@
-<%@ page import="uma.fitpro.entity.Usuario" %>
-<%@ page import="uma.fitpro.entity.DesempenyoSesion" %><%--
-  Created by IntelliJ IDEA.
-  User: victor
-  Date: 15/6/24
-  Time: 11:54
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="uma.fitpro.dto.UsuarioDTO" %>
+<%@ page import="uma.fitpro.dto.DesempenyoSesionDTO" %>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%
-    Usuario cliente = (Usuario) session.getAttribute("cliente");
+    UsuarioDTO cliente = (UsuarioDTO) session.getAttribute("cliente");
+    List<DesempenyoSesionDTO> desempenyosSesiones = (List<DesempenyoSesionDTO>) request.getAttribute("desempenyoSesiones");
 %>
 <html>
 <head>
@@ -26,14 +22,15 @@
     <section class="mt-3 ms-3 h-100">
         <ul class="list-group m-3">
             <%
-                for(DesempenyoSesion desempenyoSesion : cliente.getDesempenyoSesions()){
+                for(DesempenyoSesionDTO desempenyoSesion : desempenyosSesiones){
                     String disabled = "";
-                    if(desempenyoSesion.getTerminado() != 1){
+                    if(!desempenyoSesion.isTerminado()){
                         disabled = "disabled";
                     }
             %>
             <button <%=disabled%> onclick="window.location.href='/entrenador_fuerza/desempenyos-sesion/<%=desempenyoSesion.getId()%>'" class="list-button list-group-item">
-                <%=desempenyoSesion.getSesion().getNombre() + " " + desempenyoSesion.getFecha()%>
+                <%=desempenyoSesion.getNombreSesion() + " " + desempenyoSesion.getFecha() + " | "
+                        + (desempenyoSesion.isTerminado() ? "Terminado" : "No Terminado")%>
             </button>
             <%
                 }

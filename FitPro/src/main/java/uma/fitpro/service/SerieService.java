@@ -12,6 +12,8 @@ import uma.fitpro.entity.Ejercicio;
 import uma.fitpro.entity.Serie;
 import uma.fitpro.entity.Sesion;
 import uma.fitpro.ui.FiltroSerie;
+import uma.fitpro.utils.ComparatorSerie;
+import uma.fitpro.utils.SortedList;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -52,23 +54,21 @@ public class SerieService extends DTOService{
         return this.entidadesADTO(seriesList);
     }
 
-    public Map<EjercicioDTO, List<SerieDTO>> buscarSeriesDictionary(List<Integer> series) {
+    public Map<EjercicioDTO, SortedList<SerieDTO>> buscarSeriesDictionary(List<Integer> series) {
         List<SerieDTO> seriesList = this.buscarSeries(series);
         return this.dictFromSeries(seriesList);
     }
 
-    public Map<EjercicioDTO, List<SerieDTO>> filtroBuscarSeriesDictionary(FiltroSerie filtro) {
+    public Map<EjercicioDTO, SortedList<SerieDTO>> filtroBuscarSeriesDictionary(FiltroSerie filtro) {
         List<SerieDTO> seriesList = this.filtroBuscarSeries(filtro);
         return this.dictFromSeries(seriesList);
     }
 
-    private Map<EjercicioDTO, List<SerieDTO>> dictFromSeries(List<SerieDTO> seriesList) {
-        Map<EjercicioDTO, List<SerieDTO>> sesion_dict = new LinkedHashMap<>();
+    private Map<EjercicioDTO, SortedList<SerieDTO>> dictFromSeries(List<SerieDTO> seriesList) {
+        Map<EjercicioDTO, SortedList<SerieDTO>> sesion_dict = new LinkedHashMap<>();
         for (SerieDTO serie : seriesList) {
             EjercicioDTO ejercicio = ejercicioService.buscarEjercicio(serie.getEjercicio());
-            if (!sesion_dict.containsKey(ejercicio)) {
-                sesion_dict.put(ejercicio, new ArrayList<>());
-            }
+            sesion_dict.computeIfAbsent(ejercicio, k -> new SortedList<>(new ComparatorSerie()));
             sesion_dict.get(ejercicio).add(serie);
         }
 
@@ -84,7 +84,7 @@ public class SerieService extends DTOService{
         }
     }
 
-    public void crearSerie(EjercicioDTO ejercicioDTO, SesionDTO sesionDTO, String parametro1, String parametro2){
+    public Integer crearSerie(EjercicioDTO ejercicioDTO, SesionDTO sesionDTO, String parametro1, String parametro2){
         Ejercicio ejercicio = ejercicioRepository.findById(ejercicioDTO.getId()).orElse(null);
         Sesion sesion = sesionRepository.findById(sesionDTO.getId()).orElse(null);
         Serie nueva_serie = new Serie();
@@ -93,6 +93,8 @@ public class SerieService extends DTOService{
         nueva_serie.setMetrica1(Float.parseFloat(parametro1));
         nueva_serie.setMetrica2(Float.parseFloat(parametro2));
         serieRepository.save(nueva_serie);
+
+        return nueva_serie.getId();
     }
 
     public void guardarSerie(SerieDTO serieDTO, String parametro1, String parametro2){

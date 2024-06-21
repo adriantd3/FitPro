@@ -1,6 +1,7 @@
 <%@ page import="uma.fitpro.entity.Usuario" %>
 <%@ page import="java.util.List" %>
-<%@ page import="java.util.Set" %><%--
+<%@ page import="java.util.Set" %>
+<%@ page import="uma.fitpro.dto.UsuarioDTO" %><%--
   Created by IntelliJ IDEA.
   User: victor
   Date: 12/4/24
@@ -9,7 +10,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    Set<Usuario> clientes = (Set<Usuario>) request.getAttribute("clientes");
+    List<UsuarioDTO> clientes = (List<UsuarioDTO>) request.getAttribute("clientes");
 %>
 <html>
 <head>
@@ -20,14 +21,14 @@
 <body>
 <header>
     <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back_button.png" alt="<-"
-         onclick="window.location.href='/entrenador_fuerza/home'"> <!-- Controlar pagina anterior por modelo -->
+         onclick="window.location.href='/entrenador_fuerza/'"> <!-- Controlar pagina anterior por modelo -->
     <h1 class="header-text text-center">Clientes</h1> <!-- Meter usuario por modelo -->
 </header>
 
 <ul class="list-group">
 
     <%
-        for(Usuario cliente : clientes){
+        for(UsuarioDTO cliente : clientes){
     %>
     <button type="button" onclick="window.location.href='/entrenador_fuerza/crud-rutina?cliente=<%=cliente.getId()%>'" class="list-button list-group-item m-3">
         <%=cliente.getNombre()+ " " + cliente.getApellidos()%>

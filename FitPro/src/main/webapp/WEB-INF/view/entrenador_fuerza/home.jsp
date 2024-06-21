@@ -1,13 +1,7 @@
-<%@ page import="uma.fitpro.entity.Usuario" %><%--
-  Created by IntelliJ IDEA.
-  User: victorperez
-  Date: 11/4/24
-  Time: 11:53
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="uma.fitpro.dto.UsuarioDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    Usuario usuario = (Usuario) session.getAttribute("user");
+    UsuarioDTO usuario = (UsuarioDTO) session.getAttribute("user");
 %>
 <html>
 <head>

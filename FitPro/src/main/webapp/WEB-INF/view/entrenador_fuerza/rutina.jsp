@@ -1,19 +1,15 @@
-<%@ page import="uma.fitpro.entity.Usuario" %>
-<%@ page import="uma.fitpro.entity.Rutina" %>
 <%@ page import="uma.fitpro.entity.Sesion" %>
-<%@ page import="java.util.List" %><%--
-  Created by IntelliJ IDEA.
-  User: victor
-  Date: 12/4/24
-  Time: 16:08
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="java.util.List" %>
+<%@ page import="uma.fitpro.dto.RutinaDTO" %>
+<%@ page import="uma.fitpro.dto.UsuarioDTO" %>
+<%@ page import="uma.fitpro.dto.SesionDTO" %>
+<%@ page import="uma.fitpro.utils.UtilityFunctions" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    Usuario cliente = (Usuario) session.getAttribute("cliente");
-    Rutina rutina = (Rutina) session.getAttribute("rutina");
-    List<Sesion> sesionesRutina = (List<Sesion>) request.getAttribute("sesiones");
-    List<Sesion> sesionesTotales = (List<Sesion>) request.getAttribute("sesionesTotales");
+    UsuarioDTO cliente = (UsuarioDTO) session.getAttribute("cliente");
+    RutinaDTO rutina = (RutinaDTO) session.getAttribute("rutina");
+    List<SesionDTO> sesionesRutina = (List<SesionDTO>) request.getAttribute("sesiones");
+    List<SesionDTO> sesionesTotales = (List<SesionDTO>) request.getAttribute("sesionesTotales");
 %>
 <html>
 <head>
@@ -37,10 +33,10 @@
     <h1 style="color: white">Sesiones asignadas</h1>
     <ul class="list-group m-3">
             <%
-            for(Sesion sesion : sesionesRutina){
+            for(SesionDTO sesion : sesionesRutina){
         %>
         <button onclick="window.location.href='/entrenador_fuerza/sesion?sesion=<%=sesion.getId()%>'" class="list-button list-group-item">
-            <%=sesion.getNombre()%>
+            <%=sesion.getNombre() + " | " + UtilityFunctions.getDayByNumber(sesion.getId())%>
         </button>
             <%
             }
@@ -49,7 +45,7 @@
     <h1 style="color: white">Sesiones no asignadas</h1>
     <ul class="list-group m-3">
         <%
-            for(Sesion sesion : sesionesTotales){
+            for(SesionDTO sesion : sesionesTotales){
                 if(!sesionesRutina.contains(sesion)){
         %>
         <button onclick="window.location.href='/entrenador_fuerza/asignar-sesion?sesion=<%=sesion.getId()%>'" class="list-button list-group-item">
@@ -62,5 +58,19 @@
 
     </ul>
 </section>
+<footer class="m-3 fixed-bottom">
+    <button class="btn btn-danger" onclick="window.location.href='/entrenador_fuerza/borrar-rutina?rutina=<%=rutina.getId()%>'">
+        Borrar
+    </button>
+    <%
+        if(cliente != null){
+    %>
+    <button class="btn btn-warning" onclick="window.location.href='/entrenador_fuerza/desasignar?rutina=<%=rutina.getId()%>'">
+        Desasignar a <%=cliente.getNombre() + " " + cliente.getApellidos()%>
+    </button>
+    <%
+        }
+    %>
+</footer>
 </body>
 </html>

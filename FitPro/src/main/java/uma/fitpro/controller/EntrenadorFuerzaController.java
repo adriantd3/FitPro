@@ -7,13 +7,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import uma.fitpro.dao.*;
+import uma.fitpro.dto.*;
 import uma.fitpro.entity.*;
+import uma.fitpro.service.*;
+import uma.fitpro.ui.FiltroRutina;
+import uma.fitpro.utils.ComparatorSerie;
+import uma.fitpro.utils.SortedList;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 //////////////////////////////////////////////////////
 /////////        ENTRENADOR FUERZA           /////////
@@ -27,254 +29,280 @@ import java.util.Set;
 public class EntrenadorFuerzaController {
 
     @Autowired
-    UsuarioRepository usuarioRepository;
+    private UsuarioService usuarioService;
     @Autowired
-    private RutinaRepository rutinaRepository;
+    private RutinaService rutinaService;
+    @Autowired
+    private SesionService sesionService;
+    @Autowired
+    private EjercicioService ejercicioService;
+    @Autowired
+    private SerieService serieService;
+    @Autowired
+    private DesempenyoSesionService desempenyoSesionService;
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
-    @Autowired
-    private SesionRepository sesionRepository;
-
-    @Autowired
-    private EjercicioRepository ejercicioRepository;
-
-    @Autowired
-    private SerieRepository serieRepository;
-    @Autowired
-    private OrdenSesionRutinaRepository ordenSesionRutinaRepository;
-
-    @Autowired
-    private DesempenyoSesionRepository desempenyoSesionRepository;
-
-    @PostMapping("/home")
+    // ----------- PAGINA INICIAL -----------------
+    @PostMapping("/")
     public String doEntrenadorFuerzaHome() {
         return "/entrenador_fuerza/home";
     }
 
-    @GetMapping("/home")
+    @GetMapping("/")
     public String doHome() {
         return "/entrenador_fuerza/home";
     }
 
-    @GetMapping("/crud-rutina")
-    public String doCrudRutina(@RequestParam("cliente")@Nullable Integer cliente_id, Model model, HttpSession session) {
-
-        List<Rutina> rutinas;
-        Usuario entrenador = (Usuario) session.getAttribute("user");
-        if (cliente_id != null) {
-            Usuario cliente = usuarioRepository.findById(cliente_id).orElse(null);
-            session.setAttribute("cliente", cliente);
-            rutinas = rutinaRepository.findByNotInRutinasCliente(cliente.getRutinasCliente());
-        }
-        else{
-            rutinas = new ArrayList<>(entrenador.getRutinasEntrenador());
-            session.setAttribute("cliente", null);
-        }
-        model.addAttribute("rutinas", rutinas);
-        return "/entrenador_fuerza/crud-rutina";
-    }
-
-    @PostMapping("/crear-rutina")
-    public String doNuevaRutina(@RequestParam("nombreRutina") String nombreRutina, Model model, HttpSession session){
-        Rutina rutina = new Rutina();
-
-        Usuario entrenador = (Usuario) session.getAttribute("user");
-        rutina.setEntrenador(entrenador);
-
-        Set<Rutina> rutinasEntrenador = entrenador.getRutinasEntrenador();
-        rutinasEntrenador.add(rutina);
-        entrenador.setRutinasEntrenador(rutinasEntrenador);
-        usuarioRepository.save(entrenador);
-
-
-        rutina.setNombre(nombreRutina);
-        rutina.setFechaCreacion(LocalDate.now());
-
-        Usuario cliente = (Usuario) session.getAttribute("cliente");
-        if(cliente != null){
-            List<Rutina> rutinasCliente = cliente.getRutinasCliente();
-            rutinasCliente.add(rutina);
-            cliente.setRutinasCliente(rutinasCliente);
-            usuarioRepository.save(cliente);
-        }
-
-        rutinaRepository.save(rutina);
-        return "redirect:/entrenador_fuerza/rutina?rutina=" + rutina.getId();
-
-    }
-
-    @GetMapping("guardar-rutina")
-    public String doGuardarRutina(@RequestParam("rutina") Integer rutina_id, Model model, HttpSession session){
-        Rutina rutina = rutinaRepository.findById(rutina_id).orElse(null);
-        Usuario cliente = (Usuario) session.getAttribute("cliente");
-
-        List<Rutina> nuevasRutinas = cliente.getRutinasCliente();
-        nuevasRutinas.add(rutina);
-        cliente.setRutinasCliente(nuevasRutinas);
-
-        usuarioRepository.save(cliente);
-        return "redirect:/entrenador_fuerza/crud-rutina?cliente=" + cliente.getId();
-
-    }
-
+    // ------------- PAGINA LISTA DE CLIENTES ---------------
     @GetMapping("/clientes")
     public String doClientes(Model model, HttpSession session) {
 
-        Usuario entrenador = (Usuario)session.getAttribute("user");
-        Set<Usuario> clientes = entrenador.getClientesEntrenador();
+        UsuarioDTO entrenador = (UsuarioDTO)session.getAttribute("user");
+        List<UsuarioDTO> clientes = usuarioService.getClientesEntrenador(entrenador);
         model.addAttribute("clientes", clientes);
 
         return "/entrenador_fuerza/clientes";
     }
 
+
+    // ----------- PAGINA DE RUTINAS ---------------
+    @GetMapping("/crud-rutina")
+    public String doCrudRutina(@RequestParam("cliente")@Nullable Integer cliente_id, Model model, HttpSession session) {
+
+        List<RutinaDTO> rutinas;
+        UsuarioDTO entrenador = (UsuarioDTO) session.getAttribute("user");
+        if (cliente_id != null) {
+            UsuarioDTO cliente = usuarioService.findById(cliente_id);
+            session.setAttribute("cliente", cliente);
+            List<Integer> rutinasIdCliente  = cliente.getRutinasCliente();
+            if(rutinasIdCliente.isEmpty()) rutinasIdCliente.add(-1);
+            rutinas = rutinaService.getRutinasSinAsignarACliente(rutinasIdCliente);
+            //rutinas = rutinaService.getRutinasSinAsignarACliente(cliente.getRutinasCliente());
+            List<RutinaDTO> rutinasCliente = rutinaService.getRutinasCliente(cliente);
+            session.setAttribute("rutinasCliente", rutinasCliente);
+        }
+        else{
+            rutinas = rutinaService.getRutinasEntrenador(entrenador);
+            session.setAttribute("cliente", null);
+        }
+        model.addAttribute("rutinas", rutinas);
+
+        FiltroRutina filtroRutina = new FiltroRutina();
+        model.addAttribute("filtroRutina", filtroRutina);
+        return "/entrenador_fuerza/crud-rutina";
+    }
+
+    @PostMapping("/crear-rutina")
+    public String doNuevaRutina(@RequestParam("nombreRutina") String nombreRutina, HttpSession session){
+
+        UsuarioDTO entrenador = (UsuarioDTO) session.getAttribute("user");
+
+        rutinaService.nuevaRutina(entrenador, nombreRutina);
+
+        UsuarioDTO cliente = (UsuarioDTO) session.getAttribute("cliente");
+        if(cliente != null){
+            return "redirect:/entrenador_fuerza/crud-rutina?cliente=" + cliente.getId();
+        }else{
+            return "redirect:/entrenador_fuerza/crud-rutina";
+        }
+    }
+
+    @GetMapping("guardar-rutina")
+    public String doGuardarRutina(@RequestParam("rutina") Integer rutina_id, HttpSession session){
+        System.out.println("rutina_id: " + rutina_id);
+        RutinaDTO rutinaDTO = rutinaService.buscarRutina(rutina_id);
+        UsuarioDTO cliente = (UsuarioDTO) session.getAttribute("cliente");
+
+        usuarioService.asignarRutinaCliente(cliente, rutinaDTO);
+
+        return "redirect:/entrenador_fuerza/crud-rutina?cliente=" + cliente.getId();
+
+    }
+
+    @PostMapping("/crud-rutina/filtro")
+    public String doFiltroListaRutinas(@ModelAttribute FiltroRutina filtroRutina,
+                                       @RequestParam("cliente") Integer cliente_id,
+                                       Model model, HttpSession session){
+        List<RutinaDTO> rutinas;
+        UsuarioDTO entrenador = (UsuarioDTO) session.getAttribute("user");
+        if (cliente_id != -1) {
+            UsuarioDTO cliente = usuarioService.findById(cliente_id);
+            session.setAttribute("cliente", cliente);
+            rutinas = rutinaService.getRutinasSinAsignarACliente(cliente.getRutinasCliente(), filtroRutina);
+            List<RutinaDTO> rutinasCliente = rutinaService.getRutinasCliente(cliente, filtroRutina);
+            session.setAttribute("rutinasCliente", rutinasCliente);
+        }
+        else{
+            rutinas = rutinaService.getRutinasEntrenador(entrenador, filtroRutina);
+            session.setAttribute("cliente", null);
+        }
+        model.addAttribute("rutinas", rutinas);
+
+        model.addAttribute("filtroRutina", filtroRutina);
+        return "/entrenador_fuerza/crud-rutina";
+    }
+
+
+    // ----------- PAGINA DE UNA RUTINA -------------------
+    @GetMapping("/rutina")
+    public String doRutina(@RequestParam("rutina") Integer rutina_id, Model model, HttpSession session) {
+        UsuarioDTO cliente = (UsuarioDTO) session.getAttribute("cliente");
+        Usuario test = usuarioRepository.findById(cliente.getId()).orElse(null);
+        RutinaDTO rutina = rutinaService.buscarRutina(rutina_id);
+        session.setAttribute("rutina", rutina);
+
+        List<SesionDTO> sesiones = sesionService.getSesionesFromRutina(rutina);
+
+        model.addAttribute("sesiones", sesiones);
+        model.addAttribute("sesionesTotales", sesionService.getSesiones());
+        return "/entrenador_fuerza/rutina";
+    }
+
+    @GetMapping("/borrar-rutina")
+    public String doBorrarRutina(@RequestParam("rutina") Integer rutina_id, HttpSession session) {
+        rutinaService.borrarRutina(rutina_id);
+        UsuarioDTO cliente = (UsuarioDTO) session.getAttribute("cliente");
+        if(cliente != null){
+            return "redirect:/entrenador_fuerza/crud-rutina?cliente=" + cliente.getId();
+        }else{
+            return "redirect:/entrenador_fuerza/crud-rutina";
+        }
+    }
+
+    @GetMapping("/desasignar")
+    public String doDesasignar(@RequestParam("rutina") Integer rutina_id, HttpSession session) {
+        RutinaDTO rutina = rutinaService.buscarRutina(rutina_id);
+        UsuarioDTO cliente = (UsuarioDTO) session.getAttribute("cliente");
+
+        usuarioService.borrarRutinaCliente(cliente, rutina);
+
+        return "redirect:/entrenador_fuerza/crud-rutina?cliente=" + cliente.getId();
+    }
+
+    @GetMapping("asignar-sesion")
+    public String doAsignarSesion(@RequestParam("sesion") Integer sesion_id, HttpSession session) {
+        SesionDTO sesion = sesionService.buscarSesion(sesion_id);
+        RutinaDTO rutina = (RutinaDTO) session.getAttribute("rutina");
+        SesionDTO sesionAnterior = sesionService.getSesionByDia(rutina,1);
+        rutinaService.asociarDiaSesion(rutina,1, sesion, sesionAnterior);
+
+        return "redirect:/entrenador_fuerza/rutina?rutina=" + rutina.getId();
+    }
+
+    @PostMapping("/crear-sesion")
+    public String doCrearSesion(@RequestParam("nombreSesion") String nombreSesion, HttpSession session) {
+
+        sesionService.nuevaSesion(nombreSesion);
+        RutinaDTO rutina = (RutinaDTO) session.getAttribute("rutina");
+
+        return "redirect:/entrenador_fuerza/rutina?rutina=" + rutina.getId();
+    }
+
+
+    // ---------- PAGINA DE SESION ------------------
     @GetMapping("/sesion")
     public String doSesion(@RequestParam("sesion")@Nullable Integer sesion_id, Model model) {
-        Sesion sesion;
+        SesionDTO sesion;
         if (sesion_id != null) {
-            sesion = sesionRepository.findById(sesion_id).orElse(null);
+            sesion = sesionService.buscarSesion(sesion_id);
             model.addAttribute("sesion", sesion);
-        }
 
+            Map<EjercicioDTO, SortedList<SerieDTO>> tablas = serieService.buscarSeriesDictionary(sesion.getSeries());
+            model.addAttribute("tablas", tablas);
+        }
         //System.out.printf(String.valueOf(model.getAttribute("serie") == null));
 
         return "/entrenador_fuerza/sesion";
     }
 
-    @PostMapping("/crear-sesion")
-    public String doCrearSesion(@RequestParam("nombreSesion") String nombreSesion, Model model, HttpSession session) {
-
-        Sesion sesion = new Sesion();
-        sesion.setNombre(nombreSesion);
-        sesionRepository.save(sesion);
-
-        Rutina rutina = (Rutina) session.getAttribute("rutina");
-
-        createOrdenSesionObject(rutina, sesion);
-
-        return "redirect:/entrenador_fuerza/sesion?sesion=" + sesion.getId();
-    }
-
     @GetMapping("borrar-sesion")
-    public String doBorrarSesion(@RequestParam("sesion") Integer sesion_id, Model model, HttpSession session) {
-        Sesion sesion = sesionRepository.findById(sesion_id).orElse(null);
-        sesionRepository.delete(sesion);
-        Rutina rutina = (Rutina) session.getAttribute("rutina");
+    public String doBorrarSesion(@RequestParam("sesion") Integer sesion_id, HttpSession session) {
+        sesionService.borrarSesion(sesion_id);
+        RutinaDTO rutina = (RutinaDTO) session.getAttribute("rutina");
 
         return "redirect:/entrenador_fuerza/rutina?rutina=" + rutina.getId();
-    }
-
-
-
-    @GetMapping("asignar-sesion")
-    public String doAsignarSesion(@RequestParam("sesion") Integer sesion_id, Model model, HttpSession session) {
-        Sesion sesion = sesionRepository.findById(sesion_id).orElse(null);
-        Rutina rutina = (Rutina) session.getAttribute("rutina");
-
-        createOrdenSesionObject(rutina, sesion);
-
-        return "redirect:/entrenador_fuerza/rutina?rutina=" + rutina.getId();
-    }
-
-    private void createOrdenSesionObject(Rutina rutina, Sesion sesion){
-        OrdenSesionRutina ordenSesion = new OrdenSesionRutina();
-        OrdenSesionRutinaId idOrdenSesion = new OrdenSesionRutinaId();
-        idOrdenSesion.setSesionId(sesion.getId());
-        idOrdenSesion.setRutinaId(rutina.getId());
-        idOrdenSesion.setOrden(1);
-        ordenSesion.setId(idOrdenSesion);
-        ordenSesion.setSesion(sesion);
-        ordenSesion.setRutina(rutina);
-        ordenSesionRutinaRepository.save(ordenSesion);
-
-        List<OrdenSesionRutina> ordenSesionesRutina = rutina.getOrdenSesionRutinas();
-        ordenSesionesRutina.add(ordenSesion);
-        rutina.setOrdenSesionRutinas(ordenSesionesRutina);
-        rutinaRepository.save(rutina);
-    }
-
-    @GetMapping("/rutina")
-    public String doRutina(@RequestParam("rutina") Integer rutina_id, Model model, HttpSession session) {
-        Rutina rutina = rutinaRepository.findById(rutina_id).orElse(null);
-        session.setAttribute("rutina", rutina);
-        System.out.println(rutina.getOrdenSesionRutinas());
-        System.out.println(sesionRepository.findAllByOrdenSesionRutina(rutina));
-        model.addAttribute("sesiones", sesionRepository.findAllByOrdenSesionRutina(rutina));
-        model.addAttribute("sesionesTotales", sesionRepository.findAll());
-        return "/entrenador_fuerza/rutina";
     }
 
     @GetMapping("/asignar-ejercicio")
     public String doAsignarEjercicio(@ModelAttribute("sesion") Integer sesion_id, Model model) {
-        Sesion sesion = sesionRepository.findById(sesion_id).orElse(null);
+        SesionDTO sesion = sesionService.buscarSesion(sesion_id);
         model.addAttribute("sesion", sesion);
 
-        List<Ejercicio> ejercicios = ejercicioRepository.findAll();
+        List<EjercicioDTO> ejercicios = ejercicioService.getEjercicios();
         model.addAttribute("ejercicios", ejercicios);
 
-        Serie serie = new Serie();
+        SerieDTO serie = new SerieDTO();
         model.addAttribute("serie", serie);
 
         return "/entrenador_fuerza/asignar-ejercicio";
     }
 
-    @PostMapping("/guardar-ejercicio")
-    public String doGuardarEjercicio(@ModelAttribute("serie") Serie serie, Model model) {
-        model.addAttribute("sesion", serie.getSesion());
-
-        serie.setMetrica2((float)0);
-        serie.setMetrica1((float)0);
-        serieRepository.save(serie);
-
-        return "/entrenador_fuerza/crear-sesion";
-    }
-
     @GetMapping("editar-serie")
     public String doEditarSerie(@RequestParam("serie") Integer serie_id, Model model) {
-        Serie serie = serieRepository.findById(serie_id).orElse(null);
+        SerieDTO serie = serieService.buscarSerie(serie_id);
+        SesionDTO sesion = sesionService.buscarSesion(serie.getSesion());
+        String nombreEjercicio = ejercicioService.buscarEjercicio(serie.getEjercicio()).getNombre();
         model.addAttribute("serie", serie);
-        model.addAttribute("sesion", serie.getSesion());
+        model.addAttribute("sesion", sesion);
+        model.addAttribute("nombreEjercicio", nombreEjercicio);
+
+        Map<EjercicioDTO, SortedList<SerieDTO>> tablas = serieService.buscarSeriesDictionary(sesion.getSeries());
+        model.addAttribute("tablas", tablas);
         return "/entrenador_fuerza/sesion";
     }
 
     @PostMapping("/guardar-serie")
-    public String doGuardarSerie(@ModelAttribute("serie") Serie serie) {
-        serieRepository.save(serie);
-
-        return "redirect:/entrenador_fuerza/sesion?sesion=" + serie.getSesion().getId();
+    public String doGuardarSerie(@ModelAttribute("serie") SerieDTO serie) {
+        serieService.guardarSerie(serie, serie.getMetrica1().toString(), serie.getMetrica2().toString());
+        return "redirect:/entrenador_fuerza/sesion?sesion=" + serie.getSesion();
     }
 
     @GetMapping("eliminar-serie")
     public String doEliminarSerie(@RequestParam("serie") Integer serie_id) {
-        Serie serie = serieRepository.findById(serie_id).orElse(null);
-        serieRepository.delete(serie);
+        SerieDTO serie = serieService.buscarSerie(serie_id);
+        serieService.borrarSerie(serie);
 
-        return "redirect:/entrenador_fuerza/sesion?sesion=" + serie.getSesion().getId();
+        return "redirect:/entrenador_fuerza/sesion?sesion=" + serie.getSesion();
     }
 
     @GetMapping("anyadir-serie")
     public String doAnyadirSerie(@RequestParam("sesion") Integer sesion_id ,
                                  @RequestParam("ejercicio") Integer ejercicio_id) {
-        Sesion sesion = sesionRepository.findById(sesion_id).orElse(null);
-        Ejercicio ejercicio = ejercicioRepository.findById(ejercicio_id).orElse(null);
-        Serie serie = new Serie();
-        serie.setMetrica2((float)0);
-        serie.setMetrica1((float)0);
-        serie.setSesion(sesion);
-        serie.setEjercicio(ejercicio);
-
-        serieRepository.save(serie);
-        return "redirect:/entrenador_fuerza/editar-serie?serie=" + serie.getId();
+        SesionDTO sesion = sesionService.buscarSesion(sesion_id);
+        EjercicioDTO ejercicio = ejercicioService.buscarEjercicio(ejercicio_id);
+        Integer serie_id = serieService.crearSerie(ejercicio, sesion, "0", "0");
+        return "redirect:/entrenador_fuerza/editar-serie?serie=" + serie_id;
     }
 
+
+    // -------- LISTA DE EJERCICIOS ---------------
+    @PostMapping("/guardar-ejercicio")
+    public String doGuardarEjercicio(@RequestParam("ejercicio") Integer ejercicioId, @RequestParam("sesion") Integer sesionId,
+                                     Model model) {
+        EjercicioDTO ejercicioDTO = ejercicioService.buscarEjercicio(ejercicioId);
+        SesionDTO sesionDTO = sesionService.buscarSesion(sesionId);
+
+        Integer serieId = serieService.crearSerie(ejercicioDTO, sesionDTO, "0", "0");
+
+        return "redirect:/entrenador_fuerza/editar-serie?serie=" + serieId;
+    }
+
+
+    //---------------- PAGINAS DE SEGUIMIENTO -----------------------
     @GetMapping("seguimiento")
     public String doSeguimiento(Model model, HttpSession session) {
-
+        UsuarioDTO cliente = (UsuarioDTO) session.getAttribute("cliente");
+        List<DesempenyoSesionDTO> desempenyosSesiones = desempenyoSesionService.getDesempenyosSesionesByCliente(cliente);
+        model.addAttribute("desempenyoSesiones", desempenyosSesiones);
         return "/entrenador_fuerza/seguimiento";
     }
 
     @GetMapping("desempenyos-sesion/{id}")
     public String doDesempenyoSesion(@PathVariable Integer id, Model model) {
-        System.out.println("holi");
-        DesempenyoSesion desempenyoSesion = desempenyoSesionRepository.findById(id).orElse(null);
+        DesempenyoSesionDTO desempenyoSesion = desempenyoSesionService.buscarDesempenyoSesion(id);
+        Map<EjercicioDTO, SortedList<SerieDTO>> tablas = serieService.buscarSeriesDictionary(desempenyoSesion.getDesempenyoSeries());
+        model.addAttribute("tablas", tablas);
 
         model.addAttribute("desempenyoSesion", desempenyoSesion);
         return "/entrenador_fuerza/desempenyos-sesion";

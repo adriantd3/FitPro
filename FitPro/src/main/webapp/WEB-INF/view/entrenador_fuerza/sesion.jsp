@@ -1,28 +1,18 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ page import="uma.fitpro.entity.Rutina" %>
-<%@ page import="uma.fitpro.entity.Ejercicio" %>
-<%@ page import="uma.fitpro.entity.Sesion" %>
-<%@ page import="uma.fitpro.entity.Serie" %>
 <%@ page import="java.util.HashMap" %>
 <%@ page import="java.util.List" %>
-<%@ page import="java.util.ArrayList" %><%--
-  Created by IntelliJ IDEA.
-  User: victor
-  Date: 12/4/24
-  Time: 16:09
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="uma.fitpro.dto.SesionDTO" %>
+<%@ page import="uma.fitpro.dto.RutinaDTO" %>
+<%@ page import="uma.fitpro.dto.SerieDTO" %>
+<%@ page import="uma.fitpro.dto.EjercicioDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%
-    Rutina rutina = (Rutina) session.getAttribute("rutina");
-    Sesion sesion = (Sesion) request.getAttribute("sesion");
-    HashMap<Ejercicio, List<Serie>> tablas = new HashMap<>();
-    for(Serie serie : sesion.getSeries()){
-        tablas.computeIfAbsent(serie.getEjercicio(), k -> new ArrayList<>());
-        tablas.get(serie.getEjercicio()).add(serie);
-    }
-    Serie serie = (Serie) request.getAttribute("serie");
+    RutinaDTO rutina = (RutinaDTO) session.getAttribute("rutina");
+    SesionDTO sesion = (SesionDTO) request.getAttribute("sesion");
+    HashMap<EjercicioDTO, List<SerieDTO>> tablas = (HashMap<EjercicioDTO, List<SerieDTO>>) request.getAttribute("tablas");
+    SerieDTO serie = (SerieDTO) request.getAttribute("serie");
+    String nombreEjercicio = (String) request.getAttribute("nombreEjercicio");
 %>
 <html>
 <head>
@@ -40,11 +30,11 @@
 <section class="mt-3 ms-3 h-100 d-flex">
     <div class="w-50">
     <%
-        for (Ejercicio ejercicio : tablas.keySet()){
+        for (EjercicioDTO ejercicio : tablas.keySet()){
     %>
 
         <table style="border-spacing: 0" class="table caption-top text-center w-100 ">
-            <a href="#" class="d-block fs-3"><%=ejercicio.getNombre()%></a>
+            <a href="/cliente/rutinas/ejercicio?id=<%=ejercicio.getId()%>" class="d-block fs-3"><%=ejercicio.getNombre()%></a>
             <thead class="table-dark">
             <tr>
                 <th class="nombre-menu">Peso</th>
@@ -55,7 +45,7 @@
             </thead>
             <tbody style="border-top: 0 !important;" class = "table-group-divider table-secondary">
             <%
-                for(Serie s : tablas.get(ejercicio)){
+                for(SerieDTO s : tablas.get(ejercicio)){
             %>
 
             <tr onclick="">
@@ -88,7 +78,7 @@
         if(serie != null){
     %>
     <div class="w-50 align-items-center d-flex flex-column">
-        <h1 class="pb-2" style="color: white"> Serie de <%=serie.getEjercicio().getNombre()%></h1>
+        <h1 class="pb-2" style="color: white"> Serie de <%=nombreEjercicio%></h1>
         <form:form method="post" action="/entrenador_fuerza/guardar-serie" modelAttribute="serie">
             <form:label cssStyle="color: white; width: 110px" path="metrica1" >Peso: </form:label>
             <form:input path="metrica1" type="number"/>
@@ -98,8 +88,8 @@
             <br>
 
             <form:input type="hidden" path="id" value="<%=serie.getId()%>"/>
-            <form:input type="hidden" path="sesion" value="<%=serie.getSesion().getId()%>"/>
-            <form:input type="hidden" path="ejercicio" value="<%=serie.getEjercicio().getId()%>"/>
+            <form:input type="hidden" path="sesion" value="<%=serie.getSesion()%>"/>
+            <form:input type="hidden" path="ejercicio" value="<%=serie.getEjercicio()%>"/>
 
             <input class="btn btn-success" type="submit" value="Guardar">
         </form:form>

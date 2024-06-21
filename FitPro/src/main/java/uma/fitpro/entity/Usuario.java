@@ -101,7 +101,7 @@ public class Usuario implements Serializable, DTO<UsuarioDTO> {
     @JoinTable(name = "rutina_cliente",
             joinColumns = @JoinColumn(name = "cliente_id"),
             inverseJoinColumns = @JoinColumn(name = "rutina_id"))
-    private List<Rutina> rutinasCliente = new ArrayList<>();
+    private Set<Rutina> rutinasCliente = new LinkedHashSet<>();
 
     public Integer getId() {
         return id;
@@ -263,11 +263,11 @@ public class Usuario implements Serializable, DTO<UsuarioDTO> {
         this.rutinasEntrenador = rutinasEntrenador;
     }
 
-    public List<Rutina> getRutinasCliente() {
+    public Set<Rutina> getRutinasCliente() {
         return rutinasCliente;
     }
 
-    public void setRutinasCliente(List<Rutina> rutinasCliente) {
+    public void setRutinasCliente(Set<Rutina> rutinasCliente) {
         this.rutinasCliente = rutinasCliente;
     }
 

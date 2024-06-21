@@ -10,6 +10,7 @@ import uma.fitpro.entity.Usuario;
 import uma.fitpro.entity.Rutina;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class UsuarioService extends DTOService{
@@ -57,7 +58,7 @@ public class UsuarioService extends DTOService{
     public void asignarRutinaCliente(UsuarioDTO clienteDTO, RutinaDTO rutinaDTO){
         Rutina rutina = rutinaRepository.findById(rutinaDTO.getId()).orElse(null);
         Usuario cliente = usuarioRepository.findById(clienteDTO.getId()).orElse(null);
-        List<Rutina> rutinas_cliente = cliente.getRutinasCliente();
+        Set<Rutina> rutinas_cliente = cliente.getRutinasCliente();
         rutinas_cliente.add(rutina);
         cliente.setRutinasCliente(rutinas_cliente);
         usuarioRepository.save(cliente);
@@ -66,7 +67,7 @@ public class UsuarioService extends DTOService{
     public void borrarRutinaCliente(UsuarioDTO clienteDTO, RutinaDTO rutinaDTO){
         Rutina rutina = rutinaRepository.findById(rutinaDTO.getId()).orElse(null);
         Usuario cliente = usuarioRepository.findById(clienteDTO.getId()).orElse(null);
-        List<Rutina> rutinas_cliente = cliente.getRutinasCliente();
+        Set<Rutina> rutinas_cliente = cliente.getRutinasCliente();
         rutinas_cliente.remove(rutina);
         cliente.setRutinasCliente(rutinas_cliente);
         usuarioRepository.save(cliente);

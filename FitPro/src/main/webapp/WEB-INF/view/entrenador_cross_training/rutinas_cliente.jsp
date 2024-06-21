@@ -114,7 +114,7 @@
                         <%
                             for (RutinaDTO r : todasLasRutinas){
                         %>
-                        <option value="<%=r.getId()%>"><%=r.getNombre()%></option>
+                        <option value="<%=r.getId()%>"><%=r.getNombre()%> - <%=r.getFechaCreacion()%></option>
                         <%
                             }
                         %>

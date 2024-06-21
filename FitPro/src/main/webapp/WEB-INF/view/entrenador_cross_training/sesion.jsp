@@ -37,14 +37,17 @@
     <% } %>
     <section class="sesion-table-container scrollable-content">
         <%
-            String nombre_ejercicio = "";
             for (EjercicioDTO e : mapa.keySet()){
-                nombre_ejercicio = e.getNombre();
         %>
         <div>
             <table name="tabla_ejercicio" style="width: 700px" class="table table-striped table-dark">
                 <thead>
-                <tr><th style="background-color: transparent; color: darkblue;width: 300px"><%= nombre_ejercicio %></th></tr>
+                <tr>
+                    <th style="background-color: transparent;width: 300px">
+                        <a style="color: darkblue" href="ejercicio?id=<%=e.getId()%>" target="_blank"><%=e.getNombre()%>
+                        </a>
+                    </th>
+                </tr>
                 <tr>
                     <th scope="col">Serie</th>
                     <th scope="col"><%=ejercicioParametros.get(e.getTipo().getId()).get(0)%></th>

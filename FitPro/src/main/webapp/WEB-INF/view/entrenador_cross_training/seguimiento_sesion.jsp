@@ -31,16 +31,19 @@
 <section class="scrollable-section" style="height: 650px">
     <section class="sesion-table-container scrollable-content">
         <section class="seguimiento-sesion-container">
-            <div><h2 class="h2-seguimiento-sesion">Sesión original</h2></div>
+            <div><h3 class="h3-seguimiento-sesion">Sesión original</h3></div>
             <%
-                String nombre_ejercicio = "";
                 for (EjercicioDTO e : mapaSesionOriginal.keySet()){
-                    nombre_ejercicio = e.getNombre();
             %>
             <div>
                 <table name="tabla_ejercicio" style="width: 700px" class="table table-striped table-dark">
                     <thead>
-                    <tr><th style="background-color: transparent; color: darkblue;width: 300px"><%= nombre_ejercicio %></th></tr>
+                    <tr>
+                        <th style="background-color: transparent;width: 300px">
+                            <a style="color: darkblue" href="ejercicio?id=<%=e.getId()%>" target="_blank"><%=e.getNombre()%>
+                            </a>
+                        </th>
+                    </tr>
                     <tr>
                         <th scope="col">Serie</th>
                         <th scope="col"><%=ejercicioParametros.get(e.getTipo().getId()).get(0)%></th>
@@ -70,21 +73,24 @@
             %>
         </section>
         <section class="seguimiento-sesion-container">
-            <div><h2 class="h2-seguimiento-sesion">Desempeño de la sesión</h2></div>
+            <div><h3 class="h3-seguimiento-sesion">Desempeño de la sesión</h3></div>
             <% if (mapaDesempenyoSesion.keySet().isEmpty()) { %>
             <section class="table-container">
                 <section class="mensaje-alerta"><h2>No se ha podido encontrar el desempeño para esta sesión.</h2></section>
             </section>
             <% } %>
             <%
-                nombre_ejercicio = "";
                 for (EjercicioDTO e : mapaDesempenyoSesion.keySet()){
-                    nombre_ejercicio = e.getNombre();
             %>
             <div>
                 <table name="tabla_ejercicio" style="width: 700px" class="table table-striped table-dark">
                     <thead>
-                    <tr><th style="background-color: transparent; color: darkblue;width: 300px"><%= nombre_ejercicio %></th></tr>
+                    <tr>
+                        <th style="background-color: transparent;width: 300px">
+                            <a style="color: darkblue" href="ejercicio?id=<%=e.getId()%>" target="_blank"><%=e.getNombre()%>
+                            </a>
+                        </th>
+                    </tr>
                     <tr>
                         <th scope="col">Serie</th>
                         <th scope="col"><%=ejercicioParametros.get(e.getTipo().getId()).get(0)%></th>

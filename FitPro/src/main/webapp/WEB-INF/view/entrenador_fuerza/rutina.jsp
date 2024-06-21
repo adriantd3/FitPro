@@ -4,11 +4,12 @@
 <%@ page import="uma.fitpro.dto.UsuarioDTO" %>
 <%@ page import="uma.fitpro.dto.SesionDTO" %>
 <%@ page import="uma.fitpro.utils.UtilityFunctions" %>
+<%@ page import="java.util.Map" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     UsuarioDTO cliente = (UsuarioDTO) session.getAttribute("cliente");
     RutinaDTO rutina = (RutinaDTO) session.getAttribute("rutina");
-    List<SesionDTO> sesionesRutina = (List<SesionDTO>) request.getAttribute("sesiones");
+    Map<Integer, SesionDTO> sesionesRutina = (Map<Integer, SesionDTO>) request.getAttribute("sesiones");
     List<SesionDTO> sesionesTotales = (List<SesionDTO>) request.getAttribute("sesionesTotales");
 %>
 <html>
@@ -33,10 +34,10 @@
     <h1 style="color: white">Sesiones asignadas</h1>
     <ul class="list-group m-3">
             <%
-            for(SesionDTO sesion : sesionesRutina){
+            for(Map.Entry<Integer, SesionDTO> diaSesion : sesionesRutina.entrySet()){
         %>
-        <button onclick="window.location.href='/entrenador_fuerza/sesion?sesion=<%=sesion.getId()%>'" class="list-button list-group-item">
-            <%=sesion.getNombre() + " | " + UtilityFunctions.getDayByNumber(sesion.getId())%>
+        <button onclick="window.location.href='/entrenador_fuerza/sesion?sesion=<%=diaSesion.getValue().getId()%>'" class="list-button list-group-item">
+            <%=diaSesion.getValue().getNombre() + " | " + UtilityFunctions.getDayByNumber(diaSesion.getKey())%>
         </button>
             <%
             }
@@ -46,7 +47,7 @@
     <ul class="list-group m-3">
         <%
             for(SesionDTO sesion : sesionesTotales){
-                if(!sesionesRutina.contains(sesion)){
+                if(!sesionesRutina.containsValue(sesion)){
         %>
         <button onclick="window.location.href='/entrenador_fuerza/asignar-sesion?sesion=<%=sesion.getId()%>'" class="list-button list-group-item">
             <%=sesion.getNombre()%>

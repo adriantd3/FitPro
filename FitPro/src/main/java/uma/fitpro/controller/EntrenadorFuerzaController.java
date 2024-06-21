@@ -147,12 +147,10 @@ public class EntrenadorFuerzaController {
     // ----------- PAGINA DE UNA RUTINA -------------------
     @GetMapping("/rutina")
     public String doRutina(@RequestParam("rutina") Integer rutina_id, Model model, HttpSession session) {
-        UsuarioDTO cliente = (UsuarioDTO) session.getAttribute("cliente");
-        Usuario test = usuarioRepository.findById(cliente.getId()).orElse(null);
         RutinaDTO rutina = rutinaService.buscarRutina(rutina_id);
         session.setAttribute("rutina", rutina);
 
-        List<SesionDTO> sesiones = sesionService.getSesionesFromRutina(rutina);
+        Map<Integer, SesionDTO> sesiones = rutinaService.getDiasSesion(rutina);
 
         model.addAttribute("sesiones", sesiones);
         model.addAttribute("sesionesTotales", sesionService.getSesiones());

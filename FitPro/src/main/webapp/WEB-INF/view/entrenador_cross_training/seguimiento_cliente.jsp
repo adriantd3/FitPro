@@ -27,7 +27,7 @@
     </a>
     <h1 class="header-text text-center">Seguimiento de <%=cliente.getNombre()%> - <%=rutina.getNombre()%></h1>
 </header>
-<section class="scrollable-section">
+<section class="scrollable-section" style="height: 650px">
     <% if (seguimientoRutina.keySet().isEmpty()) { %>
     <section class="table-container">
         <section class="mensaje-alerta"><h2>No hay sesiones que seguir en esta rutina</h2></section>

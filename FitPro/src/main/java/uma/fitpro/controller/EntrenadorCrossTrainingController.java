@@ -157,12 +157,16 @@ public class EntrenadorCrossTrainingController {
         }
         DesempenyoSesionDTO desempenyoSesion =
                 desempenyoSesionService.buscarDesempenyoSesion(id_desempenyo_sesion);
-        Map<EjercicioDTO,List<DesempenyoSerieDTO>> mapa =
+        Map<EjercicioDTO,List<DesempenyoSerieDTO>> mapaDesempenyoSesion =
                 desempenyoSerieService.buscarDesempenyoSeriesDictionary(desempenyoSesion.getDesempenyoSeries());
         Map<Integer,List<String>> ejercicioParametros = getEjercicioParametros();
 
+        SesionDTO sesionOriginal = sesionService.buscarSesion(desempenyoSesion.getIdSesion());
+        Map<EjercicioDTO, List<SerieDTO>> mapaSesionOriginal = sesionService.getEjercicioYSeries(sesionOriginal);
+
         model.addAttribute("ejercicioParametros", ejercicioParametros);
-        model.addAttribute("mapa", mapa);
+        model.addAttribute("mapaDesempenyoSesion", mapaDesempenyoSesion);
+        model.addAttribute("mapaSesionOriginal", mapaSesionOriginal);
         model.addAttribute("desempenyoSesion", desempenyoSesion);
         return "entrenador_cross_training/seguimiento_sesion";
     }

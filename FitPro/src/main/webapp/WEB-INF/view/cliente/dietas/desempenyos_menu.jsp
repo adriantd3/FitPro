@@ -51,7 +51,7 @@
                     String fecha = desempenyoMenu.getFechaCreacion().format(formatter);
             %>
             <li>
-                <a class="text-primary fs-5" href="resultados_menu?id=<%=desempenyoMenu.getId()%>" id="<%=idRes%>">
+                <a class="text-primary fs-5" href="info_ingesta?id=<%=desempenyoMenu.getId()%>" id="<%=idRes%>">
                     <%=fecha%> - <%=terminado%>
                 </a>
             </li>

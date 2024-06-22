@@ -76,46 +76,30 @@ public class ClienteDietasController {
         return "cliente/dietas/desempenyos_menu";
     }
 
-    @GetMapping("/resultados_menu")
-    public String doResultadosMenu(@RequestParam("id") Integer desempenyo_id, Model model, HttpSession session){
-        DesempenyoMenuDTO desempenyoMenu = desempenyoMenuService.buscarDesempenyoMenu(desempenyo_id);
-        if(!estaAutenticado(session) || !mismoMenu(session, desempenyoMenu)){
+    @GetMapping("/info_ingesta")
+    public String doIngesta(@RequestParam("id") Integer desempenyo_id, Model model, HttpSession session){
+        if(!estaAutenticado(session)){
             return "redirect:/";
         }
+
+        DesempenyoMenuDTO desempenyoMenu = desempenyoMenuService.buscarDesempenyoMenu(desempenyo_id);
+        if(!mismoMenu(session, desempenyoMenu)){
+            return "redirect:/";
+        }
+
+        List<DesempenyoComidaDTO> des_comidas = desempenyoComidaService.buscarDesempenyosComida(desempenyoMenu.getDesempenyoComidas());
+        model.addAttribute("des_comidas", des_comidas);
+        model.addAttribute("desempenyo_menu", desempenyoMenu);
 
         if(!desempenyoMenu.isTerminado()){
             // Si el desempenyoMenu no esta terminado, redirigir a la vista de ingesta
-            return "redirect:/cliente/dietas/ingesta?id=" + desempenyo_id;
+            return "cliente/dietas/ingesta";
         }
 
-        List<DesempenyoComidaDTO> des_comidas = desempenyoComidaService.buscarDesempenyosComida(desempenyoMenu.getDesempenyoComidas());
-
+        //Si el desempenyoMenu esta terminado, redirigir a la vista de resultados
         model.addAttribute("filtro",new FiltroDesempenyoComida(desempenyoMenu.getId()));
 
-        model.addAttribute("desempenyo_menu", desempenyoMenu);
-        model.addAttribute("des_comidas", des_comidas);
-
         return "cliente/dietas/resultados_menu";
-    }
-
-    @GetMapping("/ingesta")
-    public String doIngesta(@RequestParam("id") Integer desempenyo_id, Model model, HttpSession session){
-        DesempenyoMenuDTO desempenyoMenu = desempenyoMenuService.buscarDesempenyoMenu(desempenyo_id);
-        if(!estaAutenticado(session) || !mismoMenu(session, desempenyoMenu)){
-            return "redirect:/";
-        }
-
-        if(desempenyoMenu.isTerminado()){
-            // Si el desempenyoMenu esta terminado, redirigir a la vista de resultados
-            return "redirect:/cliente/dietas/resultados_menu?id=" + desempenyo_id;
-        }
-
-        List<DesempenyoComidaDTO> des_comidas = desempenyoComidaService.buscarDesempenyosComida(desempenyoMenu.getDesempenyoComidas());
-
-        model.addAttribute("desempenyo_menu", desempenyoMenu);
-        model.addAttribute("des_comidas", des_comidas);
-
-        return "cliente/dietas/ingesta";
     }
 
     @PostMapping("/prev_ingesta")
@@ -142,14 +126,17 @@ public class ClienteDietasController {
         MenuDTO menu = (MenuDTO) session.getAttribute("menu");
         DesempenyoMenuDTO desMenu = desempenyoMenuService.nuevoDesempenyoMenu(menu.getId(), cliente.getId());
 
-        return "redirect:/cliente/dietas/ingesta?id=" + desMenu.getId();
+        return "redirect:/cliente/dietas/info_ingesta?id=" + desMenu.getId();
     }
 
     @PostMapping("/editar_des_comida")
     public String doEditarDesemepnyoComida(@RequestParam("id") Integer desComidaId, Model model, HttpSession session){
+        if(!estaAutenticado(session)){
+            return "redirect:/";
+        }
         DesempenyoComidaDTO desComida = desempenyoComidaService.buscarDesempenyoComida(desComidaId);
         DesempenyoMenuDTO desMenu = desempenyoMenuService.buscarDesempenyoMenu(desComida.getDesempenyoMenu());
-        if(!estaAutenticado(session) || !mismoMenu(session, desMenu) || desMenu.isTerminado()){
+        if(!mismoMenu(session, desMenu) || desMenu.isTerminado()){
             return "redirect:/";
         }
 
@@ -161,31 +148,42 @@ public class ClienteDietasController {
     @PostMapping("/guardar_des_comida")
     public String doEditarDesemepnyoComida(@ModelAttribute("des_comida") DesempenyoComidaDTO desComida,
                                            Model model, HttpSession session){
+        if(!estaAutenticado(session)){
+            return "redirect:/";
+        }
         DesempenyoMenuDTO desMenu = desempenyoMenuService.buscarDesempenyoMenu(desComida.getDesempenyoMenu());
-        if(!estaAutenticado(session) || !mismoMenu(session, desMenu) || desMenu.isTerminado()){
+        if(!mismoMenu(session, desMenu) || desMenu.isTerminado()){
             return "redirect:/";
         }
 
         desempenyoComidaService.guardarDesempenyoComida(desComida);
-        return "redirect:/cliente/dietas/ingesta?id=" + desComida.getDesempenyoMenu();
+
+        return "redirect:/cliente/dietas/info_ingesta?id=" + desComida.getDesempenyoMenu();
     }
 
     @PostMapping("/terminar_ingesta")
     public String doTerminarIngesta(@RequestParam("id") Integer desempenyo_id, Model model, HttpSession session){
+        if(!estaAutenticado(session)){
+            return "redirect:/";
+        }
         DesempenyoMenuDTO desMenu = desempenyoMenuService.buscarDesempenyoMenu(desempenyo_id);
-        if(!estaAutenticado(session) || !mismoMenu(session, desMenu) || desMenu.isTerminado()){
+        if(!mismoMenu(session, desMenu) || desMenu.isTerminado()){
             return "redirect:/";
         }
 
         MenuDTO menu = (MenuDTO) session.getAttribute("menu");
         desempenyoMenuService.terminarDesempenyoMenu(desempenyo_id);
+
         return "redirect:/cliente/dietas/desempenyos_menu?id=" + menu.getId();
     }
 
     @PostMapping("/cancelar_ingesta")
     public String doCancelarIngesta(@RequestParam("id") Integer desempenyo_id, Model model, HttpSession session){
+        if(!estaAutenticado(session)){
+            return "redirect:/";
+        }
         DesempenyoMenuDTO desMenu = desempenyoMenuService.buscarDesempenyoMenu(desempenyo_id);
-        if(!estaAutenticado(session) || !mismoMenu(session, desMenu) || desMenu.isTerminado()){
+        if(!mismoMenu(session, desMenu) || desMenu.isTerminado()){
             return "redirect:/";
         }
 
@@ -197,8 +195,11 @@ public class ClienteDietasController {
 
     @PostMapping("/filtro_menu")
     public String doFiltroMenu(@ModelAttribute("filtro") FiltroDesempenyoComida filtro, Model model, HttpSession session){
+        if(!estaAutenticado(session)){
+            return "redirect:/";
+        }
         DesempenyoMenuDTO desMenu = desempenyoMenuService.buscarDesempenyoMenu(filtro.getDesMenuId());
-        if(!estaAutenticado(session) || !mismoMenu(session, desMenu)){
+        if(!mismoMenu(session, desMenu) || !desMenu.isTerminado()){
             return "redirect:/";
         }
         

@@ -16,7 +16,7 @@
 </head>
 <body>
 <header>
-    <a href="ingesta?id=<%=desComida.getDesempenyoMenu()%>" >
+    <a href="info_ingesta?id=<%=desComida.getDesempenyoMenu()%>" >
         <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back_button.png" alt="">
     </a>
     <h1 class="header-text text-center">Desempeño Comida: <%=desComida.getComida().getNombre()%></h1>

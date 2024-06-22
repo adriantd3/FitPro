@@ -228,6 +228,21 @@ public class EntrenadorFuerzaController {
         return "redirect:/entrenador_fuerza/rutina?rutina=" + rutina.getId();
     }
 
+    @PostMapping("/rutina/filtro")
+    public String doFiltrarListaSesiones(@RequestParam("nombre") String nombre, HttpSession session, Model model) {
+        if(checkUsuarioYRol(session)){
+            return "redirect:/";
+        }
+
+        RutinaDTO rutina = (RutinaDTO) session.getAttribute("rutina");
+        Map<Integer, SesionDTO> sesiones = rutinaService.getDiasSesion(rutina);
+
+        model.addAttribute("sesiones", sesiones);
+        model.addAttribute("sesionesTotales", sesionService.filtrarSesiones(nombre));
+
+        return "entrenador_fuerza/rutina";
+    }
+
 
     // ---------- PAGINA DE SESION ------------------
     @GetMapping("/sesion")

@@ -7,14 +7,14 @@ import java.util.Objects;
 
 @Getter
 @Setter
-public class FiltroMenu {
+public class FiltroDesempenyoComida {
     private Integer desMenuId;
     private String nombre;
     private Integer calorias;
     private Boolean comido;
     private Boolean gustado;
 
-    public FiltroMenu(Integer desMenuId){
+    public FiltroDesempenyoComida(Integer desMenuId){
         this.desMenuId = desMenuId;
         this.calorias = 0;
         nombre = "";

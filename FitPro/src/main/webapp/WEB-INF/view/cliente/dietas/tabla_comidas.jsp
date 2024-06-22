@@ -1,3 +1,4 @@
+<%//AUTOR: Adrián Torremocha(100%)%>
 <%@ page import="java.util.List" %>
 <%@ page import="uma.fitpro.dto.ComidaDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -10,8 +11,8 @@
     <table class="table table-striped text-center">
         <thead class="table-dark">
         <tr>
-            <th scope="col">Serie</th>
-            <th scope="col">Comida</th>
+            <th scope="col">Plato</th>
+            <th scope="col">Nombre</th>
             <th scope="col">Calorías</th>
         </tr>
         </thead>

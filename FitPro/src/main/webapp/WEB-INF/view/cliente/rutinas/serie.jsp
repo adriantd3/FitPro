@@ -1,3 +1,4 @@
+<%//AUTOR: Adrián Torremocha(100%)%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Map" %>
@@ -21,10 +22,12 @@
 </head>
 <body>
 <header>
-    <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back_button.png" alt="">
+    <a href="info_desempenyo_sesion?id=<%=desSerie.getDesempenyoSesion()%>" >
+        <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back_button.png" alt="">
+    </a>
     <h1 class="header-text text-center">Serie</h1>
 </header>
-<form:form method="POST" action="guardar_serie" modelAttribute="desSerie">
+<form:form method="POST" action="guardar_serie" modelAttribute="desSerie" cssClass="text-light fs-5 m-3 text-center">
     <form:hidden path="id"/>
     <form:hidden path="desempenyoSesion"/>
     <form:hidden path="ejercicio"/>
@@ -35,7 +38,7 @@
     <form:label path="metrica2"><%=cols.get(1)%>></form:label>
     <form:input path="metrica2" maxlength="6" id="input2" type="number"/><br>
 
-    <form:button name="guardar">Guardar</form:button>
+    <form:button name="guardar" class="btn btn-primary mt-2">Guardar</form:button>
 </form:form>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"

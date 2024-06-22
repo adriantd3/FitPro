@@ -12,5 +12,5 @@ public class DietaDTO {
     private UsuarioDTO dietista;
     private String nombre;
     private LocalDate fechaCreacion;
-    private List<OrdenMenuDietaId> ordenMenuDietaList;
+    private List<OrdenMenuDietaDTO> ordenMenuDietaList;
 }

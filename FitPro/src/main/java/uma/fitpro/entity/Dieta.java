@@ -88,9 +88,9 @@ public class Dieta implements Serializable, DTO<DietaDTO> {
         dietaDTO.setDietista(dietista.toDTO());
         dietaDTO.setNombre(nombre);
         dietaDTO.setFechaCreacion(fechaCreacion);
-        List<OrdenMenuDietaId> ordenMenuDietaDTOList = new ArrayList<>();
+        List<OrdenMenuDietaDTO> ordenMenuDietaDTOList = new ArrayList<>();
         for (OrdenMenuDieta ordenMenuDieta : ordenMenuDietas) {
-            ordenMenuDietaDTOList.add(ordenMenuDieta.getId());
+            ordenMenuDietaDTOList.add(ordenMenuDieta.toDTO());
         }
         dietaDTO.setOrdenMenuDietaList(ordenMenuDietaDTOList);
 

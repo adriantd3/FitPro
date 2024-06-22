@@ -52,7 +52,7 @@
                     String fecha = desempenyoSesion.getFecha().format(formatter);
             %>
             <li>
-                <a class="text-primary fs-5" href="resultados_sesion?id=<%=desempenyoSesion.getId()%>" id="<%=idRes%>">
+                <a class="text-primary fs-5" href="info_desempenyo_sesion?id=<%=desempenyoSesion.getId()%>" id="<%=idRes%>">
                     <%=fecha%> - <%=terminado%>
                 </a>
             </li>

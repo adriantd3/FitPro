@@ -22,7 +22,7 @@ public class Sesion implements Serializable, DTO<SesionDTO> {
     private String nombre;
 
     @OneToMany(mappedBy = "sesion",fetch = FetchType.EAGER)
-    @OrderBy("ejercicio.id ASC, metrica1 ASC, metrica2 ASC")
+    @OrderBy("ejercicio.id ASC, id ASC")
     private List<Serie> series = new ArrayList<>();
 
     public Integer getId() {

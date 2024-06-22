@@ -9,7 +9,7 @@
 
 <%
     DesempenyoSesionDTO desempenyoSesion = (DesempenyoSesionDTO) request.getAttribute("desempenyo_sesion");
-    Map<EjercicioDTO, List<DesempenyoSerieDTO>> series_dict = (Map<EjercicioDTO, List<DesempenyoSerieDTO>>) request.getAttribute("series_dict");
+    Map<EjercicioDTO, List<DesempenyoSerieDTO>> series_dict = (Map<EjercicioDTO, List<DesempenyoSerieDTO>>) request.getAttribute("des_dict");
     Map<Integer, List<String>> params = UtilityFunctions.getEjercicioParametros();
 %>
 

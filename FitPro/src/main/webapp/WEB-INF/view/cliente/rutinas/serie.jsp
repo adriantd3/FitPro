@@ -22,7 +22,7 @@
 </head>
 <body>
 <header>
-    <a href="entrenamiento?id=<%=desSerie.getDesempenyoSesion()%>" >
+    <a href="info_desempenyo_sesion?id=<%=desSerie.getDesempenyoSesion()%>" >
         <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back_button.png" alt="">
     </a>
     <h1 class="header-text text-center">Serie</h1>

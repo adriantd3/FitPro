@@ -1,0 +1,68 @@
+
+.cliente_table{
+    width: 400px;
+}
+
+.table td{
+    user-select: none;
+    transition: 0.5s;
+    transition-timing-function: ease;
+}
+
+.cliente_table td{
+    user-select: none;
+    transition: 0.5s;
+    transition-timing-function: ease;
+    cursor:pointer;
+}
+
+.dietasCliente_table{
+    width: 400px;
+}
+
+.dietasCliente_table tr{
+    cursor: pointer;
+}
+
+.menusDietasCliente_table{
+width: 400px;
+}
+
+.menusDietasCliente_table tr{
+    cursor: pointer;
+}
+
+.desempenyos_table{
+    width: 500px;
+}
+
+.id{
+    width: 20%;
+}
+
+.nombre-cliente{
+    width: 100px;
+}
+
+.apellidos-cliente{
+    width: 110px;
+}
+
+.nombre-dieta{
+}
+
+.nombre-menu{
+    width: 110px;
+}
+
+.kcal{
+    width: 50px;
+}
+
+.fecha{
+    width: 25%;
+}
+
+.nombreCliente{
+    width: 420px;
+}

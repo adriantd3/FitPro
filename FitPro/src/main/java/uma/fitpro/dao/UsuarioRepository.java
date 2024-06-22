@@ -27,4 +27,10 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
                                         @Param("peso") Float peso,
                                         @Param("altura") Float altura);
 
+    @Query("select u from Usuario u where u.nombre like concat('%' , :nombre , '%') " +
+            "and u.apellidos like concat('%' , :apellidos , '%') " +
+            "and :dietista member of u.dietistas ")
+    public List<Usuario> buscarClientesDietistaConFiltro(@Param("dietista") Usuario dietista,
+                                                         @Param("nombre") String nombre,
+                                                         @Param("apellidos") String apellidos);
 }

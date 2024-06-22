@@ -34,7 +34,12 @@ public class Dieta implements Serializable, DTO<DietaDTO> {
     private LocalDate fechaCreacion;
 
     @OneToMany(mappedBy = "dieta")
-    private Set<OrdenMenuDieta> ordenMenuDietas = new LinkedHashSet<>();
+    private List<OrdenMenuDieta> ordenMenuDietas = new ArrayList<>();
+
+    public Dieta() {
+        setNombre("NuevaDieta");
+        setFechaCreacion(LocalDate.now());
+    }
 
     public Integer getId() {
         return id;
@@ -68,11 +73,11 @@ public class Dieta implements Serializable, DTO<DietaDTO> {
         this.fechaCreacion = fechaCreacion;
     }
 
-    public Set<OrdenMenuDieta> getOrdenMenuDietas() {
+    public List<OrdenMenuDieta> getOrdenMenuDietas() {
         return ordenMenuDietas;
     }
 
-    public void setOrdenMenuDietas(Set<OrdenMenuDieta> ordenMenuDietas) {
+    public void setOrdenMenuDietas(List<OrdenMenuDieta> ordenMenuDietas) {
         this.ordenMenuDietas = ordenMenuDietas;
     }
 
@@ -83,9 +88,9 @@ public class Dieta implements Serializable, DTO<DietaDTO> {
         dietaDTO.setDietista(dietista.toDTO());
         dietaDTO.setNombre(nombre);
         dietaDTO.setFechaCreacion(fechaCreacion);
-        List<OrdenMenuDietaDTO> ordenMenuDietaDTOList = new ArrayList<>();
+        List<OrdenMenuDietaId> ordenMenuDietaDTOList = new ArrayList<>();
         for (OrdenMenuDieta ordenMenuDieta : ordenMenuDietas) {
-            ordenMenuDietaDTOList.add(ordenMenuDieta.toDTO());
+            ordenMenuDietaDTOList.add(ordenMenuDieta.getId());
         }
         dietaDTO.setOrdenMenuDietaList(ordenMenuDietaDTOList);
 

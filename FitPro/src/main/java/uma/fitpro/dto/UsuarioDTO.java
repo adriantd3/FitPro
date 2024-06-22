@@ -17,6 +17,8 @@ public class UsuarioDTO {
     private Float peso;
     private String contrasenya;
     private String correo;
-    private List<Integer> rutinasCliente;
     private List<Integer> dietasCliente;
+    private List<Integer> clientesDietista;
+    private List<Integer> rutinasCliente;
+    private List<Integer> clientesEntrenador;
 }

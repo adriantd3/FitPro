@@ -19,7 +19,6 @@ import static uma.fitpro.utils.UtilityFunctions.getEjercicioParametros;
 @RequestMapping("/entrenador_cross_training")
 @Controller
 public class EntrenadorCrossTrainingController {
-
     @Autowired
     protected UsuarioService usuarioService;
 

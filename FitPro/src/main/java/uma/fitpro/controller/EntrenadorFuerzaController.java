@@ -34,6 +34,8 @@ public class EntrenadorFuerzaController {
     private SerieService serieService;
     @Autowired
     private DesempenyoSesionService desempenyoSesionService;
+    @Autowired
+    private DesempenyoSerieService desempenyoSerieService;
 
     // ----------- PAGINA INICIAL -----------------
     @PostMapping("/")
@@ -399,7 +401,7 @@ public class EntrenadorFuerzaController {
         DesempenyoSesionDTO desempenyoSesion = desempenyoSesionService.buscarDesempenyoSesion(id);
         SesionDTO sesionDTO = sesionService.buscarSesion(desempenyoSesion.getIdSesion());
         Map<EjercicioDTO, List<SerieDTO>> tablasEsperadas = serieService.buscarSeriesDictionary(sesionDTO.getSeries());
-        Map<EjercicioDTO, List<SerieDTO>> tablas = serieService.buscarSeriesDictionary(desempenyoSesion.getDesempenyoSeries());
+        Map<EjercicioDTO, List<DesempenyoSerieDTO>> tablas = desempenyoSerieService.buscarDesempenyoSeriesDictionary(desempenyoSesion.getDesempenyoSeries());
         model.addAttribute("tablas", tablas);
         model.addAttribute("tablasEsperadas", tablasEsperadas);
 

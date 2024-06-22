@@ -39,7 +39,7 @@ public class LoginController {
     public String doHome(Model model, HttpSession session) {
         if (estaAutenticado(session)) {
             UsuarioDTO usuario = (UsuarioDTO) session.getAttribute("user");
-            return "redirect:/"+usuario.getRol().getNombre() + "";
+            return "redirect:/"+usuario.getRol().getNombre() + "/";
         }
         return "redirect:/";
     }

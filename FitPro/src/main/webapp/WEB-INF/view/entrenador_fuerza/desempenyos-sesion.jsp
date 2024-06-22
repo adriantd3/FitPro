@@ -4,7 +4,10 @@
 <%@ page import="uma.fitpro.dto.DesempenyoSerieDTO" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="uma.fitpro.dto.SerieDTO" %>
-<%@ page import="uma.fitpro.utils.SortedList" %><%--
+<%@ page import="uma.fitpro.utils.SortedList" %>
+<%@ page import="java.util.Objects" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.function.Supplier" %><%--
   Created by IntelliJ IDEA.
   User: victor
   Date: 15/6/24
@@ -32,7 +35,7 @@
 
 <section class="m-3 h-100 d-flex flex-column align-items-center">
     <%
-        for(EjercicioDTO ejercicio : tablas.keySet()){
+        for(EjercicioDTO ejercicio : tablasEsperadas.keySet()){
     %>
     <table style="border-spacing: 0; border-collapse: collapse" class="table caption-top text-center w-50 ">
         <a href="/entrenador_fuerza/ejercicio/<%=ejercicio.getId()%>%>" class="d-block fs-3" target="_blank"><%=ejercicio.getNombre()%></a>
@@ -45,7 +48,7 @@
         <tbody>
         <%
             List<SerieDTO> seriesEsperadas = tablasEsperadas.get(ejercicio);
-            List<SerieDTO> seriesDesmpenyo = tablas.get(ejercicio);
+            List<SerieDTO> seriesDesmpenyo = tablas.get(ejercicio) == null ? new ArrayList<>() : tablas.get(ejercicio);
             for(int i = 0; i < seriesEsperadas.size(); i++){
                 SerieDTO serie ;
                 if(i < seriesDesmpenyo.size()) {
@@ -61,13 +64,14 @@
             <td style="background-color: <%=color%>"><%=serie.getMetrica2()%></td>
         </tr>
         <%
-                }else{
+            }else{
                     serie = seriesEsperadas.get(i);
         %>
         <tr>
             <td style="background-color: #888888" class="fst-italic"><%=serie.getMetrica1()%></td>
-            <td style="background-color: #888888" class="fst-italic"><%=serie.getMetrica2()%></td>
+            <td style="background-color: #888888" class="fst-italic">No realizado</td>
         </tr>
+
         <%
                 }
             }

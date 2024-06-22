@@ -7,7 +7,6 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import uma.fitpro.dao.*;
 import uma.fitpro.dto.*;
 import uma.fitpro.service.*;
 import uma.fitpro.ui.*;
@@ -63,7 +62,7 @@ public class DietistaController {
 
         List<MenuDTO> menus = this.menuService.findAll();
         List<ComidaDTO> comidas = this.comidaService.findAll();
-        MenuDTO menu = this.menuService.findById(menuId);
+        MenuDTO menu = this.menuService.buscarMenu(menuId);
         List<ComidaDTO> comidasMenu = this.comidaService.buscarComidasMenu(menu);
 
         model.addAttribute("menus", menus);
@@ -153,7 +152,7 @@ public class DietistaController {
         } else {
             List<MenuDTO> menus = this.menuService.findAll();
             List<ComidaDTO> comidas = this.comidaService.filtrar(filtroComida);
-            MenuDTO menu = menuService.findById(filtroComida.getMenuId());
+            MenuDTO menu = menuService.buscarMenu(filtroComida.getMenuId());
             List<ComidaDTO> comidasMenu = this.comidaService.buscarComidasMenu(menu);
 
             model.addAttribute("menus", menus);
@@ -177,7 +176,7 @@ public class DietistaController {
         DietaDTO dieta = this.dietaService.findById(dietaId);
         List<MenuDTO> menus = this.menuService.findAll();
         List<OrdenMenuDietaDTO> menusDieta = this.ordenMenuDietaService.buscarOrdenMenuDieta(dieta);
-        MenuDTO menu = this.menuService.findById(menuId);
+        MenuDTO menu = this.menuService.buscarMenu(menuId);
         List<ComidaDTO> comidasMenu = this.comidaService.buscarComidasMenu(menu);
 
         model.addAttribute("dietas", dietas);
@@ -428,7 +427,7 @@ public class DietistaController {
         List<DietaDTO> dietasCliente = dietaService.buscarDietasCliente(cliente);
         DietaDTO dieta = dietaService.findById(dietaId);
         List<OrdenMenuDietaDTO> menusDieta = ordenMenuDietaService.buscarOrdenMenuDieta(dieta);
-        MenuDTO menu = menuService.findById(menuId);
+        MenuDTO menu = menuService.buscarMenu(menuId);
         List<DesempenyoMenuDTO> desempenyosMenu = desempenyoMenuService.buscarDesempenyosMenuPorClienteYMenu(clienteId, menuId);
 
         model.addAttribute("clientes", clientes);
@@ -457,7 +456,7 @@ public class DietistaController {
             List<DietaDTO> dietasCliente = dietaService.buscarDietasCliente(cliente);
             DietaDTO dieta = dietaService.findById(filtroDesempenyoMenu.getDietaId());
             List<OrdenMenuDietaDTO> menusDieta = ordenMenuDietaService.buscarOrdenMenuDieta(dieta);
-            MenuDTO menu = menuService.findById(filtroDesempenyoMenu.getMenuId());
+            MenuDTO menu = menuService.buscarMenu(filtroDesempenyoMenu.getMenuId());
             List<DesempenyoMenuDTO> desempenyosMenu = this.desempenyoMenuService.filtrar(filtroDesempenyoMenu);
 
             model.addAttribute("clientes", clientes);

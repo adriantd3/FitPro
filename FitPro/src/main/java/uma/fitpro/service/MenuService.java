@@ -7,11 +7,9 @@ import uma.fitpro.dao.MenuRepository;
 import uma.fitpro.dto.ComidaDTO;
 import uma.fitpro.dto.MenuDTO;
 import uma.fitpro.entity.Comida;
-import uma.fitpro.entity.Dieta;
 import uma.fitpro.entity.Menu;
 import uma.fitpro.ui.FiltroMenu;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -23,7 +21,7 @@ public class MenuService extends DTOService{
     @Autowired
     private ComidaRepository comidaRepository;
 
-    public MenuDTO findById(Integer menuId){
+    public MenuDTO buscarMenu(Integer menuId){
         MenuDTO menuDTO = null;
         if(menuId!=null){
             Menu menu = menuRepository.findById(menuId).orElse(null);

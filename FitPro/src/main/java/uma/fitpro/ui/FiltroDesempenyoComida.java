@@ -1,6 +1,7 @@
 package uma.fitpro.ui;
 
-import java.time.LocalDate;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Objects;
 

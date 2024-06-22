@@ -19,7 +19,7 @@
     <style><%@ include file="../styles/common.css"%></style>
 </head>
 <body>
-<header>
+<header class="sticky-top">
     <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back_button.png" alt="<-"
          onclick="window.location.href='/entrenador_fuerza/crud-rutina<%=(cliente != null ? "?cliente="+cliente.getId() : "")%>'"> <!-- Controlar pagina anterior por modelo -->
         <h1 class="header-text text-center"><%=(rutina != null ? rutina.getNombre() : "Crear rutina")%></h1> <!-- Controlar nombre rutina  -->

@@ -21,7 +21,7 @@
     <style><%@ include file="../styles/common.css"%></style>
 </head>
 <body>
-<header>
+<header class="sticky-top">
     <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back_button.png" alt="<-"
          onclick="window.location.href='/entrenador_fuerza/rutina?rutina=<%=rutina.getId()%>'"> <!-- Controlar pagina anterior por modelo -->
     <h1 class="header-text text-center"><%=sesion.getNombre()%></h1> <!-- Mostrar informacion relevante en la X-->
@@ -37,6 +37,7 @@
             <a href="/entrenador_fuerza/ejercicio/<%=ejercicio.getId()%>" class="d-block fs-3" target="_blank"><%=ejercicio.getNombre()%></a>
             <thead class="table-dark">
             <tr>
+                <th>ID</th>
                 <th class="nombre-menu">Peso</th>
                 <th class="kcal">Repeticiones</th>
                 <th style="background-color: transparent;border-bottom-width: 0"></th>
@@ -45,10 +46,12 @@
             </thead>
             <tbody style="border-top: 0 !important;" class = "table-group-divider table-secondary">
             <%
+                int i = 1;
                 for(SerieDTO s : tablas.get(ejercicio)){
             %>
 
             <tr onclick="">
+                <td class="fw-bold"><%=i%></td>
                 <td><%= s.getMetrica1()%></td>
                 <td><%= s.getMetrica2()%></td>
                 <td style="background-color: transparent !important; border-bottom-width: 0">
@@ -60,6 +63,7 @@
             </tr>
 
             <%
+                    i++;
                 }
             %>
             </tbody>
@@ -99,7 +103,7 @@
     %>
 </section>
 
-<footer class="m-3 fixed-bottom">
+<footer class="p-3 sticky-bottom justify-content-end" style="background-color: #434343">
     <button class="btn btn-danger" onclick="window.location.href='/entrenador_fuerza/borrar-sesion?sesion=<%=sesion.getId()%>'">
         Borrar
     </button>

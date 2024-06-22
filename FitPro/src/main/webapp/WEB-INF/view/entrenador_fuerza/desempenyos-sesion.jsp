@@ -1,19 +1,9 @@
 <%@ page import="java.util.List" %>
 <%@ page import="uma.fitpro.dto.DesempenyoSesionDTO" %>
 <%@ page import="uma.fitpro.dto.EjercicioDTO" %>
-<%@ page import="uma.fitpro.dto.DesempenyoSerieDTO" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="uma.fitpro.dto.SerieDTO" %>
-<%@ page import="uma.fitpro.utils.SortedList" %>
-<%@ page import="java.util.Objects" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="java.util.function.Supplier" %><%--
-  Created by IntelliJ IDEA.
-  User: victor
-  Date: 15/6/24
-  Time: 12:31
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     DesempenyoSesionDTO desempenyoSesion = (DesempenyoSesionDTO) request.getAttribute("desempenyoSesion");
@@ -27,7 +17,7 @@
     <style><%@ include file="../styles/common.css"%></style>
 </head>
 <body>
-<header>
+<header class="sticky-top">
 <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back_button.png" alt="<-"
      onclick="window.location.href='/entrenador_fuerza/seguimiento'"> <!-- Controlar pagina anterior por modelo -->
 <h1 class="header-text text-center">Desempeño en <%=desempenyoSesion.getNombreSesion()%></h1> <!-- Mostrar informacion relevante en la X-->

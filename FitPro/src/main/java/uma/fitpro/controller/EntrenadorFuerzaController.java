@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import uma.fitpro.dto.*;
 import uma.fitpro.service.*;
 import uma.fitpro.ui.FiltroRutina;
-import uma.fitpro.utils.SortedList;
-
 import java.util.*;
 
 //////////////////////////////////////////////////////
@@ -231,7 +229,8 @@ public class EntrenadorFuerzaController {
 
     // ---------- PAGINA DE SESION ------------------
     @GetMapping("/sesion")
-    public String doSesion(@RequestParam("sesion")@Nullable Integer sesion_id, Model model, HttpSession session) {
+    public String doSesion(@RequestParam("sesion")@Nullable Integer sesion_id,
+                           Model model, HttpSession session) {
         if(checkUsuarioYRol(session)){
             return "redirect:/";
         }
@@ -241,13 +240,14 @@ public class EntrenadorFuerzaController {
             sesion = sesionService.buscarSesion(sesion_id);
             model.addAttribute("sesion", sesion);
 
-            Map<EjercicioDTO, SortedList<SerieDTO>> tablas = serieService.buscarSeriesDictionary(sesion.getSeries());
+            Map<EjercicioDTO, List<SerieDTO>> tablas = serieService.buscarSeriesDictionary(sesion.getSeries());
             model.addAttribute("tablas", tablas);
         }
         //System.out.printf(String.valueOf(model.getAttribute("serie") == null));
 
         return "/entrenador_fuerza/sesion";
     }
+
 
     @GetMapping("borrar-sesion")
     public String doBorrarSesion(@RequestParam("sesion") Integer sesion_id, HttpSession session) {
@@ -292,7 +292,7 @@ public class EntrenadorFuerzaController {
         model.addAttribute("sesion", sesion);
         model.addAttribute("nombreEjercicio", nombreEjercicio);
 
-        Map<EjercicioDTO, SortedList<SerieDTO>> tablas = serieService.buscarSeriesDictionary(sesion.getSeries());
+        Map<EjercicioDTO, List<SerieDTO>> tablas = serieService.buscarSeriesDictionary(sesion.getSeries());
         model.addAttribute("tablas", tablas);
         return "/entrenador_fuerza/sesion";
     }
@@ -398,8 +398,8 @@ public class EntrenadorFuerzaController {
 
         DesempenyoSesionDTO desempenyoSesion = desempenyoSesionService.buscarDesempenyoSesion(id);
         SesionDTO sesionDTO = sesionService.buscarSesion(desempenyoSesion.getIdSesion());
-        Map<EjercicioDTO, SortedList<SerieDTO>> tablasEsperadas = serieService.buscarSeriesDictionary(sesionDTO.getSeries());
-        Map<EjercicioDTO, SortedList<SerieDTO>> tablas = serieService.buscarSeriesDictionary(desempenyoSesion.getDesempenyoSeries());
+        Map<EjercicioDTO, List<SerieDTO>> tablasEsperadas = serieService.buscarSeriesDictionary(sesionDTO.getSeries());
+        Map<EjercicioDTO, List<SerieDTO>> tablas = serieService.buscarSeriesDictionary(desempenyoSesion.getDesempenyoSeries());
         model.addAttribute("tablas", tablas);
         model.addAttribute("tablasEsperadas", tablasEsperadas);
 

@@ -22,7 +22,7 @@
     <style><%@ include file="../styles/common.css"%></style>
 </head>
 <body>
-<header>
+<header class="sticky-top">
     <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back_button.png" alt="<-"
          onclick="window.location.href='/entrenador_fuerza/<%=(cliente != null ? "clientes" : "")%>' ">
     <h1 class="header-text text-center">Rutinas de entrenamiento <%if(cliente != null){%><%="de "+cliente.getNombre()%><%}%></h1> <!-- Controlar si es de un usario para añadir "de usuario" y solo sus listas -->
@@ -44,9 +44,9 @@
             <form:label cssStyle="color: white" path="fechaCreacion">Fecha: </form:label>
             <form:input cssClass="me-3" path="fechaCreacion"/>
 
-            <form:label cssStyle="color: white" path="numeroSesiones">Sesiones: </form:label>
+            <form:label cssStyle="color: white" path="numeroSesiones">Nº Sesiones: </form:label>
             <form:select path="numeroSesiones">
-                <form:options items="${[0,1,2,3,4,5]}"/>
+                <form:options items="${[0,1,2,3,4,5,6,7]}"/>
             </form:select>
 
             <input type="hidden" name="cliente" value="<%=cliente != null ? cliente.getId() : -1%>">

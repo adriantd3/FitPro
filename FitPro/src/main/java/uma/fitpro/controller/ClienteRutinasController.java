@@ -88,7 +88,7 @@ public class ClienteRutinasController {
     public String doResultadosSesion(@RequestParam("id") Integer desempenyo_id,
                                      HttpSession session,
                                      Model model) {
-        //Hago la comprobación de esta manera para que no cargue datos innecesarios
+        //Hago la comprobación de esta manera para que no carguen datos innecesarios
         if(!estaAutenticado(session)){
             return "redirect:/";
         }
@@ -101,10 +101,10 @@ public class ClienteRutinasController {
         Map<EjercicioDTO,List<DesempenyoSerieDTO>> des_dict =
                 desempenyoSerieService.buscarDesempenyoSeriesDictionary(desempenyoSesion.getDesempenyoSeries());
         model.addAttribute("des_dict",des_dict);
+        model.addAttribute("desempenyo_sesion",desempenyoSesion);
 
         if(!desempenyoSesion.isTerminado()){
             //Si no esta terminado se redirige a la pagina de entrenamiento
-            model.addAttribute("desempenyo_sesion",desempenyoSesion);
             return "cliente/rutinas/entrenamiento";
         }
 
@@ -118,7 +118,6 @@ public class ClienteRutinasController {
         model.addAttribute("tipo_ejercicio",ejercicioService.listarTiposEjercicio());
 
         //INFORMACION TABLA
-        model.addAttribute("desempenyo_sesion",desempenyoSesion);
         model.addAttribute("sesion_dict",sesion_dict);
 
 
@@ -210,7 +209,7 @@ public class ClienteRutinasController {
 
     @PostMapping("/borrar_serie")
     public String doBorrarSerie(@RequestParam("id") Integer desempenyoSerieId,
-                                @RequestParam("desempenyoSesionId") Integer desempenyoSesionId,
+                                @RequestParam("desempenyo_sesion_id") Integer desempenyoSesionId,
                                 HttpSession session) {
         if(!estaAutenticado(session) || session.getAttribute("sesion") == null){
             return "redirect:/";

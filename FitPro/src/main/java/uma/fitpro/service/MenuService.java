@@ -32,11 +32,6 @@ public class MenuService extends DTOService{
         return menuDTO;
     }
 
-    public List<ComidaDTO> buscarComidasMenu(List<Integer> comidas){
-        List<Comida> comidasList = comidaRepository.findAllById(comidas);
-        return this.entidadesADTO(comidasList);
-    }
-
     public List<MenuDTO> findAll(){
         List<Menu> menus = menuRepository.findAll();
         return this.entidadesADTO(menus);

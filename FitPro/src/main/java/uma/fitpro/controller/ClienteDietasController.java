@@ -27,6 +27,9 @@ public class ClienteDietasController {
 
     @Autowired
     private DesempenyoComidaService desempenyoComidaService;
+    
+    @Autowired
+    private ComidaService comidaService;
 
     @GetMapping("")
     public String doDietas(Model model, HttpSession session){
@@ -109,7 +112,7 @@ public class ClienteDietasController {
         }
 
         MenuDTO menu = (MenuDTO) session.getAttribute("menu");
-        List<ComidaDTO> menu_comidas = menuService.buscarComidasMenu(menu.getComidas());
+        List<ComidaDTO> menu_comidas = comidaService.buscarComidas(menu.getComidas());
 
         model.addAttribute("menu_comidas", menu_comidas);
 

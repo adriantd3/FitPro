@@ -4,6 +4,7 @@
 <%@ page import="uma.fitpro.ui.FiltroComida" %>
 <%@ page import="uma.fitpro.ui.FiltroDieta" %>
 <%@ page import="uma.fitpro.dto.*" %>
+<%@ page import="uma.fitpro.utils.UtilityFunctions" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
@@ -22,9 +23,9 @@
     List<ComidaDTO> comidasMenu = (List<ComidaDTO>) request.getAttribute("comidasMenu");
     FiltroDieta filtroDieta = (FiltroDieta) request.getAttribute("filtroDieta");
     FiltroMenu filtroMenu = (FiltroMenu) request.getAttribute("filtroMenu");
-    for(OrdenMenuDietaDTO m : menusDieta) {
-        menus.remove(m.getMenu());
-    }
+    //for(OrdenMenuDietaDTO m : menusDieta) {
+    //    menus.remove(m.getMenu());
+    //}
 %>
 
 <html>
@@ -52,7 +53,6 @@
 
         function addMenu(menuId){
             document.getElementById("addMenuSelector").value=menuId;
-            document.getElementById("formAddMenu").submit();
         }
 
         function deleteMenu(menuId, ordenMenu){
@@ -146,7 +146,7 @@
                                     <caption class="text-center text-white">Menus de la Dieta</caption>
                                     <thead class="header table-dark">
                                     <tr>
-                                        <th class="id">Orden</th>
+                                        <th class="id">Día</th>
                                         <th class="nombre-menu">Nombre</th>
                                         <th class="kcal">Kcal</th>
                                         <th class="table-button"></th>
@@ -167,7 +167,7 @@
 
                                             %>
                                             <tr>
-                                                <td onclick="selectMenu(<%= m.getMenu().getId() %>)"><%= m.getOrden() %></td>
+                                                <td onclick="selectMenu(<%= m.getMenu().getId() %>)"><%= UtilityFunctions.getDayByNumber(m.getOrden()) %></td>
                                                 <td onclick="selectMenu(<%= m.getMenu().getId() %>)"><%= m.getMenu().getNombre() %></td>
                                                 <td onclick="selectMenu(<%= m.getMenu().getId() %>)"><%= m.getMenu().getCalorias() %></td>
                                                 <td><button  class="btn btn-danger" onclick="deleteMenu(<%= m.getMenu().getId() %>, <%= m.getOrden()%>)">-</button></td>
@@ -247,9 +247,6 @@
                                     <input type="hidden" name="dietaId" value=<%= dieta!=null ? dieta.getId() : 0 %>>
                                     <input type="hidden" name="menuId" id="menuSelector">
                                 </form>
-                                <form id="formAddMenu" method="post" action="./anyadirMenuDieta">
-                                    <input type="hidden" name="menuId" id="addMenuSelector">
-                                    <input type="hidden" name="dietaId" value="<%= dieta!=null ? dieta.getId() : 0 %>">
                                     <%
                                         int menuIndex = 0;
                                         for(MenuDTO m : menus){
@@ -259,14 +256,42 @@
                                         <td onclick="selectMenu(<%= m.getId() %>)"><%= menuIndex %></td>
                                         <td onclick="selectMenu(<%= m.getId() %>)"><%= m.getNombre() %></td>
                                         <td onclick="selectMenu(<%= m.getId() %>)"><%= m.getCalorias() %></td>
-                                        <td><button  class="btn btn-primary" onclick="addMenu(<%= m.getId() %>)" <%=dieta==null?"disabled":""%>>+</button></td>
+                                        <td><button  class="btn btn-primary" onclick="addMenu(<%= m.getId() %>)" <%=dieta==null?"disabled":""%> data-bs-toggle="modal" data-bs-target="#modal">+</button></td>
                                     </tr>
                                     <%
                                         }
                                     %>
-                                </form>
                                 </tbody>
                             </table>
+                        </div>
+                        <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div style="background-color: #494949" class="modal-content" data-bs-theme="dark">
+                                    <div class="modal-header">
+                                        <h1 style="color: white;" class="modal-title fs-5" id="exampleModalLabel">Asignar dia:</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <form id="formAddMenu" method="post" action="./anyadirMenuDieta">
+                                        <input type="hidden" name="menuId" id="addMenuSelector">
+                                        <input type="hidden" name="dietaId" value="<%= dieta!=null ? dieta.getId() : 0 %>">
+                                        <div class="modal-body">
+
+                                            <input type="hidden" name="sesionNueva" id="sesionNueva" value="">
+                                            <%
+                                                for(int i = 1; i <= 7; i++){
+                                            %>
+                                            <input type="radio" class="btn-check" name="ordenMenu" id="dia<%=i%>" autocomplete="off" value="<%=i%>">
+                                            <label class="btn btn-outline-info mb-1" for="dia<%=i%>"><%=UtilityFunctions.getDayByNumber(i)%></label>
+                                            <%
+                                                }
+                                            %>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-success">Guardar</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                     </section>
                 </div>

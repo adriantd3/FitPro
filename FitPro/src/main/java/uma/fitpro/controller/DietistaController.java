@@ -172,9 +172,9 @@ public class DietistaController {
     }
 
     @PostMapping("/anyadirMenuDieta")
-    public String doAnyadirMenuDieta(@RequestParam(value = "dietaId") Integer dietaId, @RequestParam(value = "menuId") Integer menuId, Model model, HttpSession session){
+    public String doAnyadirMenuDieta(@RequestParam(value = "dietaId") Integer dietaId, @RequestParam(value = "menuId") Integer menuId, @RequestParam(value = "ordenMenu") Integer ordenMenu, Model model, HttpSession session){
 
-        this.dietaService.anyadirMenuADieta(menuId, dietaId);
+        this.dietaService.anyadirMenuADieta(menuId, dietaId, ordenMenu);
 
         return "redirect:/dietista/dietas?dietaId="+dietaId;
     }

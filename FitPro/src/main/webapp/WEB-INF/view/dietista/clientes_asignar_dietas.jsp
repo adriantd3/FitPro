@@ -2,7 +2,8 @@
 <%@ page import="uma.fitpro.dto.*" %>
 <%@ page import="java.util.List" %>
 <%@ page import="uma.fitpro.ui.FiltroCliente" %>
-<%@ page import="uma.fitpro.ui.FiltroDieta" %><%--
+<%@ page import="uma.fitpro.ui.FiltroDieta" %>
+<%@ page import="uma.fitpro.utils.UtilityFunctions" %><%--
   Created by IntelliJ IDEA.
   User: jabr3
   Date: 22/05/2024
@@ -173,19 +174,17 @@
                     <caption class="text-center text-white"><%= "Menús de "+dieta.getNombre() %></caption>
                     <thead class="header table-dark">
                     <tr>
-                        <th class="id">DíaSemana</th>
+                        <th class="id">Día</th>
                         <th class="nombre-menu">Nombre</th>
                         <th class="kcal">Kcal</th>
                     </tr>
                     </thead>
                     <tbody class = "table-secondary">
                     <%
-                        int ordenMenuDietaIndex = 0;
                         for(OrdenMenuDietaDTO ordenMenuDieta : menusDieta){
-                            ordenMenuDietaIndex++;
                     %>
                     <tr>
-                        <td><%= ordenMenuDietaIndex %></td>
+                        <td><%= UtilityFunctions.getDayByNumber(ordenMenuDieta.getOrden()) %></td>
                         <td><%= ordenMenuDieta.getMenu().getNombre() %></td>
                         <td><%= ordenMenuDieta.getMenu().getCalorias() %></td>
                     </tr>

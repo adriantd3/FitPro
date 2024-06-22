@@ -12,6 +12,7 @@ import uma.fitpro.dto.OrdenMenuDietaDTO;
 import uma.fitpro.entity.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -44,6 +45,7 @@ public class OrdenMenuDietaService extends DTOService{
         if(dieta!=null){
             List<OrdenMenuDieta> ordenMenuDietasList = ordenMenuDietaRepository.findAllById(dieta.getOrdenMenuDietaList());
             ordenMenuDietasDTO = this.entidadesADTO(ordenMenuDietasList);
+            Collections.sort(ordenMenuDietasDTO);
         }
         return ordenMenuDietasDTO;
     }

@@ -13,6 +13,7 @@ import uma.fitpro.entity.Dieta;
 import uma.fitpro.ui.FiltroDieta;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -59,16 +60,15 @@ public class DietaService extends DTOService{
         return this.entidadesADTO(dietas);
     }
 
-    public void anyadirMenuADieta(Integer menuId, Integer dietaId) {
+    public void anyadirMenuADieta(Integer menuId, Integer dietaId, Integer ordenMenu) {
         Dieta dieta = dietaRepository.findById(dietaId).orElse(null);
         Menu menu = menuRepository.findById(menuId).orElse(null);
-        int orden = dieta.getOrdenMenuDietas().size()+1;
 
-        if(orden < 8){
-            OrdenMenuDietaId ordenMenuDietaId = new OrdenMenuDietaId(menuId, dietaId, orden);
-            OrdenMenuDieta ordenMenuDieta = new OrdenMenuDieta(ordenMenuDietaId, menu, dieta);
-            ordenMenuDietaRepository.save(ordenMenuDieta);
-        }
+        ordenMenuDietaRepository.deleteOrdenMenuByOrden(dietaId, ordenMenu);
+
+        OrdenMenuDietaId ordenMenuDietaId = new OrdenMenuDietaId(menuId, dietaId, ordenMenu);
+        OrdenMenuDieta ordenMenuDieta = new OrdenMenuDieta(ordenMenuDietaId, menu, dieta);
+        ordenMenuDietaRepository.save(ordenMenuDieta);
     }
 
     public void eliminarMenuDeDieta(Integer menuId, Integer dietaId, Integer ordenMenu) {

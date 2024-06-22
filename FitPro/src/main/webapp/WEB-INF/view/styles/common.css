@@ -1,5 +1,4 @@
 header{
-    position: relative;
     align-items: center;
     justify-content: center;
     background-color: #5B5B5B;
@@ -37,6 +36,14 @@ body{
     color:white;
 }
 
+.list-button{
+    text-align: start;
+}
+
+.list-button:hover{
+    background-color: dodgerblue;
+    border: dodgerblue;
+}
 .form-wrapper {
     text-align: center;
     padding-top: 200px;
@@ -56,4 +63,8 @@ body{
 .header{
     position:sticky;
     top:0;
+}
+
+.btn-close{
+    color: white;
 }

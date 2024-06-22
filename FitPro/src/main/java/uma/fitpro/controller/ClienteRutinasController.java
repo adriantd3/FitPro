@@ -274,7 +274,7 @@ public class ClienteRutinasController {
             return "redirect:/";
         }
 
-        Map<EjercicioDTO,List<SerieDTO>> sesion_dict = serieService.filtroBuscarSeriesDictionary(filtro);
+        Map<EjercicioDTO, List<SerieDTO>> sesion_dict = serieService.filtroBuscarSeriesDictionary(filtro);
         Map<EjercicioDTO,List<DesempenyoSerieDTO>> des_dict =
                 desempenyoSerieService.filtroBuscarDesempenyoSeriesDictionary(filtro);
 

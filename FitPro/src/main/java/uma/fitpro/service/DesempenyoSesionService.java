@@ -2,18 +2,12 @@ package uma.fitpro.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import uma.fitpro.dao.DesempenyoSerieRepository;
-import uma.fitpro.dao.DesempenyoSesionRepository;
-import uma.fitpro.dao.SesionRepository;
-import uma.fitpro.dao.UsuarioRepository;
+import uma.fitpro.dao.*;
 import uma.fitpro.dto.*;
 import uma.fitpro.entity.*;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class DesempenyoSesionService extends DTOService{
@@ -29,6 +23,15 @@ public class DesempenyoSesionService extends DTOService{
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private OrdenSesionRutinaRepository ordenSesionRutinaRepository;
+
+    public List<DesempenyoSesionDTO> getDesempenyosSesionesByCliente(UsuarioDTO clienteDTO){
+        Usuario cliente = usuarioRepository.findById(clienteDTO.getId()).orElse(null);
+        List<DesempenyoSesion> desempenyoSesions = new ArrayList<>(cliente.getDesempenyoSesions());
+        return this.entidadesADTO(desempenyoSesions);
+    }
 
     public DesempenyoSesionDTO buscarDesempenyoSesion(Integer id){
         DesempenyoSesion desempenyoSesion = desempenyoSesionRepository.findById(id).orElse(null);
@@ -75,6 +78,17 @@ public class DesempenyoSesionService extends DTOService{
 
     public void borrarDesempenyoSesion(Integer id){
         desempenyoSesionRepository.deleteById(id);
+    }
+
+    public HashMap<OrdenSesionRutinaDTO,List<DesempenyoSesionDTO>> seguimientoRutina(UsuarioDTO clienteDTO, RutinaDTO rutinaDTO){
+        HashMap<OrdenSesionRutinaDTO,List<DesempenyoSesionDTO>> seguimientoRutina = new HashMap<>();
+        List<OrdenSesionRutina> sesionesRutina = ordenSesionRutinaRepository.findOrdenSesionRutinaByRutinaID(rutinaDTO.getId());
+        List<OrdenSesionRutinaDTO> sesionesRutinaDTO = this.entidadesADTO(sesionesRutina);
+        for (OrdenSesionRutinaDTO s: sesionesRutinaDTO){
+            List<DesempenyoSesionDTO> desempenyoSesiones = buscarDesempenyosSesionPorClienteYSesion(clienteDTO.getId(), s.getIdSesion());
+            seguimientoRutina.put(s,desempenyoSesiones);
+        }
+        return seguimientoRutina;
     }
 
     private DesempenyoSerie crearDesempenyoSerieFromSerie(Serie serie, DesempenyoSesion des) {

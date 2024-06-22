@@ -88,7 +88,6 @@
 </section>
 
 <div class="sesion-buttons">
-    <button class="btn btn-success" onclick="window.location.href='/entrenador_cross_training'">Guardar</button>
     <button type="button" name="anyadir_rutina" class="btn btn-primary" data-toggle="modal" data-target="#nuevaRutina">
         Añadir rutina
     </button>

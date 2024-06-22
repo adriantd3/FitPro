@@ -66,7 +66,11 @@
                 <td><%= u.getEdad()%></td>
                 <td><%= u.getAltura() + " m"%></td>
                 <td><%= u.getPeso() + " kg"%></td>
-                <td><button class="btn btn-secondary" name="rutinas_cliente" onclick="window.location.href='/entrenador_cross_training/rutinas_cliente?id=<%= u.getId()%>'">Rutinas</button></td>
+                <td>
+                    <button name="rutinas_cliente" class="btn btn-secondary button-image" onclick="window.location.href='/entrenador_cross_training/rutinas_cliente?id=<%= u.getId()%>'">
+                        <img class="image-button" src="${pageContext.request.contextPath}/assets/rutinas.svg">
+                    </button>
+                </td>
             </tr>
             <%
                     num++;

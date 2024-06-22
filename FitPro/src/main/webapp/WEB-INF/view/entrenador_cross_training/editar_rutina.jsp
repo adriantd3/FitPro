@@ -28,21 +28,22 @@
     </a>
     <h1 class="header-text text-center"><%=rutina.getNombre()%></h1>
 </header>
-<section class="table-container">
-    <table class="table table-striped table-dark table-width">
-        <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Día de la semana</th>
-            <th scope="col">Sesión asociada</th>
-        </tr>
-        </thead>
-        <tbody>
-        <%
-            int num = 1;
-            for (Integer dia : diasSemana.keySet()){
+<section class="scrollable-section">
+    <section class="table-container">
+        <table class="table table-striped table-dark table-width">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Día de la semana</th>
+                <th scope="col">Sesión asociada</th>
+            </tr>
+            </thead>
+            <tbody>
+            <%
+                int num = 1;
+                for (Integer dia : diasSemana.keySet()){
 
-        %>
+            %>
             <tr>
                 <th scope="row"><%=num%></th>
                 <td><%= diasSemana.get(dia)%></td>
@@ -68,7 +69,7 @@
                                     }
 
                             %>
-                                <option value=<%=sesion.getId()%> <%=selected%>><%=sesion.getNombre()%></option>
+                            <option value=<%=sesion.getId()%> <%=selected%>><%=sesion.getNombre()%></option>
                             <%
                                 }
                             %>
@@ -82,19 +83,20 @@
                     </form>
                 </td>
             </tr>
-        <%
-                num++;
-            }
-        %>
+            <%
+                    num++;
+                }
+            %>
 
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </section>
 </section>
+
 <div class="sesion-buttons">
-    <button class="btn btn-success" onclick="window.location.href='/entrenador_cross_training/rutinas'">Guardar</button>
     <form method="post" action="/entrenador_cross_training/borrar_rutina">
         <input type="hidden" name="id" value="<%=rutina.getId()%>">
-        <button class="btn btn-danger">Borrar</button>
+        <button class="btn btn-danger">Borrar rutina</button>
     </form>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

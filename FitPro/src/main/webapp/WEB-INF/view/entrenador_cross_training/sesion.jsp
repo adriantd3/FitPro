@@ -102,10 +102,9 @@
 </section>
 
 <section class="sesion-buttons">
-    <button type="button" class="btn btn-success" onclick="window.location.href='/entrenador_cross_training/sesiones'">Guardar</button>
     <form method="post" action="/entrenador_cross_training/borrar_sesion">
         <input type="hidden" name="id" value="<%=sesion.getId()%>">
-        <button class="btn btn-danger">Borrar</button>
+        <button class="btn btn-danger">Borrar sesión</button>
     </form>
     <button name="anyadir_ejercicio" type="button" class="btn btn-primary" onclick="window.location.href='/entrenador_cross_training/ejercicios?ejercicio=&musculo=&tipo='">Añadir ejercicio</button>
 </section>

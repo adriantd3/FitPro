@@ -1,3 +1,4 @@
+<%//AUTOR: Adrián Torremocha(100%)%>
 <%@ page import="uma.fitpro.dto.DesempenyoMenuDTO" %>
 <%@ page import="uma.fitpro.dto.DesempenyoComidaDTO" %>
 <%@ page import="java.time.format.DateTimeFormatter" %>
@@ -22,7 +23,9 @@
 </head>
 <body>
 <header>
-    <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back_button.png" alt="">
+    <a href="desempenyos_menu?id=<%=desempenyoMenu.getMenuId()%>">
+        <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back_button.png" alt="">
+    </a>
     <h1 class="header-text text-center">
         <%=desempenyoMenu.getNombreMenu()%> - Resultados del <%=fecha%>
     </h1>
@@ -32,19 +35,19 @@
         <form:hidden path="desMenuId"/>
 
         Nombre <form:input path="nombre"/>
-        Calorías > <form:input path="calorias" size="5" maxlength="5" type="number"/>
+        Calorías > <form:input path="calorias" size="5" maxlength="5" type="number" />
         Terminado <form:select path="comido">
-                    <form:option value="${null}" label="Ambos"/>
+                    <form:option value="${null}" label="Todos"/>
                     <form:option value="${true}" label="Sí"/>
                     <form:option value="${false}" label="No"/>
                 </form:select>
         Gustado <form:select path="gustado">
-                    <form:option value="${null}" label="Ambos"/>
+                    <form:option value="${null}" label="Todos"/>
                     <form:option value="${true}" label="Sí"/>
                     <form:option value="${false}" label="No"/>
                 </form:select>
         <br>
-        <form:button>Filtrar</form:button>
+        <form:button class="btn btn-primary mt-3">Filtrar</form:button>
     </form:form>
 </div>
 <section id="table-container">
@@ -73,8 +76,8 @@
                 <th scope="row"><%=numSerie%></th>
                 <td><%=desComida.getComida().getNombre()%></td>
                 <td><%=desComida.getComida().getCalorias()%></td>
-                <td><%=desComida.isComido() ? "Sí" : "No"%></td>
-                <td><%=desComida.isGustado() ? "Sí" : "No"%></td>
+                <td><%=desComida.isComido() ? "✔" : "❌"%></td>
+                <td><%=desComida.isGustado() ? "✔" : "❌"%></td>
             </tr>
             <%
                     numSerie++;

@@ -44,7 +44,13 @@ public class SerieService extends DTOService{
     }
 
     public List<SerieDTO> buscarSeries(List<Integer> series) {
-        List<Serie> seriesList = serieRepository.findAllById(series);
+        List<Serie> seriesList = new ArrayList<>();
+        for (Integer id : series) {
+            Serie serie = serieRepository.findById(id).orElse(null);
+            if (serie != null) {
+                seriesList.add(serie);
+            }
+        }
         return this.entidadesADTO(seriesList);
     }
 

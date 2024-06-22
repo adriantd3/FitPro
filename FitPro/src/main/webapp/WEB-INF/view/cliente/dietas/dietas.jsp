@@ -1,3 +1,4 @@
+<%//AUTOR: Adrián Torremocha(100%)%>
 <%@ page import="uma.fitpro.dto.DietaDTO" %>
 <%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -18,22 +19,26 @@
 </head>
 <body>
 <header>
-    <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back_button.png" alt="">
+    <a href="/">
+        <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back_button.png" alt="">
+    </a>
     <h1 class="header-text text-center">Mis dietas</h1>
 </header>
-<ul>
-    <%
-        for (DietaDTO dieta : dietas) {
-    %>
-    <li>
-        <a href="menus_dieta?id=<%=dieta.getId()%>">
-            <%=dieta.getNombre()%>
-        </a>
-    </li>
-    <%
-        }
-    %>
-</ul>
+<div class="d-flex justify-content-center mt-3">
+    <ul class="text-light fs-5">
+        <%
+            for (DietaDTO dieta : dietas) {
+        %>
+        <li>
+            <a href="dietas/menus_dieta?id=<%=dieta.getId()%>" class="text-primary">
+                <%=dieta.getNombre()%>
+            </a>
+        </li>
+        <%
+            }
+        %>
+    </ul>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>

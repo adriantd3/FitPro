@@ -1,3 +1,4 @@
+<%//AUTOR: Adrián Torremocha(100%)%>
 <%@ page import="uma.fitpro.dto.SerieInterface" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Map" %>
@@ -19,7 +20,7 @@
                 List<String> cols = params.get(tipo);
         %>
 
-        <a href="ejercicio?id=<%=ejercicio.getId()%>" class="text-primary fs-4"><%=ejercicio.getNombre()%></a>
+        <a href="ejercicio?id=<%=ejercicio.getId()%>" class="text-primary fs-4" target="_blank"><%=ejercicio.getNombre()%></a>
         <table class="table table-striped text-center">
             <thead class="table-dark">
             <tr>

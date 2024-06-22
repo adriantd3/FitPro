@@ -7,9 +7,7 @@ import uma.fitpro.dto.DesempenyoComidaDTO;
 import uma.fitpro.dto.DesempenyoMenuDTO;
 import uma.fitpro.dto.OrdenMenuDietaDTO;
 import uma.fitpro.entity.DesempenyoComida;
-import uma.fitpro.entity.OrdenMenuDieta;
 import uma.fitpro.ui.FiltroDesempenyoComida;
-import uma.fitpro.ui.FiltroMenu;
 
 import java.util.ArrayList;
 import java.util.List;

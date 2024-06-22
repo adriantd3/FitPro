@@ -1,3 +1,4 @@
+<%// AUTOR: Ezequiel Sánchez García (100%)%>
 <%@ page import="java.util.List" %>
 <%@ page import="uma.fitpro.dto.EjercicioDTO" %>
 <%@ page import="uma.fitpro.dto.TipoEjercicioDTO" %>

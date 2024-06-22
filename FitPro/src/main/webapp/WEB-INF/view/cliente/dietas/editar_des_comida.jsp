@@ -1,3 +1,4 @@
+<%//AUTOR: Adrián Torremocha(100%)%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page import="uma.fitpro.dto.*" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>

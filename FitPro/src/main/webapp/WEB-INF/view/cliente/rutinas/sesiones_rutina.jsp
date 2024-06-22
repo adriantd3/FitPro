@@ -1,5 +1,4 @@
-<%@ page import="uma.fitpro.entity.OrdenSesionRutina" %>
-<%@ page import="java.util.List" %>
+<%//AUTOR: Adrián Torremocha(100%)%>
 <%@ page import="uma.fitpro.utils.UtilityFunctions" %>
 <%@ page import="uma.fitpro.dto.RutinaDTO" %>
 <%@ page import="uma.fitpro.dto.OrdenSesionRutinaDTO" %>

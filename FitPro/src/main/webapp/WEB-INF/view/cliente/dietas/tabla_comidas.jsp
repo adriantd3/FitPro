@@ -1,3 +1,4 @@
+<%//AUTOR: Adrián Torremocha(100%)%>
 <%@ page import="java.util.List" %>
 <%@ page import="uma.fitpro.dto.ComidaDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>

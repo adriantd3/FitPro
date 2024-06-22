@@ -1,3 +1,4 @@
+//AUTOR: Adrián Torremocha(100%)
 package uma.fitpro.controller;
 
 import jakarta.servlet.http.HttpSession;

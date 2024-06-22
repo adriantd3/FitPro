@@ -1,3 +1,4 @@
+<%//AUTOR: Adrián Torremocha(100%)%>
 <%@ page import="uma.fitpro.utils.UtilityFunctions" %>
 <%@ page import="uma.fitpro.dto.DietaDTO" %>
 <%@ page import="uma.fitpro.dto.OrdenMenuDietaDTO" %>

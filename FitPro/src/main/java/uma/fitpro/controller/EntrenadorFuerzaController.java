@@ -6,15 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import uma.fitpro.dao.*;
 import uma.fitpro.dto.*;
-import uma.fitpro.entity.*;
 import uma.fitpro.service.*;
 import uma.fitpro.ui.FiltroRutina;
-import uma.fitpro.utils.ComparatorSerie;
-import uma.fitpro.utils.SortedList;
-
-import java.time.LocalDate;
 import java.util.*;
 
 //////////////////////////////////////////////////////
@@ -40,8 +34,6 @@ public class EntrenadorFuerzaController {
     private SerieService serieService;
     @Autowired
     private DesempenyoSesionService desempenyoSesionService;
-    @Autowired
-    private UsuarioRepository usuarioRepository;
 
     // ----------- PAGINA INICIAL -----------------
     @PostMapping("/")
@@ -57,6 +49,9 @@ public class EntrenadorFuerzaController {
     // ------------- PAGINA LISTA DE CLIENTES ---------------
     @GetMapping("/clientes")
     public String doClientes(Model model, HttpSession session) {
+        if(checkUsuarioYRol(session)){
+            return "redirect:/";
+        }
 
         UsuarioDTO entrenador = (UsuarioDTO)session.getAttribute("user");
         List<UsuarioDTO> clientes = usuarioService.getClientesEntrenador(entrenador);
@@ -69,6 +64,9 @@ public class EntrenadorFuerzaController {
     // ----------- PAGINA DE RUTINAS ---------------
     @GetMapping("/crud-rutina")
     public String doCrudRutina(@RequestParam("cliente")@Nullable Integer cliente_id, Model model, HttpSession session) {
+        if(checkUsuarioYRol(session)){
+            return "redirect:/";
+        }
 
         List<RutinaDTO> rutinas;
         UsuarioDTO entrenador = (UsuarioDTO) session.getAttribute("user");
@@ -95,6 +93,9 @@ public class EntrenadorFuerzaController {
 
     @PostMapping("/crear-rutina")
     public String doNuevaRutina(@RequestParam("nombreRutina") String nombreRutina, HttpSession session){
+        if(checkUsuarioYRol(session)){
+            return "redirect:/";
+        }
 
         UsuarioDTO entrenador = (UsuarioDTO) session.getAttribute("user");
 
@@ -110,7 +111,10 @@ public class EntrenadorFuerzaController {
 
     @GetMapping("guardar-rutina")
     public String doGuardarRutina(@RequestParam("rutina") Integer rutina_id, HttpSession session){
-        System.out.println("rutina_id: " + rutina_id);
+        if(checkUsuarioYRol(session)){
+            return "redirect:/";
+        }
+
         RutinaDTO rutinaDTO = rutinaService.buscarRutina(rutina_id);
         UsuarioDTO cliente = (UsuarioDTO) session.getAttribute("cliente");
 
@@ -124,6 +128,10 @@ public class EntrenadorFuerzaController {
     public String doFiltroListaRutinas(@ModelAttribute FiltroRutina filtroRutina,
                                        @RequestParam("cliente") Integer cliente_id,
                                        Model model, HttpSession session){
+        if(checkUsuarioYRol(session)){
+            return "redirect:/";
+        }
+
         List<RutinaDTO> rutinas;
         UsuarioDTO entrenador = (UsuarioDTO) session.getAttribute("user");
         if (cliente_id != -1) {
@@ -147,6 +155,10 @@ public class EntrenadorFuerzaController {
     // ----------- PAGINA DE UNA RUTINA -------------------
     @GetMapping("/rutina")
     public String doRutina(@RequestParam("rutina") Integer rutina_id, Model model, HttpSession session) {
+        if(checkUsuarioYRol(session)){
+            return "redirect:/";
+        }
+
         RutinaDTO rutina = rutinaService.buscarRutina(rutina_id);
         session.setAttribute("rutina", rutina);
 
@@ -159,6 +171,10 @@ public class EntrenadorFuerzaController {
 
     @GetMapping("/borrar-rutina")
     public String doBorrarRutina(@RequestParam("rutina") Integer rutina_id, HttpSession session) {
+        if(checkUsuarioYRol(session)){
+            return "redirect:/";
+        }
+
         rutinaService.borrarRutina(rutina_id);
         UsuarioDTO cliente = (UsuarioDTO) session.getAttribute("cliente");
         if(cliente != null){
@@ -170,6 +186,10 @@ public class EntrenadorFuerzaController {
 
     @GetMapping("/desasignar-rutina")
     public String doDesasignar(@RequestParam("rutina") Integer rutina_id, HttpSession session) {
+        if(checkUsuarioYRol(session)){
+            return "redirect:/";
+        }
+
         RutinaDTO rutina = rutinaService.buscarRutina(rutina_id);
         UsuarioDTO cliente = (UsuarioDTO) session.getAttribute("cliente");
 
@@ -182,6 +202,10 @@ public class EntrenadorFuerzaController {
     public String doAsignarSesion(@RequestParam("sesionNueva") Integer sesion_id,
                                   @RequestParam("dia") Integer dia,
                                   HttpSession session) {
+        if(checkUsuarioYRol(session)){
+            return "redirect:/";
+        }
+
         SesionDTO sesion = sesionService.buscarSesion(sesion_id);
         RutinaDTO rutina = (RutinaDTO) session.getAttribute("rutina");
         SesionDTO sesionAnterior = sesionService.getSesionByDia(rutina,dia);
@@ -192,6 +216,9 @@ public class EntrenadorFuerzaController {
 
     @PostMapping("/crear-sesion")
     public String doCrearSesion(@RequestParam("nombreSesion") String nombreSesion, HttpSession session) {
+        if(checkUsuarioYRol(session)){
+            return "redirect:/";
+        }
 
         sesionService.nuevaSesion(nombreSesion);
         RutinaDTO rutina = (RutinaDTO) session.getAttribute("rutina");
@@ -202,13 +229,18 @@ public class EntrenadorFuerzaController {
 
     // ---------- PAGINA DE SESION ------------------
     @GetMapping("/sesion")
-    public String doSesion(@RequestParam("sesion")@Nullable Integer sesion_id, Model model) {
+    public String doSesion(@RequestParam("sesion")@Nullable Integer sesion_id,
+                           Model model, HttpSession session) {
+        if(checkUsuarioYRol(session)){
+            return "redirect:/";
+        }
+
         SesionDTO sesion;
         if (sesion_id != null) {
             sesion = sesionService.buscarSesion(sesion_id);
             model.addAttribute("sesion", sesion);
 
-            Map<EjercicioDTO, SortedList<SerieDTO>> tablas = serieService.buscarSeriesDictionary(sesion.getSeries());
+            Map<EjercicioDTO, List<SerieDTO>> tablas = serieService.buscarSeriesDictionary(sesion.getSeries());
             model.addAttribute("tablas", tablas);
         }
         //System.out.printf(String.valueOf(model.getAttribute("serie") == null));
@@ -216,8 +248,13 @@ public class EntrenadorFuerzaController {
         return "/entrenador_fuerza/sesion";
     }
 
+
     @GetMapping("borrar-sesion")
     public String doBorrarSesion(@RequestParam("sesion") Integer sesion_id, HttpSession session) {
+        if(checkUsuarioYRol(session)){
+            return "redirect:/";
+        }
+
         sesionService.borrarSesion(sesion_id);
         RutinaDTO rutina = (RutinaDTO) session.getAttribute("rutina");
 
@@ -225,7 +262,11 @@ public class EntrenadorFuerzaController {
     }
 
     @GetMapping("/asignar-ejercicio")
-    public String doAsignarEjercicio(@ModelAttribute("sesion") Integer sesion_id, Model model) {
+    public String doAsignarEjercicio(@ModelAttribute("sesion") Integer sesion_id, Model model, HttpSession session) {
+        if(checkUsuarioYRol(session)){
+            return "redirect:/";
+        }
+
         SesionDTO sesion = sesionService.buscarSesion(sesion_id);
         model.addAttribute("sesion", sesion);
 
@@ -239,7 +280,11 @@ public class EntrenadorFuerzaController {
     }
 
     @GetMapping("editar-serie")
-    public String doEditarSerie(@RequestParam("serie") Integer serie_id, Model model) {
+    public String doEditarSerie(@RequestParam("serie") Integer serie_id, Model model, HttpSession session) {
+        if(checkUsuarioYRol(session)){
+            return "redirect:/";
+        }
+
         SerieDTO serie = serieService.buscarSerie(serie_id);
         SesionDTO sesion = sesionService.buscarSesion(serie.getSesion());
         String nombreEjercicio = ejercicioService.buscarEjercicio(serie.getEjercicio()).getNombre();
@@ -247,19 +292,27 @@ public class EntrenadorFuerzaController {
         model.addAttribute("sesion", sesion);
         model.addAttribute("nombreEjercicio", nombreEjercicio);
 
-        Map<EjercicioDTO, SortedList<SerieDTO>> tablas = serieService.buscarSeriesDictionary(sesion.getSeries());
+        Map<EjercicioDTO, List<SerieDTO>> tablas = serieService.buscarSeriesDictionary(sesion.getSeries());
         model.addAttribute("tablas", tablas);
         return "/entrenador_fuerza/sesion";
     }
 
     @PostMapping("/guardar-serie")
-    public String doGuardarSerie(@ModelAttribute("serie") SerieDTO serie) {
+    public String doGuardarSerie(@ModelAttribute("serie") SerieDTO serie, HttpSession session) {
+        if(checkUsuarioYRol(session)){
+            return "redirect:/";
+        }
+
         serieService.guardarSerie(serie, serie.getMetrica1().toString(), serie.getMetrica2().toString());
         return "redirect:/entrenador_fuerza/sesion?sesion=" + serie.getSesion();
     }
 
     @GetMapping("eliminar-serie")
-    public String doEliminarSerie(@RequestParam("serie") Integer serie_id) {
+    public String doEliminarSerie(@RequestParam("serie") Integer serie_id, HttpSession session) {
+        if(checkUsuarioYRol(session)){
+            return "redirect:/";
+        }
+
         SerieDTO serie = serieService.buscarSerie(serie_id);
         serieService.borrarSerie(serie);
 
@@ -268,7 +321,11 @@ public class EntrenadorFuerzaController {
 
     @GetMapping("anyadir-serie")
     public String doAnyadirSerie(@RequestParam("sesion") Integer sesion_id ,
-                                 @RequestParam("ejercicio") Integer ejercicio_id) {
+                                 @RequestParam("ejercicio") Integer ejercicio_id, HttpSession session) {
+        if(checkUsuarioYRol(session)){
+            return "redirect:/";
+        }
+
         SesionDTO sesion = sesionService.buscarSesion(sesion_id);
         EjercicioDTO ejercicio = ejercicioService.buscarEjercicio(ejercicio_id);
         Integer serie_id = serieService.crearSerie(ejercicio, sesion, "0", "0");
@@ -277,6 +334,10 @@ public class EntrenadorFuerzaController {
 
     @GetMapping("/desasignar-sesion")
     public String doDesasignarSesion(@RequestParam("sesion") Integer sesion_id, HttpSession session) {
+        if(checkUsuarioYRol(session)){
+            return "redirect:/";
+        }
+
         RutinaDTO rutina = (RutinaDTO) session.getAttribute("rutina");
         Integer dia = sesionService.getDiaBySesion(sesion_id, rutina);
         SesionDTO sesion = sesionService.buscarSesion(sesion_id);
@@ -289,7 +350,11 @@ public class EntrenadorFuerzaController {
     // -------- LISTA DE EJERCICIOS ---------------
     @PostMapping("/guardar-ejercicio")
     public String doGuardarEjercicio(@RequestParam("ejercicio") Integer ejercicioId, @RequestParam("sesion") Integer sesionId,
-                                     Model model) {
+                                     HttpSession session) {
+        if(checkUsuarioYRol(session)){
+            return "redirect:/";
+        }
+
         EjercicioDTO ejercicioDTO = ejercicioService.buscarEjercicio(ejercicioId);
         SesionDTO sesionDTO = sesionService.buscarSesion(sesionId);
 
@@ -298,10 +363,27 @@ public class EntrenadorFuerzaController {
         return "redirect:/entrenador_fuerza/editar-serie?serie=" + serieId;
     }
 
+    // --------- PAGINA DE EJERCICIO ---------------
+    @GetMapping("ejercicio/{id}")
+    public String doEjercicio(@PathVariable Integer id, Model model, HttpSession session) {
+        if(checkUsuarioYRol(session)){
+            return "redirect:/";
+        }
+
+        EjercicioDTO ejercicioDTO = ejercicioService.buscarEjercicio(id);
+        model.addAttribute("ejercicio", ejercicioDTO);
+
+        return "cliente/rutinas/ejercicio";
+    }
+
 
     //---------------- PAGINAS DE SEGUIMIENTO -----------------------
     @GetMapping("seguimiento")
     public String doSeguimiento(Model model, HttpSession session) {
+        if(checkUsuarioYRol(session)){
+            return "redirect:/";
+        }
+
         UsuarioDTO cliente = (UsuarioDTO) session.getAttribute("cliente");
         List<DesempenyoSesionDTO> desempenyosSesiones = desempenyoSesionService.getDesempenyosSesionesByCliente(cliente);
         model.addAttribute("desempenyoSesiones", desempenyosSesiones);
@@ -309,12 +391,24 @@ public class EntrenadorFuerzaController {
     }
 
     @GetMapping("desempenyos-sesion/{id}")
-    public String doDesempenyoSesion(@PathVariable Integer id, Model model) {
+    public String doDesempenyoSesion(@PathVariable Integer id, Model model, HttpSession session) {
+        if(checkUsuarioYRol(session)){
+            return "redirect:/";
+        }
+
         DesempenyoSesionDTO desempenyoSesion = desempenyoSesionService.buscarDesempenyoSesion(id);
-        Map<EjercicioDTO, SortedList<SerieDTO>> tablas = serieService.buscarSeriesDictionary(desempenyoSesion.getDesempenyoSeries());
+        SesionDTO sesionDTO = sesionService.buscarSesion(desempenyoSesion.getIdSesion());
+        Map<EjercicioDTO, List<SerieDTO>> tablasEsperadas = serieService.buscarSeriesDictionary(sesionDTO.getSeries());
+        Map<EjercicioDTO, List<SerieDTO>> tablas = serieService.buscarSeriesDictionary(desempenyoSesion.getDesempenyoSeries());
         model.addAttribute("tablas", tablas);
+        model.addAttribute("tablasEsperadas", tablasEsperadas);
 
         model.addAttribute("desempenyoSesion", desempenyoSesion);
         return "/entrenador_fuerza/desempenyos-sesion";
+    }
+
+    private boolean checkUsuarioYRol(HttpSession session) {
+        UsuarioDTO usuario = (UsuarioDTO) session.getAttribute("user");
+        return usuario == null || usuario.getRol().getId() != 2;
     }
 }

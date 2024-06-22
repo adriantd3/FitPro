@@ -14,7 +14,7 @@
     <style><%@ include file="../styles/common.css"%></style>
 </head>
 <body>
-    <header>
+    <header class="sticky-top">
         <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back_button.png" alt="<-"
              onclick="window.location.href='/entrenador_fuerza/crud-rutina?cliente=<%=cliente.getId()%>'">
         <h1 class="header-text text-center">Seguimiento de <%=cliente.getNombre() + " " + cliente.getApellidos()%></h1> <!-- Controlar si es de un usario para añadir "de usuario" y solo sus listas -->

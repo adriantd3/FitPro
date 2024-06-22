@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import uma.fitpro.dto.*;
 import uma.fitpro.service.*;
 import uma.fitpro.ui.FiltroSerie;
-import uma.fitpro.utils.SortedList;
 
 import java.util.*;
 
@@ -133,7 +132,7 @@ public class ClienteRutinasController {
         }
 
         SesionDTO sesion = (SesionDTO) session.getAttribute("sesion");
-        Map<EjercicioDTO,SortedList<SerieDTO>> sesion_dict = serieService.buscarSeriesDictionary(sesion.getSeries());
+        Map<EjercicioDTO,List<SerieDTO>> sesion_dict = serieService.buscarSeriesDictionary(sesion.getSeries());
 
         model.addAttribute("sesion_dict", sesion_dict);
 
@@ -275,7 +274,7 @@ public class ClienteRutinasController {
             return "redirect:/";
         }
 
-        Map<EjercicioDTO, SortedList<SerieDTO>> sesion_dict = serieService.filtroBuscarSeriesDictionary(filtro);
+        Map<EjercicioDTO, List<SerieDTO>> sesion_dict = serieService.filtroBuscarSeriesDictionary(filtro);
         Map<EjercicioDTO,List<DesempenyoSerieDTO>> des_dict =
                 desempenyoSerieService.filtroBuscarDesempenyoSeriesDictionary(filtro);
 

@@ -12,13 +12,8 @@ import uma.fitpro.entity.Ejercicio;
 import uma.fitpro.entity.Serie;
 import uma.fitpro.entity.Sesion;
 import uma.fitpro.ui.FiltroSerie;
-import uma.fitpro.utils.ComparatorSerie;
-import uma.fitpro.utils.SortedList;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class SerieService extends DTOService{
@@ -60,21 +55,21 @@ public class SerieService extends DTOService{
         return this.entidadesADTO(seriesList);
     }
 
-    public Map<EjercicioDTO, SortedList<SerieDTO>> buscarSeriesDictionary(List<Integer> series) {
+    public Map<EjercicioDTO, List<SerieDTO>> buscarSeriesDictionary(List<Integer> series) {
         List<SerieDTO> seriesList = this.buscarSeries(series);
         return this.dictFromSeries(seriesList);
     }
 
-    public Map<EjercicioDTO, SortedList<SerieDTO>> filtroBuscarSeriesDictionary(FiltroSerie filtro) {
+    public Map<EjercicioDTO, List<SerieDTO>> filtroBuscarSeriesDictionary(FiltroSerie filtro) {
         List<SerieDTO> seriesList = this.filtroBuscarSeries(filtro);
         return this.dictFromSeries(seriesList);
     }
 
-    private Map<EjercicioDTO, SortedList<SerieDTO>> dictFromSeries(List<SerieDTO> seriesList) {
-        Map<EjercicioDTO, SortedList<SerieDTO>> sesion_dict = new LinkedHashMap<>();
+    private Map<EjercicioDTO, List<SerieDTO>> dictFromSeries(List<SerieDTO> seriesList) {
+        Map<EjercicioDTO, List<SerieDTO>> sesion_dict = new LinkedHashMap<>();
         for (SerieDTO serie : seriesList) {
             EjercicioDTO ejercicio = ejercicioService.buscarEjercicio(serie.getEjercicio());
-            sesion_dict.computeIfAbsent(ejercicio, k -> new SortedList<>(new ComparatorSerie()));
+            sesion_dict.computeIfAbsent(ejercicio, k -> new ArrayList<>());
             sesion_dict.get(ejercicio).add(serie);
         }
 

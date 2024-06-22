@@ -10,9 +10,9 @@
     <style><%@ include file="../styles/common.css"%></style>
 </head>
 <body>
-    <header>
+    <header class="sticky-top">
         <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back_button.png" alt="<-"
-            onclick="window.location.href='/'"> <!-- Controlar pagina anterior por modelo -->
+            onclick="window.location.href='/salir'"> <!-- Controlar pagina anterior por modelo -->
         <h1 class="header-text text-center">Bienvenido, <%=usuario.getNombre()%></h1> <!-- Meter usuario por modelo -->
     </header>
     <section class="position-relative top-25 start-50 w-25">

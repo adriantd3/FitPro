@@ -22,30 +22,31 @@
     <style><%@ include file="../styles/common.css"%></style>
 </head>
 <body>
-<header>
+<header class="sticky-top">
     <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back_button.png" alt="<-"
          onclick="window.location.href='/entrenador_fuerza/<%=(cliente != null ? "clientes" : "")%>' ">
     <h1 class="header-text text-center">Rutinas de entrenamiento <%if(cliente != null){%><%="de "+cliente.getNombre()%><%}%></h1> <!-- Controlar si es de un usario para añadir "de usuario" y solo sus listas -->
 </header>
 <section class="mt-3 ms-3 h-100">
     <div class="d-flex justify-content-between">
-        <form method="post" action="/entrenador_fuerza/crear-rutina" class="p-2">
+        <form method="post" action="/entrenador_fuerza/crear-rutina" class="p-2" style="border: 1px solid white; border-radius: 10px">
             <input type="text" name="nombreRutina" placeholder="Nombre de la rutina nueva..."/>
             <button type="submit" class=" btn btn-primary top-50"
                     onclick="window.location.href='/entrenador_fuerza/rutina?rutina='"
             >Añadir Rutina
             </button>
         </form>
-        <form:form cssStyle="border: 1px solid white" cssClass="me-2 p-2" method="post" action="/entrenador_fuerza/crud-rutina/filtro" modelAttribute="filtroRutina">
+        <form:form cssStyle="border: 1px solid white; border-radius: 10px" cssClass="me-2 p-2"
+                   method="post" action="/entrenador_fuerza/crud-rutina/filtro" modelAttribute="filtroRutina">
             <form:label cssStyle="color: white" path="nombre">Nombre: </form:label>
             <form:input cssClass="me-3" path="nombre"/>
 
             <form:label cssStyle="color: white" path="fechaCreacion">Fecha: </form:label>
             <form:input cssClass="me-3" path="fechaCreacion"/>
 
-            <form:label cssStyle="color: white" path="numeroSesiones">Sesiones: </form:label>
+            <form:label cssStyle="color: white" path="numeroSesiones">Nº Sesiones: </form:label>
             <form:select path="numeroSesiones">
-                <form:options items="${[0,1,2,3,4,5]}"/>
+                <form:options items="${[0,1,2,3,4,5,6,7]}"/>
             </form:select>
 
             <input type="hidden" name="cliente" value="<%=cliente != null ? cliente.getId() : -1%>">

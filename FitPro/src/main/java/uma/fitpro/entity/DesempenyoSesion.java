@@ -38,7 +38,7 @@ public class DesempenyoSesion implements Serializable, DTO<DesempenyoSesionDTO> 
     private Byte terminado;
 
     @OneToMany(mappedBy = "desempenyoSesion", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @OrderBy("ejercicio.id ASC, id ASC")
+    @OrderBy("ejercicio.id ASC, metrica1 ASC, metrica2 ASC")
     private List<DesempenyoSerie> desempenyoSeries = new ArrayList<>();
 
     public Integer getId() {

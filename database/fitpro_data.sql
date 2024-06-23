@@ -63,7 +63,7 @@ CREATE TABLE `comida_menu` (
 
 LOCK TABLES `comida_menu` WRITE;
 /*!40000 ALTER TABLE `comida_menu` DISABLE KEYS */;
-INSERT INTO `comida_menu` VALUES (1,1),(2,1),(3,1),(4,1),(5,2),(6,2),(7,2),(8,2);
+INSERT INTO `comida_menu` VALUES (1,1),(2,1),(3,1),(4,1),(2,2),(6,2),(7,2),(8,2),(15,2),(1,3),(3,3),(4,3),(6,3),(7,3),(4,4),(5,4),(6,4),(7,4);
 /*!40000 ALTER TABLE `comida_menu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -84,7 +84,7 @@ CREATE TABLE `desempenyo_comida` (
   KEY `comida_desempenyo_FK_idx` (`comida_id`),
   KEY `desempenyomenu_FK_idx` (`desempenyo_menu_id`),
   CONSTRAINT `comida_desempenyo_FK` FOREIGN KEY (`comida_id`) REFERENCES `comida` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `desempenyo_menu_FK` FOREIGN KEY (`desempenyo_menu_id`) REFERENCES `desempenyo_menu` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
+  CONSTRAINT `desempenyo_menu_FK` FOREIGN KEY (`desempenyo_menu_id`) REFERENCES `desempenyo_menu` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -94,7 +94,6 @@ CREATE TABLE `desempenyo_comida` (
 
 LOCK TABLES `desempenyo_comida` WRITE;
 /*!40000 ALTER TABLE `desempenyo_comida` DISABLE KEYS */;
-INSERT INTO `desempenyo_comida` VALUES (1,1,1,1,0),(2,2,1,0,0),(3,3,1,1,1),(4,4,1,0,0);
 /*!40000 ALTER TABLE `desempenyo_comida` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -125,7 +124,6 @@ CREATE TABLE `desempenyo_menu` (
 
 LOCK TABLES `desempenyo_menu` WRITE;
 /*!40000 ALTER TABLE `desempenyo_menu` DISABLE KEYS */;
-INSERT INTO `desempenyo_menu` VALUES (1,1,1,'2024-06-17',1);
 /*!40000 ALTER TABLE `desempenyo_menu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -156,6 +154,7 @@ CREATE TABLE `desempenyo_serie` (
 
 LOCK TABLES `desempenyo_serie` WRITE;
 /*!40000 ALTER TABLE `desempenyo_serie` DISABLE KEYS */;
+INSERT INTO `desempenyo_serie` VALUES (327,58,1,23,234),(328,58,2,3432,234);
 /*!40000 ALTER TABLE `desempenyo_serie` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -186,6 +185,7 @@ CREATE TABLE `desempenyo_sesion` (
 
 LOCK TABLES `desempenyo_sesion` WRITE;
 /*!40000 ALTER TABLE `desempenyo_sesion` DISABLE KEYS */;
+INSERT INTO `desempenyo_sesion` VALUES (58,10,4,'2024-06-23',1);
 /*!40000 ALTER TABLE `desempenyo_sesion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -204,7 +204,7 @@ CREATE TABLE `dieta` (
   PRIMARY KEY (`id`),
   KEY `dietista_dieta_FK_idx` (`dietista_id`),
   CONSTRAINT `dietista_dieta_FK` FOREIGN KEY (`dietista_id`) REFERENCES `usuario` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -213,7 +213,7 @@ CREATE TABLE `dieta` (
 
 LOCK TABLES `dieta` WRITE;
 /*!40000 ALTER TABLE `dieta` DISABLE KEYS */;
-INSERT INTO `dieta` VALUES (1,5,'Dieta1','2024-04-10'),(2,5,'Dieta2','2024-04-10'),(3,5,'Dieta3','2024-04-11');
+INSERT INTO `dieta` VALUES (1,5,'Dieta1','2024-04-10'),(2,5,'Dieta2','2024-04-10'),(3,5,'Dieta3','2024-04-11'),(4,5,'DietaEspecial','2024-06-23');
 /*!40000 ALTER TABLE `dieta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -240,7 +240,7 @@ CREATE TABLE `dieta_cliente` (
 
 LOCK TABLES `dieta_cliente` WRITE;
 /*!40000 ALTER TABLE `dieta_cliente` DISABLE KEYS */;
-INSERT INTO `dieta_cliente` VALUES (1,1),(2,1),(3,1),(1,10),(3,10),(3,12),(4,12);
+INSERT INTO `dieta_cliente` VALUES (1,10),(3,10),(3,12),(4,12);
 /*!40000 ALTER TABLE `dieta_cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -300,7 +300,7 @@ CREATE TABLE `ejercicio` (
 
 LOCK TABLES `ejercicio` WRITE;
 /*!40000 ALTER TABLE `ejercicio` DISABLE KEYS */;
-INSERT INTO `ejercicio` VALUES (1,'Incline Bench Pres','     The incline bench press is a variatio of the bench press and an exercise used to build the muscles of the chest.     ','https://cdn.muscleandstrength.com/sites/default/files/incline-bench-press.jpg','https://youtube.com/embed/uIzbJX5EVIY',1,2),(2,'Seated Cable Row','Your back must remain straight at all times. Your torso should be kept still throughout the entire set.','https://cdn.muscleandstrength.com/sites/default/files/styles/800x500/public/seated-cable-row.jpg?itok=b8Yzo0KK',NULL,1,14),(3,'Leg Press','The leg press is a variation of the squat and an exercise used to target the muscles of the leg.','https://cdn.muscleandstrength.com/sites/default/files/leg-press.jpg','https://youtube.com/embed/sEM_zo9w2ss',1,19),(4,'Smith Machine Shoulder Press','The Smith machine shoulder press is a variation of the barbell shoulder press and is used to strengthen the muscles of the shoulders.','https://cdn.muscleandstrength.com/sites/default/files/seated-military-press.jpg',NULL,1,20),(7,'Caminar',' Camina','','',5,5),(8,'Estiramientps','Estira el pecho','','',5,6),(9,'Salto de comba','Salta a la comba','','',2,5),(10,'Salto estrella','Realiza un salto y chocas las palmas cuando estas en lo alto','','',2,8),(11,'Sprint','Correr a máxima potencia','','',3,19),(12,'Cambios de dirección','  Correr y hacer cambios de dirección bruscos ','','',3,5),(13,'Equilibrio sobre una pierna','  Sentadillas sobre una pierna','','',4,19),(14,'Plancha','  Mantente recto con los brazos y pies apoyados en el suelo','','',4,2);
+INSERT INTO `ejercicio` VALUES (1,'Incline Bench Pres','The incline bench press is a variatio of the bench press and an exercise used to build the muscles of the chest.     ','https://cdn.muscleandstrength.com/sites/default/files/incline-bench-press.jpg','https://youtube.com/embed/uIzbJX5EVIY',1,2),(2,'Seated Cable Row','Your back must remain straight at all times. Your torso should be kept still throughout the entire set.','https://cdn.muscleandstrength.com/sites/default/files/styles/800x500/public/seated-cable-row.jpg?itok=b8Yzo0KK',NULL,1,14),(3,'Leg Press','The leg press is a variation of the squat and an exercise used to target the muscles of the leg.','https://cdn.muscleandstrength.com/sites/default/files/leg-press.jpg','https://youtube.com/embed/sEM_zo9w2ss',1,19),(4,'Smith Machine Shoulder Press','The Smith machine shoulder press is a variation of the barbell shoulder press and is used to strengthen the muscles of the shoulders.','https://cdn.muscleandstrength.com/sites/default/files/seated-military-press.jpg',NULL,1,20),(7,'Caminar','Camina','','',5,5),(8,'Estiramientps','Estira el pecho','','',5,6),(9,'Salto de comba','Salta a la comba','','',2,5),(10,'Salto estrella','Realiza un salto y chocas las palmas cuando estas en lo alto','','',2,8),(11,'Sprint','Correr a máxima potencia','','',3,19),(12,'Cambios de dirección','Correr y hacer cambios de dirección bruscos ','','',3,5),(13,'Equilibrio sobre una pierna','Sentadillas sobre una pierna','','',4,19),(14,'Plancha','Mantente recto con los brazos y pies apoyados en el suelo','','',4,2);
 /*!40000 ALTER TABLE `ejercicio` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -327,7 +327,7 @@ CREATE TABLE `entrenador_cliente` (
 
 LOCK TABLES `entrenador_cliente` WRITE;
 /*!40000 ALTER TABLE `entrenador_cliente` DISABLE KEYS */;
-INSERT INTO `entrenador_cliente` VALUES (3,1),(4,1),(3,10),(3,12),(4,12);
+INSERT INTO `entrenador_cliente` VALUES (3,10),(3,12),(4,12);
 /*!40000 ALTER TABLE `entrenador_cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -368,7 +368,7 @@ CREATE TABLE `menu` (
   `calorias` float NOT NULL DEFAULT '0',
   `fecha_creacion` date NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -377,7 +377,7 @@ CREATE TABLE `menu` (
 
 LOCK TABLES `menu` WRITE;
 /*!40000 ALTER TABLE `menu` DISABLE KEYS */;
-INSERT INTO `menu` VALUES (1,'Menu1',1000,'2024-04-11'),(2,'Menu2',1500,'2024-04-12'),(3,'Menu3',1000,'2024-04-01');
+INSERT INTO `menu` VALUES (1,'Menu1',1200,'2024-04-11'),(2,'Menu2',2900,'2024-04-12'),(3,'Menu3',1900,'2024-04-01'),(4,'MenuEspecial',1700,'2024-06-23');
 /*!40000 ALTER TABLE `menu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -405,7 +405,7 @@ CREATE TABLE `orden_menu_dieta` (
 
 LOCK TABLES `orden_menu_dieta` WRITE;
 /*!40000 ALTER TABLE `orden_menu_dieta` DISABLE KEYS */;
-INSERT INTO `orden_menu_dieta` VALUES (1,1,1),(1,2,2),(2,2,1),(1,3,3),(2,3,2);
+INSERT INTO `orden_menu_dieta` VALUES (1,1,1),(2,1,3),(2,1,4),(3,1,5),(4,1,2),(1,2,2),(2,2,1),(1,3,3),(1,3,4),(2,3,2),(2,3,5),(3,3,7),(4,3,1),(4,3,6),(4,4,1),(4,4,3),(4,4,5);
 /*!40000 ALTER TABLE `orden_menu_dieta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -434,7 +434,7 @@ CREATE TABLE `orden_sesion_rutina` (
 
 LOCK TABLES `orden_sesion_rutina` WRITE;
 /*!40000 ALTER TABLE `orden_sesion_rutina` DISABLE KEYS */;
-INSERT INTO `orden_sesion_rutina` VALUES (5,9,1),(5,10,4),(6,9,3),(6,10,2),(7,9,5),(7,10,6),(8,10,1);
+INSERT INTO `orden_sesion_rutina` VALUES (5,8,1),(7,8,3),(7,9,5),(8,8,5),(9,9,1);
 /*!40000 ALTER TABLE `orden_sesion_rutina` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -477,7 +477,7 @@ CREATE TABLE `rutina` (
   PRIMARY KEY (`id`),
   KEY `entrenador_rutina_FK_idx` (`entrenador_id`),
   CONSTRAINT `entrenador_rutina_FK` FOREIGN KEY (`entrenador_id`) REFERENCES `usuario` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -486,7 +486,7 @@ CREATE TABLE `rutina` (
 
 LOCK TABLES `rutina` WRITE;
 /*!40000 ALTER TABLE `rutina` DISABLE KEYS */;
-INSERT INTO `rutina` VALUES (4,4,'Rutina 1','2024-05-29'),(5,4,'Rutina 2','2024-05-29'),(6,4,'Rutina 3','2024-05-29'),(7,4,'Rutina 4','2024-05-29'),(9,3,'Rutina Mikel','2024-06-23'),(10,3,'Rutina PepeGomex','2024-06-23');
+INSERT INTO `rutina` VALUES (4,4,'Rutina 1','2024-05-29'),(5,4,'Rutina 2','2024-05-29'),(6,4,'Rutina 3','2024-05-29'),(7,4,'Rutina 4','2024-05-29'),(8,3,'Rutina Mikel','2024-06-23'),(9,3,'Rutina PepeGomex','2024-06-23');
 /*!40000 ALTER TABLE `rutina` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -513,7 +513,7 @@ CREATE TABLE `rutina_cliente` (
 
 LOCK TABLES `rutina_cliente` WRITE;
 /*!40000 ALTER TABLE `rutina_cliente` DISABLE KEYS */;
-INSERT INTO `rutina_cliente` VALUES (9,1),(10,10);
+INSERT INTO `rutina_cliente` VALUES (8,12);
 /*!40000 ALTER TABLE `rutina_cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -535,7 +535,7 @@ CREATE TABLE `serie` (
   KEY `sesion_FK_idx` (`sesion_id`),
   CONSTRAINT `ejercicio_FK` FOREIGN KEY (`ejercicio_id`) REFERENCES `ejercicio` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `sesion_serie_FK` FOREIGN KEY (`sesion_id`) REFERENCES `sesion` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -544,7 +544,7 @@ CREATE TABLE `serie` (
 
 LOCK TABLES `serie` WRITE;
 /*!40000 ALTER TABLE `serie` DISABLE KEYS */;
-INSERT INTO `serie` VALUES (15,5,1,25,15),(16,5,1,30,10),(17,5,1,30,10),(18,5,1,35,8),(19,6,3,60,15),(20,6,3,60,14),(21,6,3,70,12),(22,6,3,70,12),(23,6,3,80,10),(24,6,3,80,10),(25,7,4,20,15),(26,7,4,20,12),(27,7,4,25,10),(28,7,4,25,10),(29,7,4,30,9),(30,8,2,50,10),(31,8,2,50,10),(32,8,2,50,10),(33,8,2,60,8),(34,8,2,60,8),(35,9,1,30,10),(36,9,1,30,10),(37,9,1,30,10),(38,9,2,50,10),(39,9,2,50,10),(40,9,2,50,10),(41,9,3,60,15),(42,9,3,60,15),(43,9,3,70,12),(44,9,4,25,12),(45,9,4,25,12),(46,9,4,25,10);
+INSERT INTO `serie` VALUES (13,4,1,2,2),(14,4,2,4,4),(15,5,1,50,10),(16,5,1,55,10),(17,5,1,55,9),(18,5,1,60,8),(19,5,1,65,7),(20,6,2,50,10),(21,6,2,50,10),(22,6,2,55,10),(23,6,2,55,10),(24,6,2,60,10),(25,7,3,60,20),(26,7,3,70,15),(27,7,3,70,15),(28,7,3,80,10),(29,7,3,80,10),(30,8,4,25,12),(31,8,4,30,10),(32,8,4,40,10),(33,8,4,45,8),(34,8,4,45,8),(35,9,1,30,12),(36,9,1,35,10),(37,9,1,40,10),(38,9,2,50,10),(39,9,2,50,10),(40,9,3,60,15),(41,9,3,65,13),(42,9,3,70,10),(43,9,4,25,10),(44,9,4,30,10),(45,9,4,40,8);
 /*!40000 ALTER TABLE `serie` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -568,7 +568,7 @@ CREATE TABLE `sesion` (
 
 LOCK TABLES `sesion` WRITE;
 /*!40000 ALTER TABLE `sesion` DISABLE KEYS */;
-INSERT INTO `sesion` VALUES (5,'Pecho'),(6,'Pierna'),(7,'Brazo'),(8,'Espalda'),(9,'FullBody');
+INSERT INTO `sesion` VALUES (4,'Sesion de prueba'),(5,'Pecho'),(6,'Espalda'),(7,'Pierna'),(8,'Brazo'),(9,'FullBody');
 /*!40000 ALTER TABLE `sesion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -594,7 +594,7 @@ CREATE TABLE `tipo_ejercicio` (
 
 LOCK TABLES `tipo_ejercicio` WRITE;
 /*!40000 ALTER TABLE `tipo_ejercicio` DISABLE KEYS */;
-INSERT INTO `tipo_ejercicio` VALUES (1,'Fuerza/Resistencia','Peso','Repeticiones'),(2,'Capacidad aerobica','Distancia','Duración'),(3,'Velocidad/Potencia','Duración','Descanso'),(4,'Estabilidad','Repeticiones','Descanso'),(5,'Movilidad','Repeticiones','Descanso');
+INSERT INTO `tipo_ejercicio` VALUES (1,'Fuerza/Resistencia','Peso (kg)','Repeticiones'),(2,'Capacidad aerobica','Distancia (m)','Duración (seg)'),(3,'Velocidad/Potencia','Duración (seg)','Descanso (seg)'),(4,'Estabilidad','Repeticiones','Descanso (seg)'),(5,'Movilidad','Repeticiones','Descanso (seg)');
 /*!40000 ALTER TABLE `tipo_ejercicio` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -620,7 +620,7 @@ CREATE TABLE `usuario` (
   PRIMARY KEY (`id`),
   KEY `rol_FK_idx` (`rol`),
   CONSTRAINT `rol_FK` FOREIGN KEY (`rol`) REFERENCES `rol` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -629,7 +629,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (1,'12345678A',5,'Mikel','Arias Montiel',1,20,1.78,80,'kirito','mikel@gmail.com'),(2,'25915268B',1,'David','Garcia Sanchez',1,19,1.9,87,'david','david@gmail.com'),(3,'75249108B',2,'Alvaro','Pérez Navarro',1,20,1.67,70,'alvaro','alvaro@gmail.com'),(4,'34345612H',3,'María','Cruz Martínez',0,18,1.54,60,'maria','maria@gmail.com'),(5,'68193415I',4,'Irene','Iglesias Gutierrez',0,24,1.5,54,'irene','irene@gmail.com'),(10,'123',5,'Pepe','Gomex',1,12,12,123,'pepe','pepe@gmail.com'),(11,'123',5,'Pepa','Gomex',0,12,12,123,'pepa','pepa@gmail.com');
+INSERT INTO `usuario` VALUES (2,'25915268B',1,'David','Garcia Sanchez',1,19,1.9,87,'david','david@gmail.com'),(3,'75249108B',2,'Alvaro','Pérez Navarro',1,20,1.67,70,'alvaro','alvaro@gmail.com'),(4,'34345612H',3,'María','Cruz Martínez',0,18,1.54,60,'maria','maria@gmail.com'),(5,'68193415I',4,'Irene','Iglesias Gutierrez',0,24,1.5,54,'irene','irene@gmail.com'),(10,'123',5,'Pepe','Gomex',1,12,12,123,'pepe','pepe@gmail.com'),(11,'123',5,'Pepa','Gomex',0,12,12,123,'pepa','pepa@gmail.com'),(12,'12345678A',5,'Mikel','Arias',1,20,1.7,80,'kirito','mikel@gmail.com');
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -642,4 +642,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-06-23 17:42:16
+-- Dump completed on 2024-06-23 18:38:16

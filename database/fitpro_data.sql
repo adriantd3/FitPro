@@ -218,7 +218,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `tipo_ejercicio` WRITE;
 /*!40000 ALTER TABLE `tipo_ejercicio` DISABLE KEYS */;
-INSERT INTO `tipo_ejercicio` VALUES (1,'Fuerza/Resistencia'),(2,'Capacidad aerobica'),(3,'Velocidad/Potencia'),(4,'Estabilidad'),(5,'Movilidad');
+INSERT INTO `tipo_ejercicio` VALUES (1,'Fuerza/Resistencia','',''),(2,'Capacidad aerobica','',''),(3,'Velocidad/Potencia','',''),(4,'Estabilidad','',''),(5,'Movilidad','','');
 /*!40000 ALTER TABLE `tipo_ejercicio` ENABLE KEYS */;
 UNLOCK TABLES;
 

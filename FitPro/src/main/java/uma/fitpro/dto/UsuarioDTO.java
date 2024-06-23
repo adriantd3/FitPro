@@ -3,6 +3,7 @@ package uma.fitpro.dto;
 import lombok.Data;
 
 import java.util.List;
+import java.util.Set;
 
 @Data
 public class UsuarioDTO {
@@ -11,13 +12,15 @@ public class UsuarioDTO {
     private RolDTO rol;
     private String nombre;
     private String apellidos;
-    private boolean sexo;
+    private Byte sexo;
     private Integer edad;
     private Float altura;
     private Float peso;
     private String contrasenya;
     private String correo;
     private List<Integer> dietasCliente;
+    private Set<UsuarioDTO> diestistasCliente;
+    private Set<UsuarioDTO> entrenadoresCliente;
     private List<Integer> clientesDietista;
     private List<Integer> rutinasCliente;
     private List<Integer> clientesEntrenador;

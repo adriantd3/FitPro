@@ -7,6 +7,30 @@ button {
     margin: 50px;
 }
 
+.table-exercises {
+    max-width: 50%;
+    margin: 50px;
+}
+
+.table-food {
+    max-width: 30%;
+    margin: 50px;
+}
+
+.table-assignment {
+    max-width: 20%;
+    margin: 50px;
+}
+
+.table-assignment {
+    max-width: 100%;
+    margin: 50px;
+}
+
+.assignment-gap {
+    gap: 100px;
+}
+
 .user-wrapper {
     display: flex;
 }
@@ -31,4 +55,75 @@ button {
 .form-buttons {
     display: flex;
     justify-content: center;
+}
+
+.form-buttons button {
+    margin-right: 30px;
+    position: absolute;
+}
+
+.user-delete-button {
+    top: 340px;
+    right: 690px;
+}
+
+.user-clean-button {
+    top: 340px;
+    right: 570px;
+}
+
+.exercise-delete-button {
+    top: 300px;
+    right: 550px;
+}
+
+.exercise-clean-button {
+    top: 300px;
+    right: 430px;
+}
+
+.food-delete-button {
+    top: 175px;
+    right: 930px;
+}
+
+.food-clean-button {
+    top: 175px;
+    right: 810px;
+}
+
+.selected-row * {
+    background-color: #ced4da !important;
+    color: black !important;
+}
+
+.assignment-wrapper {
+    display: flex;
+    margin: 100px;
+}
+
+.assignment-buttons {
+    display: block;
+    margin: 100px;
+    gap: 50px;
+}
+
+.trabajador-table {
+    width: 410px;
+}
+
+.swap-button {
+    background-color: transparent;
+    border-style: none;
+    font-size: 50px;
+}
+
+.etype-delete-button {
+    top: 175px;
+    right: 680px;
+}
+
+.etype-clean-button {
+    top: 175px;
+    right: 810px;
 }

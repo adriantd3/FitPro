@@ -9,6 +9,13 @@ import uma.fitpro.dto.EjercicioDTO;
 import uma.fitpro.dto.GrupoMuscularDTO;
 import uma.fitpro.dto.SerieDTO;
 import uma.fitpro.dto.TipoEjercicioDTO;
+import uma.fitpro.dto.UsuarioDTO;
+import uma.fitpro.entity.*;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import uma.fitpro.entity.Ejercicio;
 import uma.fitpro.entity.GrupoMuscular;
 import uma.fitpro.entity.Serie;
@@ -53,6 +60,41 @@ public class EjercicioService extends DTOService{
         return this.entidadesADTO(gruposMusculares);
     }
 
+    public List<EjercicioDTO> findAll() {
+        List<EjercicioDTO> ejerciciosDTO = new ArrayList<>();
+        List<Ejercicio> ejercicios = this.ejercicioRepository.findAll();
+        ejercicios.forEach(ejercicio -> ejerciciosDTO.add(ejercicio.toDTO()));
+        return ejerciciosDTO;
+    }
+
+    public void save(EjercicioDTO ejercicioDTO) {
+        Ejercicio ejercicio = null;
+        if(ejercicioDTO.getId() != null) {
+            ejercicio = ejercicioRepository.findById(ejercicioDTO.getId()).orElse(null);
+        }
+        if(ejercicio == null) {
+            ejercicio = new Ejercicio();
+        }
+        ejercicio.setNombre(ejercicioDTO.getNombre());
+        ejercicio.setDescripcion(ejercicioDTO.getDescripcion());
+        ejercicio.setImagen(ejercicioDTO.getImagen());
+        ejercicio.setVideo(ejercicioDTO.getVideo());
+        ejercicio.setTipo(tipoEjercicioRepository.findById(ejercicioDTO.getTipo().getId()).orElse(null));
+        ejercicio.setGrupoMuscular(grupoMuscularRepository.findById(ejercicioDTO.getGrupoMuscular().getId()).orElse(null));
+        ejercicioRepository.save(ejercicio);
+    }
+
+    public void delete(int id) {
+        ejercicioRepository.deleteById(id);
+    }
+
+    public List<EjercicioDTO> filterExercise(String nombre,String tipo,String grupo) {
+        List<Ejercicio> ejercicios = this.ejercicioRepository.filterExercise(nombre, tipo, grupo);
+        List<EjercicioDTO> ejerciciosDTO = new ArrayList<>();
+        ejercicios.forEach(ejercicio -> ejerciciosDTO.add(ejercicio.toDTO()));
+        return ejerciciosDTO;
+    }
+    
     public List<EjercicioDTO> filtrarEjercicioPorNombreMusculoYTipo(String nombre_ejercicio, String musculo, String tipo) {
         List<Ejercicio> ejercicios = ejercicios = ejercicioRepository.filtrarEjercicioPorNombreMusculoYTipo(nombre_ejercicio, musculo, tipo);
         return this.entidadesADTO(ejercicios);

@@ -4,10 +4,16 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import uma.fitpro.entity.Ejercicio;
+import uma.fitpro.entity.Usuario;
+
+import java.util.List;
 
 import java.util.List;
 
 public interface EjercicioRepository extends JpaRepository<Ejercicio, Integer> {
+
+    @Query("select e from Ejercicio e where e.nombre like concat('%', :nombre, '%')  and e.tipo.tipo like concat('%', :tipo, '%') and e.grupoMuscular.grupoMuscular like concat('%', :grupo, '%')")
+    public List<Ejercicio> filterExercise(@Param("nombre") String nombre, @Param("tipo") String tipo, @Param("grupo") String grupo);
     @Query("select e from Ejercicio e where e.nombre like concat('%', :filtro, '%')")
     List<Ejercicio> filtrarEjercicioPorNombre(@Param("filtro") String filtro);
 

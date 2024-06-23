@@ -22,6 +22,7 @@ public class DesempenyoComida implements Serializable, DTO<DesempenyoComidaDTO> 
     private Comida comida;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "desempenyo_menu_id", nullable = false)
     private DesempenyoMenu desempenyoMenu;
 

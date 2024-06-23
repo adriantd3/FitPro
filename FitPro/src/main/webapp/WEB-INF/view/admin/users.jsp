@@ -1,10 +1,19 @@
 <%@ page import="java.util.List" %>
 <%@ page import="uma.fitpro.entity.Usuario" %>
 <%@ page import="uma.fitpro.entity.Rol" %>
+<%@ page import="uma.fitpro.dto.UsuarioDTO" %>
+<%@ page import="uma.fitpro.dto.RolDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    List<Usuario> usuarios = (List<Usuario>) request.getAttribute("usuarios");
-    List<Rol> roles = (List<Rol>) request.getAttribute("roles");
+    List<UsuarioDTO> usuarios = (List<UsuarioDTO>) request.getAttribute("usuarios");
+    List<RolDTO> roles = (List<RolDTO>) request.getAttribute("roles");
+    UsuarioDTO usuario = (UsuarioDTO) request.getAttribute("usuario");
+    UsuarioDTO adminLogged = (UsuarioDTO) session.getAttribute("user");
+    Integer selectedId = usuario != null ? usuario.getId() : 0;
+
+    String filtroNombre = (String) request.getAttribute("filtroNombre");
+    String filtroApellido = (String) request.getAttribute("filtroApellido");
+    String filtroRol = (String) request.getAttribute("filtroRol");
 %>
 <!doctype html>
 <html lang="en">
@@ -13,71 +22,83 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Usuarios</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style><%@ include file="../styles/common.css"%></style>
     <style><%@ include file="./admin.css"%></style>
+    <script>
+        function rellenarDatos(id) {
+            window.location.href = "/admin/users?id="+id;
+        }
+    </script>
 </head>
 <body>
 <header>
-    <img class="back-button ms-1 mt-1 " src="./assets/image.png" alt="">
+    <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back_button.png" alt="back" onclick="window.location.href = '/home'">
     <h1 class="header-text text-center">Usuarios</h1>
 </header>
 <div class="user-wrapper">
-    <table class="table-users table table-striped table-dark table-hover">
-        <thead>
+    <table class="table-users table caption-top text-center table-hover ">
+        <caption class="text-center text-white">Lista de usuarios</caption>
+        <thead class="table-dark">
         <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Apellidos</th>
-            <th scope="col">Rol</th>
+            <form method="post" action=/admin/user/filter>
+                <th scope="col"><button type="submit">🔍</button></th>
+                <th scope="col"><input value="<%=filtroNombre%>" name="nombre" type="text" placeholder="Nombre"></th>
+                <th scope="col"><input value="<%=filtroApellido%>" name="apellido" type="text" placeholder="Apellidos"></th>
+                <th scope="col"><input value="<%=filtroRol%>" name="rol" type="text" placeholder="Rol"></th>
+            </form>
         </tr>
         </thead>
         <tbody>
-        <% for(Usuario u : usuarios){ %>
-        <tr>
-            <td><%=u.getId()%></td>
-            <td><%=u.getNombre()%></td>
-            <td><%=u.getApellidos()%></td>
-            <td><%=u.getRol().getNombre()%></td>
-        </tr>
+        <% for(UsuarioDTO u : usuarios){ %>
+            <tr role="button" class="<%= usuario!=null && u.getId() == usuario.getId() ? "selected-row" : ""%>" onclick=rellenarDatos(<%=u.getId()%>)>
+                <td><%=u.getId()%></td>
+                <td><%=u.getNombre()%></td>
+                <td><%=u.getApellidos()%></td>
+                <td><%=u.getRol().getNombre()%></td>
+            </tr>
         <% } %>
         </tbody>
     </table>
-    <form class="user-form">
+    <form class="user-form" method="post" action="/admin/add-users">
+        <input name="Id" type="hidden" value=<%=usuario == null ? "0" : usuario.getId()%>>
         <table class="table table-borderless">
             <tbody>
             <tr>
-                <td>Nombre:<input type="text" placeholder="Nombre" value=David></td>
-                <td>Apellidos:<input type="text" placeholder="Apellidos" value=Garcia Sanchez></td>
-                <td>DNI:<input type="text" placeholder="DNI" value=25915268B></td>
-                <td>Rol: <select>
-                    <% for(Rol rol : roles){ %>
-                        <option value=<%=rol.getId()%>> <%=rol.getNombre()%> </option>
+                <td>Nombre:<input name="Nombre" type="text" placeholder="Nombre" value="<%=usuario == null ? "" : usuario.getNombre()%>"></td>
+                <td>Apellidos:<input name="Apellidos" type="text" placeholder="Apellidos" value="<%=usuario == null ? "" : usuario.getApellidos()%>"></td>
+                <td>DNI:<input name="DNI" type="text"  placeholder="DNI" value=<%=usuario == null ? "" : usuario.getDni()%>></td>
+                <td>Rol: <select name="Rol" <%= (selectedId == adminLogged.getId() ? "disabled" : "")%>>
+                    <% for(RolDTO rol : roles){ %>
+                        <option <%=usuario != null && usuario.getRol().getId() == rol.getId() ? "selected" : ""%> value=<%=rol.getId()%>> <%=rol.getNombre()%> </option>
                     <% } %>
                 </select></td>
             </tr>
             <tr>
-                <td>Sexo:<br> <select>
-                    <option value=1> Hombre </option>
-                    <option value=0> Mujer </option>
+                <td>Sexo:<br> <select name="Sexo">
+                    <option <%=usuario != null && usuario.getSexo() == 1 ? "selected" : ""%> value=1> Hombre </option>
+                    <option <%=usuario != null && usuario.getSexo() == 0 ? "selected" : ""%> value=0> Mujer </option>
                 </select></td>
-                <td>Edad:<input type="text" placeholder="Edad" value=19></td>
-                <td>Altura:<input type="text" placeholder="Altura" value=1.9></td>
-                <td>Peso:<input type="text" placeholder="Peso" value=87.0></td>
+                <td>Edad:<input name="Edad" type="number" placeholder="Edad" value=<%=usuario == null ? "" : usuario.getEdad()%>></td>
+                <td>Altura:<input name="Altura" type="number" placeholder="Altura" value=<%=usuario == null ? "" : usuario.getAltura()%>></td>
+                <td>Peso:<input name="Peso" type="number" placeholder="Peso" value=<%=usuario == null ? "" : usuario.getPeso()%>></td>
             </tr>
             <tr>
-                <td>Email:<input type="text" placeholder="Email" value=david@gmail.com></td>
-                <td>Contraseña:<input type="text" placeholder="Contraseña" value=david></td>
+                <td>Email:<input name="Email" type="text" placeholder="Email" value=<%=usuario == null ? "" : usuario.getCorreo()%>></td>
+                <td>Contraseña:<input name="Contrasenya" type="text" placeholder="Contraseña" value=<%=usuario == null ? "" : usuario.getContrasenya()%>></td>
             </tr>
             </tbody>
         </table>
-        <div class="form-buttons">
-            <button>Guardar</button>
-            <button onclick="">Borrar</button>
-            <button onclick=>Limpiar</button>
-        </div>
+        <button type="submit" class="btn btn-primary">Guardar</button>
     </form>
+    <div class="form-buttons">
+        <form method="post" action="/admin/delete-user">
+            <input name="Id" type="hidden" value=<%=usuario == null ? "0" : usuario.getId()%>>
+            <button <%= usuario != null && (usuario.getId() != adminLogged.getId()) ? "" : "disabled" %> type="submit" class="btn btn-primary user-delete-button">Eliminar</button>
+        </form>
+        <button type="submit" class="btn btn-primary user-clean-button" onclick="rellenarDatos(0)">Limpiar</button>
+    </div>
 </div>
 </body>
 </html>

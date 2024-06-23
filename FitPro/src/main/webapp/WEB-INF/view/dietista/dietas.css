@@ -10,6 +10,7 @@
     user-select: none;
     transition: 0.5s;
     transition-timing-function: ease;
+    align-content: center;
 }
 
 .dieta_table td{
@@ -17,6 +18,13 @@
     transition: 0.5s;
     transition-timing-function: ease;
     cursor:pointer;
+}
+
+td button{
+    z-index: 0 !important;
+}
+thead{
+    z-index: 5 !important;
 }
 
 .menus_table{

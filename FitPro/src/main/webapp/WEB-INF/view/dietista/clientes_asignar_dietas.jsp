@@ -67,10 +67,10 @@
 </head>
 <body>
 <header>
-    <a href="/dietista/clientes">
+    <a href="/dietista/clientes?clienteId=<%= cliente.getId() %>">
         <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back_button.png" alt="back">
     </a>
-    <h1 class="header-text text-center">Clientes</h1>
+    <h1 class="header-text text-center"><%= cliente.getId() %></h1>
 </header>
 
 <div class="container-fluid" >

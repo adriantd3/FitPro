@@ -65,7 +65,7 @@
 </head>
 <body>
 <header>
-    <a href="/dietista/">
+    <a href="/dietista">
         <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back_button.png" alt="back">
     </a>
     <h1 class="header-text text-center">Menús</h1>
@@ -141,7 +141,7 @@
                                             <caption class="text-center text-white">Comidas del Menú</caption>
                                             <thead class="header table-dark">
                                                 <tr>
-                                                    <th class="id"></th>
+                                                    <th class="menuId"></th>
                                                     <th class="nombre-comida">Nombre</th>
                                                     <th class="kcal">Kcal</th>
                                                     <th class="table-button"></th>
@@ -210,7 +210,7 @@
                                         <td><%= comidaIndex %></td>
                                         <td><%= comida.getNombre() %></td>
                                         <td><%= comida.getCalorias() %></td>
-                                        <td><button  class="btn btn-primary" onclick="addComida(<%= comida.getId() %>)" <%=menu==null?"disabled":""%>>+</button></td>
+                                        <td><button  class="btn btn-primary" onclick="addComida(<%= comida.getId() %>)" <%=menu==null? "disabled":menu.getComidas().size()>=5?"disabled":""%>>+</button></td>
                                     </tr>
                                     <%
                                         }

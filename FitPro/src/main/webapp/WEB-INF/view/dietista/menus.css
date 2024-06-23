@@ -10,6 +10,7 @@
     user-select: none;
     transition: 0.5s;
     transition-timing-function: ease;
+    align-content: center;
 }
 
 .menu_table td{
@@ -19,12 +20,20 @@
     cursor:pointer;
 }
 
-.id{
-    width: 20px;
+td button{
+    z-index: 0 !important;
+}
+thead{
+    z-index: 5 !important;
+}
+
+.menuId{
+    width: 40px !important;
+    max-width: 40px !important;
 }
 
 .nombre-menu{
-    width: 100px;
+    width: 160px;
 }
 
 .nombre-comida{

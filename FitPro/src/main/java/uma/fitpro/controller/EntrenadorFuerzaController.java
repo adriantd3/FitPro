@@ -8,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import uma.fitpro.dto.*;
 import uma.fitpro.service.*;
-import uma.fitpro.ui.FiltroEjercicio;
 import uma.fitpro.ui.FiltroRutina;
 import java.util.*;
 
@@ -289,6 +288,24 @@ public class EntrenadorFuerzaController {
         return "redirect:/entrenador_fuerza/rutina?rutina=" + rutina.getId();
     }
 
+    @GetMapping("/asignar-ejercicio")
+    public String doAsignarEjercicio(@ModelAttribute("sesion") Integer sesion_id, Model model, HttpSession session) {
+        if(checkUsuarioYRol(session)){
+            return "redirect:/salir";
+        }
+
+        SesionDTO sesion = sesionService.buscarSesion(sesion_id);
+        model.addAttribute("sesion", sesion);
+
+        List<EjercicioDTO> ejercicios = ejercicioService.getEjercicios();
+        model.addAttribute("ejercicios", ejercicios);
+
+        SerieDTO serie = new SerieDTO();
+        model.addAttribute("serie", serie);
+
+        return "/entrenador_fuerza/asignar-ejercicio";
+    }
+
     @GetMapping("editar-serie")
     public String doEditarSerie(@RequestParam("serie") Integer serie_id, Model model, HttpSession session) {
         if(checkUsuarioYRol(session)){
@@ -358,24 +375,6 @@ public class EntrenadorFuerzaController {
 
 
     // -------- LISTA DE EJERCICIOS ---------------
-    @GetMapping("/asignar-ejercicio")
-    public String doAsignarEjercicio(@ModelAttribute("sesion") Integer sesion_id, Model model, HttpSession session) {
-        if(checkUsuarioYRol(session)){
-            return "redirect:/salir";
-        }
-
-        SesionDTO sesion = sesionService.buscarSesion(sesion_id);
-        model.addAttribute("sesion", sesion);
-
-        List<EjercicioDTO> ejercicios = ejercicioService.getEjerciciosFuerza();
-        model.addAttribute("ejercicios", ejercicios);
-
-        FiltroEjercicio filtroEjercicio = new FiltroEjercicio();
-        model.addAttribute("filtroEjercicio", filtroEjercicio);
-
-        return "/entrenador_fuerza/asignar-ejercicio";
-    }
-
     @PostMapping("/guardar-ejercicio")
     public String doGuardarEjercicio(@RequestParam("ejercicio") Integer ejercicioId, @RequestParam("sesion") Integer sesionId,
                                      HttpSession session) {
@@ -389,26 +388,6 @@ public class EntrenadorFuerzaController {
         Integer serieId = serieService.crearSerie(ejercicioDTO, sesionDTO, "0", "0");
 
         return "redirect:/entrenador_fuerza/editar-serie?serie=" + serieId;
-    }
-
-    @PostMapping("/asignar-ejercicio/filtro")
-    public String doListaEjerciciosFiltrada(@RequestParam("sesion")Integer sesion_id,
-                                            @ModelAttribute("filtroEjercicio") FiltroEjercicio filtroEjercicio,
-                                            Model model,
-                                            HttpSession session){
-        if(checkUsuarioYRol(session)){
-            return "redirect:/salir";
-        }
-
-        SesionDTO sesion = sesionService.buscarSesion(sesion_id);
-        model.addAttribute("sesion", sesion);
-
-        List<EjercicioDTO> ejercicios = ejercicioService.getEjerciciosFuerzaFiltrados(filtroEjercicio.getNombre(), filtroEjercicio.getGrupoMuscular());
-        model.addAttribute("ejercicios", ejercicios);
-
-        model.addAttribute("filtroEjercicio", filtroEjercicio);
-
-        return "/entrenador_fuerza/asignar-ejercicio";
     }
 
     // --------- PAGINA DE EJERCICIO ---------------

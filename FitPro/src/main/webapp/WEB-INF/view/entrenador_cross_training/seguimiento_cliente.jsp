@@ -51,6 +51,15 @@
                     <th scope="col">#</th>
                     <th scope="col">Desempeño sesion</th>
                 </tr>
+                <% if (seguimientoRutina.get(o).isEmpty()) { %>
+                <tr>
+                    <th colspan="2">
+                        <section class="seccion-alerta">
+                            <section class="mensaje-alerta"><h5>No hay desempeños disponibles</h5></section>
+                        </section>
+                    </th>
+                </tr>
+                <% } %>
                 </thead>
                 <tbody>
                 <%

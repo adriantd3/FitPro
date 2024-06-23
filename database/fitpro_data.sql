@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `fitpro` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `fitpro`;
 -- MySQL dump 10.13  Distrib 8.0.34, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: fitpro
@@ -63,7 +61,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `desempenyo_serie` WRITE;
 /*!40000 ALTER TABLE `desempenyo_serie` DISABLE KEYS */;
-INSERT INTO `desempenyo_serie` VALUES (327,58,1,23,234),(328,58,2,3432,234),(329,59,1,50,10),(330,59,1,55,10),(331,59,1,60,12),(332,59,1,55,10),(335,60,1,50,10),(336,60,1,55,10),(340,61,3,60,20),(341,61,3,70,15),(342,61,3,70,15),(343,61,3,80,10),(344,61,3,80,10),(345,62,4,25,12),(346,62,4,30,10),(347,62,4,40,10);
+INSERT INTO `desempenyo_serie` VALUES (329,59,1,50,10),(330,59,1,55,10),(331,59,1,60,12),(332,59,1,55,10),(335,60,1,50,10),(336,60,1,55,10),(340,61,3,60,20),(341,61,3,70,15),(342,61,3,70,15),(343,61,3,80,10),(344,61,3,80,10),(345,62,4,25,12),(346,62,4,30,10),(347,62,4,40,10),(348,63,12,30,15),(349,63,12,60,30),(351,63,17,30,15),(353,63,17,15,20),(354,64,12,30,15),(355,64,12,60,30),(356,64,12,15,10),(359,64,17,15,20),(360,64,12,50,35),(361,65,7,4,30),(364,65,11,20,60),(365,66,7,4,30),(366,66,7,6,15),(367,66,11,10,30),(368,66,11,20,60),(369,66,7,8,60),(370,66,11,30,60),(371,67,3,60,20),(372,67,3,70,15),(373,67,3,70,15),(374,67,3,80,10),(376,67,7,0,0),(377,67,7,6,20),(378,67,7,4,15),(379,68,1,30,12),(380,68,1,35,10),(382,68,2,50,10),(383,68,2,50,10),(385,68,3,65,13),(386,68,3,70,10),(387,68,4,25,10),(388,68,4,30,10),(390,69,1,30,12),(393,69,2,50,10),(394,69,2,50,10),(395,69,3,60,15),(396,69,3,65,13),(401,69,1,70,2),(402,70,12,30,15),(403,70,12,60,30),(404,70,12,15,10),(405,70,17,30,15),(406,70,17,60,45),(407,70,17,15,20);
 /*!40000 ALTER TABLE `desempenyo_serie` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -73,7 +71,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `desempenyo_sesion` WRITE;
 /*!40000 ALTER TABLE `desempenyo_sesion` DISABLE KEYS */;
-INSERT INTO `desempenyo_sesion` VALUES (58,10,4,'2024-06-23',1),(59,12,5,'2024-06-23',1),(60,12,5,'2024-06-23',0),(61,12,7,'2024-06-23',1),(62,12,8,'2024-06-23',1);
+INSERT INTO `desempenyo_sesion` VALUES (59,12,5,'2024-06-23',1),(60,12,5,'2024-06-23',0),(61,12,7,'2024-06-23',1),(62,12,8,'2024-06-23',1),(63,11,13,'2024-06-23',1),(64,11,13,'2024-06-23',1),(65,11,10,'2024-06-23',1),(66,11,10,'2024-06-23',1),(67,11,7,'2024-06-23',1),(68,11,9,'2024-06-23',1),(69,11,9,'2024-06-23',1),(70,11,13,'2024-06-23',0);
 /*!40000 ALTER TABLE `desempenyo_sesion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -123,7 +121,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `entrenador_cliente` WRITE;
 /*!40000 ALTER TABLE `entrenador_cliente` DISABLE KEYS */;
-INSERT INTO `entrenador_cliente` VALUES (3,10),(3,12),(4,12);
+INSERT INTO `entrenador_cliente` VALUES (3,10),(4,11),(3,12);
 /*!40000 ALTER TABLE `entrenador_cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -163,7 +161,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `orden_sesion_rutina` WRITE;
 /*!40000 ALTER TABLE `orden_sesion_rutina` DISABLE KEYS */;
-INSERT INTO `orden_sesion_rutina` VALUES (5,8,1),(7,8,3),(7,9,5),(8,8,5),(9,9,1);
+INSERT INTO `orden_sesion_rutina` VALUES (5,8,1),(5,12,1),(6,12,3),(7,8,3),(7,9,5),(7,13,1),(8,8,5),(8,12,5),(9,9,1),(9,13,5),(10,10,4),(10,12,7),(10,13,3),(11,11,2),(12,11,4),(13,10,2),(13,13,7);
 /*!40000 ALTER TABLE `orden_sesion_rutina` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -183,7 +181,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `rutina` WRITE;
 /*!40000 ALTER TABLE `rutina` DISABLE KEYS */;
-INSERT INTO `rutina` VALUES (4,4,'Rutina 1','2024-05-29'),(5,4,'Rutina 2','2024-05-29'),(6,4,'Rutina 3','2024-05-29'),(7,4,'Rutina 4','2024-05-29'),(8,3,'Rutina Mikel','2024-06-23'),(9,3,'Rutina PepeGomex','2024-06-23');
+INSERT INTO `rutina` VALUES (8,3,'Rutina Mikel','2024-06-23'),(9,3,'Rutina PepeGomex','2024-06-23'),(10,4,'Cardio + Potencia','2024-06-23'),(11,4,'Equilibrio + Movilidad','2024-06-23'),(12,4,'Fuerza + Cardio','2024-06-23'),(13,4,'Rutina mixta','2024-06-23');
 /*!40000 ALTER TABLE `rutina` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -193,7 +191,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `rutina_cliente` WRITE;
 /*!40000 ALTER TABLE `rutina_cliente` DISABLE KEYS */;
-INSERT INTO `rutina_cliente` VALUES (9,10),(8,12);
+INSERT INTO `rutina_cliente` VALUES (9,10),(10,11),(13,11),(8,12);
 /*!40000 ALTER TABLE `rutina_cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -203,7 +201,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `serie` WRITE;
 /*!40000 ALTER TABLE `serie` DISABLE KEYS */;
-INSERT INTO `serie` VALUES (13,4,1,2,2),(14,4,2,4,4),(15,5,1,50,10),(16,5,1,55,10),(17,5,1,55,9),(18,5,1,60,8),(19,5,1,65,7),(20,6,2,50,10),(21,6,2,50,10),(22,6,2,55,10),(23,6,2,55,10),(24,6,2,60,10),(25,7,3,60,20),(26,7,3,70,15),(27,7,3,70,15),(28,7,3,80,10),(29,7,3,80,10),(30,8,4,25,12),(31,8,4,30,10),(32,8,4,40,10),(33,8,4,45,8),(34,8,4,45,8),(35,9,1,30,12),(36,9,1,35,10),(37,9,1,40,10),(38,9,2,50,10),(39,9,2,50,10),(40,9,3,60,15),(41,9,3,65,13),(42,9,3,70,10),(43,9,4,25,10),(44,9,4,30,10),(45,9,4,40,8),(46,7,7,0,0);
+INSERT INTO `serie` VALUES (15,5,1,50,10),(16,5,1,55,10),(17,5,1,55,9),(18,5,1,60,8),(19,5,1,65,7),(20,6,2,50,10),(21,6,2,50,10),(22,6,2,55,10),(23,6,2,55,10),(24,6,2,60,10),(25,7,3,60,20),(26,7,3,70,15),(27,7,3,70,15),(28,7,3,80,10),(29,7,3,80,10),(30,8,4,25,12),(31,8,4,30,10),(32,8,4,40,10),(33,8,4,45,8),(34,8,4,45,8),(35,9,1,30,12),(36,9,1,35,10),(37,9,1,40,10),(38,9,2,50,10),(39,9,2,50,10),(40,9,3,60,15),(41,9,3,65,13),(42,9,3,70,10),(43,9,4,25,10),(44,9,4,30,10),(45,9,4,40,8),(46,7,7,0,0),(47,10,7,4,30),(48,10,7,6,15),(49,10,11,10,30),(50,10,11,20,60),(52,11,15,10,15),(53,11,15,20,30),(54,11,15,30,60),(55,12,16,15,10),(56,12,16,20,20),(57,12,16,30,60),(58,12,8,10,15),(59,12,8,20,20),(60,12,8,30,45),(62,13,12,30,15),(63,13,12,60,30),(64,13,12,15,10),(65,13,17,30,15),(66,13,17,60,45),(67,13,17,15,20);
 /*!40000 ALTER TABLE `serie` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -213,7 +211,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `sesion` WRITE;
 /*!40000 ALTER TABLE `sesion` DISABLE KEYS */;
-INSERT INTO `sesion` VALUES (4,'Sesion de prueba'),(5,'Pecho'),(6,'Espalda'),(7,'Pierna'),(8,'Brazo'),(9,'FullBody');
+INSERT INTO `sesion` VALUES (5,'Pecho'),(6,'Espalda'),(7,'Pierna'),(8,'Brazo'),(9,'FullBody'),(10,'Cardio'),(11,'Equilibrio'),(12,'Movilidad'),(13,'Potencia');
 /*!40000 ALTER TABLE `sesion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -233,9 +231,13 @@ UNLOCK TABLES;
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (2,'25915268B',1,'David','Garcia Sanchez',1,19,1.9,87,'david','david@gmail.com'),(3,'75249108B',2,'Alvaro','Pérez Navarro',1,20,1.67,70,'alvaro','alvaro@gmail.com'),(4,'34345612H',3,'María','Cruz Martínez',0,18,1.54,60,'maria','maria@gmail.com'),(5,'68193415I',4,'Irene','Iglesias Gutierrez',0,24,1.5,54,'irene','irene@gmail.com'),(10,'123',5,'Pepe','Gomex',1,12,12,123,'pepe','pepe@gmail.com'),(11,'123',5,'Pepa','Gomex',0,12,12,123,'pepa','pepa@gmail.com'),(12,'12345678A',5,'Mikel','Arias',1,20,1.7,80,'kirito','mikel@gmail.com');
+INSERT INTO `usuario` VALUES (2,'25915268B',1,'David','Garcia Sanchez',1,19,1.9,87,'david','david@gmail.com'),(3,'75249108B',2,'Alvaro','Pérez Navarro',1,20,1.67,70,'alvaro','alvaro@gmail.com'),(4,'34345612H',3,'María','Cruz Martínez',0,18,1.54,60,'maria','maria@gmail.com'),(5,'68193415I',4,'Irene','Iglesias Gutierrez',0,24,1.5,54,'irene','irene@gmail.com'),(10,'123',5,'Pepe','Gomex',1,35,1.8,90,'pepe','pepe@gmail.com'),(11,'123',5,'Pepa','Gomex',0,30,1.6,60,'pepa','pepa@gmail.com'),(12,'12345678A',5,'Mikel','Arias',1,20,1.7,80,'kirito','mikel@gmail.com');
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Dumping events for database 'fitpro'
+--
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -246,4 +248,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-06-23 20:17:10
+-- Dump completed on 2024-06-23 23:21:27

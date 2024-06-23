@@ -49,7 +49,11 @@ th {
     grid-template-columns: repeat(2, auto);
     margin: 40px;
     gap: 50px;
+}
 
+.seguimiento-sesion-container {
+    display: flex;
+    flex-direction: column;
 }
 
 .sesion-buttons {
@@ -136,6 +140,13 @@ th {
 h1{
     color: white;
     text-align: center;
+}
+
+.h3-seguimiento-sesion {
+    color: sandybrown;
+    text-align: center;
+    background-color: #343434;
+    border-radius: 5px;
 }
 
 h6 {

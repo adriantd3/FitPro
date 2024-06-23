@@ -1,3 +1,4 @@
+<%// AUTOR: Ezequiel Sánchez García (100%)%>
 <%@ page import="uma.fitpro.dto.UsuarioDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
@@ -15,6 +16,7 @@
     <style><%@include file="css/common.css"%></style>
 </head>
 <body>
+<header>
     <%
         String bienvenida = "";
         if (user.isSexo()){
@@ -23,7 +25,11 @@
             bienvenida = "Bienvenida, ";
         }
     %>
-    <h1><%= bienvenida + user.getNombre()%></h1>
+    <a href="/salir">
+        <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back.png" alt="" onclick="">
+    </a>
+    <h1 class="header-text text-center"><%= bienvenida + user.getNombre()%></h1>
+</header>
     <section class="button-container">
         <button type="button" class="btn btn-secondary" name="clientes" onclick="window.location.href='/entrenador_cross_training/clientes'">Clientes</button><br/><br/>
         <button type="button" class="btn btn-secondary" name="rutinas" onclick="window.location.href='/entrenador_cross_training/rutinas'">Rutinas</button><br/><br/>

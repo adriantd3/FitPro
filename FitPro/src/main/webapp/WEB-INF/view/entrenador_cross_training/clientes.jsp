@@ -1,3 +1,4 @@
+<%// AUTOR: Ezequiel Sánchez García (100%)%>
 <%@ page import="java.util.List" %>
 <%@ page import="uma.fitpro.dto.UsuarioDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -28,17 +29,12 @@
 </head>
 <body>
 <header>
-    <a href="/entrenador_cross_training/">
+    <a href="/entrenador_cross_training">
         <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back.png" alt="" onclick="">
     </a>
     <h1 class="header-text text-center">Clientes</h1>
 </header>
 <section class="scrollable-section">
-    <% if (clientes.isEmpty()) { %>
-    <section class="table-container">
-        <section class="mensaje-alerta"><h2>No tienes ningún cliente asociado</h2></section>
-    </section>
-    <% }else { %>
     <section class="table-container">
         <table class="table table-striped table-dark table-width">
             <thead>
@@ -71,7 +67,11 @@
                 <td><%= u.getEdad()%></td>
                 <td><%= u.getAltura() + " m"%></td>
                 <td><%= u.getPeso() + " kg"%></td>
-                <td><button class="btn btn-secondary" name="rutinas_cliente" onclick="window.location.href='/entrenador_cross_training/rutinas_cliente?id=<%= u.getId()%>'">Rutinas</button></td>
+                <td>
+                    <button name="rutinas_cliente" class="btn btn-secondary button-image" onclick="window.location.href='/entrenador_cross_training/rutinas_cliente?id=<%= u.getId()%>'">
+                        <img class="image-button" src="${pageContext.request.contextPath}/assets/rutinas.svg">
+                    </button>
+                </td>
             </tr>
             <%
                     num++;
@@ -80,6 +80,10 @@
 
             </tbody>
         </table>
+    </section>
+    <% if (clientes.isEmpty()) { %>
+    <section class="seccion-alerta">
+        <section class="mensaje-alerta"><h2>No hay ningún cliente disponible</h2></section>
     </section>
     <% } %>
 </section>

@@ -1,3 +1,4 @@
+<%// AUTOR: Ezequiel Sánchez García (100%)%>
 <%@ page import="java.util.List" %>
 <%@ page import="uma.fitpro.dto.SesionDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -19,7 +20,7 @@
 </head>
 <body>
 <header>
-    <a href="/entrenador_cross_training/">
+    <a href="/entrenador_cross_training">
         <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back.png" alt="" onclick="">
     </a>
     <h1 class="header-text text-center">Sesiones</h1>
@@ -79,9 +80,8 @@
 </section>
 
 <div class="sesion-buttons">
-    <button class="btn btn-success" onclick="window.location.href='/entrenador_cross_training/'">Guardar</button>
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#nuevaSesion">
-        Añadir sesion
+        Añadir sesión
     </button>
 </div>
 

@@ -1,3 +1,4 @@
+<%// AUTOR: Ezequiel Sánchez García (100%)%>
 <%@ page import="java.util.List" %>
 <%@ page import="uma.fitpro.entity.Usuario" %>
 <%@ page import="uma.fitpro.dto.RutinaDTO" %>
@@ -80,7 +81,6 @@
 </section>
 
 <div class="sesion-buttons">
-    <button class="btn btn-success" onclick="window.location.href='/entrenador_cross_training/clientes'">Guardar</button>
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#asignarRutina">
         Añadir rutina
     </button>
@@ -96,7 +96,7 @@
             <div class="modal-body">
                 <form method="post" action="/entrenador_cross_training/asignar_rutina_cliente">
                     <%
-                        String color = "secondary";
+                        String color = "light";
                         if (todasLasRutinas.size() == 0) {
                             color = "warning";
                         }
@@ -114,7 +114,7 @@
                         <%
                             for (RutinaDTO r : todasLasRutinas){
                         %>
-                        <option value="<%=r.getId()%>"><%=r.getNombre()%></option>
+                        <option value="<%=r.getId()%>"><%=r.getNombre()%> - <%=r.getFechaCreacion()%></option>
                         <%
                             }
                         %>

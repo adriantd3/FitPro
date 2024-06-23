@@ -1,3 +1,4 @@
+<%// AUTOR: Ezequiel Sánchez García (100%)%>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="uma.fitpro.dto.SesionDTO" %>
@@ -33,7 +34,7 @@
     %>
     <div  style="width: 300px; margin-left: 40px" class="input-group mb-3">
         <span class="input-group-text btn btn-success"><%=elemento%></span>
-        <input type="text" name="param<%=n%>" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="<%=n == 1 ? value1: value2%>">
+        <input type="number" step="0.1" required name="param<%=n%>" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="<%=n == 1 ? value1: value2%>">
     </div>
     <%
             n++;

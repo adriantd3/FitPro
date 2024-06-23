@@ -1,11 +1,15 @@
+<%// AUTOR: Ezequiel Sánchez García (100%)%>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.HashMap" %>
 <%@ page import="uma.fitpro.dto.*" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     HashMap<OrdenSesionRutinaDTO,List<DesempenyoSesionDTO>> seguimientoRutina = (HashMap<OrdenSesionRutinaDTO, List<DesempenyoSesionDTO>>) request.getAttribute("seguimientoRutina");
     UsuarioDTO cliente = (UsuarioDTO) request.getAttribute("cliente");
     RutinaDTO rutina = (RutinaDTO) request.getAttribute("rutina");
+    Map<Integer,String> diasSemana = (Map<Integer, String>) request.getAttribute("diasSemana");
 %>
 <!doctype html>
 <html lang="en">
@@ -25,7 +29,7 @@
     </a>
     <h1 class="header-text text-center">Seguimiento de <%=cliente.getNombre()%> - <%=rutina.getNombre()%></h1>
 </header>
-<section class="scrollable-section">
+<section class="scrollable-section" style="height: 650px">
     <% if (seguimientoRutina.keySet().isEmpty()) { %>
     <section class="table-container">
         <section class="mensaje-alerta"><h2>No hay sesiones que seguir en esta rutina</h2></section>
@@ -34,8 +38,10 @@
     <section class="sesion-table-container scrollable-content">
         <%
             String nombre_sesion = "";
-            for (OrdenSesionRutinaDTO o : seguimientoRutina.keySet()){
-                nombre_sesion = o.getNombreSesion();
+            List<OrdenSesionRutinaDTO> sesiones = new ArrayList<OrdenSesionRutinaDTO>(seguimientoRutina.keySet());
+            sesiones.sort((o1, o2) -> o1.getId().compareTo(o2.getId()));
+            for (OrdenSesionRutinaDTO o : sesiones){
+                nombre_sesion = o.getNombreSesion() + " - " + diasSemana.get(o.getId());
         %>
         <div>
             <table name="tabla_ejercicio" style="width: 700px" class="table table-striped table-dark">
@@ -54,7 +60,7 @@
                 <tr>
                     <th scope="row"><%= cont %></th>
                     <td>
-                        <button class="btn btn-secondary" onclick="window.location.href='/entrenador_cross_training/seguimiento_sesion?desempenyo_sesion=<%=d.getId()%>'"><%=d.getNombreSesion()%> - <%=d.getFecha()%> - <%=d.isTerminado() ? "Finalizado" : "Sin finalizar"%></button>
+                        <button class="btn btn-secondary" onclick="window.location.href='/entrenador_cross_training/seguimiento_sesion?desempenyo_sesion=<%=d.getId()%>'"><%=d.getFecha()%> - <%=d.isTerminado() ? "Finalizado" : "Sin finalizar"%></button>
                     </td>
 
                 </tr>

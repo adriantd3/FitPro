@@ -23,6 +23,7 @@ public class UsuarioService extends DTOService{
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
     @Autowired
     private RutinaRepository rutinaRepository;
     @Autowired

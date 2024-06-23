@@ -35,8 +35,7 @@ public class RutinaService extends DTOService{
     private SesionRepository sesionRepository;
 
     public List<RutinaDTO> getRutinasEntrenador(UsuarioDTO entrenadorDTO) {
-        Usuario entrenador = this.usuarioRepository.findById(entrenadorDTO.getId()).orElse(null);
-        List<Rutina> rutinas = rutinaRepository.getRutinasByEntrenador(entrenador.getId());
+        List<Rutina> rutinas = rutinaRepository.getRutinasByEntrenador(entrenadorDTO.getId());
         rutinas.sort((r1, r2) -> r1.getNombre().compareTo(r2.getNombre()));
         return this.entidadesADTO(rutinas);
     }
@@ -71,22 +70,20 @@ public class RutinaService extends DTOService{
     }
 
     public List<RutinaDTO> getRestantesRutinasByEntrenador(UsuarioDTO entrenadorDTO, List<RutinaDTO> rutinas){
-        Usuario entrenador = this.usuarioRepository.findById(entrenadorDTO.getId()).orElse(null);
         List<Integer> rutinasIds = new ArrayList<>();
         for (RutinaDTO rutinaDTO : rutinas) {
             rutinasIds.add(rutinaDTO.getId());
         }
         List<Rutina> todasLasRutinas;
         if (rutinas.isEmpty()){
-            todasLasRutinas = rutinaRepository.getRutinasByEntrenador(entrenador.getId());
+            todasLasRutinas = rutinaRepository.getRutinasByEntrenador(entrenadorDTO.getId());
         }else {
-            todasLasRutinas = rutinaRepository.getRestantesRutinasByEntrenador(entrenador.getId(),rutinasIds);
+            todasLasRutinas = rutinaRepository.getRestantesRutinasByEntrenador(entrenadorDTO.getId(), rutinasIds);
         }
         return this.entidadesADTO(todasLasRutinas);
     }
 
     public List<RutinaDTO> filtrarRutinas(Integer id_entrenador, String nombre, String fecha) {
-
         LocalDate fechaFiltrada = getFecha(fecha);
         List<Rutina> rutinas = rutinaRepository.getFilteredRutinasByEntrenadorAndFecha(id_entrenador, nombre, fechaFiltrada);
         rutinas.sort((r1, r2) -> r1.getNombre().compareTo(r2.getNombre()));
@@ -170,6 +167,5 @@ public class RutinaService extends DTOService{
             return null;
         }
     }
-
 
 }

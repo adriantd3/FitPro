@@ -1,3 +1,4 @@
+<%// AUTOR: Ezequiel Sánchez García (100%)%>
 <%@ page import="java.util.List" %>
 <%@ page import="uma.fitpro.dto.RutinaDTO" %>
 <%@ page import="uma.fitpro.dto.UsuarioDTO" %>
@@ -25,7 +26,7 @@
 </head>
 <body>
 <header>
-    <a href="/entrenador_cross_training/">
+    <a href="/entrenador_cross_training">
         <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back.png" alt="" onclick="">
     </a>
     <h1 class="header-text text-center"><%= cliente!= null ? "Rutinas de " + cliente.getNombre() : "Rutinas"%></h1>
@@ -88,7 +89,6 @@
 </section>
 
 <div class="sesion-buttons">
-    <button class="btn btn-success" onclick="window.location.href='/entrenador_cross_training/'">Guardar</button>
     <button type="button" name="anyadir_rutina" class="btn btn-primary" data-toggle="modal" data-target="#nuevaRutina">
         Añadir rutina
     </button>

@@ -15,6 +15,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * @author David Bueno Carmona
+ */
+
 @Controller
 @RequestMapping(value ="/admin", method = RequestMethod.POST)
 public class AdminController {

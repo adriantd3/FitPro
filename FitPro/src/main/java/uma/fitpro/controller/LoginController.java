@@ -10,6 +10,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import uma.fitpro.dto.UsuarioDTO;
 import uma.fitpro.service.UsuarioService;
 
+/**
+ * @author David Bueno Carmona
+ */
+
 @Controller
 public class LoginController {
 

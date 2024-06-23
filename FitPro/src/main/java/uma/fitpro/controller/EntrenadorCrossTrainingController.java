@@ -16,6 +16,10 @@ import java.util.*;
 
 import static uma.fitpro.utils.UtilityFunctions.getDiasSemana;
 
+/**
+ * @author Ezequiel Sánchez García
+ */
+
 @RequestMapping("/entrenador_cross_training")
 @Controller
 public class EntrenadorCrossTrainingController {

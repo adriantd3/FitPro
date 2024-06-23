@@ -25,9 +25,6 @@
     FiltroDieta filtroDieta = (FiltroDieta) request.getAttribute("filtroDieta");
     FiltroMenu filtroMenu = (FiltroMenu) request.getAttribute("filtroMenu");
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/uuuu");
-    //for(OrdenMenuDietaDTO m : menusDieta) {
-    //    menus.remove(m.getMenu());
-    //}
 %>
 
 <html>

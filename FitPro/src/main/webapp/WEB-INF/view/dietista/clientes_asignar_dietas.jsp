@@ -84,6 +84,7 @@
                     <thead class="table-dark">
                     <form:form id="filtroClientes" method="get" action="/dietista/filtrarClientes" modelAttribute="filtroCliente">
                         <form:hidden path="sourcePage" value="clientes_asignar_dietas"/>
+                        <form:input type="hidden" path="clienteId" value="<%=cliente!=null? cliente.getId() : 0%>"/>
                         <tr>
                             <th class="id"><button class="btn btn-dark" onclick="filtrarClientes">🔍</button></th>
                             <th class="nombre-cliente"><form:input path="nombre" class="form-control" data-bs-theme="dark" placeholder="Nombre"/></th>

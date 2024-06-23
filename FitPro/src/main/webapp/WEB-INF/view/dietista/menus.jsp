@@ -22,7 +22,7 @@
     List<ComidaDTO> comidasMenu = (List<ComidaDTO>) request.getAttribute("comidasMenu");
     List<ComidaDTO> comidas = (List<ComidaDTO>) request.getAttribute("comidas");
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/uuuu");
-    //comidas.removeAll(comidasMenu);
+    comidas.removeAll(comidasMenu);
 %>
 
 <html>

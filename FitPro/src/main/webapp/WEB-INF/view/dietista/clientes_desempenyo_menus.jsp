@@ -62,7 +62,7 @@
 </head>
 <body>
 <header>
-    <a href="/dietista/clientes?clienteId=" + <%= cliente.getId() %>>
+    <a href="/dietista/clientes?clienteId=<%= cliente.getId() %>">
         <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back_button.png" alt="back">
     </a>
     <h1 class="header-text text-center">Clientes</h1>
@@ -77,6 +77,7 @@
                     <thead class="table-dark">
                     <form:form id="filtroClientes" method="get" action="/dietista/filtrarClientes" modelAttribute="filtroCliente">
                         <form:hidden path="sourcePage" value="clientes_desempenyo_menus"/>
+                        <form:input type="hidden" path="clienteId" value="<%=cliente!=null? cliente.getId() : 0%>"/>
                         <tr>
                             <th class="id"><button class="btn btn-dark" onclick="filtrarClientes">🔍</button></th>
                             <th class="nombre-cliente"><form:input path="nombre" class="form-control" data-bs-theme="dark" placeholder="Nombre"/></th>

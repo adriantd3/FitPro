@@ -4,6 +4,7 @@ public class FiltroCliente {
     private String nombre;
     private String apellidos;
     private String sourcePage;
+    private int clienteId;
 
     public String getSourcePage() {
         return sourcePage;
@@ -31,5 +32,13 @@ public class FiltroCliente {
 
     public boolean estaVacio() {
         return nombre.isEmpty() && apellidos.isEmpty();
+    }
+
+    public int getClienteId() {
+        return clienteId;
+    }
+
+    public void setClienteId(int clienteId) {
+        this.clienteId = clienteId;
     }
 }

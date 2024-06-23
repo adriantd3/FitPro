@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `fitpro` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `fitpro`;
 -- MySQL dump 10.13  Distrib 8.0.34, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: fitpro
@@ -33,7 +31,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `comida_menu` WRITE;
 /*!40000 ALTER TABLE `comida_menu` DISABLE KEYS */;
-INSERT INTO `comida_menu` VALUES (1,1),(2,1),(3,1),(4,1),(5,2),(6,2),(7,2),(8,2);
+INSERT INTO `comida_menu` VALUES (1,1),(2,1),(3,1),(4,1),(2,2),(6,2),(7,2),(8,2),(15,2),(1,3),(3,3),(4,3),(6,3),(7,3),(4,4),(5,4),(6,4),(7,4);
 /*!40000 ALTER TABLE `comida_menu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -81,7 +79,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `dieta` WRITE;
 /*!40000 ALTER TABLE `dieta` DISABLE KEYS */;
-INSERT INTO `dieta` VALUES (1,5,'Dieta1','2024-04-10'),(2,5,'Dieta2','2024-04-10'),(3,5,'Dieta3','2024-04-11');
+INSERT INTO `dieta` VALUES (1,5,'Dieta1','2024-04-10'),(2,5,'Dieta2','2024-04-10'),(3,5,'Dieta3','2024-04-11'),(4,5,'DietaEspecial','2024-06-23');
 /*!40000 ALTER TABLE `dieta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -91,6 +89,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `dieta_cliente` WRITE;
 /*!40000 ALTER TABLE `dieta_cliente` DISABLE KEYS */;
+INSERT INTO `dieta_cliente` VALUES (1,10),(3,10),(3,12),(4,12);
 /*!40000 ALTER TABLE `dieta_cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -100,7 +99,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `dietista_cliente` WRITE;
 /*!40000 ALTER TABLE `dietista_cliente` DISABLE KEYS */;
-INSERT INTO `dietista_cliente` VALUES (5,12);
+INSERT INTO `dietista_cliente` VALUES (5,10),(5,12);
 /*!40000 ALTER TABLE `dietista_cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -140,7 +139,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `menu` WRITE;
 /*!40000 ALTER TABLE `menu` DISABLE KEYS */;
-INSERT INTO `menu` VALUES (1,'Menu1',1000,'2024-04-11'),(2,'Menu2',1500,'2024-04-12'),(3,'Menu3',1000,'2024-04-01');
+INSERT INTO `menu` VALUES (1,'Menu1',1200,'2024-04-11'),(2,'Menu2',2900,'2024-04-12'),(3,'Menu3',1900,'2024-04-01'),(4,'MenuEspecial',1700,'2024-06-23');
 /*!40000 ALTER TABLE `menu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -150,7 +149,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `orden_menu_dieta` WRITE;
 /*!40000 ALTER TABLE `orden_menu_dieta` DISABLE KEYS */;
-INSERT INTO `orden_menu_dieta` VALUES (1,1,1),(1,2,2),(2,2,1),(1,3,3),(2,3,2);
+INSERT INTO `orden_menu_dieta` VALUES (1,1,1),(2,1,3),(2,1,4),(3,1,5),(4,1,2),(1,2,2),(2,2,1),(1,3,3),(1,3,4),(2,3,2),(2,3,5),(3,3,7),(4,3,1),(4,3,6),(4,4,1),(4,4,3),(4,4,5);
 /*!40000 ALTER TABLE `orden_menu_dieta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -243,4 +242,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-06-23 15:51:26
+-- Dump completed on 2024-06-23 16:42:50

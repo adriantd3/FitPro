@@ -370,11 +370,12 @@ public class DietistaController {
             }
         } else {
             UsuarioDTO dietista = (UsuarioDTO) session.getAttribute("user");
+            UsuarioDTO cliente = (UsuarioDTO) this.usuarioService.findById(filtroCliente.getClienteId());
             List<UsuarioDTO> clientes = this.usuarioService.filtrarClientesDietista(dietista, filtroCliente);
             List<DietaDTO> dietas = this.dietaService.findAll();
 
             model.addAttribute("clientes", clientes);
-            model.addAttribute("cliente", null);
+            model.addAttribute("cliente", cliente);
             model.addAttribute("dietas", dietas);
             model.addAttribute("dietasCliente", new ArrayList<>());
             model.addAttribute("dieta", null);

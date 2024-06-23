@@ -2,6 +2,11 @@
 <%@ page import="uma.fitpro.dto.RutinaDTO" %>
 <%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    /**
+     * @Author Adrian Torremocha Doblas - 100%
+     */
+%>
 <!doctype html>
 
 <%

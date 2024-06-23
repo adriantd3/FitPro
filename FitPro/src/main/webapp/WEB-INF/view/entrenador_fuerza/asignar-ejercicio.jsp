@@ -3,6 +3,11 @@
 <%@ page import="uma.fitpro.dto.EjercicioDTO" %>
 <%@ page import="uma.fitpro.dto.SesionDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    /**
+     * @Author Victor Perez Armenta - 100%
+     */
+%>
 
 <%
     SesionDTO sesion = (SesionDTO) request.getAttribute("sesion");

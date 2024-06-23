@@ -3,6 +3,11 @@
 <%@ page import="uma.fitpro.dto.*" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
+    /**
+     * @Author Adrian Torremocha Doblas - 100%
+     */
+%>
+<%
     DesempenyoComidaDTO desComida = (DesempenyoComidaDTO) request.getAttribute("des_comida");
 %>
 <html>

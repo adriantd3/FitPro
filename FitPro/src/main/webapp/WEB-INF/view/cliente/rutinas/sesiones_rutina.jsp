@@ -3,6 +3,11 @@
 <%@ page import="uma.fitpro.dto.RutinaDTO" %>
 <%@ page import="uma.fitpro.dto.OrdenSesionRutinaDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    /**
+     * @Author Adrian Torremocha Doblas - 100%
+     */
+%>
 <!doctype html>
 <%
     RutinaDTO rutina = (RutinaDTO) request.getAttribute("rutina");

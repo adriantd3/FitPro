@@ -6,6 +6,11 @@
 <%@ page import="uma.fitpro.utils.UtilityFunctions" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
+    /**
+     * @Author Adrian Torremocha Doblas - 100%
+     */
+%>
+<%
     DesempenyoSerieDTO desSerie = (DesempenyoSerieDTO) request.getAttribute("desSerie");
     Integer tipo = (Integer) request.getAttribute("tipo_ejercicio");
 

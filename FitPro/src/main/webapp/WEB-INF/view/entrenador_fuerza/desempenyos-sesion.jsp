@@ -7,6 +7,11 @@
 <%@ page import="uma.fitpro.dto.DesempenyoSerieDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
+    /**
+     * @Author Victor Perez Armenta - 100%
+     */
+%>
+<%
     DesempenyoSesionDTO desempenyoSesion = (DesempenyoSesionDTO) request.getAttribute("desempenyoSesion");
     Map<EjercicioDTO, List<DesempenyoSerieDTO>> tablas = (Map<EjercicioDTO, List<DesempenyoSerieDTO>>) request.getAttribute("tablas");
     Map<EjercicioDTO, List<SerieDTO>> tablasEsperadas = (Map<EjercicioDTO, List<SerieDTO>>) request.getAttribute("tablasEsperadas");

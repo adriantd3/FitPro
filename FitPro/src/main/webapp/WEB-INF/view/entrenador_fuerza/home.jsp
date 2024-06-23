@@ -1,6 +1,9 @@
 <%@ page import="uma.fitpro.dto.UsuarioDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
+    /**
+     * @Author Victor Perez Armenta - 100%
+     */
     UsuarioDTO usuario = (UsuarioDTO) session.getAttribute("user");
 %>
 <html>

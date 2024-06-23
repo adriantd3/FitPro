@@ -6,6 +6,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%
+    /**
+     * @Author Adrian Torremocha Doblas - 100%
+     */
+%>
+<%
     DesempenyoMenuDTO desempenyoMenu = (DesempenyoMenuDTO) request.getAttribute("desempenyo_menu");
     List<DesempenyoComidaDTO> des_comidas = (List<DesempenyoComidaDTO>) request.getAttribute("des_comidas");
 

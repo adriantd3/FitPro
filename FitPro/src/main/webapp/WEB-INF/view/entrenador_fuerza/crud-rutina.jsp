@@ -1,9 +1,13 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ page import="uma.fitpro.entity.Rutina" %>
 <%@ page import="java.util.List" %>
 <%@ page import="uma.fitpro.dto.RutinaDTO" %>
 <%@ page import="uma.fitpro.dto.UsuarioDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    /**
+     * @Author Victor Perez Armenta - 100%
+     */
+%>
 <%
     List<RutinaDTO> rutinas = (List<RutinaDTO>) request.getAttribute("rutinas");
     List<RutinaDTO> rutinasPrincipales;

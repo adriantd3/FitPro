@@ -6,6 +6,11 @@
 <%@ page import="uma.fitpro.dto.SerieDTO" %>
 <%@ page import="uma.fitpro.dto.EjercicioDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    /**
+     * @Author Victor Perez Armenta - 100%
+     */
+%>
 
 <%
     RutinaDTO rutina = (RutinaDTO) session.getAttribute("rutina");

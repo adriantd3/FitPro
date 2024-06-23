@@ -4,6 +4,11 @@
 <%@ page import="uma.fitpro.dto.SesionDTO" %>
 <%@ page import="java.time.format.DateTimeFormatter" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    /**
+     * @Author Adrian Torremocha Doblas - 100%
+     */
+%>
 <!doctype html>
 <%
     List<DesempenyoSesionDTO> desempenyoSesions = (List<DesempenyoSesionDTO>) request.getAttribute("desempenyos");

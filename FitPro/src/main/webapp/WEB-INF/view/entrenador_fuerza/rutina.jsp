@@ -1,4 +1,3 @@
-<%@ page import="uma.fitpro.entity.Sesion" %>
 <%@ page import="java.util.List" %>
 <%@ page import="uma.fitpro.dto.RutinaDTO" %>
 <%@ page import="uma.fitpro.dto.UsuarioDTO" %>
@@ -6,6 +5,11 @@
 <%@ page import="uma.fitpro.utils.UtilityFunctions" %>
 <%@ page import="java.util.Map" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    /**
+     * @Author Victor Perez Armenta - 100%
+     */
+%>
 <%
     UsuarioDTO cliente = (UsuarioDTO) session.getAttribute("cliente");
     RutinaDTO rutina = (RutinaDTO) session.getAttribute("rutina");

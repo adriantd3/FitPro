@@ -2,7 +2,11 @@
 <%@ page import="uma.fitpro.dto.DesempenyoSesionDTO" %>
 <%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
+<%
+    /**
+     * @Author Victor Perez Armenta - 100%
+     */
+%>
 <%
     UsuarioDTO cliente = (UsuarioDTO) session.getAttribute("cliente");
     List<DesempenyoSesionDTO> desempenyosSesiones = (List<DesempenyoSesionDTO>) request.getAttribute("desempenyoSesiones");

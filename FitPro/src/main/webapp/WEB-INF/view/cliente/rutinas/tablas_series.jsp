@@ -5,6 +5,11 @@
 <%@ page import="uma.fitpro.dto.EjercicioDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
+    /**
+     * @Author Adrian Torremocha Doblas - 100%
+     */
+%>
+<%
     String option = request.getParameter("dict");
     Map<EjercicioDTO, List<SerieInterface>> dict =
             (Map<EjercicioDTO, List<SerieInterface>>) request.getAttribute(option + "_dict");

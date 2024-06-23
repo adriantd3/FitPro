@@ -1,14 +1,12 @@
-<%@ page import="uma.fitpro.entity.Usuario" %>
 <%@ page import="java.util.List" %>
-<%@ page import="java.util.Set" %>
-<%@ page import="uma.fitpro.dto.UsuarioDTO" %><%--
-  Created by IntelliJ IDEA.
-  User: victor
-  Date: 12/4/24
-  Time: 16:07
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="uma.fitpro.dto.UsuarioDTO" %>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    /**
+     * @Author Victor Perez Armenta - 100%
+     */
+%>
 <%
     List<UsuarioDTO> clientes = (List<UsuarioDTO>) request.getAttribute("clientes");
 %>

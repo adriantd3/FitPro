@@ -24,4 +24,11 @@ public interface EjercicioRepository extends JpaRepository<Ejercicio, Integer> {
                                                     @Param("musculo") String musculo,
                                                     @Param("tipo") String tipo);
 
+    @Query("select E from Ejercicio E where E.tipo.id = 1")
+    List<Ejercicio> findAllByTipoFuerza();
+
+    @Query("select E from Ejercicio E where E.tipo.id = 1 and lower(E.nombre) like lower(concat('%',:nombre,'%')) " +
+            "and  E.grupoMuscular.grupoMuscular like concat('%',(:grupoMuscular),'%')")
+    List<Ejercicio> filtrarEjercicioPorNombreYGrupoMuscular(@Param("nombre") String nombre,
+                                                            @Param("grupoMuscular")String grupoMuscular);
 }

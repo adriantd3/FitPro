@@ -3,7 +3,8 @@
 <%@ page import="uma.fitpro.ui.FiltroCliente" %>
 <%@ page import="uma.fitpro.ui.FiltroDieta" %>
 <%@ page import="uma.fitpro.dto.*" %>
-<%@ page import="uma.fitpro.utils.UtilityFunctions" %><%--
+<%@ page import="uma.fitpro.utils.UtilityFunctions" %>
+<%@ page import="java.time.format.DateTimeFormatter" %><%--
   Created by IntelliJ IDEA.
   User: jabr3
   Date: 22/05/2024
@@ -22,6 +23,7 @@
     List<DesempenyoComidaDTO> desempenyosComida = (List<DesempenyoComidaDTO>) request.getAttribute("desempenyosComida");
 
     FiltroCliente filtroCliente = (FiltroCliente) request.getAttribute("filtroCliente");
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/uuuu");
 
 %>
 
@@ -141,7 +143,7 @@
                             <tr onclick="selectDietaFromCliente(<%= d.getId() %>)">
                                 <td><%= dietasClienteIndex %></td>
                                 <td><%= d.getNombre() %></td>
-                                <td><%= d.getFechaCreacion() %></td>
+                                <td><%= d.getFechaCreacion().format(formatter) %></td>
                             </tr>
                             <%
                                 }
@@ -194,7 +196,7 @@
 
                 <div class="table-responsive desempenyos_table">
                     <table class="table caption-top text-center table-hover">
-                        <caption class="header text-center text-white"><%= "Desempeño " + desempenyoMenu.getNombreMenu() + " - " + desempenyoMenu.getFechaCreacion() %></caption>
+                        <caption class="header text-center text-white"><%= "Desempeño " + desempenyoMenu.getNombreMenu() + " - " + desempenyoMenu.getFechaCreacion().format(formatter) %></caption>
                         <thead class="header table-dark">
                             <tr>
                                 <th class="id"></th>

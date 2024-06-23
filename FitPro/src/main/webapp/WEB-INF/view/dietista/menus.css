@@ -41,11 +41,12 @@ thead{
 }
 
 .kcal{
-    width: 50px;
+    width: 75px !important;
 }
 
 .fecha{
-    width: 120px;
+    width: 140px !important;
+    max-width: 140px !important;
 }
 
 .table-button{

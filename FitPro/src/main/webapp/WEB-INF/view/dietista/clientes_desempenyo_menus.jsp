@@ -3,7 +3,8 @@
 <%@ page import="uma.fitpro.ui.FiltroCliente" %>
 <%@ page import="uma.fitpro.ui.FiltroDieta" %>
 <%@ page import="uma.fitpro.dto.*" %>
-<%@ page import="uma.fitpro.utils.UtilityFunctions" %><%--
+<%@ page import="uma.fitpro.utils.UtilityFunctions" %>
+<%@ page import="java.time.format.DateTimeFormatter" %><%--
   Created by IntelliJ IDEA.
   User: jabr3
   Date: 22/05/2024
@@ -21,6 +22,7 @@
     List<DesempenyoMenuDTO> desempenyosMenu = (List<DesempenyoMenuDTO>) request.getAttribute("desempenyosMenu");
 
     FiltroCliente filtroCliente = (FiltroCliente) request.getAttribute("filtroCliente");
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/uuuu");
 %>
 
 <html>
@@ -143,7 +145,7 @@
                             <tr onclick="selectDietaFromCliente(<%= d.getId() %>)">
                                 <td><%= dietasClienteIndex %></td>
                                 <td><%= d.getNombre() %></td>
-                                <td><%= d.getFechaCreacion() %></td>
+                                <td><%= d.getFechaCreacion().format(formatter) %></td>
                             </tr>
                             <%
                                 }
@@ -206,7 +208,7 @@
                                 <th class="id"><button class="btn btn-dark" onclick="filtrarDesempenyosMenu">🔍</button></th>
                                 <th class="nombre-dieta">Nombre</th>
                                 <th class="kcal">Kcal</th>
-                                <th class="fecha_desempenyo"><form:input path="fecha" class="form-control" data-bs-theme="dark" placeholder="Fecha"/></th>
+                                <th class="fecha_desempenyo"><form:input type="date" path="fecha" class="form-control" data-bs-theme="dark" placeholder="Fecha"/></th>
                                 <th class="kcal">Terminado</th>
                             </tr>
                         </form:form>
@@ -227,7 +229,7 @@
                                 <td><%= desempenyoIndex %></td>
                                 <td><%= desempenyoMenu.getNombreMenu() %></td>
                                 <td><%= desempenyoMenu.getCaloriasMenu() %></td>
-                                <td><%= desempenyoMenu.getFechaCreacion() %></td>
+                                <td><%= desempenyoMenu.getFechaCreacion().format(formatter) %></td>
                                 <td><%= desempenyoMenu.isTerminado()?"✔":"❌" %></td>
                             </tr>
                             <%

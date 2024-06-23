@@ -5,6 +5,7 @@
 <%@ page import="uma.fitpro.ui.FiltroDieta" %>
 <%@ page import="uma.fitpro.dto.*" %>
 <%@ page import="uma.fitpro.utils.UtilityFunctions" %>
+<%@ page import="java.time.format.DateTimeFormatter" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
@@ -23,6 +24,7 @@
     List<ComidaDTO> comidasMenu = (List<ComidaDTO>) request.getAttribute("comidasMenu");
     FiltroDieta filtroDieta = (FiltroDieta) request.getAttribute("filtroDieta");
     FiltroMenu filtroMenu = (FiltroMenu) request.getAttribute("filtroMenu");
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/uuuu");
     //for(OrdenMenuDietaDTO m : menusDieta) {
     //    menus.remove(m.getMenu());
     //}
@@ -111,7 +113,7 @@
                             <tr class="dieta" onclick="selectDieta(<%= d.getId() %>)">
                                 <td><%= dietaIndex %></td>
                                 <td><%= d.getNombre() %></td>
-                                <td><%= d.getFechaCreacion() %></td>
+                                <td><%= d.getFechaCreacion().format(formatter) %></td>
                             </tr>
                             <%
                                 }
@@ -237,7 +239,7 @@
                                     <tr>
                                         <th class="id"><button class="btn btn-dark" onclick="filtrarMenus">🔍</button></th>
                                         <th class="nombre-menu"><form:input path="nombre" class="form-control" data-bs-theme="dark" placeholder="Nombre"/></th>
-                                        <th class="kcal"><form:input path="kcal" class="form-control" data-bs-theme="dark" placeholder="Kcal"/></th>
+                                        <th class="kcal"><form:input type="number" path="kcal" class="form-control" data-bs-theme="dark" placeholder="Kcal"/></th>
                                         <th class="table-button"></th>
                                     </tr>
                                 </form:form>

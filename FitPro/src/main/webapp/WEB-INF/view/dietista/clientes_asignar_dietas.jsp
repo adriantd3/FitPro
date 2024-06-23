@@ -3,7 +3,8 @@
 <%@ page import="java.util.List" %>
 <%@ page import="uma.fitpro.ui.FiltroCliente" %>
 <%@ page import="uma.fitpro.ui.FiltroDieta" %>
-<%@ page import="uma.fitpro.utils.UtilityFunctions" %><%--
+<%@ page import="uma.fitpro.utils.UtilityFunctions" %>
+<%@ page import="java.time.format.DateTimeFormatter" %><%--
   Created by IntelliJ IDEA.
   User: jabr3
   Date: 22/05/2024
@@ -23,6 +24,7 @@
     for(DietaDTO d : dietasCliente) {
         dietas.remove(d);
     }
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/uuuu");
 %>
 
 <html>
@@ -70,7 +72,7 @@
     <a href="/dietista/clientes?clienteId=<%= cliente.getId() %>">
         <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back_button.png" alt="back">
     </a>
-    <h1 class="header-text text-center"><%= cliente.getId() %></h1>
+    <h1 class="header-text text-center">Cliente</h1>
 </header>
 
 <div class="container-fluid" >
@@ -154,7 +156,7 @@
                             <tr>
                                 <td onclick="selectDietaFromCliente(<%= d.getId() %>)"><%= dietasClienteIndex %></td>
                                 <td onclick="selectDietaFromCliente(<%= d.getId() %>)"><%= d.getNombre() %></td>
-                                <td onclick="selectDietaFromCliente(<%= d.getId() %>)"><%= d.getFechaCreacion() %></td>
+                                <td onclick="selectDietaFromCliente(<%= d.getId() %>)"><%= d.getFechaCreacion().format(formatter) %></td>
                                 <td><button  class="btn btn-danger" onclick="deleteDieta(<%= d.getId() %>)">-</button></td>
                             </tr>
                             <%
@@ -232,7 +234,7 @@
                             <tr>
                                 <td onclick="selectDieta(<%= d.getId() %>)"><%= dietaIndex %></td>
                                 <td onclick="selectDieta(<%= d.getId() %>)"><%= d.getNombre() %></td>
-                                <td onclick="selectDieta(<%= d.getId() %>)"><%= d.getFechaCreacion() %></td>
+                                <td onclick="selectDieta(<%= d.getId() %>)"><%= d.getFechaCreacion().format(formatter) %></td>
                                 <td><button  class="btn btn-primary" onclick="addDieta(<%= d.getId() %>)" <%=cliente==null?"disabled":""%>>+</button></td>
                             </tr>
                             <%

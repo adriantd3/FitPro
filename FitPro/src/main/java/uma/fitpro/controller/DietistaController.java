@@ -49,7 +49,7 @@ public class DietistaController {
 
     @GetMapping("")
     public String doHome(HttpSession session) {
-        if (!usuarioTienePermisosDietista((UsuarioDTO) session.getAttribute("user"))) return "redirect:";
+        if (!usuarioTienePermisosDietista((UsuarioDTO) session.getAttribute("user"))) return "redirect:/salir";
 
         return "dietista/home";
     }
@@ -58,7 +58,7 @@ public class DietistaController {
 
     @GetMapping("/menus")
     public String doMenus(@RequestParam(value = "menuId", required = false) Integer menuId, Model model, HttpSession session){
-        if (!usuarioTienePermisosDietista((UsuarioDTO) session.getAttribute("user"))) return "redirect:";
+        if (!usuarioTienePermisosDietista((UsuarioDTO) session.getAttribute("user"))) return "redirect:/salir";
 
         List<MenuDTO> menus = this.menuService.findAll();
         List<ComidaDTO> comidas = this.comidaService.findAll();
@@ -101,7 +101,7 @@ public class DietistaController {
 
     @GetMapping("/limpiarMenu")
     public String doLimpiarMenu(HttpSession session){
-        if (!usuarioTienePermisosDietista((UsuarioDTO) session.getAttribute("user"))) return "redirect:";
+        if (!usuarioTienePermisosDietista((UsuarioDTO) session.getAttribute("user"))) return "redirect:/salir";
 
         return "redirect:./menus";
     }
@@ -116,11 +116,11 @@ public class DietistaController {
 
     @GetMapping("/filtrarMenu")
     public String doFiltrarMenu(@ModelAttribute("filtroMenu") FiltroMenu filtroMenu, BindingResult result, ModelMap model, HttpSession session){
-        if (!usuarioTienePermisosDietista((UsuarioDTO) session.getAttribute("user"))) return "redirect:";
+        if (!usuarioTienePermisosDietista((UsuarioDTO) session.getAttribute("user"))) return "redirect:/salir";
 
         String strTo = "dietista/menus";
         //if (dietistaAutenticado(session) == false) {
-        //    strTo = "redirect:";
+        //    strTo = "redirect:/salir";
         //} else if
         if (filtroMenu.estaVacio()) {
             strTo = "redirect:./menus";
@@ -141,14 +141,14 @@ public class DietistaController {
 
     @GetMapping("/filtrarComida")
     public String doFiltrarComida(@ModelAttribute("filtroComida") FiltroComida filtroComida, BindingResult result, ModelMap model, HttpSession session){
-        if (!usuarioTienePermisosDietista((UsuarioDTO) session.getAttribute("user"))) return "redirect:";
+        if (!usuarioTienePermisosDietista((UsuarioDTO) session.getAttribute("user"))) return "redirect:/salir";
 
         String strTo = "dietista/menus";
         //if (dietistaAutenticado(session) == false) {
-        //    strTo = "redirect:";
+        //    strTo = "redirect:/salir";
         //} else if
         if (filtroComida.estaVacio()) {
-            strTo = "redirect:./menus";
+            strTo = "redirect:./menus?menuId=" + filtroComida.getMenuId();
         } else {
             List<MenuDTO> menus = this.menuService.findAll();
             List<ComidaDTO> comidas = this.comidaService.filtrar(filtroComida);
@@ -170,7 +170,7 @@ public class DietistaController {
 
     @GetMapping("/dietas")
     public String doDietas(@RequestParam(value = "dietaId", required = false) Integer dietaId, @RequestParam(value = "menuId", required = false) Integer menuId, Model model, HttpSession session){
-        if (!usuarioTienePermisosDietista((UsuarioDTO) session.getAttribute("user"))) return "redirect:";
+        if (!usuarioTienePermisosDietista((UsuarioDTO) session.getAttribute("user"))) return "redirect:/salir";
 
         List<DietaDTO> dietas = this.dietaService.findAll();
         DietaDTO dieta = this.dietaService.findById(dietaId);
@@ -217,7 +217,7 @@ public class DietistaController {
 
     @GetMapping("/limpiarDieta")
     public String doLimpiarDieta(HttpSession session){
-        if (!usuarioTienePermisosDietista((UsuarioDTO) session.getAttribute("user"))) return "redirect:";
+        if (!usuarioTienePermisosDietista((UsuarioDTO) session.getAttribute("user"))) return "redirect:/salir";
 
         return "redirect:./dietas";
     }
@@ -232,11 +232,11 @@ public class DietistaController {
 
     @GetMapping("/filtrarDietas")
     public String doFiltrarDietas(@ModelAttribute("filtroDieta") FiltroDieta filtroDieta, BindingResult result, ModelMap model, HttpSession session){
-        if (!usuarioTienePermisosDietista((UsuarioDTO) session.getAttribute("user"))) return "redirect:";
+        if (!usuarioTienePermisosDietista((UsuarioDTO) session.getAttribute("user"))) return "redirect:/salir";
 
         String strTo = "dietista/dietas";
         //if (dietistaAutenticado(session) == false) {
-        //    strTo = "redirect:";
+        //    strTo = "redirect:/salir";
         //} else if
         if (filtroDieta.estaVacio()) {
             strTo = "redirect:./dietas";
@@ -259,14 +259,14 @@ public class DietistaController {
 
     @GetMapping("/filtrarMenusDieta")
     public String doFiltrarMenusDieta(@ModelAttribute("filtroMenu") FiltroMenu filtroMenu, BindingResult result, ModelMap model, HttpSession session){
-        if (!usuarioTienePermisosDietista((UsuarioDTO) session.getAttribute("user"))) return "redirect:";
+        if (!usuarioTienePermisosDietista((UsuarioDTO) session.getAttribute("user"))) return "redirect:/salir";
 
         String strTo = "dietista/dietas";
         //if (dietistaAutenticado(session) == false) {
-        //    strTo = "redirect:";
+        //    strTo = "redirect:/salir";
         //} else if
         if (filtroMenu.estaVacio()) {
-            strTo = "redirect:./dietas";
+            strTo = "redirect:./dietas?dietaId="+filtroMenu.getDietaId();
         } else {
             List<DietaDTO> dietas = this.dietaService.findAll();
             DietaDTO dieta = dietaService.findById(filtroMenu.getDietaId());
@@ -291,7 +291,7 @@ public class DietistaController {
 
     @GetMapping("/clientes")
     public String doClientes(@RequestParam(value = "clienteId", required = false) Integer clienteId, Model model, HttpSession session){
-        if (!usuarioTienePermisosDietista((UsuarioDTO) session.getAttribute("user"))) return "redirect:";
+        if (!usuarioTienePermisosDietista((UsuarioDTO) session.getAttribute("user"))) return "redirect:/salir";
 
         UsuarioDTO dietista = (UsuarioDTO) session.getAttribute("user");
         List<UsuarioDTO> clientes = usuarioService.getClientesDietista(dietista);
@@ -309,7 +309,7 @@ public class DietistaController {
     //--------------------------------------ASIGNAR DIETAS---------------------------------------------------------------
     @GetMapping("/asignarDietasCliente")
     public String doAsignarDietasCliente(@RequestParam(value = "clienteId", required = false) Integer clienteId, @RequestParam(value = "dietaId", required = false) Integer dietaId, Model model, HttpSession session){
-        if (!usuarioTienePermisosDietista((UsuarioDTO) session.getAttribute("user"))) return "redirect:";
+        if (!usuarioTienePermisosDietista((UsuarioDTO) session.getAttribute("user"))) return "redirect:/salir";
 
         UsuarioDTO dietista = (UsuarioDTO) session.getAttribute("user");
         List<UsuarioDTO> clientes = usuarioService.getClientesDietista(dietista);
@@ -352,11 +352,11 @@ public class DietistaController {
 
     @GetMapping("/filtrarClientes")
     public String doFiltrarClientes(@ModelAttribute("filtroCliente") FiltroCliente filtroCliente, BindingResult result, ModelMap model, HttpSession session){
-        if (!usuarioTienePermisosDietista((UsuarioDTO) session.getAttribute("user"))) return "redirect:";
+        if (!usuarioTienePermisosDietista((UsuarioDTO) session.getAttribute("user"))) return "redirect:/salir";
 
         String strTo = "dietista/"+filtroCliente.getSourcePage();
         //if (dietistaAutenticado(session) == false) {
-        //    strTo = "redirect:";
+        //    strTo = "redirect:/salir";
         //} else if
         if (filtroCliente.estaVacio()) {
             if(filtroCliente.getSourcePage().equals("clientes_asignar_dietas")){
@@ -391,14 +391,14 @@ public class DietistaController {
 
     @GetMapping("/filtrarDietasCliente")
     public String doFiltrarDietasCliente(@ModelAttribute("filtroDieta") FiltroDieta filtroDieta, BindingResult result, ModelMap model, HttpSession session){
-        if (!usuarioTienePermisosDietista((UsuarioDTO) session.getAttribute("user"))) return "redirect:";
+        if (!usuarioTienePermisosDietista((UsuarioDTO) session.getAttribute("user"))) return "redirect:/salir";
 
         String strTo = "dietista/clientes_asignar_dietas";
         //if (dietistaAutenticado(session) == false) {
-        //    strTo = "redirect:";
+        //    strTo = "redirect:/salir";
         //} else if
         if (filtroDieta.estaVacio()) {
-            strTo = "redirect:./asignarDietasCliente";
+            strTo = "redirect:./asignarDietasCliente?clienteId="+filtroDieta.getClienteId();
         } else {
             UsuarioDTO dietista = (UsuarioDTO) session.getAttribute("user");
             List<UsuarioDTO> clientes = usuarioService.getClientesDietista(dietista);
@@ -424,7 +424,7 @@ public class DietistaController {
                                        @RequestParam(value = "dietaId", required = false) Integer dietaId,
                                        @RequestParam(value = "menuId", required = false) Integer menuId,
                                        Model model, HttpSession session){
-        if (!usuarioTienePermisosDietista((UsuarioDTO) session.getAttribute("user"))) return "redirect:";
+        if (!usuarioTienePermisosDietista((UsuarioDTO) session.getAttribute("user"))) return "redirect:/salir";
 
         UsuarioDTO dietista = (UsuarioDTO) session.getAttribute("user");
         List<UsuarioDTO> clientes = usuarioService.getClientesDietista(dietista);
@@ -454,7 +454,7 @@ public class DietistaController {
     @GetMapping("/filtrarDesempenyosMenuCliente")
     public String doFiltrarDesempanyosCliente(@ModelAttribute("filtroDieta") FiltroDesempenyoMenu filtroDesempenyoMenu,
                                     Model model, HttpSession session){
-        if (!usuarioTienePermisosDietista((UsuarioDTO) session.getAttribute("user"))) return "redirect:";
+        if (!usuarioTienePermisosDietista((UsuarioDTO) session.getAttribute("user"))) return "redirect:/salir";
 
         String strTo = "dietista/clientes_desempenyo_menus";
 
@@ -485,7 +485,7 @@ public class DietistaController {
                                         @RequestParam(value = "menuId") Integer menuId,
                                         @RequestParam(value = "desempenyoMenuId") Integer desempenyoMenuId,
                                         Model model, HttpSession session){
-        if (!usuarioTienePermisosDietista((UsuarioDTO) session.getAttribute("user"))) return "redirect:";
+        if (!usuarioTienePermisosDietista((UsuarioDTO) session.getAttribute("user"))) return "redirect:/salir";
 
         UsuarioDTO dietista = (UsuarioDTO) session.getAttribute("user");
         List<UsuarioDTO> clientes = usuarioService.getClientesDietista(dietista);

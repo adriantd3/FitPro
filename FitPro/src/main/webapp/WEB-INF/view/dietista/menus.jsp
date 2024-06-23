@@ -4,6 +4,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="uma.fitpro.ui.FiltroMenu" %>
 <%@ page import="uma.fitpro.ui.FiltroComida" %>
+<%@ page import="java.time.format.DateTimeFormatter" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
@@ -20,7 +21,8 @@
     FiltroComida filtroComida = (FiltroComida) request.getAttribute("filtroComida");
     List<ComidaDTO> comidasMenu = (List<ComidaDTO>) request.getAttribute("comidasMenu");
     List<ComidaDTO> comidas = (List<ComidaDTO>) request.getAttribute("comidas");
-    comidas.removeAll(comidasMenu);
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/uuuu");
+    //comidas.removeAll(comidasMenu);
 %>
 
 <html>
@@ -82,10 +84,10 @@
                             <thead class="header table-dark">
                                 <form:form id="filtroMenu" method="get" action="/dietista/filtrarMenu" modelAttribute="filtroMenu">
                                     <tr>
-                                        <th class="id"><button class="btn btn-dark" onclick="filtrarMenu">🔍</button></th>
+                                        <th class="menuId"><button class="btn btn-dark" onclick="filtrarMenu">🔍</button></th>
                                         <th class="nombre-menu"><form:input path="nombre" class="form-control" data-bs-theme="dark" placeholder="Nombre"/></th>
-                                        <th class="kcal"><form:input path="kcal" class="form-control" data-bs-theme="dark" placeholder="Kcal"/></th>
-                                        <th class="fecha"><form:input path="fecha" class="form-control" data-bs-theme="dark" placeholder="Fecha Creacion"/></th>
+                                        <th class="kcal"><form:input type="number" path="kcal" class="form-control" data-bs-theme="dark" placeholder="Kcal"/></th>
+                                        <th class="fecha"><form:input type="date" path="fecha" class="form-control" data-bs-theme="dark" placeholder="Fecha Creacion"/></th>
                                     </tr>
                                 </form:form>
                             </thead>
@@ -101,7 +103,7 @@
                                             <td><%= menuIndex %></td>
                                             <td><%= m.getNombre() %></td>
                                             <td><%= m.getCalorias() %></td>
-                                            <td><%= m.getFechaCreacion() %></td>
+                                            <td><%= m.getFechaCreacion().format(formatter) %></td>
                                         </tr>
                                     <%
                                         }
@@ -192,7 +194,7 @@
                                         <tr>
                                             <th class="menuId"><button class="btn btn-dark" onclick="filtrarComida">🔍</button></th>
                                             <th class="nombre-menu"><form:input path="nombre" class="form-control" data-bs-theme="dark" placeholder="Nombre"/></th>
-                                            <th class="kcal"><form:input path="kcal" class="form-control" data-bs-theme="dark" placeholder="Kcal"/></th>
+                                            <th class="kcal"><form:input type="number" path="kcal" class="form-control" data-bs-theme="dark" placeholder="Kcal"/></th>
                                             <th class="table-button"></th>
                                         </tr>
                                     </form:form>

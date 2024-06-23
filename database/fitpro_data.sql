@@ -1,8 +1,10 @@
+CREATE DATABASE  IF NOT EXISTS `fitpro` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `fitpro`;
 -- MySQL dump 10.13  Distrib 8.0.34, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: fitpro
 -- ------------------------------------------------------
--- Server version	8.2.0
+-- Server version	8.3.0
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -41,7 +43,6 @@ UNLOCK TABLES;
 
 LOCK TABLES `desempenyo_comida` WRITE;
 /*!40000 ALTER TABLE `desempenyo_comida` DISABLE KEYS */;
-INSERT INTO `desempenyo_comida` VALUES (1,1,1,1,0),(2,2,1,0,0),(3,3,1,1,1),(4,4,1,0,0);
 /*!40000 ALTER TABLE `desempenyo_comida` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -51,7 +52,6 @@ UNLOCK TABLES;
 
 LOCK TABLES `desempenyo_menu` WRITE;
 /*!40000 ALTER TABLE `desempenyo_menu` DISABLE KEYS */;
-INSERT INTO `desempenyo_menu` VALUES (1,1,1,'2024-06-17',1);
 /*!40000 ALTER TABLE `desempenyo_menu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -61,7 +61,6 @@ UNLOCK TABLES;
 
 LOCK TABLES `desempenyo_serie` WRITE;
 /*!40000 ALTER TABLE `desempenyo_serie` DISABLE KEYS */;
-INSERT INTO `desempenyo_serie` VALUES (285,52,1,80,12),(286,52,1,65,10),(288,52,2,40,15),(289,52,2,45,12),(290,52,2,50,8),(291,52,1,10,5000),(298,54,1,60,12),(299,54,1,65,10),(300,54,1,70,6),(301,54,2,40,15),(302,54,2,45,12),(303,54,2,50,8);
 /*!40000 ALTER TABLE `desempenyo_serie` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -71,7 +70,6 @@ UNLOCK TABLES;
 
 LOCK TABLES `desempenyo_sesion` WRITE;
 /*!40000 ALTER TABLE `desempenyo_sesion` DISABLE KEYS */;
-INSERT INTO `desempenyo_sesion` VALUES (52,1,1,'2024-06-17',1),(54,1,1,'2024-06-17',1);
 /*!40000 ALTER TABLE `desempenyo_sesion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -91,7 +89,6 @@ UNLOCK TABLES;
 
 LOCK TABLES `dieta_cliente` WRITE;
 /*!40000 ALTER TABLE `dieta_cliente` DISABLE KEYS */;
-INSERT INTO `dieta_cliente` VALUES (1,1),(2,1),(3,1);
 /*!40000 ALTER TABLE `dieta_cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -110,7 +107,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `ejercicio` WRITE;
 /*!40000 ALTER TABLE `ejercicio` DISABLE KEYS */;
-INSERT INTO `ejercicio` VALUES (1,'Incline Bench Pres','     The incline bench press is a variatio of the bench press and an exercise used to build the muscles of the chest.     ','https://cdn.muscleandstrength.com/sites/default/files/incline-bench-press.jpg','https://youtube.com/embed/uIzbJX5EVIY',1,2),(2,'Seated Cable Row','Your back must remain straight at all times. Your torso should be kept still throughout the entire set.','https://cdn.muscleandstrength.com/sites/default/files/styles/800x500/public/seated-cable-row.jpg?itok=b8Yzo0KK',NULL,1,14),(3,'Leg Press','The leg press is a variation of the squat and an exercise used to target the muscles of the leg.','https://cdn.muscleandstrength.com/sites/default/files/leg-press.jpg','https://youtube.com/embed/sEM_zo9w2ss',1,19),(4,'Smith Machine Shoulder Press','The Smith machine shoulder press is a variation of the barbell shoulder press and is used to strengthen the muscles of the shoulders.','https://cdn.muscleandstrength.com/sites/default/files/seated-military-press.jpg',NULL,1,20),(7,'Caminar',' Camina','','',5,5),(8,'Estiramientps','Estira el pecho','','',5,6),(9,'Salto de comba','Salta a la comba','','',2,5),(10,'Salto estrella','Realiza un salto y chocas las palmas cuando estas en lo alto','','',2,8),(11,'Sprint','Correr a máxima potencia','','',3,19),(12,'Cambios de dirección','  Correr y hacer cambios de dirección bruscos ','','',3,5),(13,'Equilibrio sobre una pierna','  Sentadillas sobre una pierna','','',4,19),(14,'Plancha','  Mantente recto con los brazos y pies apoyados en el suelo','','',4,2);
+INSERT INTO `ejercicio` VALUES (1,'Incline Bench Pres','The incline bench press is a variatio of the bench press and an exercise used to build the muscles of the chest.     ','https://cdn.muscleandstrength.com/sites/default/files/incline-bench-press.jpg','https://youtube.com/embed/uIzbJX5EVIY',1,2),(2,'Seated Cable Row','Your back must remain straight at all times. Your torso should be kept still throughout the entire set.','https://cdn.muscleandstrength.com/sites/default/files/styles/800x500/public/seated-cable-row.jpg?itok=b8Yzo0KK',NULL,1,14),(3,'Leg Press','The leg press is a variation of the squat and an exercise used to target the muscles of the leg.','https://cdn.muscleandstrength.com/sites/default/files/leg-press.jpg','https://youtube.com/embed/sEM_zo9w2ss',1,19),(4,'Smith Machine Shoulder Press','The Smith machine shoulder press is a variation of the barbell shoulder press and is used to strengthen the muscles of the shoulders.','https://cdn.muscleandstrength.com/sites/default/files/seated-military-press.jpg',NULL,1,20),(7,'Caminar','Camina','','',5,5),(8,'Estiramientps','Estira el pecho','','',5,6),(9,'Salto de comba','Salta a la comba','','',2,5),(10,'Salto estrella','Realiza un salto y chocas las palmas cuando estas en lo alto','','',2,8),(11,'Sprint','Correr a máxima potencia','','',3,19),(12,'Cambios de dirección','Correr y hacer cambios de dirección bruscos ','','',3,5),(13,'Equilibrio sobre una pierna','Sentadillas sobre una pierna','','',4,19),(14,'Plancha','Mantente recto con los brazos y pies apoyados en el suelo','','',4,2);
 /*!40000 ALTER TABLE `ejercicio` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -120,7 +117,6 @@ UNLOCK TABLES;
 
 LOCK TABLES `entrenador_cliente` WRITE;
 /*!40000 ALTER TABLE `entrenador_cliente` DISABLE KEYS */;
-INSERT INTO `entrenador_cliente` VALUES (3,1),(4,1);
 /*!40000 ALTER TABLE `entrenador_cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -190,7 +186,6 @@ UNLOCK TABLES;
 
 LOCK TABLES `rutina_cliente` WRITE;
 /*!40000 ALTER TABLE `rutina_cliente` DISABLE KEYS */;
-INSERT INTO `rutina_cliente` VALUES (2,1);
 /*!40000 ALTER TABLE `rutina_cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -230,7 +225,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (1,'12345678A',5,'Mikel','Arias Montiel',1,20,1.78,80,'kirito','mikel@gmail.com'),(2,'25915268B',1,'David','Garcia Sanchez',1,19,1.9,87,'david','david@gmail.com'),(3,'75249108B',2,'Alvaro','Pérez Navarro',1,20,1.67,70,'alvaro','alvaro@gmail.com'),(4,'34345612H',3,'María','Cruz Martínez',0,18,1.54,60,'maria','maria@gmail.com'),(5,'68193415I',4,'Irene','Iglesias Gutierrez',0,24,1.5,54,'irene','irene@gmail.com'),(10,'123',5,'Pepe','Gomex',1,12,12,123,'pepe','pepe@gmail.com'),(11,'123',5,'Pepa','Gomex',0,12,12,123,'pepa','pepa@gmail.com');
+INSERT INTO `usuario` VALUES (2,'25915268B',1,'David','Garcia Sanchez',1,19,1.9,87,'david','david@gmail.com'),(3,'75249108B',2,'Alvaro','Pérez Navarro',1,20,1.67,70,'alvaro','alvaro@gmail.com'),(4,'34345612H',3,'María','Cruz Martínez',0,18,1.54,60,'maria','maria@gmail.com'),(5,'68193415I',4,'Irene','Iglesias Gutierrez',0,24,1.5,54,'irene','irene@gmail.com'),(10,'123',5,'Pepe','Gomex',1,12,12,123,'pepe','pepe@gmail.com'),(11,'123',5,'Pepa','Gomex',0,12,12,123,'pepa','pepa@gmail.com');
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -243,4 +238,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-06-23 13:41:49
+-- Dump completed on 2024-06-23 15:18:22

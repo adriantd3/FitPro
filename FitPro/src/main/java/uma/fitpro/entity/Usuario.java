@@ -1,6 +1,7 @@
 package uma.fitpro.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -8,6 +9,8 @@ import java.io.Serializable;
 import java.util.*;
 
 import uma.fitpro.dto.DTO;
+import uma.fitpro.dto.DietaDTO;
+import uma.fitpro.dto.RutinaDTO;
 import uma.fitpro.dto.UsuarioDTO;
 
 @Entity
@@ -53,13 +56,13 @@ public class Usuario implements Serializable, DTO<UsuarioDTO> {
     private String correo;
 
     @OneToMany(mappedBy = "usuario")
-    private Set<DesempenyoMenu> desempenyoMenuEntities = new LinkedHashSet<>();
+    private List<DesempenyoMenu> desempenyoMenuEntities = new ArrayList<>();
 
-    @OneToMany(mappedBy = "usuario")
+    @OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER)
     private Set<DesempenyoSesion> desempenyoSesionEntities = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "dietista")
-    private Set<Dieta> dietasDietista = new LinkedHashSet<>();
+    private List<Dieta> dietasDietista = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(name = "dieta_cliente",
@@ -67,19 +70,19 @@ public class Usuario implements Serializable, DTO<UsuarioDTO> {
             inverseJoinColumns = @JoinColumn(name = "dieta_id"))
     private List<Dieta> dietasCliente = new ArrayList<>();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "dietista_cliente",
             joinColumns = @JoinColumn(name = "dietista_id"),
             inverseJoinColumns = @JoinColumn(name = "cliente_id"))
-    private Set<Usuario> clientesDietista = new LinkedHashSet<>();
+    private List<Usuario> clientesDietista = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(name = "dietista_cliente",
             joinColumns = @JoinColumn(name = "cliente_id"),
             inverseJoinColumns = @JoinColumn(name = "dietista_id"))
-    private Set<Usuario> dietistas = new LinkedHashSet<>();
+    private List<Usuario> dietistas = new ArrayList<>();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "entrenador_cliente",
             joinColumns = @JoinColumn(name = "entrenador_id"),
             inverseJoinColumns = @JoinColumn(name = "cliente_id"))
@@ -91,14 +94,14 @@ public class Usuario implements Serializable, DTO<UsuarioDTO> {
             inverseJoinColumns = @JoinColumn(name = "entrenador_id"))
     private Set<Usuario> entrenadores = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "entrenador")
+    @OneToMany(fetch=FetchType.EAGER, mappedBy = "entrenador")
     private Set<Rutina> rutinasEntrenador = new LinkedHashSet<>();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "rutina_cliente",
             joinColumns = @JoinColumn(name = "cliente_id"),
             inverseJoinColumns = @JoinColumn(name = "rutina_id"))
-    private List<Rutina> rutinasCliente = new ArrayList<>();
+    private Set<Rutina> rutinasCliente = new LinkedHashSet<>();
 
     public Integer getId() {
         return id;
@@ -188,11 +191,11 @@ public class Usuario implements Serializable, DTO<UsuarioDTO> {
         this.correo = correo;
     }
 
-    public Set<DesempenyoMenu> getDesempenyoMenus() {
+    public List<DesempenyoMenu> getDesempenyoMenus() {
         return desempenyoMenuEntities;
     }
 
-    public void setDesempenyoMenus(Set<DesempenyoMenu> desempenyoMenuEntities) {
+    public void setDesempenyoMenus(List<DesempenyoMenu> desempenyoMenuEntities) {
         this.desempenyoMenuEntities = desempenyoMenuEntities;
     }
 
@@ -204,11 +207,11 @@ public class Usuario implements Serializable, DTO<UsuarioDTO> {
         this.desempenyoSesionEntities = desempenyoSesionEntities;
     }
 
-    public Set<Dieta> getDietasDietista() {
+    public List<Dieta> getDietasDietista() {
         return dietasDietista;
     }
 
-    public void setDietasDietista(Set<Dieta> dietasDietista) {
+    public void setDietasDietista(List<Dieta> dietasDietista) {
         this.dietasDietista = dietasDietista;
     }
 
@@ -220,19 +223,19 @@ public class Usuario implements Serializable, DTO<UsuarioDTO> {
         this.dietasCliente = dietasCliente;
     }
 
-    public Set<Usuario> getClientesDietista() {
+    public List<Usuario> getClientesDietista() {
         return clientesDietista;
     }
 
-    public void setClientesDietista(Set<Usuario> clientesDietista) {
+    public void setClientesDietista(List<Usuario> clientesDietista) {
         this.clientesDietista = clientesDietista;
     }
 
-    public Set<Usuario> getDietistas() {
+    public List<Usuario> getDietistas() {
         return dietistas;
     }
 
-    public void setDietistas(Set<Usuario> dietistas) {
+    public void setDietistas(List<Usuario> dietistas) {
         this.dietistas = dietistas;
     }
 
@@ -260,14 +263,13 @@ public class Usuario implements Serializable, DTO<UsuarioDTO> {
         this.rutinasEntrenador = rutinasEntrenador;
     }
 
-    public List<Rutina> getRutinasCliente() {
+    public Set<Rutina> getRutinasCliente() {
         return rutinasCliente;
     }
 
-    public void setRutinasCliente(List<Rutina> rutinasCliente) {
+    public void setRutinasCliente(Set<Rutina> rutinasCliente) {
         this.rutinasCliente = rutinasCliente;
     }
-
 
     @Override
     public UsuarioDTO toDTO() {
@@ -283,11 +285,6 @@ public class Usuario implements Serializable, DTO<UsuarioDTO> {
         usuario.setPeso(peso);
         usuario.setContrasenya(contrasenya);
         usuario.setCorreo(correo);
-        List<Integer> rutinasCliente = new ArrayList<>();
-        for (Rutina rutina : this.rutinasCliente) {
-            rutinasCliente.add(rutina.getId());
-        }
-        usuario.setRutinasCliente(rutinasCliente);
 
         List<Integer> dietasCliente = new ArrayList<>();
         for (Dieta dieta : this.dietasCliente) {
@@ -306,6 +303,23 @@ public class Usuario implements Serializable, DTO<UsuarioDTO> {
             entrenadoresCliente.add(entrenador.toDTO());
         }
         usuario.setEntrenadoresCliente(entrenadoresCliente);
+        List<Integer> clientesDietista = new ArrayList<>();
+        for (Usuario cliente : this.clientesDietista) {
+            clientesDietista.add(cliente.getId());
+        }
+        usuario.setClientesDietista(clientesDietista);
+
+        List<Integer> rutinasCliente = new ArrayList<>();
+        for (Rutina rutina : this.rutinasCliente) {
+            rutinasCliente.add(rutina.getId());
+        }
+        usuario.setRutinasCliente(rutinasCliente);
+
+        List<Integer> clientesEntrenador = new ArrayList<>();
+        for (Usuario cliente : this.clientesEntrenador) {
+            clientesEntrenador.add(cliente.getId());
+        }
+        usuario.setClientesEntrenador(clientesEntrenador);
 
         return usuario;
     }

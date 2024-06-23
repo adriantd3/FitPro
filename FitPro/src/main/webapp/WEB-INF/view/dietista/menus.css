@@ -2,10 +2,15 @@
     width: 400px;
 }
 
+.menu_table{
+    width: 500px;
+}
+
 .table td{
     user-select: none;
     transition: 0.5s;
     transition-timing-function: ease;
+    align-content: center;
 }
 
 .menu_table td{
@@ -15,24 +20,33 @@
     cursor:pointer;
 }
 
-.id{
-    width: 40px;
+td button{
+    z-index: 0 !important;
+}
+thead{
+    z-index: 5 !important;
+}
+
+.menuId{
+    width: 40px !important;
+    max-width: 40px !important;
 }
 
 .nombre-menu{
-    width: 120px;
+    width: 160px;
 }
 
 .nombre-comida{
-    width: 120px;
+    width: 110px;
 }
 
 .kcal{
-    width: 40px;
+    width: 75px !important;
 }
 
 .fecha{
-    width: 80px;
+    width: 140px !important;
+    max-width: 140px !important;
 }
 
 .table-button{

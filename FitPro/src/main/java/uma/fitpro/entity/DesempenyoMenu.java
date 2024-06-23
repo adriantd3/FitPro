@@ -95,6 +95,7 @@ public class DesempenyoMenu implements Serializable, DTO<DesempenyoMenuDTO> {
         desempenyoMenuDTO.setId(this.id);
         desempenyoMenuDTO.setMenuId(this.menu.getId());
         desempenyoMenuDTO.setNombreMenu(this.menu.getNombre());
+        desempenyoMenuDTO.setCaloriasMenu(this.menu.getCalorias());
         desempenyoMenuDTO.setFechaCreacion(this.fechaCreacion);
         desempenyoMenuDTO.setTerminado(this.terminado == 1);
 

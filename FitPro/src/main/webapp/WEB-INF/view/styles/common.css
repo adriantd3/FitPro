@@ -1,5 +1,4 @@
 header{
-    position: relative;
     align-items: center;
     justify-content: center;
     background-color: #5B5B5B;
@@ -37,7 +36,18 @@ body{
     color:white;
 }
 
+.list-button{
+    text-align: start;
+}
+
+.list-button:hover{
+    background-color: dodgerblue;
+    border: dodgerblue;
+}
 .form-wrapper {
+    display: flex;
+    justify-content: center;
+    align-content: center;
     text-align: center;
     padding-top: 200px;
 }
@@ -56,4 +66,29 @@ body{
 .header{
     position:sticky;
     top:0;
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+    color: aliceblue;
+}
+
+::-webkit-scrollbar-track {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    background: #434343;;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.btn-close{
+    color: white;
 }

@@ -1,0 +1,72 @@
+.table{
+    width: 400px;
+}
+
+.dieta_table{
+    width: 500px;
+}
+
+.table td{
+    user-select: none;
+    transition: 0.5s;
+    transition-timing-function: ease;
+    align-content: center;
+}
+
+.dieta_table td{
+    user-select: none;
+    transition: 0.5s;
+    transition-timing-function: ease;
+    cursor:pointer;
+}
+
+td button{
+    z-index: 0 !important;
+}
+thead{
+    z-index: 5 !important;
+}
+
+.menus_table{
+    overflow-y: scroll;
+    height: 250px;
+}
+
+.comidas_table {
+    overflow-y: scroll;
+    height: 200px;
+}
+
+.id{
+    width: 20px;
+}
+
+.nombre-dieta{
+    width: 100px;
+}
+
+.nombre-menu{
+    width: 110px;
+}
+
+.kcal{
+    width: 75px !important;
+}
+
+.fecha{
+    width: 80px;
+}
+
+.table-button{
+    width: 20px;
+}
+
+.saveButton{
+    height: 40px;
+}
+
+.dietaButtons {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 10px;
+}

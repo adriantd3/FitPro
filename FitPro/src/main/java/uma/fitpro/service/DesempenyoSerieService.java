@@ -41,7 +41,13 @@ public class DesempenyoSerieService extends DTOService{
     }
 
     public List<DesempenyoSerieDTO> buscarDesempenyoSeries(List<Integer> desempenyoSeries){
-        List<DesempenyoSerie> desempenyoSerieList = desempenyoSerieRepository.findAllById(desempenyoSeries);
+        List<DesempenyoSerie> desempenyoSerieList = new ArrayList<>();
+        for(Integer id: desempenyoSeries){
+            DesempenyoSerie desempenyoSerie = desempenyoSerieRepository.findById(id).orElse(null);
+            if(desempenyoSerie != null){
+                desempenyoSerieList.add(desempenyoSerie);
+            }
+        }
         return this.entidadesADTO(desempenyoSerieList);
     }
 

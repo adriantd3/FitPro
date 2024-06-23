@@ -4,9 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uma.fitpro.dao.DesempenyoComidaRepository;
 import uma.fitpro.dto.DesempenyoComidaDTO;
+import uma.fitpro.dto.DesempenyoMenuDTO;
+import uma.fitpro.dto.OrdenMenuDietaDTO;
 import uma.fitpro.entity.DesempenyoComida;
-import uma.fitpro.ui.FiltroMenu;
+import uma.fitpro.ui.FiltroDesempenyoComida;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -28,7 +31,7 @@ public class DesempenyoComidaService extends DTOService{
         return this.entidadesADTO(desempenyoComidaList);
     }
 
-    public List<DesempenyoComidaDTO> filtroBuscarDesempenyosComida(FiltroMenu filtro){
+    public List<DesempenyoComidaDTO> filtroBuscarDesempenyosComida(FiltroDesempenyoComida filtro){
         Byte comido = filtro.getComido() == null ? (byte) 2 : (byte) (filtro.getComido() ? 1 : 0);
         Byte gustado = filtro.getGustado() == null ? (byte) 2 : (byte) (filtro.getGustado() ? 1 : 0);
         List<DesempenyoComida> desempenyoComidaList = desempenyoComidaRepository.findByFiltroMenu(filtro.getDesMenuId(),
@@ -46,5 +49,12 @@ public class DesempenyoComidaService extends DTOService{
     }
 
 
-
+    public List<DesempenyoComidaDTO> buscarDesempenyosComidaDesempenyoMenu(DesempenyoMenuDTO desempenyoMenu) {
+        List<DesempenyoComidaDTO> desempenyoComidasDTO = new ArrayList<>();
+        if(desempenyoMenu!=null){
+            List<DesempenyoComida> desempenyoComidas = desempenyoComidaRepository.findAllById(desempenyoMenu.getDesempenyoComidas());
+            desempenyoComidasDTO = this.entidadesADTO(desempenyoComidas);
+        }
+        return desempenyoComidasDTO;
+    }
 }

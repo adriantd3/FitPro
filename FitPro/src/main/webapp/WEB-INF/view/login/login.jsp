@@ -16,16 +16,22 @@
 </head>
 <body>
     <header>
-        <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back_button.png" alt="">
         <h1 class="header-text text-center">FitPro</h1>
     </header>
     <div class="form-wrapper">
         <form  method="post" action="/autenticar">
-            <span>Usuario:</span>
-            <input type="text" name="mail"> </br>
-            <span>Contraseña:</span>
-            <input type="text" name="password"> </br>
-            <button name="login">Login</button> </br>
+            <table>
+                <tr>
+                    <td><span>Usuario:</span></td>
+                    <td><input type="text" name="mail"></td>
+                </tr>
+                <tr>
+                    <td><span>Contraseña:</span></td>
+                    <td> <input type="password" name="password"></td>
+                </tr>
+            </table>
+
+            <button name="login" class="btn btn-secondary mt-1">Login</button> </br>
             <span> <%= errorMsg  %></span>
         </form>
     </div>

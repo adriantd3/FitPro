@@ -59,7 +59,7 @@
             <tbody>
             <tr>
                 <td>Nombre:<input name="Nombre" type="text" placeholder="Nombre" value="<%=comida == null ? "" : comida.getNombre()%>"></td>
-                <td>Calorías:<input name="Calorias" type="text" placeholder="Calorias" value="<%=comida == null || comida.getCalorias() == null ? "0" : comida.getCalorias()%>"></td>
+                <td>Calorías:<input name="Calorias" type="number" placeholder="Calorias" value="<%=comida == null || comida.getCalorias() == null ? "0" : comida.getCalorias()%>"></td>
             </tbody>
         </table>
         <button type="submit" class="btn btn-primary">Guardar</button>

@@ -8,6 +8,7 @@
     List<UsuarioDTO> usuarios = (List<UsuarioDTO>) request.getAttribute("usuarios");
     List<RolDTO> roles = (List<RolDTO>) request.getAttribute("roles");
     UsuarioDTO usuario = (UsuarioDTO) request.getAttribute("usuario");
+    UsuarioDTO adminLogged = (UsuarioDTO) session.getAttribute("user");
 
     String filtroNombre = (String) request.getAttribute("filtroNombre");
     String filtroApellido = (String) request.getAttribute("filtroApellido");
@@ -67,7 +68,7 @@
                 <td>Nombre:<input name="Nombre" type="text" placeholder="Nombre" value="<%=usuario == null ? "" : usuario.getNombre()%>"></td>
                 <td>Apellidos:<input name="Apellidos" type="text" placeholder="Apellidos" value="<%=usuario == null ? "" : usuario.getApellidos()%>"></td>
                 <td>DNI:<input name="DNI" type="text"  placeholder="DNI" value=<%=usuario == null ? "" : usuario.getDni()%>></td>
-                <td>Rol: <select name="Rol">
+                <td>Rol: <select name="Rol" <%= usuario!= null && (usuario.getId() != adminLogged.getId()) ? "" : "disabled"%>>
                     <% for(RolDTO rol : roles){ %>
                         <option <%=usuario != null && usuario.getRol().getId() == rol.getId() ? "selected" : ""%> value=<%=rol.getId()%>> <%=rol.getNombre()%> </option>
                     <% } %>
@@ -93,7 +94,7 @@
     <div class="form-buttons">
         <form method="post" action="/admin/delete-user">
             <input name="Id" type="hidden" value=<%=usuario == null ? "0" : usuario.getId()%>>
-            <button <%= usuario != null ? "" : "disabled" %> type="submit" class="btn btn-primary user-delete-button">Eliminar</button>
+            <button <%= usuario != null && (usuario.getId() != adminLogged.getId()) ? "" : "disabled" %> type="submit" class="btn btn-primary user-delete-button">Eliminar</button>
         </form>
         <button type="submit" class="btn btn-primary user-clean-button" onclick="rellenarDatos(0)">Limpiar</button>
     </div>

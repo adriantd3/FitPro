@@ -1,5 +1,6 @@
 package uma.fitpro.controller;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +19,8 @@ import java.util.Set;
 @RequestMapping(value ="/admin", method = RequestMethod.POST)
 public class AdminController {
 
+    LoginController loginController = new LoginController();
+
     @Autowired
     UsuarioService usuarioService;
     @Autowired
@@ -30,6 +33,8 @@ public class AdminController {
     GrupoMuscularService grupoMuscularService;
     @Autowired
     TipoEjercicioService tipoEjercicioService;
+    @Autowired
+    private HttpSession httpSession;
 
     //////////////////////////////////////////////////////
     /////////               HOME                 /////////
@@ -37,6 +42,8 @@ public class AdminController {
 
     @GetMapping("")
     public String doHome() {
+        if(!loginController.esAdmin(httpSession)) return "redirect:/";
+
         return "admin/home";
     }
 
@@ -46,6 +53,7 @@ public class AdminController {
 
     @GetMapping("/users")
     public String doUsers(@RequestParam("id") Integer id, Model model) {
+        if(!loginController.esAdmin(httpSession)) return "redirect:/";
         List<UsuarioDTO> usuarios = usuarioService.findAll();
         List<RolDTO> roles = rolService.findAll();
         if(id > 0) {
@@ -70,7 +78,7 @@ public class AdminController {
                              @RequestParam(value = "DNI") String dni, @RequestParam("Rol") Integer rol, @RequestParam("Sexo") Byte sexo,
                              @RequestParam(value = "Edad",required = false) Integer edad, @RequestParam(value = "Altura",required = false) Float altura,
                              @RequestParam(value = "Peso",required = false) Float peso, @RequestParam("Email") String email, @RequestParam("Contrasenya") String contrasenya, Model model) {
-
+        if(!loginController.esAdmin(httpSession)) return "redirect:/";
         if(nombre.isEmpty() || apellidos.isEmpty() || dni.isEmpty() || contrasenya.isEmpty() || email.isEmpty()){
             return "redirect:/admin/users?id=0";
         }
@@ -93,6 +101,7 @@ public class AdminController {
 
     @PostMapping("/delete-user")
     public String doDeleteUsers(@RequestParam("Id") Integer id, Model model) {
+        if(!loginController.esAdmin(httpSession)) return "redirect:/";
 
         usuarioService.delete(id);
         return "redirect:/admin/users?id=0";
@@ -100,6 +109,7 @@ public class AdminController {
 
     @PostMapping("/user/filter")
     public String doUserFilter(@RequestParam("nombre") String nombre,@RequestParam("apellido") String apellido,@RequestParam("rol") String rol, Model model) {
+        if(!loginController.esAdmin(httpSession)) return "redirect:/";
         List<UsuarioDTO> usuarios = usuarioService.filterUsers(nombre, apellido, rol);
         List<RolDTO> roles = rolService.findAll();
 
@@ -120,6 +130,7 @@ public class AdminController {
 
     @GetMapping("/exercises")
     public String doExercises(@RequestParam("id") Integer id, Model model) {
+        if(!loginController.esAdmin(httpSession)) return "redirect:/";
         List<EjercicioDTO> ejercicios = ejercicioService.findAll();
         List<GrupoMuscularDTO> gruposMusculares = grupoMuscularService.findAll();
         List<TipoEjercicioDTO> tiposEjercicios = tipoEjercicioService.findAll();
@@ -146,6 +157,7 @@ public class AdminController {
     public String doAddexercise(@RequestParam("Id") Integer Id, @RequestParam("Nombre") String nombre, @RequestParam(value = "Imagen", required = false) String imagen,
                                 @RequestParam(value = "Video", required = false) String video, @RequestParam("Tipo") Integer tipo, @RequestParam("Grupo") Integer grupo,
                                 @RequestParam(value = "Descripcion", required = false) String desc, Model model) {
+        if(!loginController.esAdmin(httpSession)) return "redirect:/";
         if(nombre.isEmpty()) {
             return "redirect:/admin/exercises?id=0";
         }
@@ -164,6 +176,7 @@ public class AdminController {
 
     @PostMapping("/delete-exercise")
     public String doDeleteExercise(@RequestParam("Id") Integer id, Model model) {
+        if(!loginController.esAdmin(httpSession)) return "redirect:/";
         ejercicioService.delete(id);
 
         return "redirect:/admin/exercises?id=0";
@@ -171,6 +184,7 @@ public class AdminController {
 
     @PostMapping("/exercise/filter")
     public String doExerciseFilter(@RequestParam("nombre") String nombre,@RequestParam("tipo") String tipo,@RequestParam("grupoMuscular") String grupo, Model model) {
+        if(!loginController.esAdmin(httpSession)) return "redirect:/";
         List<EjercicioDTO> ejercicios = ejercicioService.filterExercise(nombre, tipo, grupo);
         List<GrupoMuscularDTO> gruposMusculares = grupoMuscularService.findAll();
         List<TipoEjercicioDTO> tiposEjercicios = tipoEjercicioService.findAll();
@@ -193,6 +207,7 @@ public class AdminController {
 
     @GetMapping("/food")
     public String doFood(@RequestParam("id") Integer id, Model model) {
+        if(!loginController.esAdmin(httpSession)) return "redirect:/";
         List<ComidaDTO> comidas = comidaService.findAll();
         ComidaDTO comida = null;
         if(id > 0) {
@@ -210,6 +225,7 @@ public class AdminController {
 
     @PostMapping("/add-food")
     public String doAddFood(@RequestParam("Id") Integer Id, @RequestParam("Nombre") String nombre, @RequestParam("Calorias") String cal, Model model) {
+        if(!loginController.esAdmin(httpSession)) return "redirect:/";
         if(nombre.isEmpty() || cal.isEmpty()) {
             return "redirect:/admin/food?id=0";
         }
@@ -224,13 +240,17 @@ public class AdminController {
 
     @PostMapping("/delete-food")
     public String doDeleteFood(@RequestParam("Id") Integer id, Model model) {
+        if(!loginController.esAdmin(httpSession)) return "redirect:/";
         comidaService.delete(id);
 
         return "redirect:/admin/food?id=0";
     }
 
     @PostMapping("/food/filter")
-    public String doFoodFilter(@RequestParam("nombre") String nombre, @RequestParam("calorias") int calorias, Model model) {
+    public String doFoodFilter(@RequestParam("nombre") String nombre, @RequestParam(value = "calorias",required = false) Integer calorias, Model model) {
+        if(!loginController.esAdmin(httpSession)) return "redirect:/";
+        if (calorias == null) calorias = 0;
+
         List<ComidaDTO> comidas = comidaService.filterComida(nombre, calorias);
 
         model.addAttribute("comidas", comidas);
@@ -250,6 +270,7 @@ public class AdminController {
     public String doAssingment(@RequestParam("id") Integer id, @RequestParam(value = "id_propio",required = false) Integer id_trabajador_propio,
                                @RequestParam(value = "id_nuevo",required = false) Integer id_trabajdor_nuevo, Model model) {
 
+        if(!loginController.esAdmin(httpSession)) return "redirect:/";
         List<UsuarioDTO> clientes = usuarioService.findAllByRol(5); // ID del rol. TODO enumerado
         List<UsuarioDTO> todos_trabajadores = new ArrayList<>();
         Set<UsuarioDTO> cliente_trabajadores = new HashSet<>();
@@ -290,6 +311,7 @@ public class AdminController {
 
     @PostMapping("/add_trabajador_propio")
     public String doAddTrabajdorPropio(@RequestParam("clienteId") Integer clienteId, @RequestParam("trabajadorId") Integer trabajadorId, Model model) {
+        if(!loginController.esAdmin(httpSession)) return "redirect:/";
         UsuarioDTO trabajador = usuarioService.findById(trabajadorId);
         UsuarioDTO cliente = usuarioService.findById(clienteId);
         if(trabajador.getRol().getId() == 4){
@@ -308,6 +330,7 @@ public class AdminController {
 
     @PostMapping("/delete_trabajador_propio")
     public String doDeleteTrabajdorPropio(@RequestParam("clienteId") Integer clienteId, @RequestParam("trabajadorId") Integer trabajadorId, Model model) {
+        if(!loginController.esAdmin(httpSession)) return "redirect:/";
         UsuarioDTO trabajador = usuarioService.findById(trabajadorId);
         UsuarioDTO cliente = usuarioService.findById(clienteId);
         if(trabajador.getRol().getId() == 4){
@@ -326,6 +349,7 @@ public class AdminController {
 
     @PostMapping("/assignment/filter")
     public String doAssignmentFilter(@RequestParam("nombre") String nombre, Model model) {
+        if(!loginController.esAdmin(httpSession)) return "redirect:/";
         List<UsuarioDTO> clientes = usuarioService.filterUsers(nombre,"","cliente");
 
         model.addAttribute("clientes", clientes);
@@ -340,6 +364,7 @@ public class AdminController {
 
     @GetMapping("/exercisetype")
     public String doEType(@RequestParam("id") Integer id, Model model) {
+        if(!loginController.esAdmin(httpSession)) return "redirect:/";
         List<TipoEjercicioDTO> tipos = tipoEjercicioService.findAll();
         TipoEjercicioDTO tipo = null;
         if(id > 0) {
@@ -357,6 +382,7 @@ public class AdminController {
 
     @PostMapping("/add-exercisetype")
     public String doAddEType(@RequestParam("Id") Integer Id, @RequestParam("Nombre") String nombre, @RequestParam("Metrica1") String m1, @RequestParam("Metrica2") String m2, Model model) {
+        if(!loginController.esAdmin(httpSession)) return "redirect:/";
         if(nombre.isEmpty() || m1.isEmpty()) {
             return "redirect:/admin/exercisetype?id=0";
         }
@@ -372,6 +398,7 @@ public class AdminController {
 
     @PostMapping("/delete-exercisetype")
     public String doDeleteEType(@RequestParam("Id") Integer id, Model model) {
+        if(!loginController.esAdmin(httpSession)) return "redirect:/";
         tipoEjercicioService.delete(id);
 
         return "redirect:/admin/exercisetype?id=0";
@@ -379,6 +406,7 @@ public class AdminController {
 
     @PostMapping("/exercisetype/filter")
     public String doETypeFilter(@RequestParam("nombre") String nombre, @RequestParam("metrica1") String m1, @RequestParam("metrica2") String m2, Model model) {
+        if(!loginController.esAdmin(httpSession)) return "redirect:/";
         List<TipoEjercicioDTO> tipos = tipoEjercicioService.filterTipos(nombre, m1, m2);
 
         model.addAttribute("tipos", tipos);

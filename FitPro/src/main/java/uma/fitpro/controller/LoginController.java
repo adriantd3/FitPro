@@ -53,4 +53,10 @@ public class LoginController {
     protected boolean estaAutenticado(HttpSession session) {
         return session.getAttribute("user") != null;
     }
+
+    protected boolean esAdmin(HttpSession session) {
+        UsuarioDTO usuario = (UsuarioDTO) session.getAttribute("user");
+        if(usuario == null) return false;
+        return usuario.getRol().getNombre().equals("admin");
+    }
 }

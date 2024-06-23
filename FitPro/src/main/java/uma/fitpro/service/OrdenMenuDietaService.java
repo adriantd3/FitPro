@@ -43,8 +43,7 @@ public class OrdenMenuDietaService extends DTOService{
     public List<OrdenMenuDietaDTO> buscarOrdenMenuDieta(DietaDTO dieta) {
         List<OrdenMenuDietaDTO> ordenMenuDietasDTO = new ArrayList<>();
         if(dieta!=null){
-            List<OrdenMenuDieta> ordenMenuDietasList = ordenMenuDietaRepository.findAllById(dieta.getOrdenMenuDietaList());
-            ordenMenuDietasDTO = this.entidadesADTO(ordenMenuDietasList);
+            ordenMenuDietasDTO = dieta.getOrdenMenuDietaList();
             Collections.sort(ordenMenuDietasDTO);
         }
         return ordenMenuDietasDTO;

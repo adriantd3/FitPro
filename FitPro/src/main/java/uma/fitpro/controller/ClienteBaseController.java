@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/cliente")
 public class ClienteBaseController {
 
-    @GetMapping("")
+    @GetMapping("/")
     public String doHome(HttpSession session) {
         if (session.getAttribute("user") == null) {
             return "redirect:/";

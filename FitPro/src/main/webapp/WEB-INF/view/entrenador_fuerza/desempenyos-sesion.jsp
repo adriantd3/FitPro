@@ -4,10 +4,11 @@
 <%@ page import="java.util.Map" %>
 <%@ page import="uma.fitpro.dto.SerieDTO" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="uma.fitpro.dto.DesempenyoSerieDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     DesempenyoSesionDTO desempenyoSesion = (DesempenyoSesionDTO) request.getAttribute("desempenyoSesion");
-    Map<EjercicioDTO, List<SerieDTO>> tablas = (Map<EjercicioDTO, List<SerieDTO>>) request.getAttribute("tablas");
+    Map<EjercicioDTO, List<DesempenyoSerieDTO>> tablas = (Map<EjercicioDTO, List<DesempenyoSerieDTO>>) request.getAttribute("tablas");
     Map<EjercicioDTO, List<SerieDTO>> tablasEsperadas = (Map<EjercicioDTO, List<SerieDTO>>) request.getAttribute("tablasEsperadas");
 %>
 <html>
@@ -38,15 +39,18 @@
         <tbody>
         <%
             List<SerieDTO> seriesEsperadas = tablasEsperadas.get(ejercicio);
-            List<SerieDTO> seriesDesmpenyo = tablas.get(ejercicio) == null ? new ArrayList<>() : tablas.get(ejercicio);
+            List<DesempenyoSerieDTO> seriesDesmpenyo = tablas.get(ejercicio) == null ? new ArrayList<>() : tablas.get(ejercicio);
+            System.out.println("ESPERADO: " + seriesEsperadas);
+            System.out.println("DESEMPEÑO: "+seriesDesmpenyo);
             for(int i = 0; i < seriesEsperadas.size(); i++){
-                SerieDTO serie ;
                 if(i < seriesDesmpenyo.size()) {
-                    serie = seriesDesmpenyo.get(i);
+                    DesempenyoSerieDTO serie = seriesDesmpenyo.get(i);
                     SerieDTO serieEsperada = seriesEsperadas.get(i);
                     String color = "#77de77";
+                    System.out.println(serie.getMetrica1() + " - " + serie.getMetrica2() + " vs " + serieEsperada.getMetrica1() + " - " + serieEsperada.getMetrica2());
                     if(serie.getMetrica1() < serieEsperada.getMetrica1() || serie.getMetrica2() < serieEsperada.getMetrica2()){
-                        color = "#e15959";
+                        System.out.println("cambia color");
+                        color = "#e27070";
                     }
         %>
         <tr>
@@ -55,7 +59,7 @@
         </tr>
         <%
             }else{
-                    serie = seriesEsperadas.get(i);
+                    SerieDTO serie = seriesEsperadas.get(i);
         %>
         <tr>
             <td style="background-color: #888888" class="fst-italic"><%=serie.getMetrica1()%></td>

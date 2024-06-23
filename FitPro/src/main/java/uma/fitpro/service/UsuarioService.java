@@ -161,7 +161,7 @@ public class UsuarioService extends DTOService{
         });
         usuario.setEntrenadores(entrenadores);
 
-        Set<Usuario> diestistas = new HashSet<>();
+        List<Usuario> diestistas = new ArrayList<>();
         usuarioDTO.getDiestistasCliente().forEach(dietista -> {
             Usuario diestistaUsuario = this.usuarioRepository.findById(dietista.getId()).orElse(null);
             diestistas.add(diestistaUsuario);

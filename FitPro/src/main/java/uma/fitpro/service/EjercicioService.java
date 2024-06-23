@@ -88,11 +88,13 @@ public class EjercicioService extends DTOService{
         ejercicioRepository.deleteById(id);
     }
 
-    public List<EjercicioDTO> filterExercise(String nombre,String tipo,String grupo){
-        List<Ejercicio> ejercicios = this.ejercicioRepository.filterExercise(nombre,tipo,grupo);
+    public List<EjercicioDTO> filterExercise(String nombre,String tipo,String grupo) {
+        List<Ejercicio> ejercicios = this.ejercicioRepository.filterExercise(nombre, tipo, grupo);
         List<EjercicioDTO> ejerciciosDTO = new ArrayList<>();
         ejercicios.forEach(ejercicio -> ejerciciosDTO.add(ejercicio.toDTO()));
         return ejerciciosDTO;
+    }
+    
     public List<EjercicioDTO> filtrarEjercicioPorNombreMusculoYTipo(String nombre_ejercicio, String musculo, String tipo) {
         List<Ejercicio> ejercicios = ejercicios = ejercicioRepository.filtrarEjercicioPorNombreMusculoYTipo(nombre_ejercicio, musculo, tipo);
         return this.entidadesADTO(ejercicios);

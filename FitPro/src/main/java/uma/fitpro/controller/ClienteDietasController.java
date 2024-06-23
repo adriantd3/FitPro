@@ -12,6 +12,10 @@ import uma.fitpro.ui.FiltroDesempenyoComida;
 
 import java.util.List;
 
+/**
+ * @author Adrián Torremocha Doblas
+ */
+
 @Controller
 @RequestMapping("/cliente/dietas")
 public class ClienteDietasController {

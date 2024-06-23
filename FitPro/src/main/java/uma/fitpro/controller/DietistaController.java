@@ -14,6 +14,11 @@ import uma.fitpro.ui.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author José Ángel Bueno Ruiz
+ */
+
+
 @Controller
 @RequestMapping("/dietista")
 public class DietistaController {

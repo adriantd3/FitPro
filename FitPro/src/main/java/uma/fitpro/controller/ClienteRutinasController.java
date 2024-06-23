@@ -12,6 +12,10 @@ import uma.fitpro.ui.FiltroSerie;
 
 import java.util.*;
 
+/**
+ * @author Adrián Torremocha Doblas
+ */
+
 @Controller
 @RequestMapping("/cliente/rutinas")
 public class ClienteRutinasController {

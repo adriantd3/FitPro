@@ -17,7 +17,7 @@ import java.util.*;
 //////////////////////////////////////////////////////
 
 /**
- * @author Victor Perez Armenta
+ * @author Víctor Pérez Armenta
  */
 @Controller
 @RequestMapping("/entrenador_fuerza")

@@ -27,7 +27,7 @@
     <h1 class="header-text text-center"><%=sesion.getNombre()%></h1> <!-- Mostrar informacion relevante en la X-->
 </header>
 
-<section class="mt-3 ms-3 h-100 d-flex">
+<section class="mt-3 ms-3 h-auto d-flex">
     <div class="w-50">
     <%
         for (EjercicioDTO ejercicio : tablas.keySet()){
@@ -103,7 +103,7 @@
     %>
 </section>
 
-<footer class="p-3 sticky-bottom justify-content-end" style="background-color: #434343">
+<footer class="footer p-3 sticky-bottom justify-content-end" style="background-color: #434343">
     <button class="btn btn-danger" onclick="window.location.href='/entrenador_fuerza/borrar-sesion?sesion=<%=sesion.getId()%>'">
         Borrar
     </button>

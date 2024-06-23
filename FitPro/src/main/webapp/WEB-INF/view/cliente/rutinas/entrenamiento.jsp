@@ -4,13 +4,11 @@
 <%@ page import="uma.fitpro.dto.DesempenyoSerieDTO" %>
 <%@ page import="uma.fitpro.dto.DesempenyoSesionDTO" %>
 <%@ page import="uma.fitpro.dto.EjercicioDTO" %>
-<%@ page import="uma.fitpro.utils.UtilityFunctions" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%
     DesempenyoSesionDTO desempenyoSesion = (DesempenyoSesionDTO) request.getAttribute("desempenyo_sesion");
     Map<EjercicioDTO, List<DesempenyoSerieDTO>> series_dict = (Map<EjercicioDTO, List<DesempenyoSerieDTO>>) request.getAttribute("des_dict");
-    Map<Integer, List<String>> params = UtilityFunctions.getEjercicioParametros();
 %>
 
 <html>
@@ -36,8 +34,6 @@
             int countEjercicio = 0;
             for (EjercicioDTO ejercicio : series_dict.keySet()) {
                 countEjercicio++;
-                int tipo = ejercicio.getTipo().getId();
-                List<String> cols = params.get(tipo);
         %>
         <section class="ejercicio<%=countEjercicio%>">
             <a href="ejercicio?id=<%=ejercicio.getId()%>"
@@ -47,9 +43,9 @@
                 <thead class="table-dark">
                 <tr>
                     <th scope="col">Serie</th>
-                    <th scope="col"><%=cols.get(0)%>
+                    <th scope="col"><%=ejercicio.getTipo().getMetrica1()%>
                     </th>
-                    <th scope="col"><%=cols.get(1)%>
+                    <th scope="col"><%=ejercicio.getTipo().getMetrica2()%>
                     </th>
                 </tr>
                 </thead>

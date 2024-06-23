@@ -7,7 +7,6 @@
 <%
     SesionDTO sesion = (SesionDTO) request.getAttribute("sesion");
     EjercicioDTO ejercicio = (EjercicioDTO) request.getAttribute("ejercicio");
-    Map<Integer, List<String>> ejercicioParametros = (Map<Integer, List<String>>) request.getAttribute("ejercicioParametros");
 %>
 <!doctype html>
 <html lang="en">
@@ -23,19 +22,15 @@
 <body>
 <h1 class="ejemplo">Nueva serie de <%=ejercicio.getNombre()%></h1>
 <form method="post" action="/entrenador_cross_training/crear_serie">
-    <%
-        int n = 1;
-        for (String elemento : ejercicioParametros.get(ejercicio.getTipo().getId())) {
-
-    %>
     <div  style="width: 300px; margin-left: 40px" class="input-group mb-3">
-        <span class="input-group-text btn btn-success"><%=elemento%></span>
-        <input type="number" step="0.1" required name="param<%=n%>" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+        <span class="input-group-text btn btn-success"><%=ejercicio.getTipo().getMetrica1()%></span>
+        <input type="number" step="0.1" required name="param1" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
     </div>
-    <%
-            n++;
-        }
-    %>
+    <div  style="width: 300px; margin-left: 40px" class="input-group mb-3">
+        <span class="input-group-text btn btn-success"><%=ejercicio.getTipo().getMetrica2()%></span>
+        <input type="number" step="0.1" required name="param2" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+    </div>
+
     <input type="hidden" name="sesion" value="<%= sesion.getId() %>">
     <input type="hidden" name="ejercicio" value="<%= ejercicio.getId() %>">
     <div class="div-nueva-serie">

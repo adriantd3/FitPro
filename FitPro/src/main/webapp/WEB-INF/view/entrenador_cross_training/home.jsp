@@ -19,7 +19,7 @@
 <header>
     <%
         String bienvenida = "";
-        if (user.isSexo()){
+        if (user.getSexo() == 1){
             bienvenida = "Bienvenido, ";
         }else {
             bienvenida = "Bienvenida, ";

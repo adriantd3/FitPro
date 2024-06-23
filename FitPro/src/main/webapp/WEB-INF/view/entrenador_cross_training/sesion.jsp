@@ -1,13 +1,11 @@
 <%// AUTOR: Ezequiel Sánchez García (100%)%>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.TreeMap" %>
-<%@ page import="java.util.Map" %>
 <%@ page import="uma.fitpro.dto.SesionDTO" %>
 <%@ page import="uma.fitpro.dto.EjercicioDTO" %>
 <%@ page import="uma.fitpro.dto.SerieDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    Map<Integer, List<String>> ejercicioParametros = (Map<Integer, List<String>>) request.getAttribute("ejercicioParametros");
     SesionDTO sesion = (SesionDTO) request.getAttribute("sesion");
     TreeMap<EjercicioDTO, List<SerieDTO>> mapa = (TreeMap<EjercicioDTO, List<SerieDTO>>) request.getAttribute("mapa");
     session.setAttribute("sesion", sesion);
@@ -51,8 +49,8 @@
                 </tr>
                 <tr>
                     <th scope="col">Serie</th>
-                    <th scope="col"><%=ejercicioParametros.get(e.getTipo().getId()).get(0)%></th>
-                    <th scope="col"><%=ejercicioParametros.get(e.getTipo().getId()).get(1)%></th>
+                    <th scope="col"><%=e.getTipo().getMetrica1()%></th>
+                    <th scope="col"><%=e.getTipo().getMetrica2()%></th>
                 </tr>
                 </thead>
                 <tbody>

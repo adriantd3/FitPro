@@ -4,7 +4,6 @@
 <%@ page import="uma.fitpro.dto.*" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    Map<Integer, List<String>> ejercicioParametros = (Map<Integer, List<String>>) request.getAttribute("ejercicioParametros");
     DesempenyoSesionDTO desempenyoSesion = (DesempenyoSesionDTO) request.getAttribute("desempenyoSesion");
     Map<EjercicioDTO, List<DesempenyoSerieDTO>> mapaDesempenyoSesion = (Map<EjercicioDTO, List<DesempenyoSerieDTO>>) request.getAttribute("mapaDesempenyoSesion");
     Map<EjercicioDTO, List<SerieDTO>> mapaSesionOriginal = (Map<EjercicioDTO, List<SerieDTO>>) request.getAttribute("mapaSesionOriginal");
@@ -52,8 +51,8 @@
                     </tr>
                     <tr>
                         <th scope="col">Serie</th>
-                        <th scope="col"><%=ejercicioParametros.get(e.getTipo().getId()).get(0)%></th>
-                        <th scope="col"><%=ejercicioParametros.get(e.getTipo().getId()).get(1)%></th>
+                        <th scope="col"><%=e.getTipo().getMetrica1()%></th>
+                        <th scope="col"><%=e.getTipo().getMetrica2()%></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -99,8 +98,8 @@
                     </tr>
                     <tr>
                         <th scope="col">Serie</th>
-                        <th scope="col"><%=ejercicioParametros.get(e.getTipo().getId()).get(0)%></th>
-                        <th scope="col"><%=ejercicioParametros.get(e.getTipo().getId()).get(1)%></th>
+                        <th scope="col"><%=e.getTipo().getMetrica1()%></th>
+                        <th scope="col"><%=e.getTipo().getMetrica2()%></th>
                     </tr>
                     </thead>
                     <tbody>

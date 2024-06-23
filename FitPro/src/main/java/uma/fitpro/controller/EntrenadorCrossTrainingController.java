@@ -15,7 +15,6 @@ import uma.fitpro.service.*;
 import java.util.*;
 
 import static uma.fitpro.utils.UtilityFunctions.getDiasSemana;
-import static uma.fitpro.utils.UtilityFunctions.getEjercicioParametros;
 
 @RequestMapping("/entrenador_cross_training")
 @Controller
@@ -158,12 +157,10 @@ public class EntrenadorCrossTrainingController {
                 desempenyoSesionService.buscarDesempenyoSesion(id_desempenyo_sesion);
         Map<EjercicioDTO,List<DesempenyoSerieDTO>> mapaDesempenyoSesion =
                 desempenyoSerieService.buscarDesempenyoSeriesDictionary(desempenyoSesion.getDesempenyoSeries());
-        Map<Integer,List<String>> ejercicioParametros = getEjercicioParametros();
 
         SesionDTO sesionOriginal = sesionService.buscarSesion(desempenyoSesion.getIdSesion());
         Map<EjercicioDTO, List<SerieDTO>> mapaSesionOriginal = sesionService.getEjercicioYSeries(sesionOriginal);
 
-        model.addAttribute("ejercicioParametros", ejercicioParametros);
         model.addAttribute("mapaDesempenyoSesion", mapaDesempenyoSesion);
         model.addAttribute("mapaSesionOriginal", mapaSesionOriginal);
         model.addAttribute("desempenyoSesion", desempenyoSesion);
@@ -302,9 +299,7 @@ public class EntrenadorCrossTrainingController {
         }
         SesionDTO sesion = sesionService.buscarSesion(id_sesion);
         Map<EjercicioDTO, List<SerieDTO>> mapa = sesionService.getEjercicioYSeries(sesion);
-        Map<Integer,List<String>> ejercicioParametros = getEjercicioParametros();
 
-        model.addAttribute("ejercicioParametros", ejercicioParametros);
         model.addAttribute("sesion", sesion);
         model.addAttribute("mapa", mapa);
 
@@ -363,9 +358,7 @@ public class EntrenadorCrossTrainingController {
         SesionDTO sesion = sesionService.buscarSesion(id_sesion);
         Map<EjercicioDTO, List<SerieDTO>> mapa = sesionService.getEjercicioYSeries(sesion);
         ejercicioService.anyadirEjercicio(mapa, ejercicio);
-        Map<Integer,List<String>> ejercicioParametros = getEjercicioParametros();
 
-        model.addAttribute("ejercicioParametros", ejercicioParametros);
         model.addAttribute("sesion", sesion);
         model.addAttribute("mapa", mapa);
 
@@ -394,9 +387,7 @@ public class EntrenadorCrossTrainingController {
         }
         SesionDTO sesion = sesionService.buscarSesion(id_sesion);
         EjercicioDTO ejercicio = ejercicioService.buscarEjercicio(id_ejercicio);
-        Map<Integer,List<String>> ejercicioParametros = getEjercicioParametros();
 
-        model.addAttribute("ejercicioParametros", ejercicioParametros);
         model.addAttribute("ejercicio", ejercicio);
         model.addAttribute("sesion", sesion);
 
@@ -428,15 +419,11 @@ public class EntrenadorCrossTrainingController {
         }
         SerieDTO serie = serieService.buscarSerie(id_serie);
         SesionDTO sesion = sesionService.buscarSesion(id_sesion);
-        Map<Integer,List<String>> ejercicioParametros = getEjercicioParametros();
-        String ejercicio = ejercicioService.buscarEjercicio(serie.getEjercicio()).getNombre();
-        Integer tipoEjercicio = ejercicioService.buscarEjercicio(serie.getEjercicio()).getTipo().getId();
+        EjercicioDTO ejercicio = ejercicioService.buscarEjercicio(serie.getEjercicio());
 
-        model.addAttribute("ejercicioParametros", ejercicioParametros);
         model.addAttribute("sesion", sesion);
         model.addAttribute("serie", serie);
         model.addAttribute("ejercicio", ejercicio);
-        model.addAttribute("tipoEjercicio", tipoEjercicio);
 
         return "entrenador_cross_training/editar_serie";
     }

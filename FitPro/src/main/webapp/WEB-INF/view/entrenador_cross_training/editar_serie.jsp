@@ -1,15 +1,12 @@
 <%// AUTOR: Ezequiel Sánchez García (100%)%>
-<%@ page import="java.util.List" %>
-<%@ page import="java.util.Map" %>
 <%@ page import="uma.fitpro.dto.SesionDTO" %>
 <%@ page import="uma.fitpro.dto.SerieDTO" %>
+<%@ page import="uma.fitpro.dto.EjercicioDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     SesionDTO sesion = (SesionDTO) request.getAttribute("sesion");
     SerieDTO serie = (SerieDTO) request.getAttribute("serie");
-    Map<Integer, List<String>> ejercicioParametros = (Map<Integer, List<String>>) request.getAttribute("ejercicioParametros");
-    String ejercicio = (String) request.getAttribute("ejercicio");
-    Integer tipoEjercicio = (Integer) request.getAttribute("tipoEjercicio");
+    EjercicioDTO ejercicio = (EjercicioDTO) request.getAttribute("ejercicio");
 %>
 <!doctype html>
 <html lang="en">
@@ -23,23 +20,21 @@
     <style><%@include file="css/common.css"%></style>
 </head>
 <body>
-<h1 class="ejemplo">Editar serie de <%=ejercicio%></h1>
+<h1 class="ejemplo">Editar serie de <%=ejercicio.getNombre()%></h1>
 <form method="post" action="/entrenador_cross_training/guardar_serie">
     <%
-        int n = 1;
         String value1 = serie.getMetrica1().toString();
         String value2 = serie.getMetrica2().toString();
-        for (String elemento : ejercicioParametros.get(tipoEjercicio)) {
-
     %>
     <div  style="width: 300px; margin-left: 40px" class="input-group mb-3">
-        <span class="input-group-text btn btn-success"><%=elemento%></span>
-        <input type="number" step="0.1" required name="param<%=n%>" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="<%=n == 1 ? value1: value2%>">
+        <span class="input-group-text btn btn-success"><%=ejercicio.getTipo().getMetrica1()%></span>
+        <input type="number" step="0.1" required name="param1" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="<%=value1%>">
     </div>
-    <%
-            n++;
-        }
-    %>
+    <div  style="width: 300px; margin-left: 40px" class="input-group mb-3">
+        <span class="input-group-text btn btn-success"><%=ejercicio.getTipo().getMetrica2()%></span>
+        <input type="number" step="0.1" required name="param2" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="<%=value2%>">
+    </div>
+
     <input type="hidden" name="sesion" value="<%= sesion.getId() %>">
     <input type="hidden" name="serie" value="<%= serie.getId() %>">
     <div class="div-nueva-serie">

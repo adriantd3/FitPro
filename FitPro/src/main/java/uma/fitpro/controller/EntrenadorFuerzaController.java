@@ -71,10 +71,11 @@ public class EntrenadorFuerzaController {
         }
         List<RutinaDTO> rutinas;
         UsuarioDTO entrenador = (UsuarioDTO) session.getAttribute("user");
-        if(!entrenador.getClientesEntrenador().contains(cliente_id)){
-            return "redirect:/salir";
-        }
+
         if (cliente_id != null) {
+            if(!entrenador.getClientesEntrenador().contains(cliente_id)){
+                return "redirect:/salir";
+            }
             UsuarioDTO cliente = usuarioService.findById(cliente_id);
             session.setAttribute("cliente", cliente);
             List<Integer> rutinasIdCliente  = cliente.getRutinasCliente();

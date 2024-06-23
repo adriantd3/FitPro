@@ -50,6 +50,16 @@ public class EjercicioService extends DTOService{
         return this.entidadesADTO(ejercicios);
     }
 
+    public List<EjercicioDTO> getEjerciciosFuerza(){
+        List<Ejercicio> ejercicios = ejercicioRepository.findAllByTipoFuerza();
+        return this.entidadesADTO(ejercicios);
+    }
+
+    public List<EjercicioDTO> getEjerciciosFuerzaFiltrados(String nombre, String grupoMuscular){
+        List<Ejercicio> ejercicios = ejercicioRepository.filtrarEjercicioPorNombreYGrupoMuscular(nombre, grupoMuscular);
+        return this.entidadesADTO(ejercicios);
+    }
+
     public List<TipoEjercicioDTO> listarTiposEjercicio(){
         List<TipoEjercicio> tiposEjercicio = tipoEjercicioRepository.findAll();
         return this.entidadesADTO(tiposEjercicio);

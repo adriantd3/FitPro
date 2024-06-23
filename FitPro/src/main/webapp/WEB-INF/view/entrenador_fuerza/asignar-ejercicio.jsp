@@ -2,7 +2,8 @@
 <%@ page import="java.util.List" %>
 <%@ page import="uma.fitpro.dto.EjercicioDTO" %>
 <%@ page import="uma.fitpro.dto.SesionDTO" %>
-<%@ page import="uma.fitpro.dto.SerieDTO" %><%--
+<%@ page import="uma.fitpro.dto.SerieDTO" %>
+<%@ page import="uma.fitpro.ui.FiltroEjercicio" %><%--
   Created by IntelliJ IDEA.
   User: victor
   Date: 12/4/24
@@ -13,9 +14,7 @@
 
 <%
     SesionDTO sesion = (SesionDTO) request.getAttribute("sesion");
-    SerieDTO serie = (SerieDTO) request.getAttribute("serie");
     List<EjercicioDTO> ejercicios = (List<EjercicioDTO>) request.getAttribute("ejercicios");
-    System.out.println(ejercicios.size());
     EjercicioDTO ejercicio = new EjercicioDTO();
 %>
 <html>
@@ -36,6 +35,18 @@
 </form>
 
 <section class="mt-3 ms-3 h-100">
+    <div class="d-flex justify-content-start">
+        <form:form method="post" action="/entrenador_fuerza/asignar-ejercicio/filtro"
+                   modelAttribute="filtroEjercicio" cssClass="p-2" cssStyle="border: 1px solid white; border-radius: 10px">
+            <input type="hidden" name="sesion" value="<%=sesion.getId()%>">
+            <form:label path="nombre" cssStyle="color: white">Nombre: </form:label>
+            <form:input cssClass="me-3" type="text" path="nombre" id="nombre"/>
+
+            <form:label path="grupoMuscular" cssStyle="color: white">Grupo Muscular: </form:label>
+            <form:input type="text" path="grupoMuscular" id="grupoMuscular"/>
+            <input type="submit" value="Filtrar" class="btn btn-info">
+        </form:form>
+    </div>
     <ul class="list-group m-3">
         <%
             for(EjercicioDTO ej : ejercicios){

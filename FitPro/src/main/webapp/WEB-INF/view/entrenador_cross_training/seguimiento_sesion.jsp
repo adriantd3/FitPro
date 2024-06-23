@@ -33,6 +33,11 @@
     <section class="sesion-table-container scrollable-content">
         <section class="seguimiento-sesion-container">
             <div><h3 class="h3-seguimiento-sesion">Sesión original</h3></div>
+            <% if (mapaSesionOriginal.keySet().isEmpty()) { %>
+            <section class="table-container">
+                <section class="mensaje-alerta"><h2>Esta sesión no tiene ejercicios actualmente</h2></section>
+            </section>
+            <% } %>
             <%
                 for (EjercicioDTO e : mapaSesionOriginal.keySet()){
             %>
@@ -77,7 +82,7 @@
             <div><h3 class="h3-seguimiento-sesion">Desempeño de la sesión</h3></div>
             <% if (mapaDesempenyoSesion.keySet().isEmpty()) { %>
             <section class="table-container">
-                <section class="mensaje-alerta"><h2>No se ha podido encontrar el desempeño para esta sesión.</h2></section>
+                <section class="mensaje-alerta"><h2>No se ha podido encontrar el desempeño para esta sesión</h2></section>
             </section>
             <% } %>
             <%

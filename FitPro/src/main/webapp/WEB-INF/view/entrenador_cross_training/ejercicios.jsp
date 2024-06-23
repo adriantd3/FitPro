@@ -99,10 +99,13 @@
 <h5 class="h5-ejercicios">Escoge el ejercicio a añadir:</h5>
 <section class="ejercicios-scrollable-section">
     <div class="div-ejercicio-buttons">
+        <% if (ejercicios.isEmpty()) { %>
+        <section class="seccion-alerta">
+            <section class="mensaje-alerta"><h2>No se ha encontrado ningún ejercicio</h2></section>
+        </section>
+        <% } %>
         <%
             for (EjercicioDTO e : ejercicios){
-
-
         %>
         <form method="post" action="/entrenador_cross_training/anyadir_ejercicio">
             <input type="hidden" name="sesion" value="<%=sesion.getId()%>">

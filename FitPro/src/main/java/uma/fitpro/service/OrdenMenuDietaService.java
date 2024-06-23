@@ -15,6 +15,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * @author José Ángel Bueno Ruiz (100%)
+ */
+
 @Service
 public class OrdenMenuDietaService extends DTOService{
 

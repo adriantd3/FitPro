@@ -7,6 +7,10 @@ import uma.fitpro.entity.DesempenyoComida;
 
 import java.util.List;
 
+/**
+ * @author Adrián Torremocha Doblas (100%)
+ */
+
 public interface DesempenyoComidaRepository extends JpaRepository<DesempenyoComida,Integer> {
 
     @Query("SELECT dc FROM DesempenyoComida dc WHERE dc.desempenyoMenu.id = :id order by dc.comida.id asc, dc.id asc")

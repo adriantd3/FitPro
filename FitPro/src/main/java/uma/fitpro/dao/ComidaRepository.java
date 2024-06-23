@@ -10,6 +10,11 @@ import java.util.List;
 
 import java.util.List;
 
+/**
+ * @author David Bueno Carmona (50%)
+ * @author José Ángel Bueno Ruiz (50%)
+ */
+
 public interface ComidaRepository extends JpaRepository<Comida, Integer> {
 
     @Query("select c from Comida c where c.nombre like concat('%', :nombre, '%')  and c.calorias >= :calorias")

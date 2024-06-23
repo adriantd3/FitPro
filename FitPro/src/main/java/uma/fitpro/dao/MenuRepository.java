@@ -10,6 +10,10 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * @author José Ángel Bueno Ruiz (100%)
+ */
+
 public interface MenuRepository extends JpaRepository<Menu,Integer> {
 
     @Query("select m from Menu m where m.nombre like concat('%', :nombre, '%') and m.calorias>=:kcal and m.fechaCreacion >= :fecha")

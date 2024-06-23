@@ -16,6 +16,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * @author Adrián Torremocha Doblas (20%)
+ * @author José Ángel Bueno Ruíz (80%)
+ */
+
 @Service
 public class DietaService extends DTOService{
 

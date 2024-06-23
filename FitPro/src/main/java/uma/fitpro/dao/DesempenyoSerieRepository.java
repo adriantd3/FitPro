@@ -7,6 +7,10 @@ import uma.fitpro.entity.DesempenyoSerie;
 
 import java.util.List;
 
+/**
+ * @author Adrián Torremocha Doblas (100%)
+ */
+
 public interface DesempenyoSerieRepository extends JpaRepository<DesempenyoSerie, Integer> {
     @Query("select d from DesempenyoSerie d order by d.ejercicio.id asc, d.id asc")
     public List<DesempenyoSerie> findAllOrdered();

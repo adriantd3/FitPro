@@ -4,6 +4,10 @@ import uma.fitpro.dto.DTO;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Adrián Torremocha Doblas (100%)
+ */
+
 public abstract class DTOService<DTOClass, EntityClass> {
     /**
         * Método que convierte una lista de entidades en una lista de DTOs

@@ -12,6 +12,11 @@ import uma.fitpro.ui.FiltroDesempenyoComida;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Adrián Torremocha Doblas (80%)
+ * @author José Ángel Bueno Ruiz (20%)
+ */
+
 @Service
 public class DesempenyoComidaService extends DTOService{
 

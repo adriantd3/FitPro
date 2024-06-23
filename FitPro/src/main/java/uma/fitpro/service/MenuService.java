@@ -12,6 +12,10 @@ import uma.fitpro.ui.FiltroMenu;
 
 import java.util.List;
 
+/**
+ * @author José Ángel Bueno Ruiz (100%)
+ */
+
 @Service
 public class MenuService extends DTOService{
 

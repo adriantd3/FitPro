@@ -7,6 +7,10 @@ import org.springframework.transaction.annotation.Transactional;
 import uma.fitpro.entity.OrdenMenuDieta;
 import uma.fitpro.entity.OrdenMenuDietaId;
 
+/**
+ * @author José Ángel Bueno Ruiz (100%)
+ */
+
 public interface OrdenMenuDietaRepository extends JpaRepository<OrdenMenuDieta, OrdenMenuDietaId> {
 
     @Transactional

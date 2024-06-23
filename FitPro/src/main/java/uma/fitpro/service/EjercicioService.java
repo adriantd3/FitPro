@@ -25,6 +25,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author Adrián Torremocha Doblas (25%)
+ * @author Ezequiel Sánchez García (25%)
+ * @author Víctor Pérez Armenta (25%)
+ * @author David Bueno Carmona (25%)
+ */
+
 @Service
 public class EjercicioService extends DTOService{
 

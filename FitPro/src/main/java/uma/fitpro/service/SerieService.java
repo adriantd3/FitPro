@@ -15,6 +15,11 @@ import uma.fitpro.ui.FiltroSerie;
 
 import java.util.*;
 
+/**
+ * @author Adrián Torremocha Doblas (65%)
+ * @author Ezequiel Sánchez García (35%)
+ */
+
 @Service
 public class SerieService extends DTOService{
 

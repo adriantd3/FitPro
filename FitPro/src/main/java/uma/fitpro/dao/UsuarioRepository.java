@@ -7,6 +7,13 @@ import uma.fitpro.entity.Usuario;
 
 import java.util.List;
 
+/**
+ * @author Adrián Torremocha Doblas (20%)
+ * @author Ezequiel Sánchez García (20%)
+ * @author David Bueno Carmona (40%)
+ * @author José Ángel Bueno Ruiz (20%)
+ */
+
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
     @Query("select u from Usuario u where u.correo = :mail and u.contrasenya = :password")

@@ -10,6 +10,10 @@ import uma.fitpro.entity.TipoEjercicio;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author David Bueno Carmona (100%)
+ */
+
 @Service
 public class TipoEjercicioService {
 

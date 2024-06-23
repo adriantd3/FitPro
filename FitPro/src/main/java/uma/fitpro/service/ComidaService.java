@@ -16,6 +16,11 @@ import uma.fitpro.ui.FiltroComida;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author David Bueno Carmona (50%)
+ * @author José Ángel Bueno Ruiz (50%)
+ */
+
 @Service
 public class ComidaService extends DTOService{
 

@@ -6,6 +6,10 @@ import org.springframework.data.repository.query.Param;
 import uma.fitpro.entity.Serie;
 ;import java.util.List;
 
+/**
+ * @author Adrián Torremocha Doblas (100%)
+ */
+
 public interface SerieRepository extends JpaRepository<Serie, Integer> {
     @Query("select d from Serie d where d.ejercicio.nombre like %:ejercicio% and d.sesion.id = :sesion_id and " +
             "(:grupo=0 or d.ejercicio.grupoMuscular.id = :grupo) and" +

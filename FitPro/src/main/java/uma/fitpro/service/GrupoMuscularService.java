@@ -9,6 +9,10 @@ import uma.fitpro.entity.GrupoMuscular;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author David Bueno Carmona (100%)
+ */
+
 @Service
 public class GrupoMuscularService {
 

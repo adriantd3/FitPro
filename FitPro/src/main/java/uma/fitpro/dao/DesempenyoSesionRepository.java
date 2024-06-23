@@ -7,6 +7,10 @@ import uma.fitpro.entity.DesempenyoSesion;
 
 import java.util.List;
 
+/**
+ * @author Adrián Torremocha Doblas (100%)
+ */
+
 public interface DesempenyoSesionRepository extends JpaRepository<DesempenyoSesion, Integer> {
     @Query("select d from DesempenyoSesion d where d.sesion.id = :sesion_id " +
             "and d.usuario.id = :cliente_id order by d.fecha asc, d.id asc")

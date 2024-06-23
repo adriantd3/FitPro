@@ -13,6 +13,12 @@ import uma.fitpro.ui.FiltroSerie;
 
 import java.util.*;
 
+/**
+ * @author Adrián Torremocha Doblas (30%)
+ * @author Ezequiel Sánchez García (40%)
+ * @author Víctor Pérez Armenta (30%)
+ */
+
 @Service
 public class SesionService extends DTOService {
 

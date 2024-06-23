@@ -19,6 +19,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author Adrián Torremocha Doblas (100%)
+ */
+
 @Service
 public class DesempenyoSerieService extends DTOService{
 

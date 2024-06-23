@@ -10,6 +10,12 @@ import java.util.List;
 
 import java.util.List;
 
+/**
+ * @author Ezequiel Sánchez García (40%)
+ * @author Víctor Pérez Armenta (40%)
+ * @author David Bueno Carmona (20%)
+ */
+
 public interface EjercicioRepository extends JpaRepository<Ejercicio, Integer> {
 
     @Query("select e from Ejercicio e where e.nombre like concat('%', :nombre, '%')  and e.tipo.tipo like concat('%', :tipo, '%') and e.grupoMuscular.grupoMuscular like concat('%', :grupo, '%')")

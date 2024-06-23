@@ -11,6 +11,10 @@ import uma.fitpro.entity.Usuario;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author David Bueno Carmona (100%)
+ */
+
 @Service
 public class RolService extends DTOService {
 

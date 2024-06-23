@@ -9,6 +9,10 @@ import uma.fitpro.entity.TipoEjercicio;
 
 import java.util.List;
 
+/**
+ * @author David Bueno Carmona (100%)
+ */
+
 public interface TipoEjercicioRepository extends JpaRepository<TipoEjercicio, Integer> {
 
     @Query("select t from TipoEjercicio t where t.tipo like concat('%', :nombre, '%')  and t.metrica1 like concat('%', :m1, '%') and t.metrica2 like concat('%', :m2, '%')")

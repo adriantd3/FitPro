@@ -25,6 +25,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * @author Adrián Torremocha Doblas (20%)
+ * @author Ezequiel Sánchez García (20%)
+ * @author José Ángel Bueno Ruiz (20%)
+ * @author David Bueno Carmona (40%)
+ */
+
 @Service
 public class UsuarioService extends DTOService{
 

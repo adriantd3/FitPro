@@ -20,6 +20,12 @@ import java.util.Map;
 
 import static uma.fitpro.utils.UtilityFunctions.getFecha;
 
+/**
+ * @author Adrián Torremocha Doblas (30%)
+ * @author Ezequiel Sánchez García (35%)
+ * @author Víctor Pérez Armenta (35%)
+ */
+
 @Service
 public class RutinaService extends DTOService{
 

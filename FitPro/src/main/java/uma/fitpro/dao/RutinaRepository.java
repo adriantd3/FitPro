@@ -13,6 +13,11 @@ import java.util.Set;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * @author Ezequiel Sánchez García (40%)
+ * @author Víctor Pérez Armenta (60%)
+ */
+
 public interface RutinaRepository extends JpaRepository<Rutina, Integer> {
     @Query("select r from Rutina r where r.entrenador.id = :entrenador and r.id not in :rutinas")
     List<Rutina> getRestantesRutinasByEntrenador(@Param("entrenador") Integer entrenador,

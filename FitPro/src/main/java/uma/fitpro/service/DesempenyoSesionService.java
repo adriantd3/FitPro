@@ -9,6 +9,12 @@ import uma.fitpro.entity.*;
 import java.time.LocalDate;
 import java.util.*;
 
+/**
+ * @author Adrián Torremocha Doblas (60%)
+ * @author Ezequiel Sánchez García (20%)
+ * @author Víctor Pérez Armenta (20%)
+ */
+
 @Service
 public class DesempenyoSesionService extends DTOService{
 

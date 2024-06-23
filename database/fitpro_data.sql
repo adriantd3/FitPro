@@ -61,6 +61,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `desempenyo_serie` WRITE;
 /*!40000 ALTER TABLE `desempenyo_serie` DISABLE KEYS */;
+INSERT INTO `desempenyo_serie` VALUES (311,56,1,60,12),(312,56,1,65,10),(313,56,1,70,6),(314,56,2,40,15),(315,56,2,45,12),(316,56,2,50,8),(317,56,1,0,0),(318,57,3,70,10),(319,57,3,70,8),(320,57,3,75,5),(321,57,4,40,10),(322,57,4,45,8),(323,57,4,45,8),(324,57,3,1324,34),(327,58,1,23,234),(328,58,2,3432,234);
 /*!40000 ALTER TABLE `desempenyo_serie` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -70,6 +71,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `desempenyo_sesion` WRITE;
 /*!40000 ALTER TABLE `desempenyo_sesion` DISABLE KEYS */;
+INSERT INTO `desempenyo_sesion` VALUES (56,12,1,'2024-06-23',1),(57,12,2,'2024-06-23',1),(58,10,4,'2024-06-23',1);
 /*!40000 ALTER TABLE `desempenyo_sesion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -98,6 +100,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `dietista_cliente` WRITE;
 /*!40000 ALTER TABLE `dietista_cliente` DISABLE KEYS */;
+INSERT INTO `dietista_cliente` VALUES (5,12);
 /*!40000 ALTER TABLE `dietista_cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -117,6 +120,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `entrenador_cliente` WRITE;
 /*!40000 ALTER TABLE `entrenador_cliente` DISABLE KEYS */;
+INSERT INTO `entrenador_cliente` VALUES (3,10),(3,12),(4,12);
 /*!40000 ALTER TABLE `entrenador_cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -156,7 +160,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `orden_sesion_rutina` WRITE;
 /*!40000 ALTER TABLE `orden_sesion_rutina` DISABLE KEYS */;
-INSERT INTO `orden_sesion_rutina` VALUES (1,2,2),(1,3,3);
+INSERT INTO `orden_sesion_rutina` VALUES (1,2,2),(1,3,3),(2,2,5),(4,3,7);
 /*!40000 ALTER TABLE `orden_sesion_rutina` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -186,6 +190,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `rutina_cliente` WRITE;
 /*!40000 ALTER TABLE `rutina_cliente` DISABLE KEYS */;
+INSERT INTO `rutina_cliente` VALUES (3,10),(2,12);
 /*!40000 ALTER TABLE `rutina_cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -215,7 +220,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `tipo_ejercicio` WRITE;
 /*!40000 ALTER TABLE `tipo_ejercicio` DISABLE KEYS */;
-INSERT INTO `tipo_ejercicio` VALUES (1,'Fuerza/Resistencia','Peso','Repeticiones'),(2,'Capacidad aerobica','Distancia','Duración'),(3,'Velocidad/Potencia','Duración','Descanso'),(4,'Estabilidad','Repeticiones','Descanso'),(5,'Movilidad','Repeticiones','Descanso');
+INSERT INTO `tipo_ejercicio` VALUES (1,'Fuerza/Resistencia','Peso (kg)','Repeticiones'),(2,'Capacidad aerobica','Distancia (m)','Duración (seg)'),(3,'Velocidad/Potencia','Duración (seg)','Descanso (seg)'),(4,'Estabilidad','Repeticiones','Descanso (seg)'),(5,'Movilidad','Repeticiones','Descanso (seg)');
 /*!40000 ALTER TABLE `tipo_ejercicio` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -225,7 +230,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (2,'25915268B',1,'David','Garcia Sanchez',1,19,1.9,87,'david','david@gmail.com'),(3,'75249108B',2,'Alvaro','Pérez Navarro',1,20,1.67,70,'alvaro','alvaro@gmail.com'),(4,'34345612H',3,'María','Cruz Martínez',0,18,1.54,60,'maria','maria@gmail.com'),(5,'68193415I',4,'Irene','Iglesias Gutierrez',0,24,1.5,54,'irene','irene@gmail.com'),(10,'123',5,'Pepe','Gomex',1,12,12,123,'pepe','pepe@gmail.com'),(11,'123',5,'Pepa','Gomex',0,12,12,123,'pepa','pepa@gmail.com');
+INSERT INTO `usuario` VALUES (2,'25915268B',1,'David','Garcia Sanchez',1,19,1.9,87,'david','david@gmail.com'),(3,'75249108B',2,'Alvaro','Pérez Navarro',1,20,1.67,70,'alvaro','alvaro@gmail.com'),(4,'34345612H',3,'María','Cruz Martínez',0,18,1.54,60,'maria','maria@gmail.com'),(5,'68193415I',4,'Irene','Iglesias Gutierrez',0,24,1.5,54,'irene','irene@gmail.com'),(10,'123',5,'Pepe','Gomex',1,12,12,123,'pepe','pepe@gmail.com'),(11,'123',5,'Pepa','Gomex',0,12,12,123,'pepa','pepa@gmail.com'),(12,'12345678A',5,'Mikel','Arias',1,20,1.7,80,'kirito','mikel@gmail.com');
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -238,4 +243,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-06-23 15:18:22
+-- Dump completed on 2024-06-23 15:51:26

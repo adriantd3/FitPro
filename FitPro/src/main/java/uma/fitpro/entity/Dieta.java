@@ -9,10 +9,7 @@ import uma.fitpro.dto.OrdenMenuDietaDTO;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "dieta")
@@ -92,6 +89,7 @@ public class Dieta implements Serializable, DTO<DietaDTO> {
         for (OrdenMenuDieta ordenMenuDieta : ordenMenuDietas) {
             ordenMenuDietaDTOList.add(ordenMenuDieta.toDTO());
         }
+        Collections.sort(ordenMenuDietaDTOList);
         dietaDTO.setOrdenMenuDietaList(ordenMenuDietaDTOList);
 
         return dietaDTO;

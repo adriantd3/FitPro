@@ -25,6 +25,9 @@
     <h1 class="header-text text-center"><%=rutina.getNombre()%> - Sesiones</h1>
 </header>
 <div class="d-flex justify-content-center mt-4">
+    <%if(rutina.getOrdenSesionRutinaList().isEmpty()){%>
+    <h2 class="text-light">No hay sesiones registradas</h2>
+    <%}%>
     <ul class="text-light">
         <%
             for (OrdenSesionRutinaDTO ordenSesionRutina : rutina.getOrdenSesionRutinaList()) {

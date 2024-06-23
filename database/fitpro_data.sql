@@ -1,8 +1,10 @@
--- MySQL dump 10.13  Distrib 8.0.35, for Linux (x86_64)
+CREATE DATABASE  IF NOT EXISTS `fitpro` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `fitpro`;
+-- MySQL dump 10.13  Distrib 8.0.34, for Win64 (x86_64)
 --
--- Host: localhost    Database: fitpro
+-- Host: 127.0.0.1    Database: fitpro
 -- ------------------------------------------------------
--- Server version	8.0.35
+-- Server version	8.3.0
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -16,46 +18,14 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `comida`
---
-
-DROP TABLE IF EXISTS `comida`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `comida` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(45) NOT NULL,
-  `calorias` int NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `comida`
 --
 
 LOCK TABLES `comida` WRITE;
 /*!40000 ALTER TABLE `comida` DISABLE KEYS */;
-INSERT INTO `comida` VALUES (1,'Salmón con ga',450),(2,'Pollo al curry',350),(3,'Ensalada César',250),(4,'Sopa de verduras',150),(5,'Arroz frito con pollo',500),(6,'Pizza de pepperoni',750),(7,'Ensalada de quinoa',300),(8,'Pasta Alfreda',500),(15,'Pasta Gansa',1000);
+INSERT INTO `comida` VALUES (1,'Salmón con gapazo',450),(2,'Pollo al curry',350),(3,'Ensalada César',250),(4,'Sopa de verduras',150),(5,'Arroz frito con pollo',500),(6,'Pizza de pepperoni',750),(7,'Ensalada de quinoa',300),(8,'Pasta Alfreda',500),(15,'Pasta Gansa',1000);
 /*!40000 ALTER TABLE `comida` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `comida_menu`
---
-
-DROP TABLE IF EXISTS `comida_menu`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `comida_menu` (
-  `comida_id` int NOT NULL,
-  `menu_id` int NOT NULL,
-  PRIMARY KEY (`comida_id`,`menu_id`),
-  KEY `menu_FK_idx` (`menu_id`),
-  CONSTRAINT `comida_FK` FOREIGN KEY (`comida_id`) REFERENCES `comida` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `menu_comida_FK` FOREIGN KEY (`menu_id`) REFERENCES `menu` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `comida_menu`
@@ -68,55 +38,14 @@ INSERT INTO `comida_menu` VALUES (1,1),(2,1),(3,1),(4,1),(2,2),(6,2),(7,2),(8,2)
 UNLOCK TABLES;
 
 --
--- Table structure for table `desempenyo_comida`
---
-
-DROP TABLE IF EXISTS `desempenyo_comida`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `desempenyo_comida` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `comida_id` int NOT NULL,
-  `desempenyo_menu_id` int NOT NULL,
-  `comido` tinyint NOT NULL,
-  `gustado` tinyint NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `comida_desempenyo_FK_idx` (`comida_id`),
-  KEY `desempenyomenu_FK_idx` (`desempenyo_menu_id`),
-  CONSTRAINT `comida_desempenyo_FK` FOREIGN KEY (`comida_id`) REFERENCES `comida` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `desempenyo_menu_FK` FOREIGN KEY (`desempenyo_menu_id`) REFERENCES `desempenyo_menu` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `desempenyo_comida`
 --
 
 LOCK TABLES `desempenyo_comida` WRITE;
 /*!40000 ALTER TABLE `desempenyo_comida` DISABLE KEYS */;
+INSERT INTO `desempenyo_comida` VALUES (5,4,2,1,0),(6,5,2,1,1),(7,6,2,1,1),(8,7,2,0,1),(9,2,3,0,0),(10,6,3,1,1),(11,7,3,0,1),(12,8,3,0,0),(13,15,3,1,0),(14,1,4,0,0),(15,3,4,1,1),(16,4,4,0,0),(17,6,4,0,1),(18,7,4,0,0),(19,4,5,0,0),(20,5,5,0,0),(21,6,5,0,0),(22,7,5,0,0),(23,4,6,0,0),(24,5,6,0,0),(25,6,6,0,0),(26,7,6,0,0);
 /*!40000 ALTER TABLE `desempenyo_comida` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `desempenyo_menu`
---
-
-DROP TABLE IF EXISTS `desempenyo_menu`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `desempenyo_menu` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `usuario_id` int NOT NULL,
-  `menu_id` int NOT NULL,
-  `fecha_creacion` date NOT NULL,
-  `terminado` tinyint NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `menu_FK_idx` (`menu_id`),
-  KEY `menu_desempenyo_usuario_FK_idx` (`usuario_id`),
-  CONSTRAINT `menu_desempenyo_FK` FOREIGN KEY (`menu_id`) REFERENCES `menu` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `menu_desempenyo_usuario_FK` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `desempenyo_menu`
@@ -124,29 +53,9 @@ CREATE TABLE `desempenyo_menu` (
 
 LOCK TABLES `desempenyo_menu` WRITE;
 /*!40000 ALTER TABLE `desempenyo_menu` DISABLE KEYS */;
+INSERT INTO `desempenyo_menu` VALUES (2,12,4,'2024-06-23',1),(3,12,2,'2024-06-23',1),(4,12,3,'2024-06-23',0),(5,10,4,'2024-06-23',1),(6,10,4,'2024-06-23',1);
 /*!40000 ALTER TABLE `desempenyo_menu` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `desempenyo_serie`
---
-
-DROP TABLE IF EXISTS `desempenyo_serie`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `desempenyo_serie` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `desempenyo_sesion_id` int NOT NULL,
-  `ejercicio_id` int NOT NULL,
-  `metrica1` float DEFAULT NULL,
-  `metrica2` float DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `desempenyo_sesion_FK_idx` (`desempenyo_sesion_id`),
-  KEY `ejercicio_FK_idx` (`ejercicio_id`),
-  CONSTRAINT `desempenyo_sesion_FK` FOREIGN KEY (`desempenyo_sesion_id`) REFERENCES `desempenyo_sesion` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `ejercicio_desempenyo_FK` FOREIGN KEY (`ejercicio_id`) REFERENCES `ejercicio` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=329 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `desempenyo_serie`
@@ -154,30 +63,9 @@ CREATE TABLE `desempenyo_serie` (
 
 LOCK TABLES `desempenyo_serie` WRITE;
 /*!40000 ALTER TABLE `desempenyo_serie` DISABLE KEYS */;
-INSERT INTO `desempenyo_serie` VALUES (327,58,1,23,234),(328,58,2,3432,234);
+INSERT INTO `desempenyo_serie` VALUES (327,58,1,23,234),(328,58,2,3432,234),(329,59,1,50,10),(330,59,1,55,10),(331,59,1,60,12),(332,59,1,55,10),(335,60,1,50,10),(336,60,1,55,10),(340,61,3,60,20),(341,61,3,70,15),(342,61,3,70,15),(343,61,3,80,10),(344,61,3,80,10),(345,62,4,25,12),(346,62,4,30,10),(347,62,4,40,10);
 /*!40000 ALTER TABLE `desempenyo_serie` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `desempenyo_sesion`
---
-
-DROP TABLE IF EXISTS `desempenyo_sesion`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `desempenyo_sesion` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `usuario_id` int NOT NULL,
-  `sesion_id` int NOT NULL,
-  `fecha` date NOT NULL,
-  `terminado` tinyint NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `sesion_desempenyo_FK_idx` (`sesion_id`),
-  KEY `sesion_desempenyo_usuario_FK_idx` (`usuario_id`),
-  CONSTRAINT `sesion_desempenyo_FK` FOREIGN KEY (`sesion_id`) REFERENCES `sesion` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `sesion_desempenyo_usuario_FK` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `desempenyo_sesion`
@@ -185,27 +73,9 @@ CREATE TABLE `desempenyo_sesion` (
 
 LOCK TABLES `desempenyo_sesion` WRITE;
 /*!40000 ALTER TABLE `desempenyo_sesion` DISABLE KEYS */;
-INSERT INTO `desempenyo_sesion` VALUES (58,10,4,'2024-06-23',1);
+INSERT INTO `desempenyo_sesion` VALUES (58,10,4,'2024-06-23',1),(59,12,5,'2024-06-23',1),(60,12,5,'2024-06-23',0),(61,12,7,'2024-06-23',1),(62,12,8,'2024-06-23',1);
 /*!40000 ALTER TABLE `desempenyo_sesion` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `dieta`
---
-
-DROP TABLE IF EXISTS `dieta`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `dieta` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `dietista_id` int NOT NULL,
-  `nombre` varchar(45) NOT NULL,
-  `fecha_creacion` date NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `dietista_dieta_FK_idx` (`dietista_id`),
-  CONSTRAINT `dietista_dieta_FK` FOREIGN KEY (`dietista_id`) REFERENCES `usuario` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `dieta`
@@ -218,23 +88,6 @@ INSERT INTO `dieta` VALUES (1,5,'Dieta1','2024-04-10'),(2,5,'Dieta2','2024-04-10
 UNLOCK TABLES;
 
 --
--- Table structure for table `dieta_cliente`
---
-
-DROP TABLE IF EXISTS `dieta_cliente`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `dieta_cliente` (
-  `dieta_id` int NOT NULL,
-  `cliente_id` int NOT NULL,
-  PRIMARY KEY (`dieta_id`,`cliente_id`),
-  KEY `dieta_cliente_FK_idx` (`cliente_id`),
-  CONSTRAINT `dieta_cliente_FK` FOREIGN KEY (`cliente_id`) REFERENCES `usuario` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `dieta_dieta_FK` FOREIGN KEY (`dieta_id`) REFERENCES `dieta` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `dieta_cliente`
 --
 
@@ -243,23 +96,6 @@ LOCK TABLES `dieta_cliente` WRITE;
 INSERT INTO `dieta_cliente` VALUES (1,10),(3,10),(3,12),(4,12);
 /*!40000 ALTER TABLE `dieta_cliente` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `dietista_cliente`
---
-
-DROP TABLE IF EXISTS `dietista_cliente`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `dietista_cliente` (
-  `dietista_id` int NOT NULL,
-  `cliente_id` int NOT NULL,
-  PRIMARY KEY (`dietista_id`,`cliente_id`),
-  KEY `dietista_cliente_FK_idx` (`cliente_id`),
-  CONSTRAINT `dietista_cliente_FK` FOREIGN KEY (`cliente_id`) REFERENCES `usuario` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `dietista_FK` FOREIGN KEY (`dietista_id`) REFERENCES `usuario` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `dietista_cliente`
@@ -272,54 +108,14 @@ INSERT INTO `dietista_cliente` VALUES (5,10),(5,12);
 UNLOCK TABLES;
 
 --
--- Table structure for table `ejercicio`
---
-
-DROP TABLE IF EXISTS `ejercicio`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `ejercicio` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(45) NOT NULL,
-  `descripcion` longtext,
-  `imagen` varchar(255) DEFAULT NULL,
-  `video` varchar(255) DEFAULT NULL,
-  `tipo` int NOT NULL,
-  `grupo_muscular` int NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `tipo_FK_idx` (`tipo`),
-  KEY `grupo_muscular_FK_idx` (`grupo_muscular`),
-  CONSTRAINT `grupo_muscular_FK` FOREIGN KEY (`grupo_muscular`) REFERENCES `grupo_muscular` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `tipo_FK` FOREIGN KEY (`tipo`) REFERENCES `tipo_ejercicio` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `ejercicio`
 --
 
 LOCK TABLES `ejercicio` WRITE;
 /*!40000 ALTER TABLE `ejercicio` DISABLE KEYS */;
-INSERT INTO `ejercicio` VALUES (1,'Incline Bench Pres','The incline bench press is a variatio of the bench press and an exercise used to build the muscles of the chest.     ','https://cdn.muscleandstrength.com/sites/default/files/incline-bench-press.jpg','https://youtube.com/embed/uIzbJX5EVIY',1,2),(2,'Seated Cable Row','Your back must remain straight at all times. Your torso should be kept still throughout the entire set.','https://cdn.muscleandstrength.com/sites/default/files/styles/800x500/public/seated-cable-row.jpg?itok=b8Yzo0KK',NULL,1,14),(3,'Leg Press','The leg press is a variation of the squat and an exercise used to target the muscles of the leg.','https://cdn.muscleandstrength.com/sites/default/files/leg-press.jpg','https://youtube.com/embed/sEM_zo9w2ss',1,19),(4,'Smith Machine Shoulder Press','The Smith machine shoulder press is a variation of the barbell shoulder press and is used to strengthen the muscles of the shoulders.','https://cdn.muscleandstrength.com/sites/default/files/seated-military-press.jpg',NULL,1,20),(7,'Caminar','Camina','','',5,5),(8,'Estiramientps','Estira el pecho','','',5,6),(9,'Salto de comba','Salta a la comba','','',2,5),(10,'Salto estrella','Realiza un salto y chocas las palmas cuando estas en lo alto','','',2,8),(11,'Sprint','Correr a máxima potencia','','',3,19),(12,'Cambios de dirección','Correr y hacer cambios de dirección bruscos ','','',3,5),(13,'Equilibrio sobre una pierna','Sentadillas sobre una pierna','','',4,19),(14,'Plancha','Mantente recto con los brazos y pies apoyados en el suelo','','',4,2);
+INSERT INTO `ejercicio` VALUES (1,'Incline Bench Press',' The incline bench press is a variatio of the bench press and an exercise used to build the muscles of the chest.      ','https://cdn.muscleandstrength.com/sites/default/files/incline-bench-press.jpg','https://youtube.com/embed/uIzbJX5EVIY',1,2),(2,'Seated Cable Row','Your back must remain straight at all times. Your torso should be kept still throughout the entire set.','https://cdn.muscleandstrength.com/sites/default/files/styles/800x500/public/seated-cable-row.jpg?itok=b8Yzo0KK',NULL,1,14),(3,'Leg Press','The leg press is a variation of the squat and an exercise used to target the muscles of the leg.','https://cdn.muscleandstrength.com/sites/default/files/leg-press.jpg','https://youtube.com/embed/sEM_zo9w2ss',1,19),(4,'Smith Machine Shoulder Press','The Smith machine shoulder press is a variation of the barbell shoulder press and is used to strengthen the muscles of the shoulders.','https://cdn.muscleandstrength.com/sites/default/files/seated-military-press.jpg',NULL,1,20),(7,'Go for a walk','Go for a walk to improve your overall health','https://www.mpcp.com/wp-content/uploads/2022/06/mpcp-walking-320x240-1.jpg','https://www.youtube.com/embed/RrphLKih470?si=gsCCgy3viD4rSg5v',5,5),(8,'Side Lying Hip Flexor And Quad Stretchor','The side lying hip Flexor and quad stretch helps improve mobility and flexibility in the quads and hip flexor area.','https://i0.wp.com/www.muscleandfitness.com/wp-content/uploads/2014/02/992_B.jpg?quality=86&strip=all','https://www.youtube.com/embed/_xU-wIiMxpI?si=JZv3iVcvTboJzR0c',5,19),(9,'Skipping','It is about running by raising the knees exaggeratedly, and it is one of the most important exercises to improve our running technique.','https://www.entrenamientos.com/media/cache/exercise_375/uploads/exercise/carrera-en-el-sitio-o-skipinng-init-pos-6552.png','https://www.youtube.com/embed/98Qbs7ghKnU?si=D8ktK5lh3qXETFAC',2,10),(10,'Salto estrella',' Realiza un salto y chocas las palmas cuando estas en lo alto ','https://d3h3bmeuj906e6.cloudfront.net/wp-content/uploads/2020/05/SALTO-DE-ESTRELLA.jpg','',2,8),(11,'Sprint','These challenging sprint workouts are built to help you gain speed and power.','https://www.dummies.com/wp-content/uploads/sprint-training.jpg','https://www.youtube.com/embed/TFdHV9rYcz0?si=_TILoygfsuI-mDld',3,5),(12,'Stride Length Drill','Strides are fast running sets with short rests. By running fast, your body automatically reverts back to what is a better technique than the slow plod.','https://s3-us-west-2.amazonaws.com/mostfit/posts/featured_images/000/000/012/medium/minihurdles.png?1556994256','https://www.youtube.com/embed/VjSONvP3kds?si=wtWWwXU37302Qupe',3,5),(15,'T Stabilization','  The T-stabilization is an intermediate stability exercise that trains the entire core, including your shoulder complex, abs, and hips, while helping build endurance in your lower back.','https://workouttrends.com/wp-content/uploads/2014/05/t-stabilization-300x300.jpg','https://www.youtube.com/embed/5nqMNkVwASE?si=ACCzzERDRzcbAZmB',4,2),(16,'Scorpion','   The scorpion is a dynamic warm-up exercise that improves hip mobility while strengthening the lower back and core. The exercise also improves coordination and flexibility throughout the body. ','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSS1QQNw6FhbYBvRyzHJYKVMFlGQxYMgrfCCA&s','https://www.youtube.com/embed/zFlwrxVeQxc?si=ADe8zh8e6qOPao7C',5,10),(17,'Clean','The clean is a multi-joint exercise that develops power and strength throughout the entire body. The exercise also helps build core strength and athletic coordination.  ','https://cdn.mos.cms.futurecdn.net/c7QzqURhcSy7MqwSbWevoA-1200-80.jpg','https://www.youtube.com/embed/EKRiW9Yt3Ps?si=XZBU7mBSyhuuHwZZ',3,8),(18,'Weighted Situp','The weighted sit up is a progression from a bodyweight sit up that strengthens the entire core region including the lower abdominals, hip flexors, and lower back.','https://i0.wp.com/www.muscleandfitness.com/wp-content/uploads/2017/10/weighted-situp-2.jpg?w=800&h=630&crop=1&quality=86&strip=all','https://www.youtube.com/embed/kZvSaq192cg?si=MGxLw8y_PkcxrChW',1,2),(19,'Weighted Dip','  The weighted dip is a compound upper-body pressing exercise and progression of the bodyweight dip that strengthens the chest, shoulders, and triceps.','https://www.hevyapp.com/wp-content/uploads/DSC04897.jpg','https://www.youtube.com/embed/l0b_W3Gk4vM?si=NTK5DkU3Ma3EOnu7',1,6),(20,'Thrusters','  Thrusters improve strength and power in the legs, shoulders, triceps, and core while increasing cardiovascular endurance. ','https://media1.popsugar-assets.com/files/thumbor/900e0spHYKKugbcA2xANt1hyi4U=/fit-in/792x792/filters:format_auto():upscale()/2017/09/28/732/n/1922729/tmp_FPCm3l_1c11759740338fc7_Dumbbell-Thrusters.jpg','https://www.youtube.com/embed/u3wKkZjE8QM?si=wTpjNboVAijWC3yU',1,20);
 /*!40000 ALTER TABLE `ejercicio` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `entrenador_cliente`
---
-
-DROP TABLE IF EXISTS `entrenador_cliente`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `entrenador_cliente` (
-  `entrenador_id` int NOT NULL,
-  `cliente_id` int NOT NULL,
-  PRIMARY KEY (`entrenador_id`,`cliente_id`),
-  KEY `entrenador_cliente_FK_idx` (`cliente_id`),
-  CONSTRAINT `entrenador_cliente_FK` FOREIGN KEY (`cliente_id`) REFERENCES `usuario` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `entrenador_FK` FOREIGN KEY (`entrenador_id`) REFERENCES `usuario` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `entrenador_cliente`
@@ -332,20 +128,6 @@ INSERT INTO `entrenador_cliente` VALUES (3,10),(3,12),(4,12);
 UNLOCK TABLES;
 
 --
--- Table structure for table `grupo_muscular`
---
-
-DROP TABLE IF EXISTS `grupo_muscular`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `grupo_muscular` (
-  `id` int NOT NULL,
-  `grupo_muscular` varchar(45) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `grupo_muscular`
 --
 
@@ -354,22 +136,6 @@ LOCK TABLES `grupo_muscular` WRITE;
 INSERT INTO `grupo_muscular` VALUES (1,'Abductores'),(2,'Abdominales'),(3,'Aductores'),(4,'Biceps'),(5,'Gemelos'),(6,'Pecho'),(7,'Antebrazo'),(8,'Gluteos'),(9,'Isquiotibiales'),(10,'Flexores de cadera'),(11,'Cintilla Iliotibial'),(12,'Dorsales'),(13,'Espalda Baja'),(14,'Espalda Superior'),(15,'Cuello'),(16,'Oblicuos'),(17,'Fascia Palmar'),(18,'Fascia Plantar'),(19,'Cuadriceps'),(20,'Hombros'),(21,'Trapecios'),(22,'Triceps');
 /*!40000 ALTER TABLE `grupo_muscular` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `menu`
---
-
-DROP TABLE IF EXISTS `menu`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `menu` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(45) NOT NULL,
-  `calorias` float NOT NULL DEFAULT '0',
-  `fecha_creacion` date NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `menu`
@@ -382,24 +148,6 @@ INSERT INTO `menu` VALUES (1,'Menu1',1200,'2024-04-11'),(2,'Menu2',2900,'2024-04
 UNLOCK TABLES;
 
 --
--- Table structure for table `orden_menu_dieta`
---
-
-DROP TABLE IF EXISTS `orden_menu_dieta`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `orden_menu_dieta` (
-  `menu_id` int NOT NULL,
-  `dieta_id` int NOT NULL,
-  `orden` int NOT NULL,
-  PRIMARY KEY (`menu_id`,`dieta_id`,`orden`),
-  KEY `dieta_FK_idx` (`dieta_id`),
-  CONSTRAINT `dieta_FK` FOREIGN KEY (`dieta_id`) REFERENCES `dieta` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `menu_FK` FOREIGN KEY (`menu_id`) REFERENCES `menu` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `orden_menu_dieta`
 --
 
@@ -408,25 +156,6 @@ LOCK TABLES `orden_menu_dieta` WRITE;
 INSERT INTO `orden_menu_dieta` VALUES (1,1,1),(2,1,3),(2,1,4),(3,1,5),(4,1,2),(1,2,2),(2,2,1),(1,3,3),(1,3,4),(2,3,2),(2,3,5),(3,3,7),(4,3,1),(4,3,6),(4,4,1),(4,4,3),(4,4,5);
 /*!40000 ALTER TABLE `orden_menu_dieta` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `orden_sesion_rutina`
---
-
-DROP TABLE IF EXISTS `orden_sesion_rutina`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `orden_sesion_rutina` (
-  `sesion_id` int NOT NULL,
-  `rutina_id` int NOT NULL,
-  `orden` int NOT NULL,
-  PRIMARY KEY (`sesion_id`,`rutina_id`,`orden`),
-  KEY `sesion_FK_idx` (`sesion_id`),
-  KEY `rutina_FK_idx` (`rutina_id`),
-  CONSTRAINT `rutina_FK` FOREIGN KEY (`rutina_id`) REFERENCES `rutina` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `sesion_FK` FOREIGN KEY (`sesion_id`) REFERENCES `sesion` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `orden_sesion_rutina`
@@ -439,20 +168,6 @@ INSERT INTO `orden_sesion_rutina` VALUES (5,8,1),(7,8,3),(7,9,5),(8,8,5),(9,9,1)
 UNLOCK TABLES;
 
 --
--- Table structure for table `rol`
---
-
-DROP TABLE IF EXISTS `rol`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `rol` (
-  `id` int NOT NULL,
-  `nombre` varchar(45) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `rol`
 --
 
@@ -461,24 +176,6 @@ LOCK TABLES `rol` WRITE;
 INSERT INTO `rol` VALUES (1,'admin'),(2,'entrenador_fuerza'),(3,'entrenador_cross_training'),(4,'dietista'),(5,'cliente');
 /*!40000 ALTER TABLE `rol` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `rutina`
---
-
-DROP TABLE IF EXISTS `rutina`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `rutina` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `entrenador_id` int NOT NULL,
-  `nombre` varchar(45) NOT NULL,
-  `fecha_creacion` date NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `entrenador_rutina_FK_idx` (`entrenador_id`),
-  CONSTRAINT `entrenador_rutina_FK` FOREIGN KEY (`entrenador_id`) REFERENCES `usuario` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `rutina`
@@ -491,52 +188,14 @@ INSERT INTO `rutina` VALUES (4,4,'Rutina 1','2024-05-29'),(5,4,'Rutina 2','2024-
 UNLOCK TABLES;
 
 --
--- Table structure for table `rutina_cliente`
---
-
-DROP TABLE IF EXISTS `rutina_cliente`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `rutina_cliente` (
-  `rutina_id` int NOT NULL,
-  `cliente_id` int NOT NULL,
-  PRIMARY KEY (`rutina_id`,`cliente_id`),
-  KEY `rutina_cliente_FK_idx` (`cliente_id`),
-  CONSTRAINT `rutina_cliente_FK` FOREIGN KEY (`cliente_id`) REFERENCES `usuario` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `rutina_rutina_cliente_FK` FOREIGN KEY (`rutina_id`) REFERENCES `rutina` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `rutina_cliente`
 --
 
 LOCK TABLES `rutina_cliente` WRITE;
 /*!40000 ALTER TABLE `rutina_cliente` DISABLE KEYS */;
-INSERT INTO `rutina_cliente` VALUES (8,12);
+INSERT INTO `rutina_cliente` VALUES (9,10),(8,12);
 /*!40000 ALTER TABLE `rutina_cliente` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `serie`
---
-
-DROP TABLE IF EXISTS `serie`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `serie` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `sesion_id` int NOT NULL,
-  `ejercicio_id` int NOT NULL,
-  `metrica1` float DEFAULT NULL,
-  `metrica2` float DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `ejercicio_FK_idx` (`ejercicio_id`),
-  KEY `sesion_FK_idx` (`sesion_id`),
-  CONSTRAINT `ejercicio_FK` FOREIGN KEY (`ejercicio_id`) REFERENCES `ejercicio` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `sesion_serie_FK` FOREIGN KEY (`sesion_id`) REFERENCES `sesion` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `serie`
@@ -544,23 +203,9 @@ CREATE TABLE `serie` (
 
 LOCK TABLES `serie` WRITE;
 /*!40000 ALTER TABLE `serie` DISABLE KEYS */;
-INSERT INTO `serie` VALUES (13,4,1,2,2),(14,4,2,4,4),(15,5,1,50,10),(16,5,1,55,10),(17,5,1,55,9),(18,5,1,60,8),(19,5,1,65,7),(20,6,2,50,10),(21,6,2,50,10),(22,6,2,55,10),(23,6,2,55,10),(24,6,2,60,10),(25,7,3,60,20),(26,7,3,70,15),(27,7,3,70,15),(28,7,3,80,10),(29,7,3,80,10),(30,8,4,25,12),(31,8,4,30,10),(32,8,4,40,10),(33,8,4,45,8),(34,8,4,45,8),(35,9,1,30,12),(36,9,1,35,10),(37,9,1,40,10),(38,9,2,50,10),(39,9,2,50,10),(40,9,3,60,15),(41,9,3,65,13),(42,9,3,70,10),(43,9,4,25,10),(44,9,4,30,10),(45,9,4,40,8);
+INSERT INTO `serie` VALUES (13,4,1,2,2),(14,4,2,4,4),(15,5,1,50,10),(16,5,1,55,10),(17,5,1,55,9),(18,5,1,60,8),(19,5,1,65,7),(20,6,2,50,10),(21,6,2,50,10),(22,6,2,55,10),(23,6,2,55,10),(24,6,2,60,10),(25,7,3,60,20),(26,7,3,70,15),(27,7,3,70,15),(28,7,3,80,10),(29,7,3,80,10),(30,8,4,25,12),(31,8,4,30,10),(32,8,4,40,10),(33,8,4,45,8),(34,8,4,45,8),(35,9,1,30,12),(36,9,1,35,10),(37,9,1,40,10),(38,9,2,50,10),(39,9,2,50,10),(40,9,3,60,15),(41,9,3,65,13),(42,9,3,70,10),(43,9,4,25,10),(44,9,4,30,10),(45,9,4,40,8),(46,7,7,0,0);
 /*!40000 ALTER TABLE `serie` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `sesion`
---
-
-DROP TABLE IF EXISTS `sesion`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `sesion` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(45) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `sesion`
@@ -573,22 +218,6 @@ INSERT INTO `sesion` VALUES (4,'Sesion de prueba'),(5,'Pecho'),(6,'Espalda'),(7,
 UNLOCK TABLES;
 
 --
--- Table structure for table `tipo_ejercicio`
---
-
-DROP TABLE IF EXISTS `tipo_ejercicio`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `tipo_ejercicio` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `tipo` varchar(45) NOT NULL,
-  `metrica1` varchar(45) NOT NULL,
-  `metrica2` varchar(45) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `tipo_ejercicio`
 --
 
@@ -597,31 +226,6 @@ LOCK TABLES `tipo_ejercicio` WRITE;
 INSERT INTO `tipo_ejercicio` VALUES (1,'Fuerza/Resistencia','Peso (kg)','Repeticiones'),(2,'Capacidad aerobica','Distancia (m)','Duración (seg)'),(3,'Velocidad/Potencia','Duración (seg)','Descanso (seg)'),(4,'Estabilidad','Repeticiones','Descanso (seg)'),(5,'Movilidad','Repeticiones','Descanso (seg)');
 /*!40000 ALTER TABLE `tipo_ejercicio` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `usuario`
---
-
-DROP TABLE IF EXISTS `usuario`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `usuario` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `dni` varchar(9) NOT NULL,
-  `rol` int NOT NULL,
-  `nombre` varchar(45) NOT NULL,
-  `apellidos` varchar(255) NOT NULL,
-  `sexo` tinyint DEFAULT NULL,
-  `edad` int DEFAULT NULL,
-  `altura` float DEFAULT NULL,
-  `peso` float DEFAULT NULL,
-  `contrasenya` varchar(45) NOT NULL,
-  `correo` varchar(45) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `rol_FK_idx` (`rol`),
-  CONSTRAINT `rol_FK` FOREIGN KEY (`rol`) REFERENCES `rol` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `usuario`
@@ -642,4 +246,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-06-23 18:38:16
+-- Dump completed on 2024-06-23 20:17:10

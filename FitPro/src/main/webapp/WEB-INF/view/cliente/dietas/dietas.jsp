@@ -25,6 +25,9 @@
     <h1 class="header-text text-center">Mis dietas</h1>
 </header>
 <div class="d-flex justify-content-center mt-3">
+    <%if(dietas.isEmpty()){%>
+    <h2 class="text-light">No hay dietas registradas</h2>
+    <%}%>
     <ul class="text-light fs-5">
         <%
             for (DietaDTO dieta : dietas) {

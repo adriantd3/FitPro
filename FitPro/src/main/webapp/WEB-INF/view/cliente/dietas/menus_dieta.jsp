@@ -25,6 +25,9 @@
     <h1 class="header-text text-center"><%=dieta.getNombre()%> - Menús</h1>
 </header>
 <div class="d-flex justify-content-center mt-3">
+    <%if(dieta.getOrdenMenuDietaList().isEmpty()){%>
+    <h2 class="text-light">No hay menús registrados</h2>
+    <%}%>
     <ul class="text-light fs-5">
         <%
             for (OrdenMenuDietaDTO ordenMenuDieta : dieta.getOrdenMenuDietaList()) {

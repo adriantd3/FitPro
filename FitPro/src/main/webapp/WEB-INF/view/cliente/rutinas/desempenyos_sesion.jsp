@@ -33,6 +33,9 @@
 </header>
 <div class="d-flex justify-content-center mt-4">
     <div>
+        <%if(desempenyoSesions.isEmpty()){%>
+        <h2 class="text-light">No hay desempeños registrados</h2>
+        <%}%>
         <ul class="text-light">
             <%
                 int countNT = 0;

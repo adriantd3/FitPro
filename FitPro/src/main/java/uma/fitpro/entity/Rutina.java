@@ -36,6 +36,7 @@ public class Rutina implements Serializable, DTO<RutinaDTO> {
     private LocalDate fechaCreacion;
 
     @OneToMany(mappedBy = "rutina")
+    @OrderBy("id.orden ASC")
     private List<OrdenSesionRutina> ordenSesionRutinas = new ArrayList<>();
 
     public Integer getId() {

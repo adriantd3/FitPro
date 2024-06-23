@@ -25,6 +25,9 @@
     <h1 class="header-text text-center">Rutinas de entrenamiento</h1>
 </header>
 <div class="d-flex justify-content-center mt-4">
+    <%if(rutinas.isEmpty()){%>
+    <h2 class="text-light">No hay rutinas registradas</h2>
+    <%}%>
     <ul class="text-light">
         <%
             for (RutinaDTO rutina : rutinas) {

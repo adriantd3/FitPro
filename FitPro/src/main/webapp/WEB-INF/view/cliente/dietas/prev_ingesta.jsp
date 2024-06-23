@@ -1,3 +1,4 @@
+<%//AUTOR: Adrián Torremocha(100%)%>
 <%@ page import="uma.fitpro.dto.MenuDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!doctype html>
@@ -23,10 +24,10 @@
     <h1 class="header-text text-center">Información de <%=menu.getNombre()%>
     </h1>
 </header>
-<div class="container-fluid d-flex justify-content-start">
-    <div class="p-3" style="width: 40%">
+<div class="container-fluid d-flex justify-content-center mt-3">
+    <div style="width: 30%">
         <jsp:include page="tabla_comidas.jsp"/>
-        <form method="post" action="nueva_ingesta">
+        <form method="post" action="nueva_ingesta" class="text-center">
             <button type="submit" class="btn btn-primary" name="comenzar_ingesta">Comenzar ingesta</button>
         </form>
     </div>

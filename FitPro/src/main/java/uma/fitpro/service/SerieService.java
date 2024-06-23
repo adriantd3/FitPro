@@ -13,10 +13,7 @@ import uma.fitpro.entity.Serie;
 import uma.fitpro.entity.Sesion;
 import uma.fitpro.ui.FiltroSerie;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class SerieService extends DTOService{
@@ -42,7 +39,13 @@ public class SerieService extends DTOService{
     }
 
     public List<SerieDTO> buscarSeries(List<Integer> series) {
-        List<Serie> seriesList = serieRepository.findAllById(series);
+        List<Serie> seriesList = new ArrayList<>();
+        for (Integer id : series) {
+            Serie serie = serieRepository.findById(id).orElse(null);
+            if (serie != null) {
+                seriesList.add(serie);
+            }
+        }
         return this.entidadesADTO(seriesList);
     }
 
@@ -66,9 +69,7 @@ public class SerieService extends DTOService{
         Map<EjercicioDTO, List<SerieDTO>> sesion_dict = new LinkedHashMap<>();
         for (SerieDTO serie : seriesList) {
             EjercicioDTO ejercicio = ejercicioService.buscarEjercicio(serie.getEjercicio());
-            if (!sesion_dict.containsKey(ejercicio)) {
-                sesion_dict.put(ejercicio, new ArrayList<>());
-            }
+            sesion_dict.computeIfAbsent(ejercicio, k -> new ArrayList<>());
             sesion_dict.get(ejercicio).add(serie);
         }
 
@@ -84,7 +85,7 @@ public class SerieService extends DTOService{
         }
     }
 
-    public void crearSerie(EjercicioDTO ejercicioDTO, SesionDTO sesionDTO, String parametro1, String parametro2){
+    public Integer crearSerie(EjercicioDTO ejercicioDTO, SesionDTO sesionDTO, String parametro1, String parametro2){
         Ejercicio ejercicio = ejercicioRepository.findById(ejercicioDTO.getId()).orElse(null);
         Sesion sesion = sesionRepository.findById(sesionDTO.getId()).orElse(null);
         Serie nueva_serie = new Serie();
@@ -93,6 +94,8 @@ public class SerieService extends DTOService{
         nueva_serie.setMetrica1(Float.parseFloat(parametro1));
         nueva_serie.setMetrica2(Float.parseFloat(parametro2));
         serieRepository.save(nueva_serie);
+
+        return nueva_serie.getId();
     }
 
     public void guardarSerie(SerieDTO serieDTO, String parametro1, String parametro2){

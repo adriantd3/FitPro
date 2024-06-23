@@ -2,6 +2,10 @@
     width: 400px;
 }
 
+.menu_table{
+    width: 500px;
+}
+
 .table td{
     user-select: none;
     transition: 0.5s;
@@ -16,23 +20,23 @@
 }
 
 .id{
-    width: 40px;
+    width: 20px;
 }
 
 .nombre-menu{
-    width: 120px;
+    width: 100px;
 }
 
 .nombre-comida{
-    width: 120px;
+    width: 110px;
 }
 
 .kcal{
-    width: 40px;
+    width: 50px;
 }
 
 .fecha{
-    width: 80px;
+    width: 120px;
 }
 
 .table-button{

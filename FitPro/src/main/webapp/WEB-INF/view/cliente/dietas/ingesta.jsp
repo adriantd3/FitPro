@@ -1,3 +1,4 @@
+<%//AUTOR: Adrián Torremocha(100%)%>
 <%@ page import="java.util.List" %>
 <%@ page import="uma.fitpro.dto.DesempenyoMenuDTO" %>
 <%@ page import="uma.fitpro.dto.DesempenyoComidaDTO" %>
@@ -25,8 +26,8 @@
     <h1 class="header-text text-center">Ingesta en curso : <%=desempenyoMenu.getNombreMenu()%>
     </h1>
 </header>
-<section id="table-container">
-    <div class="p-3" style="width: 50%">
+<section id="table-container" class="d-flex justify-content-center mt-3">
+    <div style="width: 35%">
         <table class="table table-striped text-center" id="tabla_comidas">
             <thead class="table-dark">
             <tr>

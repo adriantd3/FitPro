@@ -4,9 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uma.fitpro.dao.DesempenyoComidaRepository;
 import uma.fitpro.dto.DesempenyoComidaDTO;
+import uma.fitpro.dto.DesempenyoMenuDTO;
+import uma.fitpro.dto.OrdenMenuDietaDTO;
 import uma.fitpro.entity.DesempenyoComida;
 import uma.fitpro.ui.FiltroDesempenyoComida;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -46,5 +49,12 @@ public class DesempenyoComidaService extends DTOService{
     }
 
 
-
+    public List<DesempenyoComidaDTO> buscarDesempenyosComidaDesempenyoMenu(DesempenyoMenuDTO desempenyoMenu) {
+        List<DesempenyoComidaDTO> desempenyoComidasDTO = new ArrayList<>();
+        if(desempenyoMenu!=null){
+            List<DesempenyoComida> desempenyoComidas = desempenyoComidaRepository.findAllById(desempenyoMenu.getDesempenyoComidas());
+            desempenyoComidasDTO = this.entidadesADTO(desempenyoComidas);
+        }
+        return desempenyoComidasDTO;
+    }
 }

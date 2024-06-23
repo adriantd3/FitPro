@@ -18,6 +18,16 @@ public class OrdenMenuDietaId implements java.io.Serializable {
     @Column(name = "orden", nullable = false)
     private Integer orden;
 
+    public OrdenMenuDietaId(int menuId, int dietaId, int orden) {
+        setMenuId(menuId);
+        setDietaId(dietaId);
+        setOrden(orden);
+    }
+
+    public OrdenMenuDietaId() {
+
+    }
+
     public Integer getMenuId() {
         return menuId;
     }

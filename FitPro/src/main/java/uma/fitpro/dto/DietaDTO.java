@@ -1,6 +1,7 @@
 package uma.fitpro.dto;
 
 import lombok.Data;
+import uma.fitpro.entity.OrdenMenuDietaId;
 
 import java.time.LocalDate;
 import java.util.List;

@@ -1,3 +1,4 @@
+<%//AUTOR: Adrián Torremocha(100%)%>
 <%@ page import="uma.fitpro.dto.SesionDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!doctype html>
@@ -23,12 +24,12 @@
     <h1 class="header-text text-center">Información de <%=sesion.getNombre()%>
     </h1>
 </header>
-<div class="container-fluid d-flex justify-content-start">
+<div class="container-fluid d-flex justify-content-center">
     <div class="p-3" style="width: 40%">
         <jsp:include page="tablas_series.jsp">
             <jsp:param name="dict" value="sesion"/>
         </jsp:include>
-        <form method="post" action="nuevo_desempenyo_sesion">
+        <form method="post" action="nuevo_desempenyo_sesion" class="text-center mt-4">
             <button type="submit" class="btn btn-primary" name="comenzar_entrenamiento">Comenzar entrenamiento</button>
         </form>
     </div>

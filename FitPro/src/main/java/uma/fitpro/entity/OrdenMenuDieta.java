@@ -27,6 +27,16 @@ public class OrdenMenuDieta implements Serializable, DTO<OrdenMenuDietaDTO>{
     @JoinColumn(name = "dieta_id", nullable = false)
     private Dieta dieta;
 
+    public OrdenMenuDieta(OrdenMenuDietaId id, Menu menu, Dieta dieta) {
+        setId(id);
+        setMenu(menu);
+        setDieta(dieta);
+    }
+
+    public OrdenMenuDieta() {
+
+    }
+
     public OrdenMenuDietaId getId() {
         return id;
     }
@@ -54,8 +64,8 @@ public class OrdenMenuDieta implements Serializable, DTO<OrdenMenuDietaDTO>{
     @Override
     public OrdenMenuDietaDTO toDTO() {
         OrdenMenuDietaDTO ordenMenuDietaDTO = new OrdenMenuDietaDTO();
-        ordenMenuDietaDTO.setId(this.id.getOrden());
-        ordenMenuDietaDTO.setMenuId(this.id.getMenuId());
+        ordenMenuDietaDTO.setOrden(this.id.getOrden());
+        ordenMenuDietaDTO.setMenu(this.menu.toDTO());
         ordenMenuDietaDTO.setDietaId(this.id.getDietaId());
         ordenMenuDietaDTO.setNombreMenu(this.menu.getNombre());
         return ordenMenuDietaDTO;

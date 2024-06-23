@@ -1,3 +1,4 @@
+<%//AUTOR: Adrián Torremocha(100%)%>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="uma.fitpro.dto.DesempenyoSerieDTO" %>
@@ -8,7 +9,7 @@
 
 <%
     DesempenyoSesionDTO desempenyoSesion = (DesempenyoSesionDTO) request.getAttribute("desempenyo_sesion");
-    Map<EjercicioDTO, List<DesempenyoSerieDTO>> series_dict = (Map<EjercicioDTO, List<DesempenyoSerieDTO>>) request.getAttribute("series_dict");
+    Map<EjercicioDTO, List<DesempenyoSerieDTO>> series_dict = (Map<EjercicioDTO, List<DesempenyoSerieDTO>>) request.getAttribute("des_dict");
     Map<Integer, List<String>> params = UtilityFunctions.getEjercicioParametros();
 %>
 
@@ -29,7 +30,7 @@
     <h1 class="header-text text-center">Entrenamiento en curso : <%=desempenyoSesion.getNombreSesion()%>
     </h1>
 </header>
-<section id="table-container">
+<section id="table-container" class="d-flex justify-content-center">
     <div class="p-3" style="width: 70%">
         <%
             int countEjercicio = 0;
@@ -40,7 +41,7 @@
         %>
         <section class="ejercicio<%=countEjercicio%>">
             <a href="ejercicio?id=<%=ejercicio.getId()%>"
-               class="text-primary fs-4 ejercicio"><%=ejercicio.getNombre()%>
+               class="text-primary fs-4 ejercicio" target="_blank" ><%=ejercicio.getNombre()%>
             </a>
             <table class="table table-striped text-center" id="TableEjer<%=ejercicio.getId()%>">
                 <thead class="table-dark">

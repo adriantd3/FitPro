@@ -23,5 +23,4 @@ public class FiltroDesempenyoComida {
     public void setCalorias(Integer calorias){
         this.calorias = Objects.requireNonNullElse(calorias, 0);
     }
-
 }

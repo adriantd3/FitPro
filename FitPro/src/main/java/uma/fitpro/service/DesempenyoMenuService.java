@@ -9,8 +9,10 @@ import uma.fitpro.dao.UsuarioRepository;
 import uma.fitpro.dto.DesempenyoComidaDTO;
 import uma.fitpro.dto.DesempenyoMenuDTO;
 import uma.fitpro.entity.*;
+import uma.fitpro.ui.FiltroDesempenyoMenu;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -85,4 +87,13 @@ public class DesempenyoMenuService extends DTOService{
         return desempenyoComida;
     }
 
+    public List<DesempenyoMenuDTO> filtrar(FiltroDesempenyoMenu filtroDesempenyoMenu) {
+        List<DesempenyoMenu> desempenyosMenu = new ArrayList<>();
+        if(filtroDesempenyoMenu.estaVacio()){
+            desempenyosMenu = desempenyoMenuRepository.findByClientIDAndMenuID(filtroDesempenyoMenu.getClienteId(), filtroDesempenyoMenu.getMenuId());
+        }else{
+            desempenyosMenu = desempenyoMenuRepository.findByClientIDAndMenuIDAndDate(filtroDesempenyoMenu.getClienteId(), filtroDesempenyoMenu.getMenuId(), filtroDesempenyoMenu.getLocalDateFecha());
+        }
+        return this.entidadesADTO(desempenyosMenu);
+    }
 }

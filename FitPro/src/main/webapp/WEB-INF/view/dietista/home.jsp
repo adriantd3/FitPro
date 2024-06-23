@@ -1,4 +1,5 @@
-<%@ page import="uma.fitpro.entity.Usuario" %><%--
+<%@ page import="uma.fitpro.entity.Usuario" %>
+<%@ page import="uma.fitpro.dto.UsuarioDTO" %><%--
   Created by IntelliJ IDEA.
   User: jabr3
   Date: 24/04/2024
@@ -7,7 +8,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    Usuario user = (Usuario) session.getAttribute("user");
+    UsuarioDTO user = (UsuarioDTO) session.getAttribute("user");
 %>
 <html>
 <head>
@@ -18,7 +19,9 @@
 </head>
 <body>
 <header>
-    <img class="back-button ms-1 mt-1" src="./assets/image.png" alt="">
+    <a href="/salir">
+        <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back_button.png" alt="back">
+    </a>
     <h1 class="header-text text-center">Bienvenido, <%= user.getNombre() %></h1>
 </header>
 
@@ -26,11 +29,11 @@
     <form method="get" action="/dietista/menus">
         <button type="submit" class="btn  btn-secondary">Menús</button><br/>
     </form>
-    <form method="get" action="/dietista/menus">
+    <form method="get" action="/dietista/dietas">
         <button type="submit" class="btn  btn-secondary">Dietas</button><br/>
     </form>
     <form method="get" action="/dietista/clientes">
-        <button type="submit" class="btn  btn-secondary">Clientes</button>
+        <button type="submit" class="btn  btn-secondary" onclick="window.location.href='/dietista/clientes'">Clientes</button>
     </form>
 </div>
 

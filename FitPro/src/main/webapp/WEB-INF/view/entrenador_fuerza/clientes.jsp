@@ -21,7 +21,7 @@
 <body>
 <header class="sticky-top">
     <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back_button.png" alt="<-"
-         onclick="window.location.href='/entrenador_fuerza/'"> <!-- Controlar pagina anterior por modelo -->
+         onclick="window.location.href='/entrenador_fuerza'"> <!-- Controlar pagina anterior por modelo -->
     <h1 class="header-text text-center">Clientes</h1> <!-- Meter usuario por modelo -->
 </header>
 

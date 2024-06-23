@@ -9,6 +9,7 @@
     List<RolDTO> roles = (List<RolDTO>) request.getAttribute("roles");
     UsuarioDTO usuario = (UsuarioDTO) request.getAttribute("usuario");
     UsuarioDTO adminLogged = (UsuarioDTO) session.getAttribute("user");
+    Integer selectedId = usuario != null ? usuario.getId() : 0;
 
     String filtroNombre = (String) request.getAttribute("filtroNombre");
     String filtroApellido = (String) request.getAttribute("filtroApellido");
@@ -68,7 +69,7 @@
                 <td>Nombre:<input name="Nombre" type="text" placeholder="Nombre" value="<%=usuario == null ? "" : usuario.getNombre()%>"></td>
                 <td>Apellidos:<input name="Apellidos" type="text" placeholder="Apellidos" value="<%=usuario == null ? "" : usuario.getApellidos()%>"></td>
                 <td>DNI:<input name="DNI" type="text"  placeholder="DNI" value=<%=usuario == null ? "" : usuario.getDni()%>></td>
-                <td>Rol: <select name="Rol" <%= usuario!= null && (usuario.getId() != adminLogged.getId()) ? "" : "disabled"%>>
+                <td>Rol: <select name="Rol" <%= (selectedId == adminLogged.getId() ? "disabled" : "")%>>
                     <% for(RolDTO rol : roles){ %>
                         <option <%=usuario != null && usuario.getRol().getId() == rol.getId() ? "selected" : ""%> value=<%=rol.getId()%>> <%=rol.getNombre()%> </option>
                     <% } %>

@@ -4,6 +4,8 @@
 <!doctype html>
 <%
     UsuarioDTO cliente = (UsuarioDTO) session.getAttribute("user");
+    String message = cliente.getSexo() == (byte) 1 ? "Bienvenido, " : "Bienvenida, ";
+    message += cliente.getNombre();
 %>
 <html lang="en">
 <head>
@@ -19,7 +21,7 @@
     <a href="/salir">
     <img class="back-button ms-1 mt-1 " src="${pageContext.request.contextPath}/assets/back_button.png" alt="">
     </a>
-    <h1 class="header-text text-center">Bienvenido, <%=cliente.getNombre()%></h1>
+    <h1 class="header-text text-center"><%=message%></h1>
 </header>
 <section id="buttons" class="position-relative start-50 w-25 mt-4">
     <button type="button" class="btn btn-secondary w-50 translate-middle-x"
